@@ -46,11 +46,11 @@ public class PEUtils {
 	public static void addResizeHandler(Scene scene, ResizableInterface resize) {
 
 		scene.widthProperty().addListener((obv, oldValue, newValue) -> {
-			resize.onWidthResize();
+			resize.onWidthResize(newValue.intValue());
 		});
 
 		scene.heightProperty().addListener((obv, oldValue, newValue) -> {
-			resize.onHeightResize();
+			resize.onHeightResize(newValue.intValue());
 		});
 
 	}

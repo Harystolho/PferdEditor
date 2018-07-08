@@ -38,7 +38,9 @@ public class PEApplication extends Application {
 	private void loadMainScene() {
 
 		Scene scene = new Scene(PEUtils.loadFXML("main.fxml"));
-
+		
+		scene.getStylesheets().add(ClassLoader.getSystemResource("style.css").toExternalForm());
+		
 		PEUtils.addResizeHandler(scene, mainController);
 
 		window.setScene(scene);

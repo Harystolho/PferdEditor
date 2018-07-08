@@ -1,0 +1,17 @@
+.menuIcon:pressed {
+    -fx-translate-y: 2px;
+}
+
+#canvasInformationBar{
+    -fx-border-width: 2px 0 0 0;
+    -fx-border-color: #969696;
+}
+
+#secundaryMenu {
+    -fx-border-width: 0 0 1px 0;
+    -fx-border-color: #969696;
+}
+
+#pane {
+    -fx-background-color: #565656;
+}

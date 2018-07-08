@@ -1,20 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.harystolho.controllers.MainController">
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.harystolho.controllers.MainController">
 	<children>
-		<MenuBar prefHeight="25.0" prefWidth="1280.0">
+		<MenuBar fx:id="menuBar" minWidth="550.0" prefHeight="25.0" prefWidth="1280.0">
 			<menus>
 				<Menu mnemonicParsing="false" text="File">
 					<items>
 						<MenuItem mnemonicParsing="false" text="Close" />
 					</items>
 				</Menu>
+				<Menu mnemonicParsing="false" text="Edit">
+					<items>
+						<MenuItem mnemonicParsing="false" text="Close" />
+					</items>
+				</Menu>
+				<Menu mnemonicParsing="false" text="Help">
+					<items>
+						<MenuItem mnemonicParsing="false" text="Close" />
+					</items>
+				</Menu>
 			</menus>
 		</MenuBar>
+		<FlowPane fx:id="secundaryMenu" layoutY="25.0" minWidth="300.0" prefHeight="33.0" prefWidth="1280.0">
+         <children>
+            <ImageView fx:id="newFile" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" styleClass="menuIcon">
+               <image>
+                  <Image url="@icons/file.png" />
+               </image>
+               <FlowPane.margin>
+                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+               </FlowPane.margin>
+            </ImageView>
+            <ImageView fx:id="saveFile" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" styleClass="menuIcon">
+               <image>
+                  <Image url="@icons/save.png" />
+               </image>
+               <FlowPane.margin>
+                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+               </FlowPane.margin>
+            </ImageView>
+         </children>
+		</FlowPane>
+      <VBox fx:id="canvasBox" layoutX="238.0" layoutY="57.0" prefHeight="663.0" prefWidth="1042.0" style="-fx-border-width: 1px; -fx-border-color: red;">
+         <children>
+      		<Canvas fx:id="canvas" height="634.0" width="1042.0" />
+            <Pane fx:id="canvasInformationBar" prefHeight="25.0" prefWidth="1042.0" />
+         </children>
+      </VBox>
 	</children>
 </Pane>
