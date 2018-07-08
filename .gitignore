@@ -11,9 +11,7 @@ local.properties
 .project
 .recommenders
 .idea
-tasks/
-tests/
-configs
+configuration
 
 # External tool builders
 .externalToolBuilders/
