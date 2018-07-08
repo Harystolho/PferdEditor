@@ -7,6 +7,9 @@ import com.harystolho.utils.PEUtils;
  *
  */
 public class Main {
+
+	private static PEApplication application;
+
 	public static void main(String[] args) {
 
 		PEUtils.start();
@@ -14,4 +17,13 @@ public class Main {
 		PEApplication.init(args);
 
 	}
+
+	public static PEApplication getApplication() {
+		return application;
+	}
+
+	public static void setApplication(PEApplication application) {
+		Main.application = application;
+	}
+
 }
