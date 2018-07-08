@@ -67,6 +67,8 @@ public class PEUtils {
 
 	public static void exit() {
 		logger.info("Closing application.");
+
+		RenderThread.stop();
 	}
 
 }
