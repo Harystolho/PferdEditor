@@ -8,8 +8,14 @@ public class File {
 	private String name;
 	private List<Word> words;
 
+	private double cursorX;
+	private double cursorY;
+
 	public File(String name) {
 		this.name = name;
+
+		cursorX = 0;
+		cursorY = 0;
 
 		words = new LinkedList<>();
 	}
@@ -36,6 +42,22 @@ public class File {
 
 	public void removeWord(Word word) {
 		words.remove(word);
+	}
+
+	public double getCursorX() {
+		return cursorX;
+	}
+
+	public double getCursorY() {
+		return cursorY;
+	}
+
+	public void setCursorX(double cursorX) {
+		this.cursorX = cursorX;
+	}
+
+	public void setCursorY(double cursorY) {
+		this.cursorY = cursorY;
 	}
 
 }

@@ -1,7 +1,10 @@
 package com.harystolho.canvas;
 
+import java.lang.Thread.State;
+
 import com.harystolho.canvas.eventHandler.CMKeyEventHandler;
 import com.harystolho.canvas.eventHandler.CMMouseEventHandler;
+import com.harystolho.utils.PEUtils;
 import com.harystolho.utils.RenderThread;
 
 import javafx.scene.canvas.Canvas;
@@ -10,18 +13,15 @@ import javafx.scene.paint.Color;
 
 public class CanvasManager {
 
+	public static final int CURSOR_DELAY = 15;
+
 	private Canvas canvas;
 
 	private GraphicsContext gc;
 
 	private File currentFile;
 
-	private double cursorX;
-	private double cursorY;
-
 	private int cursorCount;
-
-	private Thread renderThread;
 
 	private CMMouseEventHandler mouseHandler;
 	private CMKeyEventHandler keyHandler;
@@ -33,16 +33,13 @@ public class CanvasManager {
 
 		cursorCount = 0;
 
-		renderThread = new Thread(new RenderThread());
-
 		mouseHandler = new CMMouseEventHandler(this);
 
 	}
 
 	public void update() {
 
-		// Clears the canvas.
-		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		clear();
 
 		gc.setFill(Color.WHITE);
 		gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -60,10 +57,14 @@ public class CanvasManager {
 
 	}
 
+	public void clear() {
+		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+	}
+
 	private void drawCursor() {
 
-		if (cursorCount == -15) {
-			cursorCount = 15;
+		if (cursorCount == -CURSOR_DELAY) {
+			cursorCount = CURSOR_DELAY;
 		}
 
 		cursorCount--;
@@ -72,21 +73,21 @@ public class CanvasManager {
 
 			gc.setFill(Color.BLACK);
 
-			gc.strokeLine(cursorX, cursorY, cursorX, cursorY + 13);
+			// 13 is font size
+			gc.strokeLine(getCursorX(), getCursorY(), getCursorX(), getCursorY() + 13);
 		}
 
 	}
 
 	public void initRenderThread() {
-		if (!renderThread.isAlive()) {
-			renderThread.start();
-		}
+
+		RenderThread.running = true;
+
+		PEUtils.getExecutor().execute(new RenderThread());
 	}
 
 	public void stopRenderThread() {
-		if (renderThread.isAlive()) {
-			renderThread.interrupt();
-		}
+		RenderThread.stop();
 	}
 
 	public File getCurrentFile() {
@@ -101,20 +102,24 @@ public class CanvasManager {
 		return canvas;
 	}
 
+	public void setCursorCount(int count) {
+		cursorCount = count;
+	}
+
 	public double getCursorX() {
-		return cursorX;
+		return currentFile.getCursorX();
 	}
 
 	public double getCursorY() {
-		return cursorY;
+		return currentFile.getCursorY();
 	}
 
 	public void setCursorX(double d) {
-		this.cursorX = d;
+		currentFile.setCursorX(d);
 	}
 
 	public void setCursorY(double cursorY) {
-		this.cursorY = cursorY;
+		currentFile.setCursorY(cursorY);
 	}
 
 }

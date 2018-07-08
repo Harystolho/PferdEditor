@@ -2,6 +2,18 @@
     -fx-translate-y: 2px;
 }
 
+#fileList, #fileList .list-cell{
+    -fx-background-color: transparent;
+}
+
+#fileList .list-cell:selected .text{
+    -fx-fill: red;
+}
+
+#fileList .list-cell .text{
+    -fx-fill: white;
+}
+
 #canvasInformationBar{
     -fx-border-width: 2px 0 0 0;
     -fx-border-color: #969696;

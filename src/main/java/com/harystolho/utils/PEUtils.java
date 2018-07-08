@@ -1,6 +1,9 @@
 package com.harystolho.utils;
 
 import java.io.IOException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Logger;
 
 import com.harystolho.controllers.ResizableInterface;
@@ -13,13 +16,14 @@ public class PEUtils {
 
 	private static final Logger logger = Logger.getLogger(PEUtils.class.getName());
 
+	private static ExecutorService executor = Executors.newFixedThreadPool(1);
+
 	public static final String VERSION = "0.1";
 
 	/**
 	 * Loads a FXML File.
 	 * 
-	 * @param file
-	 *            full file name. (Eg: main.fxml)
+	 * @param file full file name. (Eg: main.fxml)
 	 * @return the <code>Parent</code> object containing the file, or
 	 *         <code>null</code> if it can't find the file.
 	 */
@@ -38,10 +42,9 @@ public class PEUtils {
 	 * Handler for window resize.
 	 * 
 	 * @param scene
-	 * @param resize
-	 *            a JavaFX Controller that implements
-	 *            {@link #com.harystolho.controllers.ResizableInterface
-	 *            ResizableInterface }
+	 * @param resize a JavaFX Controller that implements
+	 *               {@link #com.harystolho.controllers.ResizableInterface
+	 *               ResizableInterface }
 	 */
 	public static void addResizeHandler(Scene scene, ResizableInterface resize) {
 
@@ -53,6 +56,10 @@ public class PEUtils {
 			resize.onHeightResize(newValue.intValue());
 		});
 
+	}
+
+	public static ExecutorService getExecutor() {
+		return executor;
 	}
 
 	/**
@@ -67,6 +74,8 @@ public class PEUtils {
 
 	public static void exit() {
 		logger.info("Closing application.");
+
+		executor.shutdown();
 
 		RenderThread.stop();
 	}

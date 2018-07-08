@@ -5,7 +5,6 @@ import java.util.Random;
 import com.harystolho.Main;
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.canvas.File;
-import com.harystolho.utils.RenderThread;
 
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -32,6 +31,12 @@ public class MainController implements ResizableInterface {
 
 	@FXML
 	private ImageView saveFile;
+
+	@FXML
+	private ImageView deleteFile;
+
+	@FXML
+	private ImageView refresh;
 
 	@FXML
 	private VBox canvasBox;
@@ -65,7 +70,23 @@ public class MainController implements ResizableInterface {
 		});
 
 		fileList.getSelectionModel().selectedItemProperty().addListener((obv, oldValue, newValue) -> {
-			loadFile(newValue);
+			if (newValue != null) {
+				loadFile(newValue);
+			}
+		});
+
+		// TODO Fix file selection
+		deleteFile.setOnMouseClicked((e) -> {
+
+			fileList.getItems().remove(fileList.getSelectionModel().getSelectedItem());
+
+			cm.stopRenderThread();
+
+			cm.clear();
+		});
+
+		refresh.setOnMouseClicked((e) -> {
+			fileList.getSelectionModel().clearSelection();
 		});
 
 	}
@@ -74,9 +95,9 @@ public class MainController implements ResizableInterface {
 		System.out.println("Loading file: " + file.getName());
 
 		cm.setCurrentFile(file);
-		
+
 		cm.initRenderThread();
-		
+
 	}
 
 	public Canvas getCanvas() {
@@ -93,7 +114,10 @@ public class MainController implements ResizableInterface {
 
 		secundaryMenu.setPrefWidth(width);
 
-		canvasBox.setPrefWidth(width - 238);
+		// 10 is right margin
+		canvasBox.setPrefWidth(width - 238 - 10);
+
+		canvas.setWidth(canvasBox.getPrefWidth());
 
 	}
 

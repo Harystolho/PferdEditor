@@ -33,6 +33,8 @@ public class CMMouseEventHandler {
 		cm.setCursorX(e.getX());
 		cm.setCursorY(e.getY());
 
+		cm.setCursorCount(CanvasManager.CURSOR_DELAY);
+
 	}
 
 	private void mousePressed(MouseEvent e) {

@@ -51,14 +51,33 @@
                   <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                </FlowPane.margin>
             </ImageView>
+            <ImageView fx:id="deleteFile" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" styleClass="menuIcon">
+               <image>
+                  <Image url="@icons/trash.png" />
+               </image>
+               <FlowPane.margin>
+                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+               </FlowPane.margin>
+            </ImageView>
+            <ImageView fx:id="refresh" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" styleClass="menuIcon">
+               <image>
+                  <Image url="@icons/refresh.png" />
+               </image>
+               <FlowPane.margin>
+                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+               </FlowPane.margin>
+            </ImageView>
          </children>
 		</FlowPane>
-      <VBox fx:id="canvasBox" layoutX="238.0" layoutY="57.0" prefHeight="663.0" prefWidth="1042.0" style="-fx-border-width: 1px; -fx-border-color: red;">
+      <VBox fx:id="canvasBox" layoutX="238.0" layoutY="57.0" prefHeight="663.0" prefWidth="1035.0" style="-fx-border-width: 1px; -fx-border-color: red;">
          <children>
-      		<Canvas fx:id="canvas" height="634.0" width="1042.0" />
-            <Pane fx:id="canvasInformationBar" prefHeight="25.0" prefWidth="1042.0" />
+      		<Canvas fx:id="canvas" height="634.0" width="1033.0">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin></Canvas>
+            <Pane fx:id="canvasInformationBar" prefHeight="25.0" prefWidth="1033.0" />
          </children>
       </VBox>
-      <ListView fx:id="fileList" layoutX="14.0" layoutY="70.0" prefHeight="281.0" prefWidth="214.0" />
+      <ListView fx:id="fileList" layoutX="14.0" layoutY="70.0" prefHeight="362.0" prefWidth="214.0" />
 	</children>
 </Pane>
