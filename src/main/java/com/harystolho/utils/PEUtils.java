@@ -32,7 +32,7 @@ public class PEUtils {
 		try {
 			return FXMLLoader.load(ClassLoader.getSystemResource(file));
 		} catch (IOException | NullPointerException e) {
-			logger.severe("Couldn't load file=" + file);
+			logger.severe("Couldn't load file=" + file + " -- " + ClassLoader.getSystemResource(file));
 			return null;
 		}
 

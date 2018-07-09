@@ -5,7 +5,7 @@ import com.harystolho.Main;
 public class RenderThread implements Runnable {
 
 	private static final int FPS = 30;
-	public static boolean running = true;
+	public static boolean running = false;
 
 	@Override
 	public void run() {
@@ -27,6 +27,12 @@ public class RenderThread implements Runnable {
 
 		}
 
+		Main.getApplication().getMainController().getCanvasManager().clear();
+
+	}
+
+	public static boolean isRunning() {
+		return running;
 	}
 
 	public static void stop() {

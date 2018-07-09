@@ -5,6 +5,7 @@ import java.util.Random;
 import com.harystolho.Main;
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.canvas.File;
+import com.harystolho.utils.RenderThread;
 
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -50,7 +51,7 @@ public class MainController implements ResizableInterface {
 	@FXML
 	private ListView<File> fileList;
 
-	private CanvasManager cm;
+	private CanvasManager canvasManager;
 
 	@FXML
 	void initialize() {
@@ -58,31 +59,22 @@ public class MainController implements ResizableInterface {
 
 		loadEventHandlers();
 
-		cm = new CanvasManager(canvas);
+		canvasManager = new CanvasManager(canvas);
 
 	}
 
 	private void loadEventHandlers() {
 
 		newFile.setOnMouseClicked((e) -> {
-			File file = new File("New File" + new Random().nextInt(100));
-			fileList.getItems().add(file);
+			createNewFile();
 		});
 
 		fileList.getSelectionModel().selectedItemProperty().addListener((obv, oldValue, newValue) -> {
-			if (newValue != null) {
-				loadFile(newValue);
-			}
+			loadFile(newValue);
 		});
 
-		// TODO Fix file selection
 		deleteFile.setOnMouseClicked((e) -> {
-
-			fileList.getItems().remove(fileList.getSelectionModel().getSelectedItem());
-
-			cm.stopRenderThread();
-
-			cm.clear();
+			deleteFile(fileList.getSelectionModel().getSelectedItem());
 		});
 
 		refresh.setOnMouseClicked((e) -> {
@@ -91,12 +83,43 @@ public class MainController implements ResizableInterface {
 
 	}
 
+	/**
+	 * Creates a new {@link com.harystolho.canvas.File File} and adds it to
+	 * {@link #fileList}
+	 */
+	private void createNewFile() {
+		File file = new File("New File" + new Random().nextInt(100));
+		fileList.getItems().add(file);
+	}
+
+	private void deleteFile(File file) {
+		fileList.getItems().remove(file);
+
+		if (fileList.getItems().size() == 0) {
+			canvasManager.stopRenderThread();
+		}
+
+	}
+
+	/**
+	 * Loads this file in the canvas and draws it.
+	 * 
+	 * @param file the file to load. If the file is <code>null</code> it does
+	 *             nothing.
+	 */
 	private void loadFile(File file) {
+
+		if (file == null) {
+			return;
+		}
+
 		System.out.println("Loading file: " + file.getName());
 
-		cm.setCurrentFile(file);
+		canvasManager.setCurrentFile(file);
 
-		cm.initRenderThread();
+		if (!RenderThread.isRunning()) {
+			canvasManager.initRenderThread();
+		}
 
 	}
 
@@ -105,7 +128,7 @@ public class MainController implements ResizableInterface {
 	}
 
 	public CanvasManager getCanvasManager() {
-		return cm;
+		return canvasManager;
 	}
 
 	@Override
@@ -115,6 +138,7 @@ public class MainController implements ResizableInterface {
 		secundaryMenu.setPrefWidth(width);
 
 		// 10 is right margin
+		// 238 is file list on the left
 		canvasBox.setPrefWidth(width - 238 - 10);
 
 		canvas.setWidth(canvasBox.getPrefWidth());
