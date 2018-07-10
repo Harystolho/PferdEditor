@@ -1,9 +1,8 @@
 package com.harystolho.canvas;
 
-import java.lang.Thread.State;
-
 import com.harystolho.canvas.eventHandler.CMKeyEventHandler;
 import com.harystolho.canvas.eventHandler.CMMouseEventHandler;
+import com.harystolho.pe.File;
 import com.harystolho.utils.PEUtils;
 import com.harystolho.utils.RenderThread;
 

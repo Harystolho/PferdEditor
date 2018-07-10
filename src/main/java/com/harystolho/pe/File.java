@@ -1,4 +1,4 @@
-package com.harystolho.canvas;
+package com.harystolho.pe;
 
 import java.util.LinkedList;
 import java.util.List;

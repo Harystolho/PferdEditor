@@ -1,13 +1,26 @@
 package com.harystolho.controllers;
 
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Random;
+
+import javax.swing.text.html.HTML.Tag;
+import javax.swing.text.html.StyleSheet;
 
 import com.harystolho.Main;
 import com.harystolho.canvas.CanvasManager;
-import com.harystolho.canvas.File;
+import com.harystolho.pe.File;
 import com.harystolho.utils.RenderThread;
+import com.harystolho.utils.PEStyleSheet;
+import com.sun.glass.ui.CommonDialogs.Type;
 
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
@@ -84,7 +97,7 @@ public class MainController implements ResizableInterface {
 	}
 
 	/**
-	 * Creates a new {@link com.harystolho.canvas.File File} and adds it to
+	 * Creates a new {@link com.harystolho.pe.File File} and adds it to
 	 * {@link #fileList}
 	 */
 	private void createNewFile() {

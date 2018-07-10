@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
@@ -74,7 +75,10 @@
       		<Canvas fx:id="canvas" height="634.0" width="1033.0">
                <VBox.margin>
                   <Insets />
-               </VBox.margin></Canvas>
+               </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor></Canvas>
             <Pane fx:id="canvasInformationBar" prefHeight="25.0" prefWidth="1033.0" />
          </children>
       </VBox>
