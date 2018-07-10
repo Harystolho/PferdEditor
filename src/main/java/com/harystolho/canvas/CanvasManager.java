@@ -3,12 +3,14 @@ package com.harystolho.canvas;
 import com.harystolho.canvas.eventHandler.CMKeyEventHandler;
 import com.harystolho.canvas.eventHandler.CMMouseEventHandler;
 import com.harystolho.pe.File;
+import com.harystolho.utils.PEStyleSheet;
 import com.harystolho.utils.PEUtils;
 import com.harystolho.utils.RenderThread;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import sun.java2d.loops.DrawLine;
 
 public class CanvasManager {
 
@@ -18,9 +20,12 @@ public class CanvasManager {
 
 	private GraphicsContext gc;
 
+	PEStyleSheet peStyleSheet;
+
 	private File currentFile;
 
 	private int cursorCount;
+	private int lineHeight; // px
 
 	private CMMouseEventHandler mouseHandler;
 	private CMKeyEventHandler keyHandler;
@@ -30,7 +35,10 @@ public class CanvasManager {
 
 		gc = canvas.getGraphicsContext2D();
 
-		cursorCount = 0;
+		peStyleSheet = new PEStyleSheet("file.css");
+
+		setCursorCount(0);
+		setLineHeight(16);
 
 		mouseHandler = new CMMouseEventHandler(this);
 
@@ -48,6 +56,8 @@ public class CanvasManager {
 
 	public void draw() {
 
+		drawLineBackground();
+
 		drawCursor();
 
 		if (currentFile != null) {
@@ -58,6 +68,12 @@ public class CanvasManager {
 
 	public void clear() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+	}
+
+	private void drawLineBackground() {
+		gc.setFill(Color.web(peStyleSheet.getRule("#line", "background-color")));
+		gc.fillRect(0, getCursorY(), canvas.getWidth(), getLineHeight());
+
 	}
 
 	private void drawCursor() {
@@ -72,8 +88,7 @@ public class CanvasManager {
 
 			gc.setFill(Color.BLACK);
 
-			// 13 is font size
-			gc.strokeLine(getCursorX(), getCursorY(), getCursorX(), getCursorY() + 13);
+			gc.strokeLine(getCursorX(), getCursorY(), getCursorX(), getCursorY() + getLineHeight());
 		}
 
 	}
@@ -118,7 +133,16 @@ public class CanvasManager {
 	}
 
 	public void setCursorY(double cursorY) {
-		currentFile.setCursorY(cursorY);
+		cursorY -= lineHeight - 1; // Centralize on cursor
+		currentFile.setCursorY(cursorY - (cursorY % lineHeight) + lineHeight);
+	}
+
+	public int getLineHeight() {
+		return lineHeight;
+	}
+
+	public void setLineHeight(int lineHeight) {
+		this.lineHeight = lineHeight;
 	}
 
 }

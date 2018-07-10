@@ -16,11 +16,8 @@ import com.harystolho.Main;
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.pe.File;
 import com.harystolho.utils.RenderThread;
-import com.harystolho.utils.PEStyleSheet;
-import com.sun.glass.ui.CommonDialogs.Type;
 
 import javafx.fxml.FXML;
-import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
