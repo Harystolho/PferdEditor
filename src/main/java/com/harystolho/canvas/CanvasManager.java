@@ -1,6 +1,5 @@
 package com.harystolho.canvas;
 
-import java.util.Iterator;
 import java.util.ListIterator;
 
 import com.harystolho.canvas.eventHandler.CMMouseEventHandler;
@@ -9,12 +8,11 @@ import com.harystolho.pe.Word;
 import com.harystolho.utils.PEStyleSheet;
 import com.harystolho.utils.PEUtils;
 import com.harystolho.utils.RenderThread;
-import com.sun.javafx.tk.FontMetrics;
-import com.sun.javafx.tk.Toolkit;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 public class CanvasManager {
 
@@ -31,9 +29,12 @@ public class CanvasManager {
 	private int cursorCount;
 	private int lineHeight; // px
 
+	private int scrollX;
+	private int scrollY;
+
 	private Color lineColor;
 
-	private FontMetrics fm;
+	private static Font font;
 
 	private CMMouseEventHandler mouseHandler;
 
@@ -45,16 +46,21 @@ public class CanvasManager {
 		peStyleSheet = new PEStyleSheet("file.css");
 
 		setCursorCount(0);
-		setLineHeight(16);
+		setLineHeight(18);
+
+		scrollX = 0;
+		scrollY = 0;
 
 		loadColors();
+		setupFonts();
 
-		fm = Toolkit.getToolkit().getFontLoader().getFontMetrics(gc.getFont());
+		setFont(gc.getFont());
 
 		mouseHandler = new CMMouseEventHandler(this);
 
 	}
 
+	// TODO don't render when the canvas is not focused.
 	public void update() {
 
 		clear();
@@ -69,29 +75,33 @@ public class CanvasManager {
 
 		drawLineBackground();
 
-		drawCursor();
-
 		if (currentFile != null) {
 
-			int x = 0;
-			int y = getLineHeight();
+			float x = 0;
+			float y = getLineHeight();
 
-			ListIterator<Word> i = currentFile.getWords().listIterator();
+			synchronized (currentFile.getDrawLock()) {
+				ListIterator<Word> i = currentFile.getWords().listIterator();
 
-			while (i.hasNext()) {
-				gc.setFill(Color.BLACK);
-				String word = new String(i.next().getWord());
-				gc.fillText(word, x, y);
-				x += fm.computeStringWidth(word) + 1.2;
-				
-				if (x >= canvas.getWidth()) {
-					x = 0;
-					y += getLineHeight();
+				while (i.hasNext()) {
+					Word wordObj = i.next();
+
+					if (wordObj == File.NEW_LINE) {
+						x = 0;
+						y += getLineHeight();
+						continue;
+					}
+
+					gc.setFill(Color.BLACK);
+					gc.fillText(wordObj.getWordAsString(), x - scrollX, y);
+					x += wordObj.getSize();
+
 				}
-
 			}
 
 		}
+
+		drawCursor();
 
 	}
 
@@ -106,6 +116,10 @@ public class CanvasManager {
 	}
 
 	private void drawCursor() {
+
+		if (!canvas.isFocused()) {
+			return;
+		}
 
 		if (cursorCount == -CURSOR_DELAY) {
 			cursorCount = CURSOR_DELAY;
@@ -122,16 +136,26 @@ public class CanvasManager {
 
 	}
 
-	private void loadColors() {
-		lineColor = Color.web(peStyleSheet.getRule("#line", "background-color"));
-
-	}
-
 	public void initRenderThread() {
-
 		RenderThread.running = true;
 
 		PEUtils.getExecutor().execute(new RenderThread());
+	}
+
+	private void loadColors() {
+		lineColor = Color.rgb(179, 179, 179, 0.44);
+	}
+
+	public void setupFonts() {
+		gc.setFont(new Font("Arial", getLineHeight() - 2));
+	}
+
+	public static Font getFont() {
+		return font;
+	}
+
+	public static void setFont(Font currentFont) {
+		font = currentFont;
 	}
 
 	public void stopRenderThread() {
@@ -186,11 +210,42 @@ public class CanvasManager {
 	}
 
 	public void lineUp() {
+		// It can't go above first line.
+		if (getCursorY() < 16) {
+			return;
+		}
+
 		currentFile.setCursorY(getCursorY() - getLineHeight());
 	}
 
 	public void lineDown() {
 		currentFile.setCursorY(getCursorY() + getLineHeight());
+	}
+
+	public void scrollRight() {
+		scrollX += 5;
+	}
+
+	public void scrollLeft() {
+		if (scrollX >= 5) {
+			scrollX -= 5;
+		}
+	}
+
+	public int getScrollX() {
+		return scrollX;
+	}
+
+	public int getScrollY() {
+		return scrollY;
+	}
+
+	public void setScrollX(int scrollX) {
+		this.scrollX = scrollX;
+	}
+
+	public void setScrollY(int scrollY) {
+		this.scrollY = scrollY;
 	}
 
 }

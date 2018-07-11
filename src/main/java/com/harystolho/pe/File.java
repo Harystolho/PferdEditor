@@ -1,9 +1,19 @@
 package com.harystolho.pe;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+import com.harystolho.pe.Word.TYPES;
 
 public class File {
+
+	private static final Word SPACE = new Word(" ".toCharArray());
+	public static final Word NEW_LINE = new Word(TYPES.NEW_LINE);
+
+	private Object drawLock;
 
 	private String name;
 	private List<Word> words;
@@ -14,6 +24,8 @@ public class File {
 	public File(String name) {
 		this.name = name;
 
+		drawLock = new Object();
+
 		cursorX = 0;
 		cursorY = 0;
 
@@ -21,8 +33,23 @@ public class File {
 	}
 
 	public void type(String character) {
-		Word w = new Word(character.toCharArray());
-		addWord(w);
+
+		synchronized (drawLock) {
+
+			switch (character) {
+			case " ":
+				addWord(SPACE);
+				return;
+			case "\r":
+				addWord(NEW_LINE);
+				return;
+			default:
+				break;
+			}
+
+			Word w = new Word(character.toCharArray());
+			addWord(w);
+		}
 	}
 
 	public String getName() {
@@ -63,6 +90,10 @@ public class File {
 
 	public void setCursorY(double cursorY) {
 		this.cursorY = cursorY;
+	}
+
+	public Object getDrawLock() {
+		return drawLock;
 	}
 
 }

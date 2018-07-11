@@ -10,7 +10,7 @@ public class UtilsTest {
 
 	@Test
 	public void checkVersion() {
-		assertEquals(PEUtils.VERSION, "0.1");
+		assertEquals(PEUtils.VERSION, "0.2");
 	}
 
 }

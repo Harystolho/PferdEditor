@@ -43,13 +43,18 @@ public class CMKeyEventHandler {
 		case NUMPAD2:
 			cm.lineDown();
 			return;
+		case NUMPAD4:
+			cm.scrollLeft();
+			return;
+		case NUMPAD6:
+			cm.scrollRight();
+			return;
 		default:
 			break;
 		}
 
 		if (cm.getCanvas().isFocused()) {
 			if (cm.getCurrentFile() != null) {
-				System.out.println(e.getText());
 				cm.getCurrentFile().type(e.getText());
 			}
 		}

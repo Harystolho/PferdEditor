@@ -78,6 +78,8 @@ public class PEStyleSheet {
 	 */
 	private void loadCssRulesCache() {
 
+		// TODO fix rgb in css
+
 		Enumeration<?> cssSelectors = styleSheet.getStyleNames();
 
 		if (cssSelectors != null) {
