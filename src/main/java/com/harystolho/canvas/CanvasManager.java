@@ -1,6 +1,5 @@
 package com.harystolho.canvas;
 
-import com.harystolho.canvas.eventHandler.CMKeyEventHandler;
 import com.harystolho.canvas.eventHandler.CMMouseEventHandler;
 import com.harystolho.pe.File;
 import com.harystolho.utils.PEStyleSheet;
@@ -10,7 +9,6 @@ import com.harystolho.utils.RenderThread;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import sun.java2d.loops.DrawLine;
 
 public class CanvasManager {
 
@@ -27,8 +25,9 @@ public class CanvasManager {
 	private int cursorCount;
 	private int lineHeight; // px
 
+	private Color lineColor;
+
 	private CMMouseEventHandler mouseHandler;
-	private CMKeyEventHandler keyHandler;
 
 	public CanvasManager(Canvas canvas) {
 		this.canvas = canvas;
@@ -39,6 +38,8 @@ public class CanvasManager {
 
 		setCursorCount(0);
 		setLineHeight(16);
+
+		loadColors();
 
 		mouseHandler = new CMMouseEventHandler(this);
 
@@ -71,7 +72,7 @@ public class CanvasManager {
 	}
 
 	private void drawLineBackground() {
-		gc.setFill(Color.web(peStyleSheet.getRule("#line", "background-color")));
+		gc.setFill(lineColor);
 		gc.fillRect(0, getCursorY(), canvas.getWidth(), getLineHeight());
 
 	}
@@ -90,6 +91,11 @@ public class CanvasManager {
 
 			gc.strokeLine(getCursorX(), getCursorY(), getCursorX(), getCursorY() + getLineHeight());
 		}
+
+	}
+
+	private void loadColors() {
+		lineColor = Color.web(peStyleSheet.getRule("#line", "background-color"));
 
 	}
 
@@ -129,12 +135,18 @@ public class CanvasManager {
 	}
 
 	public void setCursorX(double d) {
-		currentFile.setCursorX(d);
+		if (currentFile != null) {
+			currentFile.setCursorX(d);
+		}
+
 	}
 
 	public void setCursorY(double cursorY) {
-		cursorY -= lineHeight - 1; // Centralize on cursor
-		currentFile.setCursorY(cursorY - (cursorY % lineHeight) + lineHeight);
+		if (currentFile != null) {
+			cursorY += lineHeight - 1; // Centralize on cursor
+
+			currentFile.setCursorY(cursorY - (cursorY % lineHeight) - lineHeight);
+		}
 	}
 
 	public int getLineHeight() {
@@ -143,6 +155,14 @@ public class CanvasManager {
 
 	public void setLineHeight(int lineHeight) {
 		this.lineHeight = lineHeight;
+	}
+
+	public void lineUp() {
+		currentFile.setCursorY(getCursorY() - getLineHeight());
+	}
+
+	public void lineDown() {
+		currentFile.setCursorY(getCursorY() + getLineHeight());
 	}
 
 }

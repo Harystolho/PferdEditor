@@ -70,7 +70,7 @@
             </ImageView>
          </children>
 		</FlowPane>
-      <VBox fx:id="canvasBox" layoutX="238.0" layoutY="57.0" prefHeight="663.0" prefWidth="1035.0" style="-fx-border-width: 1px; -fx-border-color: red;">
+      <VBox fx:id="canvasBox" layoutX="238.0" layoutY="57.0" prefHeight="663.0" prefWidth="1035.0">
          <children>
       		<Canvas fx:id="canvas" height="634.0" width="1033.0">
                <VBox.margin>
