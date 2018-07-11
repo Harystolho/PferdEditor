@@ -20,6 +20,11 @@ public class File {
 		words = new LinkedList<>();
 	}
 
+	public void type(String character) {
+		Word w = new Word(character.toCharArray());
+		addWord(w);
+	}
+
 	public String getName() {
 		return name;
 	}

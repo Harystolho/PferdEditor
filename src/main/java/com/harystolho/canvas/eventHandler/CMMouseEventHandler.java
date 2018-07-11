@@ -29,6 +29,7 @@ public class CMMouseEventHandler {
 	}
 
 	private void mouseRelease(MouseEvent e) {
+		cm.getCanvas().requestFocus();
 
 		cm.setCursorX(e.getX());
 		cm.setCursorY(e.getY());
@@ -38,7 +39,7 @@ public class CMMouseEventHandler {
 	}
 
 	private void mousePressed(MouseEvent e) {
-
+		cm.getCanvas().requestFocus();
 	}
 
 }

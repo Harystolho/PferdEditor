@@ -39,12 +39,19 @@ public class CMKeyEventHandler {
 		switch (e.getCode()) {
 		case NUMPAD8:
 			cm.lineUp();
-			break;
+			return;
 		case NUMPAD2:
 			cm.lineDown();
-			break;
+			return;
 		default:
 			break;
+		}
+
+		if (cm.getCanvas().isFocused()) {
+			if (cm.getCurrentFile() != null) {
+				System.out.println(e.getText());
+				cm.getCurrentFile().type(e.getText());
+			}
 		}
 
 	}

@@ -1,10 +1,16 @@
 package com.harystolho.canvas;
 
+import java.util.Iterator;
+import java.util.ListIterator;
+
 import com.harystolho.canvas.eventHandler.CMMouseEventHandler;
 import com.harystolho.pe.File;
+import com.harystolho.pe.Word;
 import com.harystolho.utils.PEStyleSheet;
 import com.harystolho.utils.PEUtils;
 import com.harystolho.utils.RenderThread;
+import com.sun.javafx.tk.FontMetrics;
+import com.sun.javafx.tk.Toolkit;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -27,6 +33,8 @@ public class CanvasManager {
 
 	private Color lineColor;
 
+	private FontMetrics fm;
+
 	private CMMouseEventHandler mouseHandler;
 
 	public CanvasManager(Canvas canvas) {
@@ -40,6 +48,8 @@ public class CanvasManager {
 		setLineHeight(16);
 
 		loadColors();
+
+		fm = Toolkit.getToolkit().getFontLoader().getFontMetrics(gc.getFont());
 
 		mouseHandler = new CMMouseEventHandler(this);
 
@@ -62,6 +72,24 @@ public class CanvasManager {
 		drawCursor();
 
 		if (currentFile != null) {
+
+			int x = 0;
+			int y = getLineHeight();
+
+			ListIterator<Word> i = currentFile.getWords().listIterator();
+
+			while (i.hasNext()) {
+				gc.setFill(Color.BLACK);
+				String word = new String(i.next().getWord());
+				gc.fillText(word, x, y);
+				x += fm.computeStringWidth(word) + 1.2;
+				
+				if (x >= canvas.getWidth()) {
+					x = 0;
+					y += getLineHeight();
+				}
+
+			}
 
 		}
 
