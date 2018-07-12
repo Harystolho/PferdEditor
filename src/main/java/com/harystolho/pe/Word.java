@@ -67,7 +67,7 @@ public class Word implements Drawable {
 
 		word[size++] = c;
 
-		updateStringChar();
+		updateWordAsString();
 	}
 
 	public void removeLastChar() {
@@ -75,14 +75,14 @@ public class Word implements Drawable {
 			word[size--] = '\0';
 		}
 
-		updateStringChar();
+		updateWordAsString();
 	}
 
 	private void resizeWordArray() {
 		word = Arrays.copyOf(word, (int) (size * 1.5));
 	}
 
-	private void updateStringChar() {
+	private void updateWordAsString() {
 		wordAsString = new String(word, 0, size);
 	}
 
