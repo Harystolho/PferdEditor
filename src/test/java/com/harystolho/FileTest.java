@@ -42,10 +42,10 @@ public class FileTest {
 	@Test
 	public void checkSize() {
 
-		Word w1 = new Word("123");
-		Word w2 = new Word("abc");
-		Word w3 = new Word("def");
-		Word w4 = new Word("321");
+		Word w1 = new Word('1');
+		Word w2 = new Word('2');
+		Word w3 = new Word('3');
+		Word w4 = new Word('a');
 
 		File f = new File("temp_2");
 
@@ -60,7 +60,7 @@ public class FileTest {
 	@Test
 	public void checkIfListContainsWord() {
 
-		Word w1 = new Word("123");
+		Word w1 = new Word('1');
 
 		File f = new File("temp_3");
 
@@ -73,7 +73,7 @@ public class FileTest {
 	@Test
 	public void checkIfListContainsWordAfterItIsRemoved() {
 
-		Word w1 = new Word("123");
+		Word w1 = new Word('1');
 
 		File f = new File("temp_3");
 

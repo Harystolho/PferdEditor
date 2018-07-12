@@ -37,7 +37,7 @@ public class PEUtils {
 			return p;
 
 		} catch (NullPointerException | IOException e) {
-			logger.severe("Couldn't load file=" + file + " -- " + ClassLoader.getSystemResource(file));
+			logger.severe("Couldn't load file " + file + " // " + ClassLoader.getSystemResource(file));
 			return null;
 		}
 

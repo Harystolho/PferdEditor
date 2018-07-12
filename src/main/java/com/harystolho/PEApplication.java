@@ -45,7 +45,7 @@ public class PEApplication extends Application {
 	private void loadMainScene() {
 
 		scene = new Scene(PEUtils.loadFXML("main.fxml", (c) -> {
-			setMainController((MainController) c);
+			mainController = (MainController) c;
 		}));
 
 		scene.getStylesheets().add(ClassLoader.getSystemResource("style.css").toExternalForm());
@@ -57,10 +57,6 @@ public class PEApplication extends Application {
 
 	public MainController getMainController() {
 		return mainController;
-	}
-
-	public void setMainController(MainController mainController) {
-		this.mainController = mainController;
 	}
 
 	public static void init(String[] args) {

@@ -33,6 +33,8 @@ public class CanvasManager {
 	private int scrollY;
 
 	private Color lineColor;
+	private Color bgColor;
+	private Color textColor;
 
 	private CMMouseEventHandler mouseHandler;
 
@@ -61,7 +63,7 @@ public class CanvasManager {
 
 		clear();
 
-		gc.setFill(Color.WHITE);
+		gc.setFill(bgColor);
 		gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
 		draw();
@@ -88,9 +90,9 @@ public class CanvasManager {
 						continue;
 					}
 
-					gc.setFill(Color.BLACK);
+					gc.setFill(textColor);
 					gc.fillText(wordObj.getWordAsString(), x - scrollX, y);
-					x += wordObj.getSize();
+					x += wordObj.getDrawingSize();
 
 				}
 			}
@@ -140,6 +142,8 @@ public class CanvasManager {
 
 	private void loadColors() {
 		lineColor = Color.rgb(179, 179, 179, 0.44);
+		bgColor = Color.web(peStyleSheet.getRule("#background", "background-color"));
+		textColor = Color.web(peStyleSheet.getRule("#text", "color"));
 	}
 
 	public void setupFonts() {
@@ -242,6 +246,13 @@ public class CanvasManager {
 
 	public void setScrollY(int scrollY) {
 		this.scrollY = scrollY;
+	}
+
+	public void printDebugMessage() {
+		if (currentFile != null) {
+			System.out.println(String.format("File - Words: %d | cursorX: %.1f | cursorY: %.1f",
+					currentFile.getWords().size(), currentFile.getCursorX(), currentFile.getCursorY()));
+		}
 	}
 
 }

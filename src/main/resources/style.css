@@ -1,27 +1,38 @@
+@font-face {
+    font-family: 'Quicksand';
+    src: url('Quicksand-Medium.ttf');
+}
+
 .menuIcon:pressed {
     -fx-translate-y: 2px;
 }
 
-#fileList, #fileList .list-cell{
+#menuBar {
+    -fx-background-color: #d7d7d7;
+    -fx-border-width: 0 0 1px 0;
+    -fx-border-color: #404040;
+}
+
+#fileList, #fileList .list-cell {
     -fx-background-color: transparent;
 }
 
-#fileList .list-cell:selected .text{
+#fileList .list-cell:selected .text {
     -fx-fill: red;
 }
 
-#fileList .list-cell .text{
+#fileList .list-cell .text {
     -fx-fill: white;
 }
 
-#canvasInformationBar{
+#canvasInformationBar {
     -fx-border-width: 2px 0 0 0;
     -fx-border-color: #969696;
 }
 
 #secundaryMenu {
-    -fx-border-width: 0 0 1px 0;
-    -fx-border-color: #969696;
+    -fx-border-width: 0 0 2px 0;
+    -fx-border-color: #676767;
 }
 
 #pane {
