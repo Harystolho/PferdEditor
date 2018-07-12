@@ -1,7 +1,6 @@
 package com.harystolho;
 
 import com.harystolho.canvas.eventHandler.CMKeyEventHandler;
-import com.harystolho.canvas.eventHandler.CMMouseEventHandler;
 import com.harystolho.controllers.MainController;
 import com.harystolho.utils.PEUtils;
 
@@ -45,7 +44,9 @@ public class PEApplication extends Application {
 
 	private void loadMainScene() {
 
-		scene = new Scene(PEUtils.loadFXML("main.fxml"));
+		scene = new Scene(PEUtils.loadFXML("main.fxml", (c) -> {
+			setMainController((MainController) c);
+		}));
 
 		scene.getStylesheets().add(ClassLoader.getSystemResource("style.css").toExternalForm());
 

@@ -17,9 +17,10 @@ public class PEConfiguration {
 
 	private static final File propFile = new File("configuration");
 
-	private static void createDefaultProperties() {
+	private static void loadDefaultProperties() {
 
-		prop.put("VERSION", PEUtils.VERSION);
+		prop.putIfAbsent("VERSION", PEUtils.VERSION);
+		prop.putIfAbsent("LANG", "EN");
 
 		saveProperties();
 	}
@@ -40,17 +41,13 @@ public class PEConfiguration {
 
 		logger.info("Loading configuration file");
 
-		if (!propFile.exists()) {
-			createDefaultProperties();
-			loadProperties();
-			return;
-		}
-
 		try (FileInputStream fis = new FileInputStream(propFile)) {
 			prop.load(fis);
 		} catch (IOException e) {
 			logger.severe("Couldn't load configuration file.");
 		}
+
+		loadDefaultProperties();
 
 	}
 

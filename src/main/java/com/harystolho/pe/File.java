@@ -1,10 +1,7 @@
 package com.harystolho.pe;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import com.harystolho.pe.Word.TYPES;
 

@@ -34,8 +34,6 @@ public class CanvasManager {
 
 	private Color lineColor;
 
-	private static Font font;
-
 	private CMMouseEventHandler mouseHandler;
 
 	public CanvasManager(Canvas canvas) {
@@ -53,8 +51,6 @@ public class CanvasManager {
 
 		loadColors();
 		setupFonts();
-
-		setFont(gc.getFont());
 
 		mouseHandler = new CMMouseEventHandler(this);
 
@@ -150,12 +146,12 @@ public class CanvasManager {
 		gc.setFont(new Font("Arial", getLineHeight() - 2));
 	}
 
-	public static Font getFont() {
-		return font;
+	public Font getFont() {
+		return gc.getFont();
 	}
 
-	public static void setFont(Font currentFont) {
-		font = currentFont;
+	public void setFont(Font font) {
+		gc.setFont(font);
 	}
 
 	public void stopRenderThread() {

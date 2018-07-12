@@ -1,6 +1,6 @@
 package com.harystolho.pe;
 
-import com.harystolho.canvas.CanvasManager;
+import com.harystolho.Main;
 import com.harystolho.canvas.Drawable;
 import com.sun.javafx.tk.Toolkit;
 
@@ -23,12 +23,17 @@ public class Word implements Drawable {
 		NORMAL, NEW_LINE
 	}
 
-	public Word() {
+	private Word() {
 		type = TYPES.NORMAL;
 	}
 
 	public Word(TYPES type) {
 		this.type = type;
+	}
+
+	public Word(String word) {
+		this();
+		setWord(word.toCharArray());
 	}
 
 	public Word(char[] word) {
@@ -47,6 +52,10 @@ public class Word implements Drawable {
 	public void setWord(char[] word) {
 		this.word = word;
 		wordAsString = new String(word);
+	}
+
+	public void setWord(String word) {
+		setWord(word.toCharArray());
 	}
 
 	public int getX() {
@@ -74,7 +83,8 @@ public class Word implements Drawable {
 	}
 
 	public float getSize() {
-		return Toolkit.getToolkit().getFontLoader().computeStringWidth(getWordAsString(), CanvasManager.getFont());
+		return Toolkit.getToolkit().getFontLoader().computeStringWidth(getWordAsString(),
+				Main.getApplication().getMainController().getCanvasManager().getFont());
 	}
 
 	@Override

@@ -1,18 +1,7 @@
 package com.harystolho.controllers;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.Random;
 
-import javax.swing.text.html.HTML.Tag;
-import javax.swing.text.html.StyleSheet;
-
-import com.harystolho.Main;
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.pe.File;
 import com.harystolho.utils.RenderThread;
@@ -65,8 +54,6 @@ public class MainController implements ResizableInterface {
 
 	@FXML
 	void initialize() {
-		Main.getApplication().setMainController(this);
-
 		loadEventHandlers();
 
 		canvasManager = new CanvasManager(canvas);

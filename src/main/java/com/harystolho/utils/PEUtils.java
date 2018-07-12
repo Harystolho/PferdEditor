@@ -1,9 +1,9 @@
 package com.harystolho.utils;
 
 import java.io.IOException;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.function.Consumer;
 import java.util.logging.Logger;
 
 import com.harystolho.controllers.ResizableInterface;
@@ -23,15 +23,20 @@ public class PEUtils {
 	/**
 	 * Loads a FXML File.
 	 * 
-	 * @param file full file name. (Eg: main.fxml)
+	 * @param file       full file name. (Eg: main.fxml)
+	 * @param controller a consumer interface that will accept the controller
 	 * @return the <code>Parent</code> object containing the file, or
 	 *         <code>null</code> if it can't find the file.
 	 */
-	public static Parent loadFXML(String file) {
+	public static <T> Parent loadFXML(String file, Consumer<T> controller) {
 
 		try {
-			return FXMLLoader.load(ClassLoader.getSystemResource(file));
-		} catch (IOException | NullPointerException e) {
+			FXMLLoader fxml = new FXMLLoader(ClassLoader.getSystemResource(file));
+			Parent p = fxml.load();
+			controller.accept(fxml.getController());
+			return p;
+
+		} catch (NullPointerException | IOException e) {
 			logger.severe("Couldn't load file=" + file + " -- " + ClassLoader.getSystemResource(file));
 			return null;
 		}

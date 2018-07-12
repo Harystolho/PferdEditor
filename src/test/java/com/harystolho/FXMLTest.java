@@ -24,12 +24,13 @@ public class FXMLTest {
 
 	@Test
 	public void loadMainFXMLFile() {
-		//assertNotNull(PEUtils.loadFXML("main.fxml"));
+		// assertNotNull(PEUtils.loadFXML("main.fxml"));
 	}
 
-	@Test
+	@Test(expected = IllegalStateException.class)
 	public void loadNonExistentFXMLFile() {
-		assertNull(PEUtils.loadFXML("thisFileDoesntExist.fxml"));
+		assertNull(PEUtils.loadFXML("thisFileDoesntExist.fxml", (c) -> {
+		}));
 	}
 
 }

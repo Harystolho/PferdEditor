@@ -2,7 +2,6 @@ package com.harystolho.canvas.eventHandler;
 
 import com.harystolho.canvas.CanvasManager;
 
-import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 
 public class CMMouseEventHandler {
