@@ -25,7 +25,7 @@ public class Word implements Drawable {
 	private TYPES type;
 
 	public static enum TYPES {
-		NORMAL, SPACE, NEW_LINE
+		NORMAL, SPACE, NEW_LINE, TAB
 	}
 
 	private Word() {
@@ -75,7 +75,7 @@ public class Word implements Drawable {
 
 	public void removeLastChar() {
 		if (size > 0) {
-			word[size--] = '\0';
+			word[--size] = '\0';
 		}
 
 		updateWordAsString();

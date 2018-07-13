@@ -17,6 +17,7 @@ import javafx.scene.text.Font;
 public class CanvasManager {
 
 	public static final int CURSOR_DELAY = 15;
+	public static final int TAB_SIZE = 35;
 
 	private Canvas canvas;
 
@@ -84,13 +85,21 @@ public class CanvasManager {
 				while (i.hasNext()) {
 					Word wordObj = i.next();
 
-					if (wordObj == File.NEW_LINE) {
+					switch (wordObj.getType()) {
+					case NEW_LINE:
 						x = 0;
 						y += getLineHeight();
 
 						wordObj.setY(y);
-
 						continue;
+					case TAB:
+						x += TAB_SIZE;
+
+						wordObj.setX(x);
+						wordObj.setY(y);
+						continue;
+					default:
+						break;
 					}
 
 					gc.setFill(textColor);

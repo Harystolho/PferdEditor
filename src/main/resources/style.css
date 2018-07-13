@@ -18,11 +18,12 @@
 }
 
 #fileList .list-cell:selected .text {
-    -fx-fill: red;
+    -fx-fill: #bebebe;
 }
 
 #fileList .list-cell .text {
     -fx-fill: white;
+    -fx-font-family: "Quicksand";
 }
 
 #canvasInformationBar {

@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.pe.File;
+import com.harystolho.utils.PEUtils;
 import com.harystolho.utils.RenderThread;
 
 import javafx.fxml.FXML;
@@ -58,6 +59,8 @@ public class MainController implements ResizableInterface {
 
 		canvasManager = new CanvasManager(canvas);
 
+		PEUtils.loadFiles(this);
+
 	}
 
 	private void loadEventHandlers() {
@@ -67,7 +70,7 @@ public class MainController implements ResizableInterface {
 		});
 
 		fileList.getSelectionModel().selectedItemProperty().addListener((obv, oldValue, newValue) -> {
-			loadFile(newValue);
+			loadFileInCanvas(newValue);
 		});
 
 		deleteFile.setOnMouseClicked((e) -> {
@@ -89,6 +92,10 @@ public class MainController implements ResizableInterface {
 		fileList.getItems().add(file);
 	}
 
+	public void addNewFile(File file) {
+		fileList.getItems().add(file);
+	}
+
 	private void deleteFile(File file) {
 		fileList.getItems().remove(file);
 
@@ -104,7 +111,7 @@ public class MainController implements ResizableInterface {
 	 * @param file the file to load. If the file is <code>null</code> it does
 	 *             nothing.
 	 */
-	private void loadFile(File file) {
+	public void loadFileInCanvas(File file) {
 
 		if (file == null) {
 			return;

@@ -1,11 +1,15 @@
 package com.harystolho.utils;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 
+import com.harystolho.controllers.MainController;
 import com.harystolho.controllers.ResizableInterface;
 
 import javafx.fxml.FXMLLoader;
@@ -17,6 +21,8 @@ public class PEUtils {
 	private static final Logger logger = Logger.getLogger(PEUtils.class.getName());
 
 	private static ExecutorService executor = Executors.newFixedThreadPool(1);
+
+	private static final File saveFolder = new File("files");
 
 	public static final String VERSION = "0.2";
 
@@ -60,6 +66,42 @@ public class PEUtils {
 		scene.heightProperty().addListener((obv, oldValue, newValue) -> {
 			resize.onHeightResize(newValue.intValue());
 		});
+
+	}
+
+	public static void loadFiles(MainController controller) {
+		if (saveFolder.exists()) {
+			for (File file : saveFolder.listFiles()) {
+				controller.addNewFile(createFileFromSourceFile(file));
+			}
+		}
+	}
+
+	/**
+	 * Loads a file from disk, creates a new {@link com.harystolho.pe.File File} and
+	 * adds chars to it.
+	 * 
+	 * @param f the file to be read
+	 * @return a <code>File</code> object containing the characters read
+	 */
+	private static com.harystolho.pe.File createFileFromSourceFile(File f) {
+
+		com.harystolho.pe.File file = new com.harystolho.pe.File(f.getName());
+
+		try (InputStreamReader isr = new InputStreamReader(new FileInputStream(f))) {
+
+			int i;
+
+			while ((i = isr.read()) != -1) {
+				char c = (char) i;
+				file.type(c);
+			}
+
+		} catch (IOException e) {
+			logger.severe("Couldn't read bytes from " + f.getName());
+		}
+
+		return file;
 
 	}
 

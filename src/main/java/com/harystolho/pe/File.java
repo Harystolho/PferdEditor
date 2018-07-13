@@ -6,11 +6,13 @@ import java.util.List;
 import com.harystolho.Main;
 import com.harystolho.pe.Word.TYPES;
 
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 public class File {
 
 	private static final Word SPACE = new Word(' ', TYPES.SPACE);
+	private static final Word TAB = new Word(TYPES.TAB);
 	public static final Word NEW_LINE = new Word(TYPES.NEW_LINE);
 
 	private Object drawLock;
@@ -55,6 +57,10 @@ public class File {
 			case BACK_SPACE:
 				removeCharAtCursor();
 				return;
+			case TAB:
+				addWord(TAB);
+				addLastWord();
+				return;
 			default:
 				break;
 			}
@@ -73,6 +79,26 @@ public class File {
 			}
 
 		}
+
+	}
+
+	public void type(char c) {
+
+		switch (c) {
+		case ' ':
+			type(new KeyEvent(null, null, null, KeyCode.SPACE, false, false, false, false));
+			return;
+		case '\n':
+			type(new KeyEvent(null, null, null, KeyCode.ENTER, false, false, false, false));
+			return;
+		case '\t':
+			type(new KeyEvent(null, null, null, KeyCode.TAB, false, false, false, false));
+			return;
+		default:
+			break;
+		}
+
+		type(new KeyEvent(null, String.valueOf(c), String.valueOf(c), KeyCode.UNDEFINED, false, false, false, false));
 
 	}
 
