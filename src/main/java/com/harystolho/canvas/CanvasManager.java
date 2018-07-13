@@ -87,14 +87,27 @@ public class CanvasManager {
 					if (wordObj == File.NEW_LINE) {
 						x = 0;
 						y += getLineHeight();
+
+						wordObj.setY(y);
+
 						continue;
 					}
 
 					gc.setFill(textColor);
 					gc.fillText(wordObj.getWordAsString(), x - scrollX, y);
+
+					wordObj.setX(x);
+					wordObj.setY(y);
+
 					x += wordObj.getDrawingSize();
 
 				}
+			}
+
+			if (currentFile.isTyped()) {
+				currentFile.setTyped(false);
+
+				currentFile.updateCursorPosition();
 			}
 
 		}
@@ -109,7 +122,7 @@ public class CanvasManager {
 
 	private void drawLineBackground() {
 		gc.setFill(lineColor);
-		gc.fillRect(0, getCursorY(), canvas.getWidth(), getLineHeight());
+		gc.fillRect(0, getCursorY() - lineHeight, canvas.getWidth(), getLineHeight());
 
 	}
 
@@ -129,7 +142,7 @@ public class CanvasManager {
 
 			gc.setFill(Color.BLACK);
 
-			gc.strokeLine(getCursorX(), getCursorY(), getCursorX(), getCursorY() + getLineHeight());
+			gc.strokeLine(getCursorX(), getCursorY(), getCursorX(), getCursorY() - getLineHeight());
 		}
 
 	}
@@ -197,7 +210,7 @@ public class CanvasManager {
 		if (currentFile != null) {
 			cursorY += lineHeight - 1; // Centralize on cursor
 
-			currentFile.setCursorY(cursorY - (cursorY % lineHeight) - lineHeight);
+			currentFile.setCursorY(cursorY - (cursorY % lineHeight));
 		}
 	}
 
@@ -211,7 +224,7 @@ public class CanvasManager {
 
 	public void lineUp() {
 		// It can't go above first line.
-		if (getCursorY() < 16) {
+		if (getCursorY() <= lineHeight) {
 			return;
 		}
 

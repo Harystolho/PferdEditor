@@ -1,7 +1,6 @@
 package com.harystolho;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -67,21 +66,6 @@ public class FileTest {
 		f.addWord(w1);
 
 		assertTrue(f.getWords().contains(w1));
-
-	}
-
-	@Test
-	public void checkIfListContainsWordAfterItIsRemoved() {
-
-		Word w1 = new Word('1');
-
-		File f = new File("temp_3");
-
-		f.addWord(w1);
-
-		f.removeWord(w1);
-
-		assertFalse(f.getWords().contains(w1));
 
 	}
 

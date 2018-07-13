@@ -1,5 +1,6 @@
 package com.harystolho;
 
+import com.harystolho.canvas.CanvasManager;
 import com.harystolho.canvas.eventHandler.CMKeyEventHandler;
 import com.harystolho.controllers.MainController;
 import com.harystolho.utils.PEUtils;
@@ -57,6 +58,10 @@ public class PEApplication extends Application {
 
 	public MainController getMainController() {
 		return mainController;
+	}
+
+	public CanvasManager getCanvasManager() {
+		return mainController.getCanvasManager();
 	}
 
 	public static void init(String[] args) {

@@ -10,8 +10,6 @@ import org.junit.Test;
 import com.harystolho.pe.Word;
 import com.harystolho.pe.Word.TYPES;
 
-import sun.java2d.opengl.WGLGraphicsConfig;
-
 public class WordTest {
 
 	Word word;

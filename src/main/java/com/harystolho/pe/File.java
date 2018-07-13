@@ -3,6 +3,7 @@ package com.harystolho.pe;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.harystolho.Main;
 import com.harystolho.pe.Word.TYPES;
 
 import javafx.scene.input.KeyEvent;
@@ -22,6 +23,9 @@ public class File {
 	private double cursorX;
 	private double cursorY;
 
+	// TRUE when the user types something.
+	private boolean typed;
+
 	public File(String name) {
 		this.name = name;
 
@@ -36,6 +40,9 @@ public class File {
 	public void type(KeyEvent e) {
 
 		synchronized (drawLock) {
+
+			setTyped(true);
+
 			switch (e.getCode()) {
 			case SPACE:
 				addWord(SPACE);
@@ -66,8 +73,14 @@ public class File {
 			}
 
 		}
+
 	}
 
+	/**
+	 * When the user presses SPACE or ENTER, it will set {@link #lastWord} to null,
+	 * so that if he types a new char it will create a new word instead of appending
+	 * to this one.
+	 */
 	public void addLastWord() {
 		if (lastWord != null) {
 			lastWord = null;
@@ -92,6 +105,10 @@ public class File {
 			if (w.getSize() == 0) {
 				words.remove(words.size() - 1);
 				addLastWord();
+
+				if (w.getType() == TYPES.NEW_LINE) {
+					Main.getApplication().getCanvasManager().lineUp();
+				}
 			}
 
 		} else {
@@ -101,12 +118,26 @@ public class File {
 
 	}
 
-	public void removeWord(Word word) {
-		words.remove(word);
-	}
-
 	public Word getLastWordInWordsList() {
 		return words.get(words.size() - 1);
+	}
+
+	/**
+	 * Sets the position of the cursor to the last typed char.
+	 */
+	public void updateCursorPosition() {
+
+		if (words.size() == 0) {
+			setCursorX(0);
+			return;
+		}
+
+		Word lastWord = getLastWordInWordsList();
+
+		// 1 is beauty purposes.
+		setCursorX(lastWord.getX() + lastWord.getDrawingSize() + 1);
+		Main.getApplication().getCanvasManager().setCursorY(lastWord.getY());
+		Main.getApplication().getCanvasManager().update();
 	}
 
 	public String getName() {
@@ -115,10 +146,6 @@ public class File {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String toString() {
-		return name;
 	}
 
 	public List<Word> getWords() {
@@ -139,6 +166,18 @@ public class File {
 
 	public void setCursorY(double cursorY) {
 		this.cursorY = cursorY;
+	}
+
+	public boolean isTyped() {
+		return typed;
+	}
+
+	public void setTyped(boolean typed) {
+		this.typed = typed;
+	}
+
+	public String toString() {
+		return name;
 	}
 
 	public Object getDrawLock() {
