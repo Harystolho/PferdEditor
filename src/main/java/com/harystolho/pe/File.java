@@ -13,7 +13,7 @@ public class File {
 
 	private static final Word SPACE = new Word(' ', TYPES.SPACE);
 	private static final Word TAB = new Word(TYPES.TAB);
-	public static final Word NEW_LINE = new Word(TYPES.NEW_LINE);
+	private static final Word NEW_LINE = new Word(TYPES.NEW_LINE);
 
 	private Object drawLock;
 
@@ -187,11 +187,40 @@ public class File {
 	}
 
 	public void setCursorX(double cursorX) {
-		this.cursorX = cursorX;
+		float biggestX = 0;
+
+		for (Word w : words) {
+			if (w.getY() == getCursorY()) {
+				if (w.getX() + w.getDrawingSize() > biggestX) {
+					biggestX = w.getX() + w.getDrawingSize();
+				}
+			}
+		}
+
+		if (cursorX < biggestX) {
+			this.cursorX = cursorX;
+		} else {
+			this.cursorX = biggestX;
+		}
+
 	}
 
 	public void setCursorY(double cursorY) {
-		this.cursorY = cursorY;
+
+		float biggestY = Main.getApplication().getCanvasManager().getLineHeight();
+
+		for (Word w : words) {
+			if (w.getY() > biggestY) {
+				biggestY = w.getY();
+			}
+		}
+
+		if (cursorY > biggestY) {
+			this.cursorY = biggestY;
+		} else {
+			this.cursorY = cursorY;
+		}
+
 	}
 
 	public boolean isTyped() {

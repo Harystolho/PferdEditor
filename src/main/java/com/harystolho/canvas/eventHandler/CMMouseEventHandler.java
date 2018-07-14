@@ -30,15 +30,16 @@ public class CMMouseEventHandler {
 	private void mouseRelease(MouseEvent e) {
 		cm.getCanvas().requestFocus();
 
-		cm.setCursorX(e.getX());
-		cm.setCursorY(e.getY());
-
-		cm.setCursorCount(CanvasManager.CURSOR_DELAY);
-
 	}
 
 	private void mousePressed(MouseEvent e) {
 		cm.getCanvas().requestFocus();
+
+		cm.setCursorY(e.getY()); // setCursorY MUST come first
+		cm.setCursorX(e.getX());
+
+		cm.setCursorCount(CanvasManager.CURSOR_DELAY);
+
 	}
 
 }

@@ -10,7 +10,6 @@ import com.harystolho.pe.File;
 
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.text.Font;
 
 public class CanvasManagerTest {
 
@@ -39,17 +38,6 @@ public class CanvasManagerTest {
 	public void testScrollPosition() {
 		assertEquals(0, cm.getScrollX());
 		assertEquals(0, cm.getScrollY());
-	}
-
-	@Test
-	public void testFonts() {
-
-		Font f = new Font("Verdana", 27);
-
-		cm.setFont(f);
-
-		assertEquals(cm.getFont(), f);
-
 	}
 
 	@Test

@@ -2,8 +2,8 @@ package com.harystolho.pe;
 
 import java.util.Arrays;
 
-import com.harystolho.Main;
 import com.harystolho.canvas.Drawable;
+import com.harystolho.canvas.StyleLoader;
 import com.sun.javafx.tk.Toolkit;
 
 import javafx.scene.canvas.GraphicsContext;
@@ -19,6 +19,8 @@ public class Word implements Drawable {
 	// time it draws a word
 	private String wordAsString;
 
+	private float drawingSize;
+
 	private float x;
 	private float y;
 
@@ -31,6 +33,8 @@ public class Word implements Drawable {
 	private Word() {
 		word = new char[INITIAL_WORD_LENGTH];
 		size = 0;
+
+		drawingSize = 0f;
 
 		x = 0;
 		y = 0;
@@ -87,6 +91,7 @@ public class Word implements Drawable {
 
 	private void updateWordAsString() {
 		wordAsString = new String(word, 0, size);
+		updateDrawingSize();
 	}
 
 	/**
@@ -121,11 +126,17 @@ public class Word implements Drawable {
 	}
 
 	/**
-	 * @return A number representing the width of this Word
+	 * Updates the word's width
+	 */
+	public void updateDrawingSize() {
+		drawingSize = Toolkit.getToolkit().getFontLoader().computeStringWidth(getWordAsString(), StyleLoader.getFont());
+	}
+
+	/**
+	 * @return A number representing this word's witdh
 	 */
 	public float getDrawingSize() {
-		return Toolkit.getToolkit().getFontLoader().computeStringWidth(getWordAsString(),
-				Main.getApplication().getCanvasManager().getFont());
+		return drawingSize;
 	}
 
 	@Override

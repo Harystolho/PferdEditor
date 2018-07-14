@@ -5,7 +5,6 @@ import java.util.ListIterator;
 import com.harystolho.canvas.eventHandler.CMMouseEventHandler;
 import com.harystolho.pe.File;
 import com.harystolho.pe.Word;
-import com.harystolho.utils.PEStyleSheet;
 import com.harystolho.utils.PEUtils;
 import com.harystolho.utils.RenderThread;
 
@@ -23,8 +22,6 @@ public class CanvasManager {
 
 	private GraphicsContext gc;
 
-	PEStyleSheet peStyleSheet;
-
 	private File currentFile;
 
 	private int cursorCount;
@@ -33,10 +30,6 @@ public class CanvasManager {
 	private int scrollX;
 	private int scrollY;
 
-	private Color lineColor;
-	private Color bgColor;
-	private Color textColor;
-
 	private CMMouseEventHandler mouseHandler;
 
 	public CanvasManager(Canvas canvas) {
@@ -44,16 +37,14 @@ public class CanvasManager {
 
 		gc = canvas.getGraphicsContext2D();
 
-		peStyleSheet = new PEStyleSheet("file.css");
-
 		setCursorCount(0);
 		setLineHeight(18);
 
+		StyleLoader.setFont(new Font("Arial", lineHeight - 2));
+		gc.setFont(StyleLoader.getFont());
+
 		scrollX = 0;
 		scrollY = 0;
-
-		loadColors();
-		setupFonts();
 
 		mouseHandler = new CMMouseEventHandler(this);
 
@@ -64,7 +55,7 @@ public class CanvasManager {
 
 		clear();
 
-		gc.setFill(bgColor);
+		gc.setFill(StyleLoader.getBgColor());
 		gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
 		draw();
@@ -102,7 +93,7 @@ public class CanvasManager {
 						break;
 					}
 
-					gc.setFill(textColor);
+					gc.setFill(StyleLoader.getTextColor());
 					gc.fillText(wordObj.getWordAsString(), x - scrollX, y);
 
 					wordObj.setX(x);
@@ -130,7 +121,7 @@ public class CanvasManager {
 	}
 
 	private void drawLineBackground() {
-		gc.setFill(lineColor);
+		gc.setFill(StyleLoader.getLineColor());
 		gc.fillRect(0, getCursorY() - lineHeight, canvas.getWidth(), getLineHeight());
 
 	}
@@ -162,24 +153,6 @@ public class CanvasManager {
 		PEUtils.getExecutor().execute(new RenderThread());
 	}
 
-	private void loadColors() {
-		lineColor = Color.rgb(179, 179, 179, 0.44);
-		bgColor = Color.web(peStyleSheet.getRule("#background", "background-color"));
-		textColor = Color.web(peStyleSheet.getRule("#text", "color"));
-	}
-
-	public void setupFonts() {
-		gc.setFont(new Font("Arial", getLineHeight() - 2));
-	}
-
-	public Font getFont() {
-		return gc.getFont();
-	}
-
-	public void setFont(Font font) {
-		gc.setFont(font);
-	}
-
 	public void stopRenderThread() {
 		RenderThread.stop();
 	}
@@ -190,6 +163,21 @@ public class CanvasManager {
 
 	public void setCurrentFile(File currentFile) {
 		this.currentFile = currentFile;
+		updateWordsWidth();
+	}
+
+	/**
+	 * When a file is loaded it calculates each word's width using the default font.
+	 * When the {@link CanvasManager} object is created, it may change the font and
+	 * then It has to recalculate the each word's width again.
+	 */
+	private void updateWordsWidth() {
+		synchronized (currentFile.getDrawLock()) {
+			for (Word word : currentFile.getWords()) {
+				word.updateDrawingSize();
+			}
+		}
+
 	}
 
 	public Canvas getCanvas() {

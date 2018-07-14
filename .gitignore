@@ -12,6 +12,7 @@ local.properties
 .recommenders
 .idea
 configuration
+files/
 
 # External tool builders
 .externalToolBuilders/
