@@ -35,12 +35,6 @@ public class CanvasManagerTest {
 	}
 
 	@Test
-	public void testScrollPosition() {
-		assertEquals(0, cm.getScrollX());
-		assertEquals(0, cm.getScrollY());
-	}
-
-	@Test
 	public void testCurrentFile() {
 
 		File file = new File("temp");

@@ -94,7 +94,7 @@ public class CanvasManager {
 					}
 
 					gc.setFill(StyleLoader.getTextColor());
-					gc.fillText(wordObj.getWordAsString(), x - scrollX, y);
+					gc.fillText(wordObj.getWordAsString(), x - scrollX, y - scrollY);
 
 					wordObj.setX(x);
 					wordObj.setY(y);
@@ -104,6 +104,7 @@ public class CanvasManager {
 				}
 			}
 
+			// If a new char was typed, updated the cursor
 			if (currentFile.isTyped()) {
 				currentFile.setTyped(false);
 
@@ -122,7 +123,7 @@ public class CanvasManager {
 
 	private void drawLineBackground() {
 		gc.setFill(StyleLoader.getLineColor());
-		gc.fillRect(0, getCursorY() - lineHeight, canvas.getWidth(), getLineHeight());
+		gc.fillRect(0, getCursorY() - lineHeight - scrollY, canvas.getWidth(), getLineHeight());
 
 	}
 
@@ -142,7 +143,8 @@ public class CanvasManager {
 
 			gc.setFill(Color.BLACK);
 
-			gc.strokeLine(getCursorX(), getCursorY(), getCursorX(), getCursorY() - getLineHeight());
+			gc.strokeLine(getCursorX() - scrollX, getCursorY() - scrollY, getCursorX() - scrollX,
+					getCursorY() - getLineHeight() - scrollY);
 		}
 
 	}
@@ -198,14 +200,14 @@ public class CanvasManager {
 
 	public void setCursorX(double d) {
 		if (currentFile != null) {
-			currentFile.setCursorX(d);
+			currentFile.setCursorX(d + scrollX);
 		}
 
 	}
 
 	public void setCursorY(double cursorY) {
 		if (currentFile != null) {
-			cursorY += lineHeight - 1; // Centralize on cursor
+			cursorY += lineHeight - 1 + scrollY; // Centralize on cursor
 
 			currentFile.setCursorY(cursorY - (cursorY % lineHeight));
 		}
@@ -232,30 +234,24 @@ public class CanvasManager {
 		currentFile.setCursorY(getCursorY() + getLineHeight());
 	}
 
-	public void scrollRight() {
-		scrollX += 5;
-	}
-
 	public void scrollLeft() {
 		if (scrollX >= 5) {
 			scrollX -= 5;
 		}
 	}
 
-	public int getScrollX() {
-		return scrollX;
+	public void scrollRight() {
+		scrollX += 5;
 	}
 
-	public int getScrollY() {
-		return scrollY;
+	public void scrollUp() {
+		if (scrollY >= lineHeight) {
+			scrollY -= lineHeight;
+		}
 	}
 
-	public void setScrollX(int scrollX) {
-		this.scrollX = scrollX;
-	}
-
-	public void setScrollY(int scrollY) {
-		this.scrollY = scrollY;
+	public void scrollDown() {
+		scrollY += lineHeight;
 	}
 
 	public void printDebugMessage() {
