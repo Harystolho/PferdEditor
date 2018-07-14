@@ -1,9 +1,9 @@
 package com.harystolho.pe;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import com.harystolho.Main;
+import com.harystolho.canvas.CanvasManager;
 import com.harystolho.pe.Word.TYPES;
 
 import javafx.scene.input.KeyCode;
@@ -11,16 +11,13 @@ import javafx.scene.input.KeyEvent;
 
 public class File {
 
-	private static final Word SPACE = new Word(' ', TYPES.SPACE);
 	private static final Word TAB = new Word(TYPES.TAB);
 	private static final Word NEW_LINE = new Word(TYPES.NEW_LINE);
 
 	private Object drawLock;
 
 	private String name;
-	private List<Word> words;
-
-	private Word lastWord;
+	private WordLinkedList words;
 
 	private double cursorX;
 	private double cursorY;
@@ -36,7 +33,7 @@ public class File {
 		cursorX = 0;
 		cursorY = 0;
 
-		words = new LinkedList<>();
+		words = new WordLinkedList();
 	}
 
 	public void type(KeyEvent e) {
@@ -47,19 +44,18 @@ public class File {
 
 			switch (e.getCode()) {
 			case SPACE:
-				addWord(SPACE);
-				addLastWord();
+				Word space = new Word(' ', TYPES.SPACE);
+				setWordPosition(space);
+				addWord(space);
 				return;
 			case ENTER:
 				addWord(NEW_LINE);
-				addLastWord();
 				return;
 			case BACK_SPACE:
 				removeCharAtCursor();
 				return;
 			case TAB:
 				addWord(TAB);
-				addLastWord();
 				return;
 			default:
 				break;
@@ -71,13 +67,9 @@ public class File {
 				return;
 			}
 
-			if (lastWord == null) {
-				lastWord = new Word(key.charAt(0));
-				addWord(lastWord);
-			} else {
-				lastWord.addChar(key.charAt(0));
-			}
-
+			Word lastWord = new Word(key.charAt(0));
+			setWordPosition(lastWord);
+			addWord(lastWord);
 		}
 
 	}
@@ -102,19 +94,11 @@ public class File {
 
 	}
 
-	/**
-	 * When the user presses SPACE or ENTER, it will set {@link #lastWord} to null,
-	 * so that if he types a new char it will create a new word instead of appending
-	 * to this one.
-	 */
-	public void addLastWord() {
-		if (lastWord != null) {
-			lastWord = null;
-		}
-	}
-
 	public void addWord(Word word) {
 		words.add(word);
+
+		updateCursorPosition(word.getWord()[0], true);
+
 	}
 
 	public void removeCharAtCursor() {
@@ -123,47 +107,59 @@ public class File {
 			return;
 		}
 
-		Word w = getLastWordInWordsList();
+		Word word = words.get(getCursorX() - 1, getCursorY());
 
-		if (w.getType() != TYPES.SPACE) {
-			w.removeLastChar();
+		if (word == null) {
+			return;
+		}
 
-			if (w.getSize() == 0) {
-				words.remove(words.size() - 1);
-				addLastWord();
+		char charRemoved = word.removeLastChar();
 
-				if (w.getType() == TYPES.NEW_LINE) {
-					Main.getApplication().getCanvasManager().lineUp();
-				}
+		if (word.getSize() == 0) {
+			words.remove(word);
+
+			if (word.getType() == TYPES.NEW_LINE) {
+				Main.getApplication().getCanvasManager().lineUp();
 			}
+		}
 
-		} else {
-			words.remove(words.size() - 1);
-			addLastWord();
+		updateCursorPosition(charRemoved, false);
+
+	}
+
+	private void setWordPosition(Word lastWord) {
+		if (Main.getApplication().getMainController() != null) {
+
+			CanvasManager cm = Main.getApplication().getCanvasManager();
+
+			lastWord.setX((float) cm.getCursorX());
+			lastWord.setY((float) cm.getCursorY());
+
 		}
 
 	}
 
-	public Word getLastWordInWordsList() {
-		return words.get(words.size() - 1);
-	}
-
 	/**
-	 * Sets the position of the cursor to the last typed char.
+	 * Updates the cursor position.
+	 * 
+	 * @param c   the char typed or deleted
+	 * @param add If <code>true</code> it will add the width of this char to the
+	 *            cursor X, if <code>false</code> it will subtract.
 	 */
-	public void updateCursorPosition() {
+	public void updateCursorPosition(char c, boolean add) {
 
 		if (words.size() == 0) {
 			setCursorX(0);
 			return;
 		}
 
-		Word lastWord = getLastWordInWordsList();
+		// 1 is for beauty purposes.
+		if (add) {
+			setCursorX(getCursorX() + Word.computeCharWidth(c) + 1);
+		} else {
+			setCursorX(getCursorX() - Word.computeCharWidth(c) + 1);
+		}
 
-		// 1 is beauty purposes.
-		setCursorX(lastWord.getX() + lastWord.getDrawingSize() + 1);
-		Main.getApplication().getCanvasManager().setCursorY(lastWord.getY());
-		Main.getApplication().getCanvasManager().update();
 	}
 
 	public String getName() {

@@ -2,13 +2,10 @@ package com.harystolho.pe;
 
 import java.util.Arrays;
 
-import com.harystolho.canvas.Drawable;
 import com.harystolho.canvas.StyleLoader;
 import com.sun.javafx.tk.Toolkit;
 
-import javafx.scene.canvas.GraphicsContext;
-
-public class Word implements Drawable {
+public class Word implements Comparable<Word> {
 
 	private static final int INITIAL_WORD_LENGTH = 10;
 
@@ -59,6 +56,13 @@ public class Word implements Drawable {
 		addChar(c);
 	}
 
+	/**
+	 * @return An array containing all the chars and null slots. If a word has 4
+	 *         chars, it will return an array containing 4 chars plus 6 null
+	 *         elements because by default the {@link #word word array} size is 10.
+	 *         As the word grows the size also grows.
+	 * @see #resizeWordArray()
+	 */
 	public char[] getWord() {
 		return word;
 	}
@@ -77,18 +81,32 @@ public class Word implements Drawable {
 		updateWordAsString();
 	}
 
-	public void removeLastChar() {
+	public char removeLastChar() {
+
+		char charRemoved = '\0';
+
 		if (size > 0) {
+			charRemoved = word[size];
 			word[--size] = '\0';
 		}
 
 		updateWordAsString();
+
+		return charRemoved;
 	}
 
+	/**
+	 * Creates a new array that is 50% bigger and copies the old elements into the
+	 * new one.
+	 */
 	private void resizeWordArray() {
 		word = Arrays.copyOf(word, (int) (size * 1.5));
 	}
 
+	/**
+	 * Every time a new char is added to the char array, it creates a new String
+	 * representing the char array. This method also updates the word's width
+	 */
 	private void updateWordAsString() {
 		wordAsString = new String(word, 0, size);
 		updateDrawingSize();
@@ -132,6 +150,10 @@ public class Word implements Drawable {
 		drawingSize = Toolkit.getToolkit().getFontLoader().computeStringWidth(getWordAsString(), StyleLoader.getFont());
 	}
 
+	public static float computeCharWidth(char c) {
+		return Toolkit.getToolkit().getFontLoader().computeStringWidth(String.valueOf(c), StyleLoader.getFont());
+	}
+
 	/**
 	 * @return A number representing this word's witdh
 	 */
@@ -139,9 +161,32 @@ public class Word implements Drawable {
 		return drawingSize;
 	}
 
+	// TODO change if statement order to improve performance if possible
 	@Override
-	public void draw(GraphicsContext gc) {
+	public int compareTo(Word w) {
 
+		if (this.getY() < w.getY()) {
+			return -1;
+		} else if (this.getY() == w.getY()) {
+
+			if (this.getX() < w.getX()) {
+				return -1;
+			} else {
+				if (this.getX() < w.getX() + w.getDrawingSize()) {
+					return 0;
+				} else {
+					return 1;
+				}
+			}
+		} else if (this.getY() > w.getY()) {
+			return 1;
+		}
+
+		return 0;
+	}
+
+	public String toString() {
+		return '"' + getWordAsString() + '"' + " {" + getX() + "," + getY() + "}";
 	}
 
 }
