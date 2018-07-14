@@ -63,7 +63,7 @@ public class CanvasManager {
 
 	public void draw() {
 
-		drawLineBackground();
+		drawBackgroundLine();
 
 		if (currentFile != null) {
 
@@ -121,8 +121,8 @@ public class CanvasManager {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 	}
 
-	private void drawLineBackground() {
-		gc.setFill(StyleLoader.getLineColor());
+	private void drawBackgroundLine() {
+		gc.setFill(StyleLoader.getBackgroundLineColor());
 		gc.fillRect(0, getCursorY() - lineHeight - scrollY, canvas.getWidth(), getLineHeight());
 
 	}
@@ -140,11 +140,8 @@ public class CanvasManager {
 		cursorCount--;
 
 		if (cursorCount > 0) {
-
-			gc.setFill(Color.BLACK);
-
-			gc.strokeLine(getCursorX() - scrollX, getCursorY() - scrollY, getCursorX() - scrollX,
-					getCursorY() - getLineHeight() - scrollY);
+			gc.setFill(StyleLoader.getCursorColor());
+			gc.fillRect(getCursorX() - scrollX, getCursorY() - lineHeight - scrollY, 2, lineHeight);
 		}
 
 	}

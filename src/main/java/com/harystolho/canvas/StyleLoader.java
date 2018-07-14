@@ -5,6 +5,13 @@ import com.harystolho.utils.PEStyleSheet;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
+/**
+ * A class to manager objects related to colors and sizes used when drawing in
+ * the canvas.
+ * 
+ * @author Harystolho
+ *
+ */
 public class StyleLoader {
 
 	private static PEStyleSheet peStyleSheet;
@@ -14,6 +21,7 @@ public class StyleLoader {
 	private static Color lineColor;
 	private static Color bgColor;
 	private static Color textColor;
+	private static Color cursorColor;
 
 	static {
 
@@ -26,6 +34,7 @@ public class StyleLoader {
 		lineColor = Color.rgb(179, 179, 179, 0.44);
 		bgColor = Color.web(peStyleSheet.getRule("#background", "background-color"));
 		textColor = Color.web(peStyleSheet.getRule("#text", "color"));
+		cursorColor = Color.rgb(255, 255, 255, 0.8);
 	}
 
 	public static void setFont(Font font) {
@@ -36,7 +45,7 @@ public class StyleLoader {
 		return defaultFont;
 	}
 
-	public static Color getLineColor() {
+	public static Color getBackgroundLineColor() {
 		return lineColor;
 	}
 
@@ -58,6 +67,14 @@ public class StyleLoader {
 
 	public static void setTextColor(Color textColor) {
 		StyleLoader.textColor = textColor;
+	}
+
+	public static Color getCursorColor() {
+		return cursorColor;
+	}
+
+	public static void setCursorColor(Color cursorColor) {
+		StyleLoader.cursorColor = cursorColor;
 	}
 
 }
