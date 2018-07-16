@@ -56,7 +56,7 @@ public class WordLinkedList extends LinkedList<Word> {
 			Word word = it.next();
 
 			if (word.getY() == y) {
-				if (word.getX() < x && word.getX() + word.getDrawingSize() > x) {
+				if (word.getX() <= x && word.getX() + word.getDrawingSize() >= x) {
 					return word;
 				}
 			}

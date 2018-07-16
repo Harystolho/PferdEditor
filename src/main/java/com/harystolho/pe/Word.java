@@ -86,7 +86,7 @@ public class Word implements Comparable<Word> {
 		char charRemoved = '\0';
 
 		if (size > 0) {
-			charRemoved = word[size];
+			charRemoved = word[size-1];
 			word[--size] = '\0';
 		}
 
@@ -151,6 +151,7 @@ public class Word implements Comparable<Word> {
 	}
 
 	public static float computeCharWidth(char c) {
+		// TODO test if a hash map is faster
 		return Toolkit.getToolkit().getFontLoader().computeStringWidth(String.valueOf(c), StyleLoader.getFont());
 	}
 

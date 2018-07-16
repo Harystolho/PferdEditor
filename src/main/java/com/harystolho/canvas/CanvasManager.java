@@ -102,14 +102,6 @@ public class CanvasManager {
 
 				}
 			}
-
-			// If a new char was typed, updated the cursor
-			if (currentFile.isTyped()) {
-				currentFile.setTyped(false);
-
-				//currentFile.updateCursorPosition();
-			}
-
 		}
 
 		drawCursor();
@@ -194,9 +186,9 @@ public class CanvasManager {
 		return currentFile.getCursorY();
 	}
 
-	public void setCursorX(double d) {
+	public void setCursorX(double x) {
 		if (currentFile != null) {
-			currentFile.setCursorX(d + scrollX);
+			currentFile.setCursorX(x + scrollX);
 		}
 
 	}

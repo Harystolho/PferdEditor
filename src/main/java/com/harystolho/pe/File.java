@@ -1,7 +1,5 @@
 package com.harystolho.pe;
 
-import java.util.List;
-
 import com.harystolho.Main;
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.pe.Word.TYPES;
@@ -10,9 +8,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 public class File {
-
-	private static final Word TAB = new Word(TYPES.TAB);
-	private static final Word NEW_LINE = new Word(TYPES.NEW_LINE);
 
 	private Object drawLock;
 
@@ -44,18 +39,16 @@ public class File {
 
 			switch (e.getCode()) {
 			case SPACE:
-				Word space = new Word(' ', TYPES.SPACE);
-				setWordPosition(space);
-				addWord(space);
+				createSpace();
 				return;
 			case ENTER:
-				addWord(NEW_LINE);
+				createNewLine();
 				return;
 			case BACK_SPACE:
 				removeCharAtCursor();
 				return;
 			case TAB:
-				addWord(TAB);
+				createTab();
 				return;
 			default:
 				break;
@@ -107,9 +100,10 @@ public class File {
 			return;
 		}
 
-		Word word = words.get(getCursorX() - 1, getCursorY());
+		Word word = words.get(getCursorX(), getCursorY());
 
 		if (word == null) {
+			setCursorX(-1);
 			return;
 		}
 
@@ -127,13 +121,18 @@ public class File {
 
 	}
 
-	private void setWordPosition(Word lastWord) {
+	private void setWordPosition(Word word) {
 		if (Main.getApplication().getMainController() != null) {
 
 			CanvasManager cm = Main.getApplication().getCanvasManager();
 
-			lastWord.setX((float) cm.getCursorX());
-			lastWord.setY((float) cm.getCursorY());
+			if (word.getType() != TYPES.NEW_LINE) {
+				word.setX((float) cm.getCursorX());
+				word.setY((float) cm.getCursorY());
+			} else {
+				word.setX(0);
+				word.setY((float) cm.getCursorY() + cm.getLineHeight());
+			}
 
 		}
 
@@ -157,9 +156,31 @@ public class File {
 		if (add) {
 			setCursorX(getCursorX() + Word.computeCharWidth(c) + 1);
 		} else {
-			setCursorX(getCursorX() - Word.computeCharWidth(c) + 1);
+			setCursorX(getCursorX() - Word.computeCharWidth(c));
 		}
 
+	}
+
+	private void createSpace() {
+		Word space = new Word(' ', TYPES.SPACE);
+		setWordPosition(space);
+		addWord(space);
+	}
+
+	private void createNewLine() {
+		Word new_line = new Word(TYPES.NEW_LINE);
+		setWordPosition(new_line);
+		addWord(new_line);
+		if (Main.getApplication().getMainController() != null) {
+			Main.getApplication().getCanvasManager().lineDown();
+		}
+		updateCursorPosition(new_line.getWord()[0], true);
+	}
+
+	private void createTab() {
+		Word tab = new Word(TYPES.TAB);
+		setWordPosition(tab);
+		addWord(tab);
 	}
 
 	public String getName() {
@@ -170,7 +191,7 @@ public class File {
 		this.name = name;
 	}
 
-	public List<Word> getWords() {
+	public WordLinkedList getWords() {
 		return words;
 	}
 
@@ -183,19 +204,38 @@ public class File {
 	}
 
 	public void setCursorX(double cursorX) {
-		float biggestX = 0;
 
-		for (Word w : words) {
-			if (w.getY() == getCursorY()) {
-				if (w.getX() + w.getDrawingSize() > biggestX) {
-					biggestX = w.getX() + w.getDrawingSize();
+		Word word = getWords().get(cursorX, getCursorY());
+
+		if (word != null) {
+			double wordX = cursorX - word.getX();
+
+			double wordPosition = 0;
+			for (char c : word.getWord()) {
+				float wordWidth = Word.computeCharWidth(c);
+
+				if (wordPosition + wordWidth > wordX) {
+					if (wordX - wordPosition < wordWidth - wordX) {
+						cursorX -= wordX - wordPosition;
+					} else {
+						cursorX += wordPosition + wordWidth - wordX;
+					}
+					break;
 				}
+				wordPosition += wordWidth;
 			}
-		}
 
-		if (cursorX < biggestX) {
 			this.cursorX = cursorX;
 		} else {
+			float biggestX = 0;
+
+			for (Word w : words) {
+				if (w.getY() == getCursorY()) {
+					if (w.getX() + w.getDrawingSize() >= biggestX) {
+						biggestX = w.getX() + w.getDrawingSize();
+					}
+				}
+			}
 			this.cursorX = biggestX;
 		}
 
