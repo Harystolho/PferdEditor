@@ -3,6 +3,7 @@ package com.harystolho.canvas.eventHandler;
 import com.harystolho.canvas.CanvasManager;
 
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 
 public class CMMouseEventHandler {
 
@@ -24,7 +25,11 @@ public class CMMouseEventHandler {
 		cm.getCanvas().setOnMouseReleased((e) -> {
 			mouseRelease(e);
 		});
-
+		
+		cm.getCanvas().setOnScroll((e)->{
+			scrollMoved(e);
+		});
+		
 	}
 
 	private void mouseRelease(MouseEvent e) {
@@ -42,4 +47,13 @@ public class CMMouseEventHandler {
 
 	}
 
+	private void scrollMoved(ScrollEvent e) {
+		if(e.getDeltaY() > 0) {
+			cm.scrollUp();	
+		} else {
+			cm.scrollDown();
+		}
+		
+	}
+	
 }

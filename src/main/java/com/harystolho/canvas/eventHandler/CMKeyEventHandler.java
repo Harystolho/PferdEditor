@@ -37,11 +37,11 @@ public class CMKeyEventHandler {
 	private void keyPress(KeyEvent e) {
 
 		switch (e.getCode()) {
-		case NUMPAD8:
-			cm.scrollUp();
+		case UP:
+			cm.lineUp();
 			return;
-		case NUMPAD2:
-			cm.scrollDown();
+		case DOWN:
+			cm.lineDown();
 			return;
 		case NUMPAD4:
 			cm.scrollLeft();

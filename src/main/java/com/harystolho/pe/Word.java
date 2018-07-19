@@ -81,6 +81,21 @@ public class Word implements Comparable<Word> {
 		updateWordAsString();
 	}
 
+	public void addBeforeChar(char charToAdd, int indexToADd) {
+		if (size == word.length) {
+			resizeWordArray();
+		}
+
+		for (int x = size - 1; x >= indexToADd; x--) { // -2 because it begins at the char before the last char.
+			word[x + 1] = word[x];
+		}
+
+		word[indexToADd] = charToAdd;
+		size++;
+
+		updateWordAsString();
+	}
+
 	public char removeLastChar() {
 
 		char charRemoved = '\0';
@@ -93,6 +108,20 @@ public class Word implements Comparable<Word> {
 		updateWordAsString();
 
 		return charRemoved;
+	}
+
+	public char removeCharAt(int index) {
+		char removed = word[index];
+
+		for (int x = index; x < size - 1; x++) { //
+			word[x] = word[x + 1];
+		}
+
+		word[--size] = '\0';
+
+		updateWordAsString();
+
+		return removed;
 	}
 
 	/**

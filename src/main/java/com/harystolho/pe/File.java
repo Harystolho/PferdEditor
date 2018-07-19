@@ -17,8 +17,7 @@ public class File {
 	private double cursorX;
 	private double cursorY;
 
-	// TRUE when the user types something.
-	private boolean typed;
+	private Word lastWord;
 
 	public File(String name) {
 		this.name = name;
@@ -34,8 +33,6 @@ public class File {
 	public void type(KeyEvent e) {
 
 		synchronized (drawLock) {
-
-			setTyped(true);
 
 			switch (e.getCode()) {
 			case SPACE:
@@ -60,9 +57,7 @@ public class File {
 				return;
 			}
 
-			Word lastWord = new Word(key.charAt(0));
-			setWordPosition(lastWord);
-			addWord(lastWord);
+			addCharToFile(key.charAt(0));
 		}
 
 	}
@@ -72,17 +67,27 @@ public class File {
 		switch (c) {
 		case ' ':
 			words.addLast(new Word(' ', TYPES.SPACE));
+			resetLastWord();
 			return;
 		case '\n':
 			words.addLast(new Word(TYPES.NEW_LINE));
+			resetLastWord();
 			return;
 		case '\t':
 			words.addLast(new Word(TYPES.TAB));
+			resetLastWord();
 			return;
 		default:
 			break;
 		}
-		words.addLast(new Word(c));
+
+		if (lastWord == null) {
+			lastWord = new Word(c);
+			words.addLast(lastWord);
+		} else {
+			lastWord.addChar(c);
+		}
+
 	}
 
 	public void addWord(Word word) {
@@ -94,29 +99,38 @@ public class File {
 
 	public void removeCharAtCursor() {
 
-		if (words.size() <= 0) {
+		if (words.size() == 0) {
 			return;
 		}
 
-		Word wordToRemove = words.get(getCursorX() - 1, getCursorY());
+		Word wordToRemove = words.get(getCursorX() - 1, getCursorY()); // Get the word before the cursor.
 
-		if (wordToRemove == null) {
-			Word wordToRemoveAgain = words.get(getCursorX(), getCursorY());
+		if (wordToRemove == null) { // If it's the beginning of a line, it will return null.
+			removeWordAtTheBeginningOfTheLine(wordToRemove);
+			return;
+		}
 
-			if (wordToRemoveAgain != null) {
-				words.remove(wordToRemoveAgain);
+		double cursorXInWWord = cursorX - wordToRemove.getX(); // Cursor' X in relation to word's X
+		double wordWidthPosition = 0;
+
+		for (int x = 0; x < wordToRemove.getSize(); x++) {
+			char ch = wordToRemove.getWord()[x];
+
+			wordWidthPosition += Word.computeCharWidth(ch);
+
+			if (wordWidthPosition >= cursorXInWWord) {
+				char removed = wordToRemove.removeCharAt(x);
+				updateCursorPosition(removed, false);
+				break;
 			}
-
-			Main.getApplication().getCanvasManager().lineUp();
-			setCursorX(-1);
-
-			return;
 		}
-
-		char charRemoved = wordToRemove.removeLastChar();
 
 		if (wordToRemove.getSize() == 0) {
 			words.remove(wordToRemove);
+
+			if (wordToRemove == lastWord) {
+				lastWord = null;
+			}
 
 			if (wordToRemove.getType() == TYPES.NEW_LINE) {
 				Main.getApplication().getCanvasManager().lineUp();
@@ -124,8 +138,17 @@ public class File {
 			}
 		}
 
-		updateCursorPosition(charRemoved, false);
+	}
 
+	private void removeWordAtTheBeginningOfTheLine(Word wordToRemove) {
+		Word wordToRemoveAgain = words.get(getCursorX(), getCursorY()); // Try to remove the word at the
+		// cursor.
+		if (wordToRemoveAgain != null) {
+			words.remove(wordToRemoveAgain);
+		}
+
+		Main.getApplication().getCanvasManager().lineUp();
+		setCursorX(-1);
 	}
 
 	private void setWordPosition(Word word) {
@@ -183,10 +206,57 @@ public class File {
 
 	}
 
+	private void addCharToFile(char c) {
+
+		Word wrd = words.get(getCursorX(), getCursorY());
+
+		if (wrd != null) {
+			if (wrd.getType() == TYPES.SPACE || wrd.getType() == TYPES.NEW_LINE || wrd.getType() == TYPES.TAB) {
+			} else {
+				addCharToExistingWord(wrd, c);
+				updateCursorPosition(c, true);
+				return;
+			}
+		}
+
+		if (lastWord == null) {
+			Word word = new Word(c);
+			this.lastWord = word;
+
+			setWordPosition(word);
+			addWord(word);
+		} else {
+			lastWord.addChar(c);
+			updateCursorPosition(c, true);
+		}
+
+	}
+
+	private void addCharToExistingWord(Word wrd, char c) {
+		double cursorXInWWord = cursorX - wrd.getX(); // Cursor' X in relation to word's X
+
+		double wordWidthPosition = 0;
+
+		for (int x = 0; x < wrd.getSize(); x++) {
+			char ch = wrd.getWord()[x];
+
+			wordWidthPosition += Word.computeCharWidth(ch);
+
+			if (wordWidthPosition > cursorXInWWord) {
+				wrd.addBeforeChar(c, x);
+				return;
+			}
+		}
+
+		wrd.addChar(c); // Add the char to the end of the word
+
+	}
+
 	private void createSpace() {
 		Word space = new Word(' ', TYPES.SPACE);
 		setWordPosition(space);
 		addWord(space);
+		resetLastWord();
 	}
 
 	private void createNewLine() {
@@ -195,12 +265,18 @@ public class File {
 		addWord(new_line);
 		forceLineDown();
 		setCursorXToZero();
+		resetLastWord();
 	}
 
 	private void createTab() {
 		Word tab = new Word(TYPES.TAB);
 		setWordPosition(tab);
 		addWord(tab);
+		resetLastWord();
+	}
+
+	public void resetLastWord() {
+		lastWord = null;
 	}
 
 	public String getName() {
@@ -235,7 +311,7 @@ public class File {
 				float charWidth = Word.computeCharWidth(c);
 
 				if (wordWidthPosition + charWidth > cursorXInWWord) {
-					if (cursorXInWWord - wordWidthPosition < charWidth - cursorXInWWord) {
+					if (cursorXInWWord - wordWidthPosition <= charWidth / 2) {
 						cursorX -= cursorXInWWord - wordWidthPosition;
 					} else {
 						cursorX += wordWidthPosition + charWidth - cursorXInWWord;
@@ -280,20 +356,16 @@ public class File {
 
 	}
 
-	public boolean isTyped() {
-		return typed;
-	}
-
-	public void setTyped(boolean typed) {
-		this.typed = typed;
-	}
-
 	public String toString() {
 		return name;
 	}
 
 	public Object getDrawLock() {
 		return drawLock;
+	}
+
+	public Word getLastWord() {
+		return lastWord;
 	}
 
 }

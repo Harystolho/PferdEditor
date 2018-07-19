@@ -37,7 +37,7 @@ public class CanvasManager {
 		gc = canvas.getGraphicsContext2D();
 
 		setCursorCount(0);
-		setLineHeight(18);
+		setLineHeight(35);
 
 		StyleLoader.setFont(new Font("Arial", lineHeight - 2));
 		gc.setFont(StyleLoader.getFont());
@@ -51,12 +51,7 @@ public class CanvasManager {
 
 	// TODO don't render when the canvas is not focused.
 	public void update() {
-
 		clear();
-
-		gc.setFill(StyleLoader.getBgColor());
-		gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-
 		draw();
 	}
 
@@ -110,7 +105,8 @@ public class CanvasManager {
 	}
 
 	public void clear() {
-		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		gc.setFill(StyleLoader.getBgColor());
+		gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 	}
 
 	private void drawBackgroundLine() {
@@ -217,10 +213,12 @@ public class CanvasManager {
 		}
 
 		currentFile.setCursorY(getCursorY() - getLineHeight());
+		currentFile.setCursorX(getCursorX()); // Moves the cursor to the end of the life if the line above is shorter.
 	}
 
 	public void lineDown() {
 		currentFile.setCursorY(getCursorY() + getLineHeight());
+		currentFile.setCursorX(getCursorX()); // Moves the cursor to the end of the life if the line below is shorter.
 	}
 
 	public void scrollLeft() {
@@ -247,6 +245,7 @@ public class CanvasManager {
 		if (currentFile != null) {
 			System.out.println(String.format("File - Words: %d | cursorX: %.1f | cursorY: %.1f",
 					currentFile.getWords().size(), currentFile.getCursorX(), currentFile.getCursorY()));
+			System.out.println(String.format("File - lastWord: %s", currentFile.getLastWord()));
 		}
 	}
 
