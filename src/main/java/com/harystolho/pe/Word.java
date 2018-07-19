@@ -86,7 +86,7 @@ public class Word implements Comparable<Word> {
 		char charRemoved = '\0';
 
 		if (size > 0) {
-			charRemoved = word[size-1];
+			charRemoved = word[size - 1];
 			word[--size] = '\0';
 		}
 
@@ -160,6 +160,10 @@ public class Word implements Comparable<Word> {
 	 */
 	public float getDrawingSize() {
 		return drawingSize;
+	}
+
+	public void setDrawingSize(float drawingSize) {
+		this.drawingSize = drawingSize;
 	}
 
 	// TODO change if statement order to improve performance if possible

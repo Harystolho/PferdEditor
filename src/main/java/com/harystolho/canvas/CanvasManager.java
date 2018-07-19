@@ -80,6 +80,7 @@ public class CanvasManager {
 						x = 0;
 						y += getLineHeight();
 
+						wordObj.setX(x);
 						wordObj.setY(y);
 						continue;
 					case TAB:

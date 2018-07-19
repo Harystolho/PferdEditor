@@ -55,9 +55,6 @@ public class CMKeyEventHandler {
 		case F4:
 			System.out.println(cm.getCurrentFile().getWords().toString());
 			return;
-		case ENTER:
-			cm.lineDown();
-			break;
 		default:
 			break;
 		}
