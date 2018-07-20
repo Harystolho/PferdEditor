@@ -222,6 +222,19 @@ public class CanvasManager {
 		currentFile.setCursorX(getCursorX()); // Moves the cursor to the end of the life if the line below is shorter.
 	}
 
+	public void moveCursorLeft() {
+		if(currentFile != null) {
+			currentFile.moveCursorLeft();
+		}
+		
+	}
+
+	public void moveCursorRight() {
+		if(currentFile != null) {
+			currentFile.moveCursorRight();
+		}
+	}
+	
 	public void scrollLeft() {
 		if (scrollX >= SCROLL_CHANGE) {
 			scrollX -= SCROLL_CHANGE;

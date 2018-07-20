@@ -43,6 +43,12 @@ public class CMKeyEventHandler {
 		case DOWN:
 			cm.lineDown();
 			return;
+		case LEFT:
+			cm.moveCursorLeft();
+			return;
+		case RIGHT:
+			cm.moveCursorRight();
+			return;
 		case NUMPAD4:
 			cm.scrollLeft();
 			return;

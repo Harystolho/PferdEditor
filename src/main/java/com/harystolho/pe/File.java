@@ -434,6 +434,66 @@ public class File {
 
 	}
 
+	public void moveCursorLeft() {
+
+		Word word = getWords().get(getCursorX(), getCursorY());
+
+		if (word != null) {
+			double cursorXInWWord = getCursorX() - word.getX(); // Cursor' X in relation to word's X
+			double wordWidthPosition = 0;
+
+			int x = 0;
+			for (x = 0; x < word.getSize(); x++) {
+				wordWidthPosition += Word.computeCharWidth(word.getWord()[x]);
+
+				if (wordWidthPosition > cursorXInWWord) { // If the cursor is in the middle of a word
+					if (getCursorX() > 0) {
+						setCursorX(getCursorX() - Word.computeCharWidth(word.getWord()[x - 1]));
+					}
+					return;
+				}
+			}
+
+			if (getCursorX() > 0) {
+				setCursorX(getCursorX() - Word.computeCharWidth(word.getWord()[x - 1]));
+			} else { // Move line up
+				Main.getApplication().getCanvasManager().lineUp();
+				setCursorX(-1);
+			}
+
+		}
+
+	}
+
+	public void moveCursorRight() {
+		Word word = getWords().get(getCursorX(), getCursorY());
+
+		if (word != null) {
+			double cursorXInWWord = getCursorX() - word.getX(); // Cursor' X in relation to word's X
+			double wordWidthPosition = 0;
+
+			int x = 0;
+			for (x = 0; x < word.getSize(); x++) {
+				wordWidthPosition += Word.computeCharWidth(word.getWord()[x]);
+
+				if (wordWidthPosition > cursorXInWWord) { // If the cursor is in the middle of a word
+					setCursorX(getCursorX() + Word.computeCharWidth(word.getWord()[x]));
+					return;
+				}
+			}
+
+			Word nextWord = getWords().get(word.getX() + word.getDrawingSize() + 1, getCursorY());
+
+			if (nextWord != null) {
+				setCursorX(getCursorX() + Word.computeCharWidth(nextWord.getWord()[0]));
+			} else {
+				Main.getApplication().getCanvasManager().lineDown();
+			}
+
+		}
+	}
+
+	@Override
 	public String toString() {
 		return name;
 	}
