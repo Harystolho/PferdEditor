@@ -195,6 +195,28 @@ public class Word implements Comparable<Word> {
 		this.drawingSize = drawingSize;
 	}
 
+	/**
+	 * Removes all chars after the char at index(inclusive) and add them to another
+	 * {@link Word}. In the end there will be 2 words each one containing a part of
+	 * the initial chars.
+	 * 
+	 * @param ch
+	 * @return The other word
+	 */
+	public Word split(int charIndex) {
+		Word otherWord = new Word(TYPES.NORMAL);
+
+		for (int x = charIndex; x < size; x++) {
+			otherWord.addChar(word[x]);
+			word[x] = '\0';
+		}
+
+		size = size - otherWord.getSize();
+
+		updateWordAsString();
+		return otherWord;
+	}
+
 	// TODO change if statement order to improve performance if possible
 	@Override
 	public int compareTo(Word w) {

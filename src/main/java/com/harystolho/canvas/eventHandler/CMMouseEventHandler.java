@@ -25,11 +25,11 @@ public class CMMouseEventHandler {
 		cm.getCanvas().setOnMouseReleased((e) -> {
 			mouseRelease(e);
 		});
-		
-		cm.getCanvas().setOnScroll((e)->{
+
+		cm.getCanvas().setOnScroll((e) -> {
 			scrollMoved(e);
 		});
-		
+
 	}
 
 	private void mouseRelease(MouseEvent e) {
@@ -48,12 +48,12 @@ public class CMMouseEventHandler {
 	}
 
 	private void scrollMoved(ScrollEvent e) {
-		if(e.getDeltaY() > 0) {
-			cm.scrollUp();	
+		if (e.getDeltaY() > 0) {
+			cm.scrollUp();
 		} else {
 			cm.scrollDown();
 		}
-		
+
 	}
-	
+
 }

@@ -14,8 +14,9 @@ import javafx.scene.text.Font;
 
 public class CanvasManager {
 
-	public static final int CURSOR_DELAY = 15;
+	public static final int CURSOR_DELAY = 8;
 	public static final int TAB_SIZE = 35;
+	public static final int SCROLL_CHANGE = 5;
 
 	private Canvas canvas;
 
@@ -23,8 +24,8 @@ public class CanvasManager {
 
 	private File currentFile;
 
-	private int cursorCount;
-	private int lineHeight; // px
+	private int cursorCount = 0;
+	private int lineHeight; // in pixels
 
 	private int scrollX;
 	private int scrollY;
@@ -36,7 +37,6 @@ public class CanvasManager {
 
 		gc = canvas.getGraphicsContext2D();
 
-		setCursorCount(0);
 		setLineHeight(35);
 
 		StyleLoader.setFont(new Font("Arial", lineHeight - 2));
@@ -55,10 +55,18 @@ public class CanvasManager {
 		draw();
 	}
 
+	public void clear() {
+		gc.setFill(StyleLoader.getBgColor());
+		gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+	}
+
 	public void draw() {
-
 		drawBackgroundLine();
+		drawWords();
+		drawCursor();
+	}
 
+	private void drawWords() {
 		if (currentFile != null) {
 
 			float x = 0;
@@ -99,14 +107,6 @@ public class CanvasManager {
 				}
 			}
 		}
-
-		drawCursor();
-
-	}
-
-	public void clear() {
-		gc.setFill(StyleLoader.getBgColor());
-		gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 	}
 
 	private void drawBackgroundLine() {
@@ -129,14 +129,14 @@ public class CanvasManager {
 
 		if (cursorCount > 0) {
 			gc.setFill(StyleLoader.getCursorColor());
-			gc.fillRect(getCursorX() - scrollX, getCursorY() - lineHeight - scrollY, 2, lineHeight);
+			gc.fillRect(getCursorX() - scrollX, getCursorY() - lineHeight - scrollY, 2, lineHeight); // 2 is cursor's
+																										// width
 		}
 
 	}
 
 	public void initRenderThread() {
 		RenderThread.running = true;
-
 		PEUtils.getExecutor().execute(new RenderThread());
 	}
 
@@ -150,13 +150,14 @@ public class CanvasManager {
 
 	public void setCurrentFile(File currentFile) {
 		this.currentFile = currentFile;
-		updateWordsWidth();
 	}
 
 	/**
 	 * When a file is loaded it calculates each word's width using the default font.
 	 * When the {@link CanvasManager} object is created, it may change the font and
 	 * then It has to recalculate the each word's width again.
+	 * 
+	 * @deprecated it's not needed anymore.
 	 */
 	private void updateWordsWidth() {
 		synchronized (currentFile.getDrawLock()) {
@@ -222,13 +223,13 @@ public class CanvasManager {
 	}
 
 	public void scrollLeft() {
-		if (scrollX >= 5) {
-			scrollX -= 5;
+		if (scrollX >= SCROLL_CHANGE) {
+			scrollX -= SCROLL_CHANGE;
 		}
 	}
 
 	public void scrollRight() {
-		scrollX += 5;
+		scrollX += SCROLL_CHANGE;
 	}
 
 	public void scrollUp() {

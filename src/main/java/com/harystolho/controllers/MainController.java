@@ -84,8 +84,7 @@ public class MainController implements ResizableInterface {
 	}
 
 	/**
-	 * Creates a new {@link com.harystolho.pe.File File} and adds it to
-	 * {@link #fileList}
+	 * Creates a new {@link File} and adds it to {@link #fileList}
 	 */
 	private void createNewFile() {
 		File file = new File("New File" + new Random().nextInt(100));

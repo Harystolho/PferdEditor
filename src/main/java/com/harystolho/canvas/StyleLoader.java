@@ -24,9 +24,7 @@ public class StyleLoader {
 	private static Color cursorColor;
 
 	static {
-
 		peStyleSheet = new PEStyleSheet("file.css");
-
 		loadColors();
 	}
 

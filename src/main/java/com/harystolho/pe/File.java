@@ -62,6 +62,11 @@ public class File {
 
 	}
 
+	/**
+	 * Used when a file is loaded from the system.
+	 * 
+	 * @param c
+	 */
 	public void type(char c) {
 
 		switch (c) {
@@ -92,9 +97,7 @@ public class File {
 
 	public void addWord(Word word) {
 		words.add(word);
-
 		updateCursorPosition(word.getWord()[0], true);
-
 	}
 
 	public void removeCharAtCursor() {
@@ -119,7 +122,7 @@ public class File {
 			wordWidthPosition += Word.computeCharWidth(ch);
 
 			if (wordWidthPosition >= cursorXInWWord) {
-				char removed = wordToRemove.removeCharAt(x);
+				char removed = wordToRemove.removeCharAt(x); // Removes only 1 char in the word
 				updateCursorPosition(removed, false);
 				break;
 			}
@@ -163,13 +166,6 @@ public class File {
 				word.setX((float) cm.getCursorX() + 1);
 				word.setY((float) cm.getCursorY());
 			}
-
-			/*
-			 * if (word.getType() != TYPES.NEW_LINE) { word.setX((float) cm.getCursorX());
-			 * word.setY((float) cm.getCursorY()); } else { word.setX((float)
-			 * cm.getCursorX() - 1); word.setY((float) cm.getCursorY()); }
-			 */
-
 		}
 
 	}
@@ -232,9 +228,14 @@ public class File {
 
 	}
 
+	/**
+	 * Adds this char to an existing word
+	 * 
+	 * @param wrd word
+	 * @param c   char
+	 */
 	private void addCharToExistingWord(Word wrd, char c) {
-		double cursorXInWWord = cursorX - wrd.getX(); // Cursor' X in relation to word's X
-
+		double cursorXInWWord = getCursorX() - wrd.getX(); // Cursor' X in relation to word's X
 		double wordWidthPosition = 0;
 
 		for (int x = 0; x < wrd.getSize(); x++) {
@@ -253,6 +254,45 @@ public class File {
 	}
 
 	private void createSpace() {
+
+		Word wordAtCursor = words.get(getCursorX(), getCursorY());
+
+		if (wordAtCursor != null) {
+			double cursorXInWWord = getCursorX() - wordAtCursor.getX(); // Cursor' X in relation to word's X
+			double wordWidthPosition = 0;
+
+			for (int x = 0; x < wordAtCursor.getSize(); x++) {
+				wordWidthPosition += Word.computeCharWidth(wordAtCursor.getWord()[x]);
+
+				if (wordWidthPosition > cursorXInWWord) { // If the cursor is in the middle of a word
+					createSpaceInTheMiddleOfTheWord(wordAtCursor, x);
+					return;
+				}
+			}
+
+			createSpaceAtTheEndOfTheWord(); // If the cursor is at the and of the word
+
+		} else { // It shouldn't get here, but in case it does
+			createSpaceAtTheEndOfTheWord();
+		}
+
+	}
+
+	private void createSpaceInTheMiddleOfTheWord(Word word, int charIndex) {
+		Word newWord = word.split(charIndex); // Split the current word in 2
+
+		Word space = new Word(' ', TYPES.SPACE);
+		setWordPosition(space);
+		addWord(space);
+
+		newWord.setX(space.getX() + space.getDrawingSize());
+		newWord.setY(word.getY());
+
+		words.add(newWord); // Add new word after space
+		resetLastWord();
+	}
+
+	private void createSpaceAtTheEndOfTheWord() {
 		Word space = new Word(' ', TYPES.SPACE);
 		setWordPosition(space);
 		addWord(space);
@@ -260,6 +300,42 @@ public class File {
 	}
 
 	private void createNewLine() {
+
+		Word wordAtCursor = words.get(getCursorX(), getCursorY());
+
+		if (wordAtCursor != null) {
+			double cursorXInWWord = getCursorX() - wordAtCursor.getX(); // Cursor' X in relation to word's X
+			double wordWidthPosition = 0;
+
+			for (int x = 0; x < wordAtCursor.getSize(); x++) {
+				wordWidthPosition += Word.computeCharWidth(wordAtCursor.getWord()[x]);
+
+				if (wordWidthPosition > cursorXInWWord) { // If the cursor is in the middle of a word
+					createNewLineInTheMiddleOfTheWord(wordAtCursor, x);
+					return;
+				}
+			}
+
+			createNewLineAtTheEndOfTheWord(); // If the cursor is at the and of the word
+
+		} else { // It shouldn't get here, but in case it does
+			createNewLineAtTheEndOfTheWord();
+		}
+	}
+
+	private void createNewLineInTheMiddleOfTheWord(Word word, int charIndex) {
+		Word newWord = word.split(charIndex); // Split the current word in 2
+
+		createNewLineAtTheEndOfTheWord();
+
+		newWord.setX(-1); // Puts it before the first word in that line
+		newWord.setY((float) getCursorY());
+
+		words.add(newWord); // Add new word after space
+		resetLastWord();
+	}
+
+	private void createNewLineAtTheEndOfTheWord() {
 		Word new_line = new Word(TYPES.NEW_LINE);
 		setWordPosition(new_line);
 		addWord(new_line);
@@ -353,6 +429,8 @@ public class File {
 		} else {
 			this.cursorY = biggestY;
 		}
+
+		resetLastWord();
 
 	}
 
