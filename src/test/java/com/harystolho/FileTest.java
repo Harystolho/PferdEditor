@@ -75,11 +75,4 @@ public class FileTest {
 		assertEquals(0, file.getCursorY(), 0);
 	}
 
-	@Test
-	public void setCursor() {
-		file.setCursorX(15);
-
-		assertEquals(15, file.getCursorX(), 0);
-	}
-
 }

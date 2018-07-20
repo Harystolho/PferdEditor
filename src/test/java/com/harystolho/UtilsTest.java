@@ -20,7 +20,7 @@ public class UtilsTest {
 
 	@Test
 	public void checkVersion() {
-		assertEquals(PEUtils.VERSION, "0.2");
+		assertEquals(PEUtils.VERSION, "0.3");
 	}
 
 	@Test(expected = IllegalStateException.class)
