@@ -3,7 +3,6 @@ package com.harystolho.canvas.eventHandler;
 import com.harystolho.canvas.CanvasManager;
 
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 public class CMKeyEventHandler {
@@ -68,6 +67,7 @@ public class CMKeyEventHandler {
 
 		if (cm.getCanvas().isFocused()) {
 			if (cm.getCurrentFile() != null) {
+				e.consume();
 				cm.getCurrentFile().type(e);
 			}
 		}

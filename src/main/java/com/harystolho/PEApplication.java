@@ -68,4 +68,8 @@ public class PEApplication extends Application {
 		launch(args);
 	}
 
+	public Stage getWindow() {
+		return window;
+	}
+
 }

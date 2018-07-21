@@ -1,12 +1,9 @@
 package com.harystolho.utils;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.StringReader;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -16,7 +13,6 @@ import java.util.logging.Logger;
 import com.harystolho.controllers.MainController;
 import com.harystolho.controllers.ResizableInterface;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -77,35 +73,37 @@ public class PEUtils {
 	public static void saveFiles(List<com.harystolho.pe.File> files) {
 		files.stream().forEach((fileToSave) -> {
 			File f = new File(saveFolder + "/" + fileToSave.getName());
-
-			try (FileWriter fw = new FileWriter(f)) {
-				fileToSave.getWords().stream().forEach((word) -> {
-					try {
-						switch (word.getType()) {
-						case NORMAL:
-						case SPACE:
-							fw.write(word.getWordAsString());
-							break;
-						case NEW_LINE:
-							fw.write("\n");
-							break;
-						case TAB:
-							fw.write("\t");
-							break;
-						default:
-							break;
-						}
-
-					} catch (IOException e) {
-						logger.severe("Couldn't write {" + word.getWordAsString() + "} to " + f.getName());
-					}
-				});
-				fw.flush();
-			} catch (IOException e) {
-				logger.severe("Couldn't save file " + f.getName() + " to " + saveFolder.getAbsolutePath());
-			}
-
+			saveFile(fileToSave, f);
 		});
+	}
+
+	public static void saveFile(com.harystolho.pe.File fileToSave, File f) {
+		try (FileWriter fw = new FileWriter(f)) {
+			fileToSave.getWords().stream().forEach((word) -> {
+				try {
+					switch (word.getType()) {
+					case NORMAL:
+					case SPACE:
+						fw.write(word.getWordAsString());
+						break;
+					case NEW_LINE:
+						fw.write("\n");
+						break;
+					case TAB:
+						fw.write("\t");
+						break;
+					default:
+						break;
+					}
+
+				} catch (IOException e) {
+					logger.severe("Couldn't write {" + word.getWordAsString() + "} to " + f.getName());
+				}
+			});
+			fw.flush();
+		} catch (IOException e) {
+			logger.severe("Couldn't save file " + f.getName() + " to " + saveFolder.getAbsolutePath());
+		}
 	}
 
 	public static void loadFiles(MainController controller) {

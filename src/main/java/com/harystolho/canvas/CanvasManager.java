@@ -87,10 +87,10 @@ public class CanvasManager {
 						wordObj.setY(y);
 						continue;
 					case TAB:
-						x += TAB_SIZE;
-
 						wordObj.setX(x);
 						wordObj.setY(y);
+
+						x += TAB_SIZE;
 						continue;
 					default:
 						break;

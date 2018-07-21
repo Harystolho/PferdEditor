@@ -2,6 +2,7 @@ package com.harystolho.controllers;
 
 import java.util.Random;
 
+import com.harystolho.Main;
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.pe.File;
 import com.harystolho.utils.PEUtils;
@@ -11,10 +12,12 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 
 public class MainController implements ResizableInterface {
 
@@ -23,6 +26,33 @@ public class MainController implements ResizableInterface {
 
 	@FXML
 	private MenuBar menuBar;
+
+	@FXML
+	private MenuItem menuNeFile;
+
+	@FXML
+	private MenuItem menuSave;
+
+	@FXML
+	private MenuItem menuSaveAs;
+
+	@FXML
+	private MenuItem menuExit;
+
+	@FXML
+	private MenuItem menuSearch;
+
+	@FXML
+	private MenuItem menuReplace;
+
+	@FXML
+	private MenuItem menuSettings;
+
+	@FXML
+	private MenuItem menuCheckForUpdates;
+
+	@FXML
+	private MenuItem menuAbout;
 
 	@FXML
 	private FlowPane secundaryMenu;
@@ -65,6 +95,8 @@ public class MainController implements ResizableInterface {
 
 	private void loadEventHandlers() {
 
+		loadMenuBarItemHandler();
+
 		fileList.getSelectionModel().selectedItemProperty().addListener((obv, oldValue, newValue) -> {
 			loadFileInCanvas(newValue);
 		});
@@ -84,6 +116,52 @@ public class MainController implements ResizableInterface {
 			fileList.getSelectionModel().clearSelection();
 		});
 
+	}
+
+	/**
+	 * Sets the event handler for items on the menu
+	 */
+	private void loadMenuBarItemHandler() {
+
+		menuNeFile.setOnAction((e) -> {
+			createNewFile();
+		});
+
+		menuSave.setOnAction((e) -> {
+			PEUtils.saveFiles(fileList.getItems());
+		});
+		menuSaveAs.setOnAction((e) -> {
+			saveFileAs(canvasManager.getCurrentFile());
+		});
+		menuExit.setOnAction((e) -> {
+			PEUtils.exit();
+		});
+		menuSearch.setOnAction((e) -> {
+
+		});
+		menuReplace.setOnAction((e) -> {
+
+		});
+		menuSettings.setOnAction((e) -> {
+
+		});
+		menuCheckForUpdates.setOnAction((e) -> {
+
+		});
+
+		menuAbout.setOnAction((e) -> {
+
+		});
+
+	}
+
+	private void saveFileAs(File currentFile) {
+		FileChooser fc = new FileChooser();
+		java.io.File file = fc.showSaveDialog(Main.getApplication().getWindow());
+
+		if (file != null) {
+			PEUtils.saveFile(currentFile, file);
+		}
 	}
 
 	/**

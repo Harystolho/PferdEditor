@@ -228,7 +228,7 @@ public class Word implements Comparable<Word> {
 			if (this.getX() < w.getX()) {
 				return -1;
 			} else {
-				if (this.getX() < w.getX() + w.getDrawingSize()) {
+				if (this.getX() <= w.getX() + w.getDrawingSize()) {
 					return 0;
 				} else {
 					return 1;
@@ -242,7 +242,12 @@ public class Word implements Comparable<Word> {
 	}
 
 	public String toString() {
-		return '"' + getWordAsString() + '"' + " {" + getX() + "," + getY() + "}";
+		if (getType() == TYPES.TAB || getType() == TYPES.NEW_LINE) {
+			return '"' + getType().name() + '"' + " {" + getX() + "," + getY() + "}";
+		} else {
+			return '"' + getWordAsString() + '"' + " {" + getX() + "," + getY() + "}";
+		}
+
 	}
 
 }

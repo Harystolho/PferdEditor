@@ -4,7 +4,6 @@ import com.harystolho.Main;
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.pe.Word.TYPES;
 
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 public class File {
@@ -135,10 +134,18 @@ public class File {
 				lastWord = null;
 			}
 
-			if (wordToRemove.getType() == TYPES.NEW_LINE) {
+			switch (wordToRemove.getType()) {
+			case NEW_LINE:
 				Main.getApplication().getCanvasManager().lineUp();
 				setCursorX(-1);
+				break;
+			case TAB:
+				updateCursorPosition(wordToRemove, false);
+				break;
+			default:
+				break;
 			}
+
 		}
 
 	}
@@ -163,7 +170,7 @@ public class File {
 				word.setX((float) cm.getCursorX() - 1);
 				word.setY((float) cm.getCursorY());
 			} else {
-				word.setX((float) cm.getCursorX() + 1);
+				word.setX((float) cm.getCursorX());
 				word.setY((float) cm.getCursorY());
 			}
 		}
@@ -181,7 +188,7 @@ public class File {
 	}
 
 	/**
-	 * Updates the cursor position.
+	 * Increases/Decreases the cursor position by <code>c</code>'s width
 	 * 
 	 * @param c   the char typed or deleted
 	 * @param add If <code>true</code> it will add the width of this char to the
@@ -202,12 +209,34 @@ public class File {
 
 	}
 
+	/**
+	 * Increases/Decreases the cursor position by <code>word</code>'s
+	 * {@link Word#getDrawingSize() getDrawingSize()}
+	 * 
+	 * @param word the wordth's width
+	 * @param add  If <code>true</code> it will add the width of this char to the
+	 *             cursor X, if <code>false</code> it will subtract.
+	 */
+	public void updateCursorPosition(Word word, boolean add) {
+		if (words.size() == 0) {
+			setCursorX(0);
+			return;
+		}
+
+		if (add) {
+			cursorX = cursorX + word.getDrawingSize();
+		} else {
+			cursorX = cursorX - word.getDrawingSize();
+		}
+	}
+
 	private void addCharToFile(char c) {
 
 		Word wrd = words.get(getCursorX(), getCursorY());
 
 		if (wrd != null) {
 			if (wrd.getType() == TYPES.SPACE || wrd.getType() == TYPES.NEW_LINE || wrd.getType() == TYPES.TAB) {
+				lastWord = null;
 			} else {
 				addCharToExistingWord(wrd, c);
 				updateCursorPosition(c, true);
@@ -347,7 +376,10 @@ public class File {
 	private void createTab() {
 		Word tab = new Word(TYPES.TAB);
 		setWordPosition(tab);
+		tab.setDrawingSize(CanvasManager.TAB_SIZE);
+
 		addWord(tab);
+		updateCursorPosition(tab, true);
 		resetLastWord();
 	}
 
@@ -455,7 +487,9 @@ public class File {
 			}
 
 			if (getCursorX() > 0) {
-				setCursorX(getCursorX() - Word.computeCharWidth(word.getWord()[x - 1]));
+				if (word.getType() != TYPES.TAB) {
+					setCursorX(getCursorX() - Word.computeCharWidth(word.getWord()[x - 1]));
+				}
 			} else { // Move line up
 				Main.getApplication().getCanvasManager().lineUp();
 				setCursorX(-1);
