@@ -261,6 +261,20 @@ public class CanvasManager {
 		scrollY += lineHeight;
 	}
 
+	public void moveCursorToStartOfTheLine() {
+		if (currentFile != null) {
+			setCursorX(0);
+			resetCursorCount();
+		}
+	}
+
+	public void moveCursorToEndOfTheLine() {
+		if (currentFile != null) {
+			setCursorX(-1);
+			resetCursorCount();
+		}
+	}
+
 	public void printDebugMessage() {
 		if (currentFile != null) {
 			System.out.println(String.format("File - Words: %d | cursorX: %.1f | cursorY: %.1f",

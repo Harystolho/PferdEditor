@@ -75,11 +75,11 @@ public class PEUtils {
 	}
 
 	public static void saveFiles(List<com.harystolho.pe.File> files) {
-		files.stream().forEach((file) -> {
-			File f = new File(saveFolder + "/" + file.getName());
+		files.stream().forEach((fileToSave) -> {
+			File f = new File(saveFolder + "/" + fileToSave.getName());
 
 			try (FileWriter fw = new FileWriter(f)) {
-				file.getWords().stream().forEach((word) -> {
+				fileToSave.getWords().stream().forEach((word) -> {
 					try {
 						switch (word.getType()) {
 						case NORMAL:
@@ -87,7 +87,10 @@ public class PEUtils {
 							fw.write(word.getWordAsString());
 							break;
 						case NEW_LINE:
-							fw.write("\r\n");
+							fw.write("\n");
+							break;
+						case TAB:
+							fw.write("\t");
 							break;
 						default:
 							break;

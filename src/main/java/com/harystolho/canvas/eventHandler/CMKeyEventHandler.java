@@ -50,11 +50,11 @@ public class CMKeyEventHandler {
 		case RIGHT:
 			cm.moveCursorRight();
 			return;
-		case NUMPAD4:
-			cm.scrollLeft();
+		case HOME:
+			cm.moveCursorToStartOfTheLine();
 			return;
-		case NUMPAD6:
-			cm.scrollRight();
+		case END:
+			cm.moveCursorToEndOfTheLine();
 			return;
 		case F3:
 			cm.printDebugMessage();
@@ -73,5 +73,5 @@ public class CMKeyEventHandler {
 		}
 
 	}
-	
+
 }
