@@ -65,12 +65,15 @@ public class MainController implements ResizableInterface {
 
 	private void loadEventHandlers() {
 
+		fileList.getSelectionModel().selectedItemProperty().addListener((obv, oldValue, newValue) -> {
+			loadFileInCanvas(newValue);
+		});
 		newFile.setOnMouseClicked((e) -> {
 			createNewFile();
 		});
 
-		fileList.getSelectionModel().selectedItemProperty().addListener((obv, oldValue, newValue) -> {
-			loadFileInCanvas(newValue);
+		saveFile.setOnMouseClicked((e) -> {
+			PEUtils.saveFiles(fileList.getItems());
 		});
 
 		deleteFile.setOnMouseClicked((e) -> {

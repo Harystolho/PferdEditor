@@ -2,8 +2,12 @@ package com.harystolho.utils;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.StringReader;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
@@ -12,6 +16,7 @@ import java.util.logging.Logger;
 import com.harystolho.controllers.MainController;
 import com.harystolho.controllers.ResizableInterface;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -69,6 +74,37 @@ public class PEUtils {
 
 	}
 
+	public static void saveFiles(List<com.harystolho.pe.File> files) {
+		files.stream().forEach((file) -> {
+			File f = new File(saveFolder + "/" + file.getName());
+
+			try (FileWriter fw = new FileWriter(f)) {
+				file.getWords().stream().forEach((word) -> {
+					try {
+						switch (word.getType()) {
+						case NORMAL:
+						case SPACE:
+							fw.write(word.getWordAsString());
+							break;
+						case NEW_LINE:
+							fw.write("\r\n");
+							break;
+						default:
+							break;
+						}
+
+					} catch (IOException e) {
+						logger.severe("Couldn't write {" + word.getWordAsString() + "} to " + f.getName());
+					}
+				});
+				fw.flush();
+			} catch (IOException e) {
+				logger.severe("Couldn't save file " + f.getName() + " to " + saveFolder.getAbsolutePath());
+			}
+
+		});
+	}
+
 	public static void loadFiles(MainController controller) {
 		if (saveFolder.exists()) {
 			for (File file : saveFolder.listFiles()) {
@@ -88,11 +124,10 @@ public class PEUtils {
 
 		com.harystolho.pe.File file = new com.harystolho.pe.File(f.getName());
 
-		try (InputStreamReader isr = new InputStreamReader(new FileInputStream(f))) {
+		try (FileReader fr = new FileReader(f)) {
 
 			int i;
-
-			while ((i = isr.read()) != -1) {
+			while ((i = fr.read()) != -1) {
 				char c = (char) i;
 				file.type(c);
 			}
@@ -113,7 +148,7 @@ public class PEUtils {
 	 * Initializes resources for this application.
 	 */
 	public static void start() {
-		logger.info("Initializing application.");
+		logger.info("Initializing application");
 
 		PEConfiguration.loadProperties();
 

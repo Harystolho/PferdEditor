@@ -176,6 +176,10 @@ public class CanvasManager {
 		cursorCount = count;
 	}
 
+	private void resetCursorCount() {
+		setCursorCount(CURSOR_DELAY);
+	}
+
 	public double getCursorX() {
 		return currentFile.getCursorX();
 	}
@@ -223,18 +227,20 @@ public class CanvasManager {
 	}
 
 	public void moveCursorLeft() {
-		if(currentFile != null) {
+		if (currentFile != null) {
 			currentFile.moveCursorLeft();
+			resetCursorCount();
 		}
-		
+
 	}
 
 	public void moveCursorRight() {
-		if(currentFile != null) {
+		if (currentFile != null) {
 			currentFile.moveCursorRight();
+			resetCursorCount();
 		}
 	}
-	
+
 	public void scrollLeft() {
 		if (scrollX >= SCROLL_CHANGE) {
 			scrollX -= SCROLL_CHANGE;
