@@ -6,6 +6,13 @@ import com.harystolho.pe.Word.TYPES;
 
 import javafx.scene.input.KeyEvent;
 
+/**
+ * A class that behaves similarly to a normal file. It contains a list of the
+ * words that are drawn by the {@link CanvasManager}.
+ * 
+ * @author Harystolho
+ *
+ */
 public class File {
 
 	private Object drawLock;
@@ -16,6 +23,7 @@ public class File {
 	private double cursorX;
 	private double cursorY;
 
+	// Reference to the last typed word
 	private Word lastWord;
 
 	public File(String name) {
@@ -29,6 +37,13 @@ public class File {
 		words = new WordLinkedList();
 	}
 
+	/**
+	 * This method is called when the user presses a key that can be typed in a
+	 * file. For example if the user presses <code>F3</code> this method won't be
+	 * called.
+	 * 
+	 * @param e
+	 */
 	public void type(KeyEvent e) {
 
 		synchronized (drawLock) {
@@ -50,13 +65,7 @@ public class File {
 				break;
 			}
 
-			String key = e.getText();
-
-			if (key.length() <= 0) {
-				return;
-			}
-
-			addCharToFile(key.charAt(0));
+			addKeyToFile(e);
 		}
 
 	}
@@ -105,35 +114,24 @@ public class File {
 			return;
 		}
 
-		Word wordToRemove = words.get(getCursorX() - 1, getCursorY()); // Get the word before the cursor.
+		Word wordToRemove = words.get(getCursorX() - 1, getCursorY()); // Gets the word before the cursor.
 
 		if (wordToRemove == null) { // If it's the beginning of a line, it will return null.
 			removeWordAtTheBeginningOfTheLine(wordToRemove);
 			return;
 		}
 
-		double cursorXInWWord = cursorX - wordToRemove.getX(); // Cursor' X in relation to word's X
-		double wordWidthPosition = 0;
+		removeCharAtCursor(wordToRemove);
 
-		for (int x = 0; x < wordToRemove.getSize(); x++) {
-			char ch = wordToRemove.getWord()[x];
-
-			wordWidthPosition += Word.computeCharWidth(ch);
-
-			if (wordWidthPosition >= cursorXInWWord) {
-				char removed = wordToRemove.removeCharAt(x); // Removes only 1 char in the word
-				updateCursorPosition(removed, false);
-				break;
-			}
-		}
-
-		if (wordToRemove.getSize() == 0) {
+		if (!wordToRemove.hasChars()) {
+			// If the word has no chars left
 			words.remove(wordToRemove);
 
 			if (wordToRemove == lastWord) {
 				lastWord = null;
 			}
 
+			// Updates the cursor position
 			switch (wordToRemove.getType()) {
 			case NEW_LINE:
 				Main.getApplication().getCanvasManager().lineUp();
@@ -150,9 +148,25 @@ public class File {
 
 	}
 
+	private void removeCharAtCursor(Word word) {
+		double cursorXInWWord = getCursorX() - word.getX(); // Cursor' X in relation to word's X
+		double wordWidthPosition = 0;
+
+		for (int x = 0; x < word.getSize(); x++) {
+			char ch = word.getWord()[x];
+
+			wordWidthPosition += Word.computeCharWidth(ch);
+
+			if (wordWidthPosition >= cursorXInWWord) {
+				char removed = word.removeCharAt(x); // Removes only 1 char in the word
+				updateCursorPosition(removed, false);
+				break;
+			}
+		}
+	}
+
 	private void removeWordAtTheBeginningOfTheLine(Word wordToRemove) {
-		Word wordToRemoveAgain = words.get(getCursorX(), getCursorY()); // Try to remove the word at the
-		// cursor.
+		Word wordToRemoveAgain = words.get(getCursorX(), getCursorY()); // Try to remove the word at the cursor
 		if (wordToRemoveAgain != null) {
 			words.remove(wordToRemoveAgain);
 		}
@@ -161,6 +175,11 @@ public class File {
 		setCursorX(-1);
 	}
 
+	/**
+	 * Sets the <code>word</code> position to the cursor position.
+	 * 
+	 * @param word
+	 */
 	private void setWordPosition(Word word) {
 		if (Main.getApplication().getMainController() != null) {
 
@@ -191,8 +210,8 @@ public class File {
 	 * Increases/Decreases the cursor position by <code>c</code>'s width
 	 * 
 	 * @param c   the char typed or deleted
-	 * @param add If <code>true</code> it will add the width of this char to the
-	 *            cursor X, if <code>false</code> it will subtract.
+	 * @param add If <code>true</code> it will add the char's width to cursor X, if
+	 *            <code>false</code> it will subtract.
 	 */
 	public void updateCursorPosition(char c, boolean add) {
 
@@ -213,7 +232,7 @@ public class File {
 	 * Increases/Decreases the cursor position by <code>word</code>'s
 	 * {@link Word#getDrawingSize() getDrawingSize()}
 	 * 
-	 * @param word the wordth's width
+	 * @param word the word's width
 	 * @param add  If <code>true</code> it will add the width of this char to the
 	 *             cursor X, if <code>false</code> it will subtract.
 	 */
@@ -230,6 +249,29 @@ public class File {
 		}
 	}
 
+	private void addKeyToFile(KeyEvent key) {
+		String keyString = key.getText(); // Get String representing this key
+
+		// If SHIFT is pressed, it's keyString.lenght is 0
+		if (keyString.length() <= 0) {
+			return;
+		}
+
+		if (key.isShiftDown()) {
+			addCharToFile(keyString.toUpperCase().charAt(0));
+		} else {
+			addCharToFile(keyString.charAt(0));
+		}
+
+	}
+
+	/**
+	 * Adds the <code>char</code> to this file at the cursor position. If there is a
+	 * word at that position, it will add the char to that word, otherwise it will
+	 * create a new word
+	 * 
+	 * @param c
+	 */
 	private void addCharToFile(char c) {
 
 		Word wrd = words.get(getCursorX(), getCursorY());
@@ -246,7 +288,7 @@ public class File {
 
 		if (lastWord == null) {
 			Word word = new Word(c);
-			this.lastWord = word;
+			lastWord = word;
 
 			setWordPosition(word);
 			addWord(word);

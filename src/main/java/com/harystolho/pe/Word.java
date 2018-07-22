@@ -172,6 +172,10 @@ public class Word implements Comparable<Word> {
 		this.type = type;
 	}
 
+	public boolean hasChars() {
+		return getSize() > 0;
+	}
+	
 	/**
 	 * Updates the word's width
 	 */
