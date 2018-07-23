@@ -207,6 +207,13 @@ public class MainController implements ResizableInterface {
 
 	}
 
+	/**
+	 * @return if a file is selected
+	 */
+	public boolean isFileSelected() {
+		return fileList.getSelectionModel().getSelectedIndices().isEmpty() ? false : true;
+	}
+
 	public Canvas getCanvas() {
 		return canvas;
 	}

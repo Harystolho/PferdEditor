@@ -1,16 +1,17 @@
 package com.harystolho.canvas.eventHandler;
 
+import com.harystolho.Main;
 import com.harystolho.canvas.CanvasManager;
 
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 
-public class CMKeyEventHandler {
+public class PEKeyEventHandler {
 
 	private CanvasManager cm;
 	private Scene scene;
 
-	public CMKeyEventHandler(Scene scene, CanvasManager cm) {
+	public PEKeyEventHandler(Scene scene, CanvasManager cm) {
 		this.cm = cm;
 		this.scene = scene;
 

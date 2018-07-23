@@ -5,11 +5,11 @@ import com.harystolho.canvas.CanvasManager;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 
-public class CMMouseEventHandler {
+public class PEMouseEventHandler {
 
 	private CanvasManager cm;
 
-	public CMMouseEventHandler(CanvasManager cm) {
+	public PEMouseEventHandler(CanvasManager cm) {
 		this.cm = cm;
 
 		init();

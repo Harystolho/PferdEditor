@@ -2,7 +2,7 @@ package com.harystolho.canvas;
 
 import java.util.ListIterator;
 
-import com.harystolho.canvas.eventHandler.CMMouseEventHandler;
+import com.harystolho.canvas.eventHandler.PEMouseEventHandler;
 import com.harystolho.pe.File;
 import com.harystolho.pe.Word;
 import com.harystolho.utils.PEUtils;
@@ -30,7 +30,7 @@ public class CanvasManager {
 	private int scrollX;
 	private int scrollY;
 
-	private CMMouseEventHandler mouseHandler;
+	private PEMouseEventHandler mouseHandler;
 
 	public CanvasManager(Canvas canvas) {
 		this.canvas = canvas;
@@ -45,7 +45,7 @@ public class CanvasManager {
 		scrollX = 0;
 		scrollY = 0;
 
-		mouseHandler = new CMMouseEventHandler(this);
+		mouseHandler = new PEMouseEventHandler(this);
 
 	}
 

@@ -1,7 +1,7 @@
 package com.harystolho;
 
 import com.harystolho.canvas.CanvasManager;
-import com.harystolho.canvas.eventHandler.CMKeyEventHandler;
+import com.harystolho.canvas.eventHandler.PEKeyEventHandler;
 import com.harystolho.controllers.MainController;
 import com.harystolho.utils.PEUtils;
 
@@ -17,7 +17,7 @@ public class PEApplication extends Application {
 
 	private MainController mainController;
 
-	private CMKeyEventHandler keyHandler;
+	private PEKeyEventHandler keyHandler;
 
 	@Override
 	public void start(Stage window) throws Exception {
@@ -39,7 +39,7 @@ public class PEApplication extends Application {
 			PEUtils.exit();
 		});
 
-		keyHandler = new CMKeyEventHandler(scene, mainController.getCanvasManager());
+		keyHandler = new PEKeyEventHandler(scene, mainController.getCanvasManager());
 
 	}
 
