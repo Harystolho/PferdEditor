@@ -40,8 +40,8 @@ public class PEMouseEventHandler {
 	private void mousePressed(MouseEvent e) {
 		cm.getCanvas().requestFocus();
 
-		cm.setCursorY(e.getY()); // setCursorY MUST come first
-		cm.setCursorX(e.getX());
+		cm.setCursorY((float) e.getY()); // setCursorY MUST come first
+		cm.setCursorX((float) e.getX());
 
 		cm.setCursorCount(CanvasManager.CURSOR_DELAY);
 

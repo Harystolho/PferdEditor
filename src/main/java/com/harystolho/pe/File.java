@@ -3,6 +3,7 @@ package com.harystolho.pe;
 import com.harystolho.Main;
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.pe.Word.TYPES;
+import com.harystolho.pe.linkedList.IndexLinkedList;
 
 import javafx.scene.input.KeyEvent;
 
@@ -18,10 +19,10 @@ public class File {
 	private Object drawLock;
 
 	private String name;
-	private WordLinkedList words;
+	private IndexLinkedList<Word> words;
 
-	private double cursorX;
-	private double cursorY;
+	private float cursorX;
+	private float cursorY;
 
 	// Reference to the last typed word
 	private Word lastWord;
@@ -34,7 +35,7 @@ public class File {
 		cursorX = 0;
 		cursorY = 0;
 
-		words = new WordLinkedList();
+		words = new IndexLinkedList<>();
 	}
 
 	/**
@@ -110,7 +111,7 @@ public class File {
 
 	public void removeCharAtCursor() {
 
-		if (words.size() == 0) {
+		if (words.isEmpty()) {
 			return;
 		}
 
@@ -186,7 +187,7 @@ public class File {
 			CanvasManager cm = Main.getApplication().getCanvasManager();
 
 			if (getCursorX() != 0 || word.getType() == TYPES.NEW_LINE) {
-				word.setX((float) cm.getCursorX() - 1);
+				word.setX((float) cm.getCursorX() + 1);
 				word.setY((float) cm.getCursorY());
 			} else {
 				word.setX((float) cm.getCursorX());
@@ -437,19 +438,19 @@ public class File {
 		this.name = name;
 	}
 
-	public WordLinkedList getWords() {
+	public IndexLinkedList<Word> getWords() {
 		return words;
 	}
 
-	public double getCursorX() {
+	public float getCursorX() {
 		return cursorX;
 	}
 
-	public double getCursorY() {
+	public float getCursorY() {
 		return cursorY;
 	}
 
-	public void setCursorX(double cursorX) {
+	public void setCursorX(float cursorX) {
 
 		Word word = getWords().get(cursorX, getCursorY());
 
@@ -488,7 +489,7 @@ public class File {
 
 	}
 
-	public void setCursorY(double cursorY) {
+	public void setCursorY(float cursorY) {
 
 		float biggestY = Main.getApplication().getCanvasManager().getLineHeight();
 

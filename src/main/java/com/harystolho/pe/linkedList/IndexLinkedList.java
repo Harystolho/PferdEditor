@@ -390,6 +390,8 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 	public void remove(E word) {
 		Node middleNode = nodeIndexes.getMiddleIndex().getKey();
 
+		word.setX(word.getX() + 1f);
+
 		switch (word.compareTo(middleNode.getData())) {
 		case -1: // If the word's position is smaller than the middle node's position
 			Node leftNode = middleNode.getLeft();
@@ -431,6 +433,8 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 					}
 					if (rightNode.getRight() != null) {
 						rightNode.getRight().setLeft(rightNode.getLeft());
+					}else { // last node
+						last = rightNode.getLeft();
 					}
 
 					rightNode = null;
@@ -482,18 +486,29 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 		return root;
 	}
 
-	public void printNodes() {
+	public void printDebug() {
+		printNodes();
+		printIndexes();
+	}
+
+	private void printNodes() {
+		System.out.println("---- NODES ------");
 		for (E e : this) {
-			System.out.println(e);
+			System.out.print(e + ", ");
+		}
+		System.out.print("\n");
+	}
+
+	private void printIndexes() {
+		if (nodeIndexes.getMiddleIndex().getKey() != null) {
+			System.out.println("---- INDEXES ------");
+			System.out.println("Middle: " + nodeIndexes.getMiddleIndex().getKey().getData() + " - "
+					+ nodeIndexes.getMiddleIndex().getValue());
 		}
 	}
 
-	public void printDebug() {
+	public void printDebug2() {
 		System.out.println(String.format("Size: %d\n", size));
-		if (nodeIndexes.getMiddleIndex().getKey() != null) {
-			System.out.println(
-					nodeIndexes.getMiddleIndex().getKey().getData() + " - " + nodeIndexes.getMiddleIndex().getValue());
-		}
 		System.out.println("Root: " + root);
 		System.out.println("Last: " + last);
 	}

@@ -43,23 +43,33 @@ public class NodeIndexes<G extends Word> {
 		if (diff > 0) { // Increase index
 			for (int x = 0; x < diff; x++) {
 				Pair<Node, Integer> middleIndex = getMiddleIndex();
-				middleIndex.setValue(middleIndex.getValue() + 1);
 
 				if (beforeMiddleNode) {
-					middleIndex.setKey(middleIndex.getKey().getLeft());
+					if (middleIndex.getKey().getLeft() != null) {
+						middleIndex.setValue(middleIndex.getValue() + 1);
+						middleIndex.setKey(middleIndex.getKey().getLeft());
+					}
 				} else {
-					middleIndex.setKey(middleIndex.getKey().getRight());
+					if (middleIndex.getKey().getRight() != null) {
+						middleIndex.setValue(middleIndex.getValue() + 1);
+						middleIndex.setKey(middleIndex.getKey().getRight());
+					}
 				}
 			}
 		} else if (diff < 0) { // Decrease Index
 			for (int x = 0; x > diff; x--) {
 				Pair<Node, Integer> middleIndex = getMiddleIndex();
-				middleIndex.setValue(middleIndex.getValue() - 1);
 
 				if (beforeMiddleNode) {
-					middleIndex.setKey(middleIndex.getKey().getLeft());
+					if (middleIndex.getKey().getLeft() != null) {
+						middleIndex.setValue(middleIndex.getValue() - 1);
+						middleIndex.setKey(middleIndex.getKey().getLeft());
+					}
 				} else {
-					middleIndex.setKey(middleIndex.getKey().getRight());
+					if (middleIndex.getKey().getRight() != null) {
+						middleIndex.setValue(middleIndex.getValue() - 1);
+						middleIndex.setKey(middleIndex.getKey().getRight());
+					}
 				}
 			}
 		}

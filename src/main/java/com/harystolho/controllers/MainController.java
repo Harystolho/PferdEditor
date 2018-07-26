@@ -89,7 +89,7 @@ public class MainController implements ResizableInterface {
 
 		canvasManager = new CanvasManager(canvas);
 
-		PEUtils.loadFiles(this);
+		// PEUtils.loadFiles(this);
 
 	}
 

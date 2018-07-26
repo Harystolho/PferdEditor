@@ -152,22 +152,6 @@ public class CanvasManager {
 		this.currentFile = currentFile;
 	}
 
-	/**
-	 * When a file is loaded it calculates each word's width using the default font.
-	 * When the {@link CanvasManager} object is created, it may change the font and
-	 * then It has to recalculate the each word's width again.
-	 * 
-	 * @deprecated it's not needed anymore.
-	 */
-	private void updateWordsWidth() {
-		synchronized (currentFile.getDrawLock()) {
-			for (Word word : currentFile.getWords()) {
-				word.updateDrawingSize();
-			}
-		}
-
-	}
-
 	public Canvas getCanvas() {
 		return canvas;
 	}
@@ -180,22 +164,22 @@ public class CanvasManager {
 		setCursorCount(CURSOR_DELAY);
 	}
 
-	public double getCursorX() {
+	public float getCursorX() {
 		return currentFile.getCursorX();
 	}
 
-	public double getCursorY() {
+	public float getCursorY() {
 		return currentFile.getCursorY();
 	}
 
-	public void setCursorX(double x) {
+	public void setCursorX(float x) {
 		if (currentFile != null) {
 			currentFile.setCursorX(x + scrollX);
 		}
 
 	}
 
-	public void setCursorY(double cursorY) {
+	public void setCursorY(float cursorY) {
 		if (currentFile != null) {
 			cursorY += lineHeight - 1 + scrollY; // Centralize on cursor
 
@@ -277,6 +261,7 @@ public class CanvasManager {
 
 	public void printDebugMessage() {
 		if (currentFile != null) {
+			System.out.println("---- DEBUG ------");
 			System.out.println(String.format("File - Words: %d | cursorX: %.1f | cursorY: %.1f",
 					currentFile.getWords().size(), currentFile.getCursorX(), currentFile.getCursorY()));
 			System.out.println(String.format("File - lastWord: %s", currentFile.getLastWord()));

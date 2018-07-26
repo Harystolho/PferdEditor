@@ -59,7 +59,7 @@ public class PEKeyEventHandler {
 			cm.printDebugMessage();
 			return;
 		case F4:
-			System.out.println(cm.getCurrentFile().getWords().toString());
+			cm.getCurrentFile().getWords().printDebug();
 			return;
 		default:
 			break;
