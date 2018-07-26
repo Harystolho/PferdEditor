@@ -39,3 +39,9 @@
 #pane {
     -fx-background-color: #565656;
 }
+
+.label{
+	-fx-text-fill: white;
+	-fx-font-size: 15px;
+    -fx-font-family: "Quicksand";
+}

@@ -399,6 +399,8 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 				if (word.compareTo(leftNode.getData()) == 0) {
 					if (leftNode.getLeft() != null) {
 						leftNode.getLeft().setRight(leftNode.getRight());
+					} else {
+						root = leftNode.getRight();
 					}
 					if (leftNode.getRight() != null) {
 						leftNode.getRight().setLeft(leftNode.getLeft());
@@ -433,7 +435,7 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 					}
 					if (rightNode.getRight() != null) {
 						rightNode.getRight().setLeft(rightNode.getLeft());
-					}else { // last node
+					} else { // last node
 						last = rightNode.getLeft();
 					}
 

@@ -30,7 +30,7 @@ public class NodeIndexes<G extends Word> {
 	}
 
 	public Pair<Node, Integer> getMiddleIndex() {
-		return nodeIndexes.get(1);
+		return nodeIndexes.get(nodeIndexes.size() / 2);
 	}
 
 	// TODO document this

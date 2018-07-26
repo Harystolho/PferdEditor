@@ -9,15 +9,19 @@ import com.harystolho.utils.PEUtils;
 import com.harystolho.utils.RenderThread;
 
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 public class MainController implements ResizableInterface {
 
@@ -100,6 +104,13 @@ public class MainController implements ResizableInterface {
 		fileList.getSelectionModel().selectedItemProperty().addListener((obv, oldValue, newValue) -> {
 			loadFileInCanvas(newValue);
 		});
+
+		fileList.setOnMouseClicked((e) -> {
+			if (e.getButton() == MouseButton.SECONDARY) {
+				renameFile(fileList.getSelectionModel().getSelectedItem());
+			}
+		});
+
 		newFile.setOnMouseClicked((e) -> {
 			createNewFile();
 		});
@@ -130,21 +141,27 @@ public class MainController implements ResizableInterface {
 		menuSave.setOnAction((e) -> {
 			PEUtils.saveFiles(fileList.getItems());
 		});
+
 		menuSaveAs.setOnAction((e) -> {
 			saveFileAs(canvasManager.getCurrentFile());
 		});
+
 		menuExit.setOnAction((e) -> {
 			PEUtils.exit();
 		});
+
 		menuSearch.setOnAction((e) -> {
 
 		});
+
 		menuReplace.setOnAction((e) -> {
 
 		});
+
 		menuSettings.setOnAction((e) -> {
 
 		});
+
 		menuCheckForUpdates.setOnAction((e) -> {
 
 		});
@@ -205,6 +222,27 @@ public class MainController implements ResizableInterface {
 			canvasManager.initRenderThread();
 		}
 
+	}
+
+	/**
+	 * Opens a new window to rename the selected file
+	 * 
+	 * @param selectedItem
+	 */
+	private void renameFile(File selectedItem) {
+		Stage stage = new Stage();
+
+		Parent p = PEUtils.loadFXML("renameFile.fxml", (controller) -> {
+			RenameFileController ctrl = (RenameFileController) controller;
+			ctrl.renameFile(selectedItem);
+			ctrl.setStage(stage);
+		});
+
+		Scene scene = new Scene(p);
+		scene.getStylesheets().add(ClassLoader.getSystemResource("style.css").toExternalForm());
+
+		stage.setScene(scene);
+		stage.show();
 	}
 
 	/**
