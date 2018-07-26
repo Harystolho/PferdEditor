@@ -1,6 +1,5 @@
 package com.harystolho.canvas.eventHandler;
 
-import com.harystolho.Main;
 import com.harystolho.canvas.CanvasManager;
 
 import javafx.scene.Scene;
