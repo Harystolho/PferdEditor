@@ -416,12 +416,16 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 		case 0: // If the word is at the middle node's position
 			if (middleNode.getLeft() != null) {
 				middleNode.getLeft().setRight(middleNode.getRight());
+			} else {
+				root = middleNode.getRight();
 			}
 			if (middleNode.getRight() != null) {
 				middleNode.getRight().setLeft(middleNode.getLeft());
+			} else {
+				last = middleNode.getLeft();
 			}
 
-			middleNode = null;
+			// middleNode = null;
 
 			size--;
 			updateIndexes(true);
@@ -474,6 +478,27 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 		}
 
 		return array;
+	}
+
+	// TODO improve
+	public Word findLastWordIn(float y) {
+		if (size == 0 || root == null) {
+			return null;
+		}
+
+		Word lastWord = new Word(TYPES.NORMAL);
+		lastWord.setX(0f);
+		
+		for (Word w : this) {
+			if (w.getY() == y) {
+				if (w.getX() >= lastWord.getX()) {
+					lastWord = w;
+				}
+			}
+		}
+
+		return lastWord;
+
 	}
 
 	public E getFirst() {

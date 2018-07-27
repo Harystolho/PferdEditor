@@ -106,7 +106,7 @@ public class PEUtils {
 		}
 	}
 
-	public static void loadFiles(MainController controller) {
+	public static void loadFileNames(MainController controller) {
 		if (saveFolder.exists()) {
 			for (File file : saveFolder.listFiles()) {
 				controller.addNewFile(createFileFromSourceFile(file));
@@ -115,29 +115,38 @@ public class PEUtils {
 	}
 
 	/**
-	 * Loads a file from disk, creates a new {@link com.harystolho.pe.File File} and
-	 * adds chars to it.
+	 * Loads the file names from disk but not the content inside it, to load the
+	 * content use {@link #loadFileFromDisk(com.harystolho.pe.File)}
 	 * 
-	 * @param f the file to be read
-	 * @return a <code>File</code> object containing the characters read
+	 * @param f file to be read
+	 * @return a <code>File</code> object containing the file name
 	 */
 	private static com.harystolho.pe.File createFileFromSourceFile(File f) {
-
 		com.harystolho.pe.File file = new com.harystolho.pe.File(f.getName());
-
-		try (FileReader fr = new FileReader(f)) {
-
-			int i;
-			while ((i = fr.read()) != -1) {
-				char c = (char) i;
-				file.type(c);
-			}
-
-		} catch (IOException e) {
-			logger.severe("Couldn't read bytes from " + f.getName());
-		}
+		file.setDiskFile(f);
 
 		return file;
+	}
+
+	public static void loadFileFromDisk(com.harystolho.pe.File file) {
+
+		System.out.println("Loading from disk: " + file.getName());
+
+		if (file.getDiskFile() != null) {
+			try (FileReader fr = new FileReader(file.getDiskFile())) {
+
+				int i;
+				while ((i = fr.read()) != -1) {
+					char c = (char) i;
+					file.type(c);
+				}
+
+			} catch (IOException e) {
+				logger.severe("Couldn't read bytes from " + file.getName());
+			}
+		}
+
+		file.setLoaded(true);
 
 	}
 

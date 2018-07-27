@@ -80,11 +80,11 @@ public class CanvasManager {
 
 					switch (wordObj.getType()) {
 					case NEW_LINE:
-						x = 0;
-						y += getLineHeight();
-
 						wordObj.setX(x);
 						wordObj.setY(y);
+
+						x = 0;
+						y += getLineHeight();
 						continue;
 					case TAB:
 						wordObj.setX(x);

@@ -18,6 +18,9 @@ public class File {
 
 	private Object drawLock;
 
+	private java.io.File diskFile;
+	private boolean isLoaded;
+
 	private String name;
 	private IndexLinkedList<Word> words;
 
@@ -29,6 +32,9 @@ public class File {
 
 	public File(String name) {
 		this.name = name;
+
+		diskFile = null;
+		isLoaded = false;
 
 		drawLock = new Object();
 
@@ -118,7 +124,7 @@ public class File {
 		Word wordToRemove = words.get(getCursorX() - 1, getCursorY()); // Gets the word before the cursor.
 
 		if (wordToRemove == null) { // If it's the beginning of a line, it will return null.
-			removeWordAtTheBeginningOfTheLine(wordToRemove);
+			removeLastWordAtTheLineAbove();
 			return;
 		}
 
@@ -166,10 +172,15 @@ public class File {
 		}
 	}
 
-	private void removeWordAtTheBeginningOfTheLine(Word wordToRemove) {
-		Word wordToRemoveAgain = words.get(getCursorX(), getCursorY()); // Try to remove the word at the cursor
-		if (wordToRemoveAgain != null) {
-			words.remove(wordToRemoveAgain);
+	/**
+	 * If the user presses <code>backspace</code> at the beginning of a line, it has
+	 * to remove the <code>new line</code> at the line above
+	 */
+	private void removeLastWordAtTheLineAbove() {
+		// The new line will always be the last word in a line
+		Word newLine = words.findLastWordIn(getCursorY() - Main.getApplication().getCanvasManager().getLineHeight());
+		if (newLine != null) {
+			words.remove(newLine);
 		}
 
 		Main.getApplication().getCanvasManager().lineUp();
@@ -186,7 +197,7 @@ public class File {
 
 			CanvasManager cm = Main.getApplication().getCanvasManager();
 
-			if (getCursorX() != 0 || word.getType() == TYPES.NEW_LINE) {
+			if (getCursorX() != 0) {
 				word.setX((float) cm.getCursorX() + 1);
 				word.setY((float) cm.getCursorY());
 			} else {
@@ -400,8 +411,8 @@ public class File {
 
 		createNewLineAtTheEndOfTheWord();
 
-		newWord.setX(-1); // Puts it before the first word in that line
-		newWord.setY((float) getCursorY());
+		newWord.setX(0); // Puts it before the first word in that line
+		newWord.setY(getCursorY());
 
 		words.add(newWord); // Add new word after space
 		resetLastWord();
@@ -496,6 +507,10 @@ public class File {
 		if (!words.isEmpty()) {
 			biggestY = words.getLast().getY();
 
+			if (words.getLast().getType() == TYPES.NEW_LINE) {
+				biggestY += Main.getApplication().getCanvasManager().getLineHeight();
+			}
+
 			if (cursorY > biggestY) {
 				this.cursorY = biggestY;
 			} else {
@@ -581,6 +596,22 @@ public class File {
 
 	public Word getLastWord() {
 		return lastWord;
+	}
+
+	public java.io.File getDiskFile() {
+		return diskFile;
+	}
+
+	public void setDiskFile(java.io.File f) {
+		this.diskFile = f;
+	}
+
+	public boolean isLoaded() {
+		return isLoaded;
+	}
+
+	public void setLoaded(boolean loaded) {
+		this.isLoaded = loaded;
 	}
 
 }

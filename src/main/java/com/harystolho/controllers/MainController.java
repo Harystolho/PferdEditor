@@ -93,7 +93,7 @@ public class MainController implements ResizableInterface {
 
 		canvasManager = new CanvasManager(canvas);
 
-		// PEUtils.loadFiles(this);
+		PEUtils.loadFileNames(this);
 
 	}
 
@@ -214,8 +214,10 @@ public class MainController implements ResizableInterface {
 			return;
 		}
 
-		System.out.println("Loading file: " + file.getName());
-
+		if(!file.isLoaded()) {
+			PEUtils.loadFileFromDisk(file);	
+		}
+		
 		canvasManager.setCurrentFile(file);
 
 		if (!RenderThread.isRunning()) {
@@ -237,6 +239,8 @@ public class MainController implements ResizableInterface {
 			ctrl.renameFile(selectedItem);
 			ctrl.setStage(stage);
 		});
+
+		// TODO update list when file name changes
 
 		Scene scene = new Scene(p);
 		scene.getStylesheets().add(ClassLoader.getSystemResource("style.css").toExternalForm());
