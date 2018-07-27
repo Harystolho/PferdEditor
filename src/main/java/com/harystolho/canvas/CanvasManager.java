@@ -104,6 +104,11 @@ public class CanvasManager {
 
 					x += wordObj.getDrawingSize();
 
+					// Stop drawing if it's out of the canvas
+					if (y > canvas.getHeight() + scrollY) {
+						break;
+					}
+
 				}
 			}
 		}

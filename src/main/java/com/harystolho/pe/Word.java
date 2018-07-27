@@ -33,8 +33,8 @@ public class Word implements Comparable<Word> {
 
 		drawingSize = 0f;
 
-		x = 0;
-		y = 0;
+		x = Float.MAX_VALUE;
+		y = Float.MAX_VALUE;
 
 		type = TYPES.NORMAL;
 	}

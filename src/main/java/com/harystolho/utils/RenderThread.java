@@ -5,7 +5,7 @@ import com.harystolho.Main;
 public class RenderThread implements Runnable {
 
 	private static final int FPS = 15;
-	public static boolean running = false;
+	public static volatile boolean running = false;
 
 	@Override
 	public void run() {

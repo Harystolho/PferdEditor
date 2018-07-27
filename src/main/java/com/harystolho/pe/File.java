@@ -27,7 +27,7 @@ public class File {
 	private float cursorX;
 	private float cursorY;
 
-	// Reference to the last typed word
+	// Reference to the last word typed
 	private Word lastWord;
 
 	public File(String name) {
@@ -110,6 +110,11 @@ public class File {
 
 	}
 
+	/**
+	 * Adds word to file and updates the cursor position
+	 * 
+	 * @param word
+	 */
 	public void addWord(Word word) {
 		words.add(word);
 		updateCursorPosition(word.getWord()[0], true);
@@ -123,15 +128,17 @@ public class File {
 
 		Word wordToRemove = words.get(getCursorX() - 1, getCursorY()); // Gets the word before the cursor.
 
-		if (wordToRemove == null) { // If it's the beginning of a line, it will return null.
+		if (wordToRemove == null) { // If it's the beginning of a line, it will return null and will remove the last
+									// word in the line above
 			removeLastWordAtTheLineAbove();
 			return;
 		}
 
+		// Remove the last char in the word
 		removeCharAtCursor(wordToRemove);
 
+		// If the word has no chars left
 		if (!wordToRemove.hasChars()) {
-			// If the word has no chars left
 			words.remove(wordToRemove);
 
 			if (wordToRemove == lastWord) {
@@ -212,10 +219,6 @@ public class File {
 		if (Main.getApplication().getMainController() != null) {
 			cursorY = (getCursorY() + Main.getApplication().getCanvasManager().getLineHeight());
 		}
-	}
-
-	public void setCursorXToZero() {
-		setCursorX(0);
 	}
 
 	/**
@@ -422,8 +425,11 @@ public class File {
 		Word new_line = new Word(TYPES.NEW_LINE);
 		setWordPosition(new_line);
 		addWord(new_line);
+
+		// Move cursor at the beginning of the line below
 		forceLineDown();
-		setCursorXToZero();
+		setCursorX(0);
+
 		resetLastWord();
 	}
 
@@ -457,10 +463,6 @@ public class File {
 		return cursorX;
 	}
 
-	public float getCursorY() {
-		return cursorY;
-	}
-
 	public void setCursorX(float cursorX) {
 
 		Word word = getWords().get(cursorX, getCursorY());
@@ -485,17 +487,8 @@ public class File {
 
 			this.cursorX = cursorX;
 		} else {
-
-			float biggestX = 0;
-
-			for (Word w : words) {
-				if (w.getY() == getCursorY()) {
-					if (w.getX() + w.getDrawingSize() >= biggestX) {
-						biggestX = w.getX() + w.getDrawingSize();
-					}
-				}
-			}
-			this.cursorX = biggestX;
+			Word lastWord = words.findLastWordIn(getCursorY());
+			this.cursorX = lastWord.getX() + lastWord.getDrawingSize();
 		}
 
 	}
@@ -522,6 +515,10 @@ public class File {
 
 		resetLastWord();
 
+	}
+
+	public float getCursorY() {
+		return cursorY;
 	}
 
 	public void moveCursorLeft() {
@@ -606,6 +603,9 @@ public class File {
 		this.diskFile = f;
 	}
 
+	/**
+	 * @return <code>true</code> is the file has already been loaded from disk
+	 */
 	public boolean isLoaded() {
 		return isLoaded;
 	}

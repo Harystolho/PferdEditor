@@ -488,12 +488,14 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 
 		Word lastWord = new Word(TYPES.NORMAL);
 		lastWord.setX(0f);
-		
+
 		for (Word w : this) {
 			if (w.getY() == y) {
-				if (w.getX() >= lastWord.getX()) {
+				if (w.getX() > lastWord.getX()) {
 					lastWord = w;
 				}
+			} else if(w.getY() > y){
+				break;
 			}
 		}
 
