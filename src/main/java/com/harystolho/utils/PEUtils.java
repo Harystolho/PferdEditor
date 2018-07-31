@@ -129,7 +129,6 @@ public class PEUtils {
 	}
 
 	public static void loadFileFromDisk(com.harystolho.pe.File file) {
-
 		System.out.println("Loading from disk: " + file.getName());
 
 		if (file.getDiskFile() != null) {

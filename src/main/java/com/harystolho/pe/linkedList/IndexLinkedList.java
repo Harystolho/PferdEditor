@@ -257,6 +257,7 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 	public void clear() {
 		root = null;
 		last = null;
+		size = 0;
 		nodeIndexes.setNodesAs(null);
 	}
 
@@ -494,7 +495,7 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 				if (w.getX() > lastWord.getX()) {
 					lastWord = w;
 				}
-			} else if(w.getY() > y){
+			} else if (w.getY() > y) {
 				break;
 			}
 		}

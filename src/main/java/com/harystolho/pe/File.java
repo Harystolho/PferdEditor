@@ -89,9 +89,9 @@ public class File {
 			words.addLast(new Word(' ', TYPES.SPACE));
 			resetLastWord();
 			return;
-		case '\r': // Ignore CR LF
+		case '\n': // Ignore
 			return;
-		case '\n':
+		case '\r':
 			words.addLast(new Word(TYPES.NEW_LINE));
 			resetLastWord();
 			return;

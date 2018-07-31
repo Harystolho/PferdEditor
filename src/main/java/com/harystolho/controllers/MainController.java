@@ -126,7 +126,12 @@ public class MainController implements ResizableInterface {
 		});
 
 		refresh.setOnMouseClicked((e) -> {
-			fileList.getSelectionModel().clearSelection();
+			File f = fileList.getSelectionModel().getSelectedItem();
+			if (f != null) {
+				f.setLoaded(false);
+				f.resetLastWord();
+				fileList.getSelectionModel().clearSelection();
+			}
 		});
 
 	}
@@ -217,6 +222,7 @@ public class MainController implements ResizableInterface {
 		}
 
 		if (!file.isLoaded()) {
+			file.getWords().clear();
 			PEUtils.loadFileFromDisk(file);
 		}
 
