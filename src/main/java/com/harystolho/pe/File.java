@@ -89,6 +89,8 @@ public class File {
 			words.addLast(new Word(' ', TYPES.SPACE));
 			resetLastWord();
 			return;
+		case '\r': // Ignore CR LF
+			return;
 		case '\n':
 			words.addLast(new Word(TYPES.NEW_LINE));
 			resetLastWord();
@@ -415,7 +417,7 @@ public class File {
 		createNewLineAtTheEndOfTheWord();
 
 		newWord.setX(word.getX() + word.getDrawingSize());
-		newWord.setY(word.getY());	
+		newWord.setY(word.getY());
 
 		words.add(newWord); // Add new word after space
 		resetLastWord();
@@ -526,7 +528,7 @@ public class File {
 
 	public void moveCursorLeft() {
 
-		Word word = getWords().get(getCursorX()-1, getCursorY());
+		Word word = getWords().get(getCursorX() - 1, getCursorY());
 
 		if (word != null) {
 			double cursorXInWWord = getCursorX() - word.getX(); // Cursor' X in relation to word's X

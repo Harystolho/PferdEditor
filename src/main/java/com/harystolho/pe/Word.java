@@ -224,7 +224,11 @@ public class Word implements Comparable<Word> {
 	// TODO change if statement order to improve performance if possible
 	@Override
 	public int compareTo(Word w) {
-
+		
+		if(this == w) {
+			return 0;
+		}
+		
 		if (this.getY() < w.getY()) {
 			return -1;
 		} else if (this.getY() == w.getY()) {
