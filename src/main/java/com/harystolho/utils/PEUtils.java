@@ -87,7 +87,7 @@ public class PEUtils {
 						fw.write(word.getWordAsString());
 						break;
 					case NEW_LINE:
-						fw.write("\n");
+						fw.write("\r");
 						break;
 					case TAB:
 						fw.write("\t");
