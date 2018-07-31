@@ -414,8 +414,8 @@ public class File {
 
 		createNewLineAtTheEndOfTheWord();
 
-		newWord.setX(0); // Puts it before the first word in that line
-		newWord.setY(getCursorY());
+		newWord.setX(word.getX() + word.getDrawingSize());
+		newWord.setY(word.getY());	
 
 		words.add(newWord); // Add new word after space
 		resetLastWord();
@@ -424,6 +424,7 @@ public class File {
 	private void createNewLineAtTheEndOfTheWord() {
 		Word new_line = new Word(TYPES.NEW_LINE);
 		setWordPosition(new_line);
+		new_line.setX(new_line.getX() - 2);
 		addWord(new_line);
 
 		// Move cursor at the beginning of the line below
@@ -488,7 +489,9 @@ public class File {
 			this.cursorX = cursorX;
 		} else {
 			Word lastWord = words.findLastWordIn(getCursorY());
-			this.cursorX = lastWord.getX() + lastWord.getDrawingSize();
+			if (lastWord != null) {
+				this.cursorX = lastWord.getX() + lastWord.getDrawingSize();
+			}
 		}
 
 	}
@@ -523,7 +526,7 @@ public class File {
 
 	public void moveCursorLeft() {
 
-		Word word = getWords().get(getCursorX(), getCursorY());
+		Word word = getWords().get(getCursorX()-1, getCursorY());
 
 		if (word != null) {
 			double cursorXInWWord = getCursorX() - word.getX(); // Cursor' X in relation to word's X

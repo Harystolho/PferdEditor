@@ -42,7 +42,7 @@ public class CanvasManager {
 		StyleLoader.setFont(new Font("Arial", lineHeight - 2));
 		gc.setFont(StyleLoader.getFont());
 
-		scrollX = 0;
+		scrollX = -2;
 		scrollY = 0;
 
 		mouseHandler = new PEMouseEventHandler(this);
@@ -252,7 +252,7 @@ public class CanvasManager {
 
 	public void moveCursorToStartOfTheLine() {
 		if (currentFile != null) {
-			setCursorX(0);
+			currentFile.setCursorX(0);
 			resetCursorCount();
 		}
 	}

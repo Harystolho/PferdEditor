@@ -175,7 +175,7 @@ public class Word implements Comparable<Word> {
 	public boolean hasChars() {
 		return getSize() > 0;
 	}
-	
+
 	/**
 	 * Updates the word's width
 	 */
@@ -232,7 +232,8 @@ public class Word implements Comparable<Word> {
 			if (this.getX() < w.getX()) {
 				return -1;
 			} else {
-				if (this.getX() <= w.getX() + w.getDrawingSize()) {
+				if (this.getX() < w.getX() + w.getDrawingSize()) {
+			 // if (this.getX() <= w.getX() + w.getDrawingSize()) {
 					return 0;
 				} else {
 					return 1;

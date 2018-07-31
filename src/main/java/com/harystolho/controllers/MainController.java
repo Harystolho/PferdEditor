@@ -7,7 +7,9 @@ import com.harystolho.canvas.CanvasManager;
 import com.harystolho.pe.File;
 import com.harystolho.utils.PEUtils;
 import com.harystolho.utils.RenderThread;
+import com.sun.security.jgss.ExtendedGSSContext;
 
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -214,10 +216,10 @@ public class MainController implements ResizableInterface {
 			return;
 		}
 
-		if(!file.isLoaded()) {
-			PEUtils.loadFileFromDisk(file);	
+		if (!file.isLoaded()) {
+			PEUtils.loadFileFromDisk(file);
 		}
-		
+
 		canvasManager.setCurrentFile(file);
 
 		if (!RenderThread.isRunning()) {
