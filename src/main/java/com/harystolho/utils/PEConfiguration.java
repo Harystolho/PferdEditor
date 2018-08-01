@@ -21,6 +21,7 @@ public class PEConfiguration {
 
 		prop.putIfAbsent("VERSION", PEUtils.VERSION);
 		prop.putIfAbsent("LANG", "EN");
+		prop.putIfAbsent("PROJ_FOLDER", "files");
 
 		saveProperties();
 	}
@@ -49,6 +50,10 @@ public class PEConfiguration {
 
 		loadDefaultProperties();
 
+	}
+
+	public static void setProperty(Object string, Object value) {
+		prop.put(string, value);
 	}
 
 	public static String getProperty(String key) {

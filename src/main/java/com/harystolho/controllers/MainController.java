@@ -1,17 +1,18 @@
 package com.harystolho.controllers;
 
 import java.util.Random;
+import java.util.regex.Pattern;
 
 import com.harystolho.Main;
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.pe.File;
 import com.harystolho.utils.PEUtils;
 import com.harystolho.utils.RenderThread;
-
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -20,6 +21,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -85,6 +87,9 @@ public class MainController implements ResizableInterface {
 	@FXML
 	private ListView<File> fileList;
 
+	@FXML
+	private Label fileDirectory;
+
 	private CanvasManager canvasManager;
 
 	@FXML
@@ -93,7 +98,8 @@ public class MainController implements ResizableInterface {
 
 		canvasManager = new CanvasManager(canvas);
 
-		PEUtils.loadFileNames(this);
+		loadSaveDirectory();
+		setCurrentDirectoryLabel(PEUtils.getSaveFolder());
 
 	}
 
@@ -130,6 +136,10 @@ public class MainController implements ResizableInterface {
 				f.resetLastWord();
 				fileList.getSelectionModel().clearSelection();
 			}
+		});
+
+		fileDirectory.setOnMouseClicked((e) -> {
+			changeDirectory();
 		});
 
 	}
@@ -232,6 +242,14 @@ public class MainController implements ResizableInterface {
 
 	}
 
+	public void setCurrentDirectoryLabel(java.io.File directory) {
+		// Split the full directory name
+		String fullDirName[] = directory.getPath().split(Pattern.quote(java.io.File.separator));
+		// Get only the last part (Eg: C:/file_to/folder/LAST_PART)
+		String lastDirName = fullDirName[fullDirName.length - 1];
+		fileDirectory.setText(lastDirName);
+	}
+
 	/**
 	 * Opens a new window to rename the selected file
 	 * 
@@ -253,6 +271,25 @@ public class MainController implements ResizableInterface {
 
 		stage.setScene(scene);
 		stage.show();
+	}
+
+	/**
+	 * Opens a new window to select the new directory
+	 */
+	private void changeDirectory() {
+		DirectoryChooser dc = new DirectoryChooser();
+		dc.setTitle("Choose the new directory folder");
+		java.io.File newDir = dc.showDialog(Main.getApplication().getWindow());
+		if (newDir != null && newDir.isDirectory()) {
+			PEUtils.setSaveFolder(newDir); // Updates the save folder
+			setCurrentDirectoryLabel(newDir); // Updates the directory label
+			loadSaveDirectory();
+		}
+	}
+
+	private void loadSaveDirectory() {
+		fileList.getItems().clear();
+		PEUtils.loadFileNames(this);
 	}
 
 	/**

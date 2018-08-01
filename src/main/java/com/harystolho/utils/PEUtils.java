@@ -23,7 +23,7 @@ public class PEUtils {
 
 	private static ExecutorService executor = Executors.newFixedThreadPool(1);
 
-	private static final File saveFolder = new File("files");
+	private static File saveFolder;
 
 	public static final String VERSION = "0.3";
 
@@ -72,8 +72,10 @@ public class PEUtils {
 
 	public static void saveFiles(List<com.harystolho.pe.File> files) {
 		files.stream().forEach((fileToSave) -> {
-			File f = new File(saveFolder + "/" + fileToSave.getName());
-			saveFile(fileToSave, f);
+			if (fileToSave.isLoaded()) {
+				File f = new File(saveFolder + "/" + fileToSave.getName());
+				saveFile(fileToSave, f);
+			}
 		});
 	}
 
@@ -109,7 +111,9 @@ public class PEUtils {
 	public static void loadFileNames(MainController controller) {
 		if (saveFolder.exists()) {
 			for (File file : saveFolder.listFiles()) {
-				controller.addNewFile(createFileFromSourceFile(file));
+				if(!file.isDirectory()) {
+					controller.addNewFile(createFileFromSourceFile(file));	
+				}
 			}
 		}
 	}
@@ -149,6 +153,15 @@ public class PEUtils {
 
 	}
 
+	public static File getSaveFolder() {
+		return saveFolder;
+	}
+
+	public static void setSaveFolder(File dir) {
+		saveFolder = dir;
+		PEConfiguration.setProperty("PROJ_FOLDER", dir);
+	}
+
 	public static ExecutorService getExecutor() {
 		return executor;
 	}
@@ -160,6 +173,8 @@ public class PEUtils {
 		logger.info("Initializing application");
 
 		PEConfiguration.loadProperties();
+
+		saveFolder = new File(PEConfiguration.getProperty("PROJ_FOLDER"));
 
 	}
 
