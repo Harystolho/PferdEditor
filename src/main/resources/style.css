@@ -45,3 +45,11 @@
 	-fx-font-size: 15px;
     -fx-font-family: "Quicksand";
 }
+
+.menu-item{
+    -fx-background-color: #565656;
+}
+
+.menu-item:hover{
+    -fx-background-color: #939393;
+}

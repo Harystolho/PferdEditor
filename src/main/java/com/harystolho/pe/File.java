@@ -16,6 +16,7 @@ import javafx.scene.input.KeyEvent;
  */
 public class File {
 
+	// Locked used when modifying the LinkedList
 	private Object drawLock;
 
 	private java.io.File diskFile;
@@ -45,17 +46,15 @@ public class File {
 	}
 
 	/**
-	 * This method is called when the user presses a key that can be typed in a
-	 * file. For example if the user presses <code>F3</code> this method won't be
-	 * called.
+	 * This method is called when the user presses a key that can be turned into a
+	 * character (If the user presses <code>F3</code> this method won't be called)
 	 * 
-	 * @param e
+	 * @param keyEvent
 	 */
-	public void type(KeyEvent e) {
+	public void type(KeyEvent keyEvent) {
 
 		synchronized (drawLock) {
-
-			switch (e.getCode()) {
+			switch (keyEvent.getCode()) {
 			case SPACE:
 				createSpace();
 				return;
@@ -72,7 +71,7 @@ public class File {
 				break;
 			}
 
-			addKeyToFile(e);
+			addKeyToFile(keyEvent);
 		}
 
 	}
@@ -122,6 +121,22 @@ public class File {
 		updateCursorPosition(word.getWord()[0], true);
 	}
 
+	private void addKeyToFile(KeyEvent key) {
+		String keyString = key.getText(); // Get String representing this key
+
+		// If SHIFT is pressed, it's keyString.lenght is 0
+		if (keyString.length() <= 0) {
+			return;
+		}
+
+		if (key.isShiftDown()) {
+			addCharToFile(keyString.toUpperCase().charAt(0));
+		} else {
+			addCharToFile(keyString.charAt(0));
+		}
+
+	}
+
 	public void removeCharAtCursor() {
 
 		if (words.isEmpty()) {
@@ -164,6 +179,11 @@ public class File {
 
 	}
 
+	/**
+	 * Removes the last char of the word and updates the cursor position
+	 * 
+	 * @param word
+	 */
 	private void removeCharAtCursor(Word word) {
 		double cursorXInWWord = getCursorX() - word.getX(); // Cursor' X in relation to word's X
 		double wordWidthPosition = 0;
@@ -264,22 +284,6 @@ public class File {
 		} else {
 			cursorX = cursorX - word.getDrawingSize();
 		}
-	}
-
-	private void addKeyToFile(KeyEvent key) {
-		String keyString = key.getText(); // Get String representing this key
-
-		// If SHIFT is pressed, it's keyString.lenght is 0
-		if (keyString.length() <= 0) {
-			return;
-		}
-
-		if (key.isShiftDown()) {
-			addCharToFile(keyString.toUpperCase().charAt(0));
-		} else {
-			addCharToFile(keyString.charAt(0));
-		}
-
 	}
 
 	/**
