@@ -7,9 +7,7 @@ import com.harystolho.canvas.CanvasManager;
 import com.harystolho.pe.File;
 import com.harystolho.utils.PEUtils;
 import com.harystolho.utils.RenderThread;
-import com.sun.security.jgss.ExtendedGSSContext;
 
-import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

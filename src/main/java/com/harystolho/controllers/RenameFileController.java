@@ -1,8 +1,6 @@
 package com.harystolho.controllers;
 
-import com.harystolho.Main;
 import com.harystolho.pe.File;
-import com.sun.media.jfxmediaimpl.platform.Platform;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

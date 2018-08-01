@@ -6,6 +6,16 @@ import java.util.List;
 import com.harystolho.pe.Word;
 import com.harystolho.pe.linkedList.IndexLinkedList.Node;
 
+/**
+ * This class keeps a reference to the middle node of the linked list (If the
+ * list has 20 elements, it will keep a reference to the 10th node). This is
+ * used to improve efficiency on basic operations. When a node is either removed
+ * or added to the list, the method {@link #update(boolean)} must be called.
+ * 
+ * @author Harystolho
+ *
+ * @param <G>
+ */
 @SuppressWarnings("rawtypes")
 public class NodeIndexes<G extends Word> {
 
@@ -33,7 +43,12 @@ public class NodeIndexes<G extends Word> {
 		return nodeIndexes.get(nodeIndexes.size() / 2);
 	}
 
-	// TODO document this
+	/**
+	 * Updates the middle node's reference.
+	 * 
+	 * @param beforeMiddleNode if the element was added or removed before the middle
+	 *                         node, then <code>true</code>
+	 */
 	public void update(boolean beforeMiddleNode) {
 		// FIRST
 
@@ -47,12 +62,12 @@ public class NodeIndexes<G extends Word> {
 				if (beforeMiddleNode) {
 					if (middleIndex.getKey().getLeft() != null) {
 						middleIndex.setValue(middleIndex.getValue() + 1);
-						middleIndex.setKey(middleIndex.getKey().getLeft());
+						middleIndex.setKey(middleIndex.getKey().getLeft()); // Move reference left
 					}
 				} else {
 					if (middleIndex.getKey().getRight() != null) {
 						middleIndex.setValue(middleIndex.getValue() + 1);
-						middleIndex.setKey(middleIndex.getKey().getRight());
+						middleIndex.setKey(middleIndex.getKey().getRight()); // Move reference right
 					}
 				}
 			}
@@ -63,12 +78,12 @@ public class NodeIndexes<G extends Word> {
 				if (beforeMiddleNode) {
 					if (middleIndex.getKey().getLeft() != null) {
 						middleIndex.setValue(middleIndex.getValue() - 1);
-						middleIndex.setKey(middleIndex.getKey().getLeft());
+						middleIndex.setKey(middleIndex.getKey().getLeft()); // Move reference left
 					}
 				} else {
 					if (middleIndex.getKey().getRight() != null) {
 						middleIndex.setValue(middleIndex.getValue() - 1);
-						middleIndex.setKey(middleIndex.getKey().getRight());
+						middleIndex.setKey(middleIndex.getKey().getRight()); // Move reference right
 					}
 				}
 			}
