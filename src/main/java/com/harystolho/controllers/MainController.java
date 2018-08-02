@@ -110,13 +110,18 @@ public class MainController implements ResizableInterface {
 
 		loadMenuBarItemHandler();
 
-		fileList.getSelectionModel().selectedItemProperty().addListener((obv, oldValue, newValue) -> {
-			loadFileInCanvas(newValue);
-		});
-
 		fileList.setOnMouseClicked((e) -> {
+			PropertiesWindowFactory.removeOpenWindow();
+
 			if (e.getButton() == MouseButton.SECONDARY) {
-				openFileRightClickWindow(fileList.getSelectionModel().getSelectedItem(), e.getSceneX(), e.getSceneY());
+				if (fileList.getSelectionModel().getSelectedItem() != null) {
+					openFileRightClickWindow(fileList.getSelectionModel().getSelectedItem(), e.getSceneX(),
+							e.getSceneY());
+				}
+			} else if (e.getButton() == MouseButton.PRIMARY) {
+				if (e.getClickCount() == 2) {
+					loadFileInCanvas(fileList.getSelectionModel().getSelectedItem());
+				}
 			}
 		});
 

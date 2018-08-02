@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.VBox?>
 
 
-<VBox fx:id="fileRightClick" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="128.0" prefWidth="243.0" xmlns="http://javafx.com/javafx/8.0.181" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.harystolho.controllers.FileRightClickController">
+<VBox fx:id="fileRightClick" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="128.0" prefWidth="152.0" xmlns="http://javafx.com/javafx/8.0.181" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.harystolho.controllers.FileRightClickController">
    <children>
-      <HBox alignment="CENTER_LEFT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="32.0" prefWidth="262.0">
+      <HBox alignment="CENTER_LEFT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="32.0" prefWidth="262.0" styleClass="propLine">
          <children>
             <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
@@ -23,7 +23,7 @@
             </Label>
          </children>
       </HBox>
-      <HBox alignment="CENTER_LEFT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="32.0" prefWidth="262.0">
+      <HBox alignment="CENTER_LEFT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="32.0" prefWidth="262.0" styleClass="propLine">
          <children>
             <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
@@ -37,7 +37,7 @@
             </Label>
          </children>
       </HBox>
-      <HBox alignment="CENTER_LEFT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="32.0" prefWidth="262.0">
+      <HBox alignment="CENTER_LEFT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="32.0" prefWidth="262.0" styleClass="propLine">
          <children>
             <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
@@ -51,7 +51,7 @@
             </Label>
          </children>
       </HBox>
-      <HBox alignment="CENTER_LEFT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="32.0" prefWidth="262.0">
+      <HBox alignment="CENTER_LEFT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="32.0" prefWidth="262.0" styleClass="propLine">
          <children>
             <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>

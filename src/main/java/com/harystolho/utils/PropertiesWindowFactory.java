@@ -32,8 +32,8 @@ public class PropertiesWindowFactory {
 			return;
 		}
 
-		p.setLayoutX(x);
-		p.setLayoutY(y);
+		p.setLayoutX(x + 4); // Open it a little to the right
+		p.setLayoutY(y + 1); // Open it a little down
 
 		((Pane) Main.getApplication().getWindow().getScene().getRoot()).getChildren().add(p);
 		lastNode = p;
@@ -47,7 +47,6 @@ public class PropertiesWindowFactory {
 
 	public static void removeOpenWindow(double x, double y) {
 		if (lastNode != null) {
-			System.out.println(lastNode.prefWidth(0));
 			if (x > lastNode.getLayoutX() && x < lastNode.getLayoutX() + lastNode.prefWidth(0)
 					&& y > lastNode.getLayoutY() && y < lastNode.getLayoutY() + lastNode.prefHeight(0)) {
 

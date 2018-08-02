@@ -55,5 +55,13 @@
 }
 
 #fileRightClick{
-	-fx-background-color: #565656; 
+	-fx-background-color: #fff; 
+}
+
+#fileRightClick .label{
+	-fx-text-fill: black;
+}
+
+.propLine:hover{
+	-fx-background-color: #939393;
 }
