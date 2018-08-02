@@ -27,9 +27,6 @@ public class CanvasManager {
 	private int cursorCount = 0;
 	private int lineHeight; // in pixels
 
-	private int scrollX;
-	private int scrollY;
-
 	private PEMouseEventHandler mouseHandler;
 
 	public CanvasManager(Canvas canvas) {
@@ -41,9 +38,6 @@ public class CanvasManager {
 
 		StyleLoader.setFont(new Font("Arial", lineHeight - 2));
 		gc.setFont(StyleLoader.getFont());
-
-		scrollX = -2;
-		scrollY = 0;
 
 		mouseHandler = new PEMouseEventHandler(this);
 
@@ -97,7 +91,7 @@ public class CanvasManager {
 					}
 
 					gc.setFill(StyleLoader.getTextColor());
-					gc.fillText(wordObj.getWordAsString(), x - scrollX, y - scrollY);
+					gc.fillText(wordObj.getWordAsString(), x - getScrollX(), y - getScrollY());
 
 					wordObj.setX(x);
 					wordObj.setY(y);
@@ -105,7 +99,7 @@ public class CanvasManager {
 					x += wordObj.getDrawingSize();
 
 					// Stop drawing if it's out of the canvas
-					if (y > canvas.getHeight() + scrollY) {
+					if (y > canvas.getHeight() + getScrollY()) {
 						break;
 					}
 
@@ -116,7 +110,7 @@ public class CanvasManager {
 
 	private void drawBackgroundLine() {
 		gc.setFill(StyleLoader.getBackgroundLineColor());
-		gc.fillRect(0, getCursorY() - lineHeight - scrollY, canvas.getWidth(), getLineHeight());
+		gc.fillRect(0, getCursorY() - lineHeight - getScrollY(), canvas.getWidth(), getLineHeight());
 
 	}
 
@@ -134,8 +128,9 @@ public class CanvasManager {
 
 		if (cursorCount > 0) {
 			gc.setFill(StyleLoader.getCursorColor());
-			gc.fillRect(getCursorX() - scrollX, getCursorY() - lineHeight - scrollY, 2, lineHeight); // 2 is cursor's
-																										// width
+			gc.fillRect(getCursorX() - getScrollX(), getCursorY() - lineHeight - getScrollY(), 2, lineHeight); // 2 is
+																												// cursor's
+			// width
 		}
 
 	}
@@ -179,14 +174,14 @@ public class CanvasManager {
 
 	public void setCursorX(float x) {
 		if (currentFile != null) {
-			currentFile.setCursorX(x + scrollX);
+			currentFile.setCursorX(x + getScrollX());
 		}
 
 	}
 
 	public void setCursorY(float cursorY) {
 		if (currentFile != null) {
-			cursorY += lineHeight - 1 + scrollY; // Centralize on cursor
+			cursorY += lineHeight - 1 + getScrollY(); // Centralize on cursor
 
 			currentFile.setCursorY(cursorY - (cursorY % lineHeight));
 		}
@@ -230,26 +225,6 @@ public class CanvasManager {
 		}
 	}
 
-	public void scrollLeft() {
-		if (scrollX >= SCROLL_CHANGE) {
-			scrollX -= SCROLL_CHANGE;
-		}
-	}
-
-	public void scrollRight() {
-		scrollX += SCROLL_CHANGE;
-	}
-
-	public void scrollUp() {
-		if (scrollY >= lineHeight) {
-			scrollY -= lineHeight;
-		}
-	}
-
-	public void scrollDown() {
-		scrollY += lineHeight;
-	}
-
 	public void moveCursorToStartOfTheLine() {
 		if (currentFile != null) {
 			currentFile.setCursorX(0);
@@ -262,6 +237,52 @@ public class CanvasManager {
 			setCursorX(-1);
 			resetCursorCount();
 		}
+	}
+
+	public void scrollLeft() {
+		if (getScrollX() >= SCROLL_CHANGE) {
+			setScrollX(getScrollX() - SCROLL_CHANGE);
+		}
+	}
+
+	public void scrollRight() {
+		setScrollX(getScrollX() + SCROLL_CHANGE);
+	}
+
+	public void scrollUp() {
+		if (getScrollY() >= lineHeight) {
+			setScrollY(getScrollY() - lineHeight);
+		}
+	}
+
+	public void scrollDown() {
+		setScrollY(getScrollY() + lineHeight);
+	}
+
+	public void setScrollX(int x) {
+		if (currentFile != null) {
+			currentFile.setScrollX(x);
+		}
+	}
+
+	public void setScrollY(int y) {
+		if (currentFile != null) {
+			currentFile.setScrollY(y);
+		}
+	}
+
+	public int getScrollX() {
+		if (currentFile != null) {
+			return currentFile.getScrollX();
+		}
+		return 0;
+	}
+
+	public int getScrollY() {
+		if (currentFile != null) {
+			return currentFile.getScrollY();
+		}
+		return 0;
 	}
 
 	public void printDebugMessage() {

@@ -279,18 +279,34 @@ public class MainController implements ResizableInterface {
 	 */
 	private void changeDirectory() {
 		DirectoryChooser dc = new DirectoryChooser();
+
 		dc.setTitle("Choose the new directory folder");
 		java.io.File newDir = dc.showDialog(Main.getApplication().getWindow());
+
 		if (newDir != null && newDir.isDirectory()) {
 			PEUtils.setSaveFolder(newDir); // Updates the save folder
 			setCurrentDirectoryLabel(newDir); // Updates the directory label
-			loadSaveDirectory();
+			loadSaveDirectory(); // Loads the new directory
 		}
 	}
 
 	private void loadSaveDirectory() {
 		fileList.getItems().clear();
-		PEUtils.loadFileNames(this);
+		loadFileNames();
+	}
+
+	/**
+	 * Loads the files name from the current directory
+	 */
+	private void loadFileNames() {
+		java.io.File saveFolder = PEUtils.getSaveFolder();
+		if (saveFolder.exists()) {
+			for (java.io.File file : saveFolder.listFiles()) {
+				if (!file.isDirectory()) {
+					addNewFile(PEUtils.createFileFromSourceFile(file));
+				}
+			}
+		}
 	}
 
 	/**

@@ -1,2 +1,1 @@
-# PferdEditor
-A Text Editor
+# PferdEditorA simple text editor built in Java

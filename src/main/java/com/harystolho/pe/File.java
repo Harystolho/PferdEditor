@@ -28,8 +28,10 @@ public class File {
 	private float cursorX;
 	private float cursorY;
 
-	// Reference to the last word typed
-	private Word lastWord;
+	private int scrollX;
+	private int scrollY;
+
+	private Word lastWordTyped;
 
 	public File(String name) {
 		this.name = name;
@@ -41,6 +43,9 @@ public class File {
 
 		cursorX = 0;
 		cursorY = 0;
+
+		scrollX = -2;
+		scrollY = 0;
 
 		words = new IndexLinkedList<>();
 	}
@@ -102,11 +107,11 @@ public class File {
 			break;
 		}
 
-		if (lastWord == null) {
-			lastWord = new Word(c);
-			words.addLast(lastWord);
+		if (lastWordTyped == null) {
+			lastWordTyped = new Word(c);
+			words.addLast(lastWordTyped);
 		} else {
-			lastWord.addChar(c);
+			lastWordTyped.addChar(c);
 		}
 
 	}
@@ -138,7 +143,6 @@ public class File {
 	}
 
 	public void removeCharAtCursor() {
-
 		if (words.isEmpty()) {
 			return;
 		}
@@ -158,8 +162,8 @@ public class File {
 		if (!wordToRemove.hasChars()) {
 			words.remove(wordToRemove);
 
-			if (wordToRemove == lastWord) {
-				lastWord = null;
+			if (wordToRemove == lastWordTyped) {
+				lastWordTyped = null;
 			}
 
 			// Updates the cursor position
@@ -213,7 +217,7 @@ public class File {
 		}
 
 		Main.getApplication().getCanvasManager().lineUp();
-		setCursorX(-1);
+		setCursorX(-1); // Sets cursor to the end of the line
 	}
 
 	/**
@@ -299,7 +303,7 @@ public class File {
 
 		if (wrd != null) {
 			if (wrd.getType() == TYPES.SPACE || wrd.getType() == TYPES.NEW_LINE || wrd.getType() == TYPES.TAB) {
-				lastWord = null;
+				lastWordTyped = null;
 			} else {
 				addCharToExistingWord(wrd, c);
 				updateCursorPosition(c, true);
@@ -307,14 +311,14 @@ public class File {
 			}
 		}
 
-		if (lastWord == null) {
+		if (lastWordTyped == null) {
 			Word word = new Word(c);
-			lastWord = word;
+			lastWordTyped = word;
 
 			setWordPosition(word);
 			addWord(word);
 		} else {
-			lastWord.addChar(c);
+			lastWordTyped.addChar(c);
 			updateCursorPosition(c, true);
 		}
 
@@ -451,7 +455,7 @@ public class File {
 	}
 
 	public void resetLastWord() {
-		lastWord = null;
+		lastWordTyped = null;
 	}
 
 	public String getName() {
@@ -470,6 +474,14 @@ public class File {
 		return cursorX;
 	}
 
+	/**
+	 * Sets the cursor's x position to the beginning or end of a char position. If
+	 * the user clicks near the beginning of a char, it will place the cursor at the
+	 * beginning of the char.
+	 * 
+	 * @param cursorX if -1 will set the cursor's position to the end of the line
+	 *                otherwise near <code>cursorX</code>
+	 */
 	public void setCursorX(float cursorX) {
 
 		Word word = getWords().get(cursorX, getCursorY());
@@ -601,7 +613,7 @@ public class File {
 	}
 
 	public Word getLastWord() {
-		return lastWord;
+		return lastWordTyped;
 	}
 
 	public java.io.File getDiskFile() {
@@ -621,6 +633,22 @@ public class File {
 
 	public void setLoaded(boolean loaded) {
 		this.isLoaded = loaded;
+	}
+
+	public int getScrollX() {
+		return scrollX;
+	}
+
+	public void setScrollX(int scrollX) {
+		this.scrollX = scrollX;
+	}
+
+	public int getScrollY() {
+		return scrollY;
+	}
+
+	public void setScrollY(int scrollY) {
+		this.scrollY = scrollY;
 	}
 
 }

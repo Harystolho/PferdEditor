@@ -30,7 +30,7 @@ public class PEUtils {
 	/**
 	 * Loads a FXML File.
 	 * 
-	 * @param file       full file name. (Eg: main.fxml)
+	 * @param file       file name with extension. (Eg: main.fxml)
 	 * @param controller a consumer interface that will accept the controller
 	 * @return the <code>Parent</code> object containing the file, or
 	 *         <code>null</code> if it can't find the file.
@@ -108,16 +108,6 @@ public class PEUtils {
 		}
 	}
 
-	public static void loadFileNames(MainController controller) {
-		if (saveFolder.exists()) {
-			for (File file : saveFolder.listFiles()) {
-				if(!file.isDirectory()) {
-					controller.addNewFile(createFileFromSourceFile(file));	
-				}
-			}
-		}
-	}
-
 	/**
 	 * Loads the file names from disk but not the content inside it, to load the
 	 * content use {@link #loadFileFromDisk(com.harystolho.pe.File)}
@@ -125,7 +115,7 @@ public class PEUtils {
 	 * @param f file to be read
 	 * @return a <code>File</code> object containing the file name
 	 */
-	private static com.harystolho.pe.File createFileFromSourceFile(File f) {
+	public static com.harystolho.pe.File createFileFromSourceFile(File f) {
 		com.harystolho.pe.File file = new com.harystolho.pe.File(f.getName());
 		file.setDiskFile(f);
 
@@ -159,7 +149,7 @@ public class PEUtils {
 
 	public static void setSaveFolder(File dir) {
 		saveFolder = dir;
-		PEConfiguration.setProperty("PROJ_FOLDER", dir);
+		PEConfiguration.setProperty("PROJ_FOLDER", dir.getAbsolutePath());
 	}
 
 	public static ExecutorService getExecutor() {
@@ -182,6 +172,8 @@ public class PEUtils {
 		logger.info("Closing application.");
 
 		executor.shutdown();
+
+		PEConfiguration.saveProperties();
 
 		RenderThread.stop();
 	}
