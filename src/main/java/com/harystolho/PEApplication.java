@@ -2,6 +2,7 @@ package com.harystolho;
 
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.canvas.eventHandler.PEKeyEventHandler;
+import com.harystolho.canvas.eventHandler.PEMouseEventHandler;
 import com.harystolho.controllers.MainController;
 import com.harystolho.utils.PEUtils;
 
@@ -18,6 +19,7 @@ public class PEApplication extends Application {
 	private MainController mainController;
 
 	private PEKeyEventHandler keyHandler;
+	private PEMouseEventHandler mouseHandler;
 
 	@Override
 	public void start(Stage window) throws Exception {
@@ -40,6 +42,7 @@ public class PEApplication extends Application {
 		});
 
 		keyHandler = new PEKeyEventHandler(scene, mainController.getCanvasManager());
+		mouseHandler = new PEMouseEventHandler(scene);
 
 	}
 

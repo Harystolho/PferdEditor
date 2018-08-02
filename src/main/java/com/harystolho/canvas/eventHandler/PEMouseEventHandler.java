@@ -1,58 +1,45 @@
 package com.harystolho.canvas.eventHandler;
 
-import com.harystolho.canvas.CanvasManager;
+import com.harystolho.utils.PropertiesWindowFactory;
 
+import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 
 public class PEMouseEventHandler {
 
-	private CanvasManager cm;
+	private Scene scene;
 
-	public PEMouseEventHandler(CanvasManager cm) {
-		this.cm = cm;
-
+	public PEMouseEventHandler(Scene scene) {
+		this.scene = scene;
 		init();
-
 	}
 
 	private void init() {
 
-		cm.getCanvas().setOnMousePressed((e) -> {
+		scene.setOnMousePressed((e) -> {
 			mousePressed(e);
 		});
 
-		cm.getCanvas().setOnMouseReleased((e) -> {
+		scene.setOnMouseReleased((e) -> {
 			mouseRelease(e);
 		});
 
-		cm.getCanvas().setOnScroll((e) -> {
+		scene.setOnScroll((e) -> {
 			scrollMoved(e);
 		});
 
 	}
 
 	private void mouseRelease(MouseEvent e) {
-		cm.getCanvas().requestFocus();
 
 	}
 
 	private void mousePressed(MouseEvent e) {
-		cm.getCanvas().requestFocus();
-
-		cm.setCursorY((float) e.getY()); // setCursorY MUST come first
-		cm.setCursorX((float) e.getX());
-
-		cm.setCursorCount(CanvasManager.CURSOR_DELAY);
-
+		PropertiesWindowFactory.removeOpenWindow(e.getSceneX(), e.getSceneY());
 	}
 
 	private void scrollMoved(ScrollEvent e) {
-		if (e.getDeltaY() > 0) {
-			cm.scrollUp();
-		} else {
-			cm.scrollDown();
-		}
 
 	}
 

@@ -10,7 +10,6 @@ import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 
-import com.harystolho.controllers.MainController;
 import com.harystolho.controllers.ResizableInterface;
 
 import javafx.fxml.FXMLLoader;

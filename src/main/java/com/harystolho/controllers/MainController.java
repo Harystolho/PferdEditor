@@ -7,7 +7,10 @@ import com.harystolho.Main;
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.pe.File;
 import com.harystolho.utils.PEUtils;
+import com.harystolho.utils.PropertiesWindowFactory;
+import com.harystolho.utils.PropertiesWindowFactory.window_type;
 import com.harystolho.utils.RenderThread;
+
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -23,7 +26,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
 public class MainController implements ResizableInterface {
@@ -114,7 +116,7 @@ public class MainController implements ResizableInterface {
 
 		fileList.setOnMouseClicked((e) -> {
 			if (e.getButton() == MouseButton.SECONDARY) {
-				renameFile(fileList.getSelectionModel().getSelectedItem());
+				openFileRightClickWindow(fileList.getSelectionModel().getSelectedItem(), e.getSceneX(), e.getSceneY());
 			}
 		});
 
@@ -272,6 +274,13 @@ public class MainController implements ResizableInterface {
 
 		stage.setScene(scene);
 		stage.show();
+	}
+
+	private void openFileRightClickWindow(File file, double x, double y) {
+		PropertiesWindowFactory.get(window_type.FILE, x, y, (controller) -> {
+
+		});
+
 	}
 
 	/**
