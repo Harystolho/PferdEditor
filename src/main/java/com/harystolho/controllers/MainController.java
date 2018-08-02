@@ -113,14 +113,15 @@ public class MainController implements ResizableInterface {
 		fileList.setOnMouseClicked((e) -> {
 			PropertiesWindowFactory.removeOpenWindow();
 
-			if (e.getButton() == MouseButton.SECONDARY) {
+			if (e.getButton() == MouseButton.PRIMARY) {
+				if (e.getClickCount() == 2) { // Double click
+					loadFileInCanvas(fileList.getSelectionModel().getSelectedItem());
+				}
+			} else if (e.getButton() == MouseButton.SECONDARY) {
 				if (fileList.getSelectionModel().getSelectedItem() != null) {
+					// Opens right click propeties window
 					openFileRightClickWindow(fileList.getSelectionModel().getSelectedItem(), e.getSceneX(),
 							e.getSceneY());
-				}
-			} else if (e.getButton() == MouseButton.PRIMARY) {
-				if (e.getClickCount() == 2) {
-					loadFileInCanvas(fileList.getSelectionModel().getSelectedItem());
 				}
 			}
 		});
@@ -281,8 +282,16 @@ public class MainController implements ResizableInterface {
 		stage.show();
 	}
 
+	/**
+	 * Opens a properties window( this is the window that opens when you press right
+	 * click) at the cursor's position
+	 * 
+	 * @param file
+	 * @param x
+	 * @param y
+	 */
 	private void openFileRightClickWindow(File file, double x, double y) {
-		PropertiesWindowFactory.get(window_type.FILE, x, y, (controller) -> {
+		PropertiesWindowFactory.open(window_type.FILE, x, y, (controller) -> {
 
 		});
 
