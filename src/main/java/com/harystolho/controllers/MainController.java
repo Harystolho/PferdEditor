@@ -17,8 +17,6 @@ import com.harystolho.utils.PropertiesWindowFactory.window_type;
 import com.harystolho.utils.RenderThread;
 
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -31,7 +29,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 public class MainController implements ResizableInterface {
 

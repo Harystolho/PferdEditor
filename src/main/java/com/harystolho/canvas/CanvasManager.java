@@ -157,7 +157,9 @@ public class CanvasManager {
 	}
 
 	public void setCursorCount(int count) {
-		cursorCount = count;
+		if (count > 0) {
+			cursorCount = count;
+		}
 	}
 
 	private void resetCursorCount() {

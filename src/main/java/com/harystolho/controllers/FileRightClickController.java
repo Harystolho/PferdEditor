@@ -3,7 +3,6 @@ package com.harystolho.controllers;
 import com.harystolho.pe.File;
 import com.harystolho.utils.PEUtils;
 import com.harystolho.utils.PropertiesWindowFactory;
-import com.sun.javafx.tk.Toolkit;
 
 import javafx.fxml.FXML;
 import javafx.scene.Parent;

@@ -16,11 +16,12 @@ public class UtilsTest {
 	@Before
 	public void init() {
 		new JFXPanel();
+		PEUtils.start();
 	}
 
 	@Test
 	public void checkVersion() {
-		assertEquals(PEUtils.VERSION, "0.3");
+		assertEquals(PEUtils.VERSION, "0.4");
 	}
 
 	@Test(expected = IllegalStateException.class)

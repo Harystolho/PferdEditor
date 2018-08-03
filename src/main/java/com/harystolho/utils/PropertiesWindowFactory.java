@@ -2,8 +2,6 @@ package com.harystolho.utils;
 
 import java.util.function.Consumer;
 
-import com.harystolho.Main;
-
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 
