@@ -5,6 +5,7 @@ import com.harystolho.canvas.eventHandler.PEKeyEventHandler;
 import com.harystolho.canvas.eventHandler.PEMouseEventHandler;
 import com.harystolho.controllers.MainController;
 import com.harystolho.utils.PEUtils;
+import com.harystolho.utils.PropertiesWindowFactory;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -31,6 +32,8 @@ public class PEApplication extends Application {
 
 		loadMainScene();
 
+		PropertiesWindowFactory.setMainPane(Main.getApplication().getWindow().getScene().getRoot());
+		
 		loadEventHandlers();
 
 		window.show();

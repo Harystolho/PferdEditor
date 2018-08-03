@@ -1,5 +1,10 @@
 package com.harystolho.controllers;
 
+import java.awt.Desktop;
+import java.awt.Desktop.Action;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Random;
 import java.util.regex.Pattern;
 
@@ -103,7 +108,6 @@ public class MainController implements ResizableInterface {
 
 		loadSaveDirectory();
 		setCurrentDirectoryLabel(PEUtils.getSaveFolder());
-
 	}
 
 	private void loadEventHandlers() {
@@ -171,6 +175,7 @@ public class MainController implements ResizableInterface {
 		});
 
 		menuExit.setOnAction((e) -> {
+			Main.getApplication().getWindow().close();
 			PEUtils.exit();
 		});
 
@@ -191,8 +196,20 @@ public class MainController implements ResizableInterface {
 		});
 
 		menuAbout.setOnAction((e) -> {
-
+			openAboutPage();
 		});
+
+	}
+
+	private void openAboutPage() {
+		Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+		if (desktop != null && desktop.isSupported(Action.BROWSE)) {
+			try {
+				desktop.browse(new URI("https://github.com/Harystolho/PferdEditor"));
+			} catch (IOException | URISyntaxException e) {
+				System.out.println("Couldn't open github link");
+			}
+		}
 
 	}
 
@@ -260,29 +277,6 @@ public class MainController implements ResizableInterface {
 	}
 
 	/**
-	 * Opens a new window to rename the selected file
-	 * 
-	 * @param selectedItem
-	 */
-	private void renameFile(File selectedItem) {
-		Stage stage = new Stage();
-
-		Parent p = PEUtils.loadFXML("renameFile.fxml", (controller) -> {
-			RenameFileController ctrl = (RenameFileController) controller;
-			ctrl.renameFile(selectedItem);
-			ctrl.setStage(stage);
-		});
-
-		// TODO update list when file name changes
-
-		Scene scene = new Scene(p);
-		scene.getStylesheets().add(ClassLoader.getSystemResource("style.css").toExternalForm());
-
-		stage.setScene(scene);
-		stage.show();
-	}
-
-	/**
 	 * Opens a properties window( this is the window that opens when you press right
 	 * click) at the cursor's position
 	 * 
@@ -292,9 +286,9 @@ public class MainController implements ResizableInterface {
 	 */
 	private void openFileRightClickWindow(File file, double x, double y) {
 		PropertiesWindowFactory.open(window_type.FILE, x, y, (controller) -> {
-
+			FileRightClickController fileController = (FileRightClickController) controller;
+			fileController.setFile(file);
 		});
-
 	}
 
 	/**
