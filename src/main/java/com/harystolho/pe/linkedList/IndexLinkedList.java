@@ -159,7 +159,13 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 			case 0: // If the word is at the same position as the middle node, insert it after the
 					// middle node
 				node.setRight(middleNode.getRight());
-				middleNode.getRight().setLeft(node);
+				
+				if(middleNode.getRight() != null) {
+					middleNode.getRight().setLeft(node);
+				} else {
+					last = node;
+				}
+				
 				middleNode.setRight(node);
 				node.setLeft(middleNode);
 				size++;
@@ -492,7 +498,7 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 
 		for (Word w : this) {
 			if (w.getY() == y) {
-				if (w.getX() > lastWord.getX()) {
+				if (w.getX() >= lastWord.getX()) {
 					lastWord = w;
 				}
 			} else if (w.getY() > y) {

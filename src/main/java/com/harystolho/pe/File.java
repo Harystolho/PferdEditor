@@ -406,8 +406,13 @@ public class File {
 			for (int x = 0; x < wordAtCursor.getSize(); x++) {
 				wordWidthPosition += Word.computeCharWidth(wordAtCursor.getWord()[x]);
 
-				if (wordWidthPosition > cursorXInWWord) { // If the cursor is in the middle of a word
-					createNewLineInTheMiddleOfTheWord(wordAtCursor, x);
+				if (wordWidthPosition > cursorXInWWord) {
+					if (x > 0) {
+						createNewLineInTheMiddleOfTheWord(wordAtCursor, x);// If the cursor is in the middle of a word
+					} else {
+						createNewLineAtTheEndOfTheWord(); // If the cursor is at the beginning of a word
+					}
+
 					return;
 				}
 			}
