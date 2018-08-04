@@ -9,3 +9,7 @@
 #background {
     background-color: #404040;
 }
+
+#pane{
+    -fx-background-color: #565656;
+}

@@ -403,6 +403,7 @@ public class File {
 			double cursorXInWWord = getCursorX() - wordAtCursor.getX(); // Cursor' X in relation to word's X
 			double wordWidthPosition = 0;
 
+			// Loops through the chars in the word
 			for (int x = 0; x < wordAtCursor.getSize(); x++) {
 				wordWidthPosition += Word.computeCharWidth(wordAtCursor.getWord()[x]);
 
@@ -656,4 +657,6 @@ public class File {
 		this.scrollY = scrollY;
 	}
 
+	
+	
 }

@@ -7,7 +7,6 @@ import org.junit.Test;
 
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.pe.File;
-import com.sun.webkit.graphics.RenderTheme;
 
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.canvas.Canvas;

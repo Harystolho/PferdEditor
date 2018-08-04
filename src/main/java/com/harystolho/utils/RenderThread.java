@@ -27,7 +27,7 @@ public class RenderThread implements Runnable {
 
 		}
 
-		Main.getApplication().getMainController().getCanvasManager().clear();
+		Main.getApplication().getMainController().getCanvasManager().makeCanvasTransparent();
 
 	}
 

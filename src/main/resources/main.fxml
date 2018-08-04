@@ -11,6 +11,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -77,19 +78,24 @@
             </ImageView>
          </children>
 		</FlowPane>
-      <VBox fx:id="canvasBox" layoutX="238.0" layoutY="57.0" prefHeight="663.0" prefWidth="1035.0">
+      <VBox fx:id="canvasBox" layoutX="238.0" layoutY="59.0" prefHeight="663.0" prefWidth="1035.0">
          <children>
-      		<Canvas fx:id="canvas" height="634.0" width="1033.0">
+            <HBox fx:id="filesTab" prefHeight="24.0" prefWidth="1035.0">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </HBox>
+      		<Canvas fx:id="canvas" height="610.0" width="1033.0">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
                <cursor>
-                  <Cursor fx:constant="TEXT" />
+                  <Cursor fx:constant="DEFAULT" />
                </cursor></Canvas>
             <Pane fx:id="canvasInformationBar" prefHeight="25.0" prefWidth="1033.0" />
          </children>
       </VBox>
-      <ListView fx:id="fileList" layoutX="12.0" layoutY="93.0" prefHeight="362.0" prefWidth="227.0" />
+      <ListView fx:id="fileList" layoutX="12.0" layoutY="93.0" prefHeight="362.0" prefWidth="215.0" />
       <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="8.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@icons/folder.png" />

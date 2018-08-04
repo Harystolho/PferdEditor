@@ -65,3 +65,7 @@
 .propLine:hover{
 	-fx-background-color: #939393;
 }
+
+.fileTabItem{
+	-fx-background-color: red;
+}

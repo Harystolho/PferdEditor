@@ -5,6 +5,8 @@ import java.awt.Desktop.Action;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Iterator;
+import java.util.ListIterator;
 import java.util.Random;
 import java.util.regex.Pattern;
 
@@ -17,6 +19,9 @@ import com.harystolho.utils.PropertiesWindowFactory.window_type;
 import com.harystolho.utils.RenderThread;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -25,6 +30,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
@@ -81,6 +87,9 @@ public class MainController implements ResizableInterface {
 	private ImageView refresh;
 
 	@FXML
+	private HBox filesTab;
+
+	@FXML
 	private VBox canvasBox;
 
 	@FXML
@@ -120,7 +129,7 @@ public class MainController implements ResizableInterface {
 				}
 			} else if (e.getButton() == MouseButton.SECONDARY) {
 				if (fileList.getSelectionModel().getSelectedItem() != null) {
-					// Opens right click propeties window
+					// Opens right click properties window
 					openFileRightClickWindow(fileList.getSelectionModel().getSelectedItem(), e.getSceneX(),
 							e.getSceneY());
 				}
@@ -234,10 +243,9 @@ public class MainController implements ResizableInterface {
 	private void deleteFile(File file) {
 		fileList.getItems().remove(file);
 
-		if (fileList.getItems().size() == 0) {
-			canvasManager.stopRenderThread();
+		if (file.isLoaded()) {
+			closeFile(file);
 		}
-
 	}
 
 	/**
@@ -255,14 +263,31 @@ public class MainController implements ResizableInterface {
 		if (!file.isLoaded()) {
 			file.getWords().clear();
 			PEUtils.loadFileFromDisk(file);
+			createFileTabLabel(file);
 		}
 
 		canvasManager.setCurrentFile(file);
 
 		if (!RenderThread.isRunning()) {
+			canvas.setCursor(Cursor.TEXT);
 			canvasManager.initRenderThread();
 		}
 
+		updateFilesTabSelection(file);
+
+	}
+
+	private void updateFilesTabSelection(File file) {
+		for (Node node : filesTab.getChildren()) {
+			if (node.getUserData() != file) {
+				node.getStyleClass().remove("fileTabItem");
+			} else {
+				if (!node.getStyleClass().contains("fileTabItem")) { // Otherwise it adds the same class twice
+					node.getStyleClass().add("fileTabItem");
+				}
+			}
+
+		}
 	}
 
 	public void setCurrentDirectoryLabel(java.io.File directory) {
@@ -323,6 +348,56 @@ public class MainController implements ResizableInterface {
 		}
 	}
 
+	private void createFileTabLabel(File file) {
+		HBox box = new HBox();
+		box.setUserData(file);
+
+		Label fileLabel = new Label(file.getName());
+		fileLabel.setOnMouseClicked((e) -> {
+			loadFileInCanvas(file);
+		});
+
+		Label close = new Label("x");
+		close.setPadding(new Insets(0, 0, 0, 7));
+		close.setOnMouseClicked((e) -> {
+			closeFile(file);
+		});
+
+		box.setPadding(new Insets(0, 5, 0, 5));
+		box.getChildren().addAll(fileLabel, close);
+
+		filesTab.getChildren().add(box);
+	}
+
+	private void closeFile(File file) {
+		file.setLoaded(false);
+
+		// TODO ask to save file
+
+		Iterator<Node> it = filesTab.getChildren().iterator();
+
+		while (it.hasNext()) {
+			Node node = it.next();
+			if (node.getUserData() == file) {
+				it.remove();
+				break;
+			}
+		}
+
+		if (filesTab.getChildren().size() > 0) {
+			Node node = filesTab.getChildren().get(0);
+			loadFileInCanvas((File) node.getUserData());
+		} else {
+			stopRendering();
+		}
+
+	}
+
+	private void stopRendering() {
+		canvas.setCursor(Cursor.DEFAULT);
+		canvasManager.stopRenderThread();
+	}
+
 	/**
 	 * @return if a file is selected
 	 */
@@ -358,7 +433,7 @@ public class MainController implements ResizableInterface {
 		canvasBox.setPrefHeight(height - secundaryMenu.getHeight() - menuBar.getHeight());
 
 		// 25 = canvasInformationBar Height
-		canvas.setHeight(canvasBox.getPrefHeight() - 25);
+		canvas.setHeight(canvasBox.getPrefHeight() - 25 - filesTab.getHeight());
 	}
 
 }
