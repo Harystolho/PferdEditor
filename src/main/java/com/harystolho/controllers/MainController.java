@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Iterator;
-import java.util.ListIterator;
 import java.util.Random;
 import java.util.regex.Pattern;
 
@@ -207,6 +206,9 @@ public class MainController implements ResizableInterface {
 
 	}
 
+	/**
+	 * Opens this project's GitHub page
+	 */
 	private void openAboutPage() {
 		Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
 		if (desktop != null && desktop.isSupported(Action.BROWSE)) {
@@ -249,7 +251,7 @@ public class MainController implements ResizableInterface {
 	}
 
 	/**
-	 * Loads this file in the canvas and draws it.
+	 * Loads this file in the canvas and updates the selected file tab
 	 * 
 	 * @param file the file to load. If the file is <code>null</code> it does
 	 *             nothing.
@@ -277,12 +279,17 @@ public class MainController implements ResizableInterface {
 
 	}
 
+	/**
+	 * Adds a CSS class to the select file tab to show it's select
+	 * 
+	 * @param file
+	 */
 	private void updateFilesTabSelection(File file) {
 		for (Node node : filesTab.getChildren()) {
 			if (node.getUserData() != file) {
 				node.getStyleClass().remove("fileTabItem");
 			} else {
-				if (!node.getStyleClass().contains("fileTabItem")) { // Otherwise it adds the same class twice
+				if (!node.getStyleClass().contains("fileTabItem")) { // If it already contains it, don't add again
 					node.getStyleClass().add("fileTabItem");
 				}
 			}
@@ -331,6 +338,7 @@ public class MainController implements ResizableInterface {
 
 	private void loadSaveDirectory() {
 		fileList.getItems().clear();
+		filesTab.getChildren().clear(); // Closes open files
 		loadFileNames();
 	}
 
@@ -348,6 +356,11 @@ public class MainController implements ResizableInterface {
 		}
 	}
 
+	/**
+	 * Creates and adds a new tab in the {@link #filesTab}
+	 * 
+	 * @param file
+	 */
 	private void createFileTabLabel(File file) {
 		HBox box = new HBox();
 		box.setUserData(file);
@@ -369,6 +382,12 @@ public class MainController implements ResizableInterface {
 		filesTab.getChildren().add(box);
 	}
 
+	/**
+	 * Removes the <code>file</code> from the {@link #filesTab} and selects the
+	 * first one if there's one
+	 * 
+	 * @param file
+	 */
 	private void closeFile(File file) {
 		file.setLoaded(false);
 
@@ -384,6 +403,7 @@ public class MainController implements ResizableInterface {
 			}
 		}
 
+		// Selects the first tab
 		if (filesTab.getChildren().size() > 0) {
 			Node node = filesTab.getChildren().get(0);
 			loadFileInCanvas((File) node.getUserData());
