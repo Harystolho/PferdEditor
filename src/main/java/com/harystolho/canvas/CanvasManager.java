@@ -125,7 +125,7 @@ public class CanvasManager {
 			return;
 		}
 
-		if (cursorCount == -CURSOR_DELAY) {
+		if (cursorCount <= -CURSOR_DELAY) {
 			cursorCount = CURSOR_DELAY;
 		}
 
@@ -162,9 +162,7 @@ public class CanvasManager {
 	}
 
 	public void setCursorCount(int count) {
-		if (count > 0) {
-			cursorCount = count;
-		}
+		cursorCount = count;
 	}
 
 	private void resetCursorCount() {

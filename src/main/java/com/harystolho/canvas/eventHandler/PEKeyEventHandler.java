@@ -39,15 +39,19 @@ public class PEKeyEventHandler {
 		switch (e.getCode()) {
 		case UP:
 			cm.lineUp();
+			e.consume();
 			return;
 		case DOWN:
 			cm.lineDown();
+			e.consume();
 			return;
 		case LEFT:
 			cm.moveCursorLeft();
+			e.consume();
 			return;
 		case RIGHT:
 			cm.moveCursorRight();
+			e.consume();
 			return;
 		case HOME:
 			cm.moveCursorToStartOfTheLine();

@@ -638,6 +638,10 @@ public class File {
 	}
 
 	public void setLoaded(boolean loaded) {
+		if (!loaded) {
+			getWords().clear();
+		}
+
 		this.isLoaded = loaded;
 	}
 
@@ -657,6 +661,4 @@ public class File {
 		this.scrollY = scrollY;
 	}
 
-	
-	
 }
