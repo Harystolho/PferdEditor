@@ -640,6 +640,7 @@ public class File {
 	public void setLoaded(boolean loaded) {
 		if (!loaded) {
 			getWords().clear();
+			resetLastWord();
 		}
 
 		this.isLoaded = loaded;
