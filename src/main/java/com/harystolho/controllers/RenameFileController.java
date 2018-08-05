@@ -36,6 +36,7 @@ public class RenameFileController {
 		rename.setOnAction((e) -> {
 			file.setName(fileName.getText());
 			stage.close();
+			Main.getApplication().getMainController().refrestFileList();
 		});
 
 		cancel.setOnAction((e) -> {
@@ -44,8 +45,8 @@ public class RenameFileController {
 
 	}
 
-	public void renameFile(File f) {
-		file = f;
+	public void renameFile(File file) {
+		this.file = file;
 	}
 
 	public void setStage(Stage stage) {

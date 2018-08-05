@@ -17,7 +17,8 @@ import com.harystolho.utils.PropertiesWindowFactory;
 import com.harystolho.utils.PropertiesWindowFactory.window_type;
 import com.harystolho.utils.RenderThread;
 
-import javafx.collections.ObservableList;
+import javafx.event.Event;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -342,11 +343,11 @@ public class MainController implements ResizableInterface {
 
 	private void loadSaveDirectory() {
 		fileList.getItems().clear();
-		
-		for(Node node : filesTab.getChildren()) {
+
+		for (Node node : filesTab.getChildren()) {
 			closeFile((File) node.getUserData());
 		}
-		
+
 		loadFileNames();
 	}
 
@@ -423,6 +424,10 @@ public class MainController implements ResizableInterface {
 
 	}
 
+	public void refrestFileList() {
+		fileList.refresh();
+	}
+
 	private void stopRendering() {
 		canvas.setCursor(Cursor.DEFAULT);
 		canvasManager.stopRenderThread();
@@ -464,11 +469,6 @@ public class MainController implements ResizableInterface {
 
 		// 25 = canvasInformationBar Height
 		canvas.setHeight(canvasBox.getPrefHeight() - 25 - filesTab.getHeight());
-	}
-
-	public ObservableList<File> getFileList() {
-		return fileList.getItems();
-		
 	}
 
 }
