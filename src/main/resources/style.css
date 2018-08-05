@@ -69,3 +69,7 @@
 .fileTabItem{
 	-fx-background-color: #0061ce;
 }
+
+.closeTab:hover{
+    -fx-text-fill: #ff383f;
+}

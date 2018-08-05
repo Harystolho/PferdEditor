@@ -17,8 +17,10 @@ import com.harystolho.utils.PropertiesWindowFactory;
 import com.harystolho.utils.PropertiesWindowFactory.window_type;
 import com.harystolho.utils.RenderThread;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
@@ -243,10 +245,12 @@ public class MainController implements ResizableInterface {
 	}
 
 	private void deleteFile(File file) {
-		fileList.getItems().remove(file);
+		if (file != null) {
+			fileList.getItems().remove(file);
 
-		if (file.isLoaded()) {
-			closeFile(file);
+			if (file.isLoaded()) {
+				closeFile(file);
+			}
 		}
 	}
 
@@ -338,7 +342,11 @@ public class MainController implements ResizableInterface {
 
 	private void loadSaveDirectory() {
 		fileList.getItems().clear();
-		filesTab.getChildren().clear(); // Closes open files
+		
+		for(Node node : filesTab.getChildren()) {
+			closeFile((File) node.getUserData());
+		}
+		
 		loadFileNames();
 	}
 
@@ -371,11 +379,13 @@ public class MainController implements ResizableInterface {
 		});
 
 		Label close = new Label("x");
+		close.getStyleClass().add("closeTab");
 		close.setPadding(new Insets(0, 0, 0, 7));
 		close.setOnMouseClicked((e) -> {
 			closeFile(file);
 		});
 
+		box.setAlignment(Pos.CENTER);
 		box.setPadding(new Insets(0, 5, 0, 5));
 		box.getChildren().addAll(fileLabel, close);
 
@@ -454,6 +464,11 @@ public class MainController implements ResizableInterface {
 
 		// 25 = canvasInformationBar Height
 		canvas.setHeight(canvasBox.getPrefHeight() - 25 - filesTab.getHeight());
+	}
+
+	public ObservableList<File> getFileList() {
+		return fileList.getItems();
+		
 	}
 
 }

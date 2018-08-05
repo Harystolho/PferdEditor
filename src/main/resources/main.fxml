@@ -106,5 +106,6 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Label>
+      <HBox layoutX="20.0" layoutY="509.0" prefHeight="100.0" prefWidth="200.0" />
 	</children>
 </Pane>
