@@ -12,11 +12,11 @@ import java.util.regex.Pattern;
 import com.harystolho.Main;
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.pe.File;
-import com.harystolho.utils.FileUpdaterThread;
+import com.harystolho.thread.FileUpdaterThread;
+import com.harystolho.thread.RenderThread;
 import com.harystolho.utils.PEUtils;
 import com.harystolho.utils.PropertiesWindowFactory;
 import com.harystolho.utils.PropertiesWindowFactory.window_type;
-import com.harystolho.utils.RenderThread;
 
 import javafx.event.Event;
 import javafx.event.EventType;
@@ -107,6 +107,7 @@ public class MainController implements ResizableInterface {
 
 	@FXML
 	private Pane rightScrollBar;
+	private int lastY = 0;
 
 	@FXML
 	private Rectangle rightScrollInside;
@@ -169,6 +170,17 @@ public class MainController implements ResizableInterface {
 
 		fileDirectory.setOnMouseClicked((e) -> {
 			changeDirectory();
+		});
+
+		rightScrollInside.setOnMouseDragged((e) -> {
+			double displacement = lastY - e.getY();
+			if (e.getY() > lastY) {
+
+			} else {
+
+			}
+
+			lastY = (int) e.getY();
 		});
 
 	}
@@ -457,6 +469,8 @@ public class MainController implements ResizableInterface {
 		} else { // Hides it
 			rightScrollInside.setVisible(false);
 		}
+		
+		rightScrollInside.setLayoutY(((canvasManager.getScrollY() + 1) / y) * rightScrollBar.getHeight());
 
 	}
 

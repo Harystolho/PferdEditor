@@ -1,4 +1,4 @@
-package com.harystolho.utils;
+package com.harystolho.thread;
 
 import com.harystolho.Main;
 

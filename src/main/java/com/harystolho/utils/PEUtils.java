@@ -11,6 +11,8 @@ import java.util.function.Consumer;
 import java.util.logging.Logger;
 
 import com.harystolho.controllers.ResizableInterface;
+import com.harystolho.thread.FileUpdaterThread;
+import com.harystolho.thread.RenderThread;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

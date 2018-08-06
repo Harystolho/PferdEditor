@@ -1,4 +1,4 @@
-package com.harystolho.utils;
+package com.harystolho.thread;
 
 import java.util.ListIterator;
 
@@ -7,6 +7,7 @@ import com.harystolho.canvas.CanvasManager;
 import com.harystolho.canvas.StyleLoader;
 import com.harystolho.pe.File;
 import com.harystolho.pe.Word;
+import com.harystolho.utils.PEUtils;
 
 /**
  * A class that runs over the whole file every {@value #THREAD_INTERVAL}

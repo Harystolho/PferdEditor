@@ -6,9 +6,9 @@ import com.harystolho.Main;
 import com.harystolho.canvas.eventHandler.CanvasMouseEventHandler;
 import com.harystolho.pe.File;
 import com.harystolho.pe.Word;
-import com.harystolho.utils.FileUpdaterThread;
+import com.harystolho.thread.FileUpdaterThread;
+import com.harystolho.thread.RenderThread;
 import com.harystolho.utils.PEUtils;
-import com.harystolho.utils.RenderThread;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -36,7 +36,7 @@ public class CanvasManager {
 
 		gc = canvas.getGraphicsContext2D();
 
-		setLineHeight(18);
+		setLineHeight(30);
 
 		StyleLoader.setFont(new Font("Arial", lineHeight - 2));
 		gc.setFont(StyleLoader.getFont());
