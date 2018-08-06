@@ -196,7 +196,6 @@ public class CanvasManager {
 		if (currentFile != null) {
 			currentFile.setCursorX(x + getScrollX());
 		}
-
 	}
 
 	public void setCursorY(float cursorY) {
@@ -223,11 +222,21 @@ public class CanvasManager {
 
 		currentFile.setCursorY(getCursorY() - getLineHeight());
 		currentFile.setCursorX(getCursorX()); // Moves the cursor to the end of the life if the line above is shorter.
+		
+		if(getCursorY() <= getScrollY()) {
+			scrollUp();	
+		}
+		
 	}
 
 	public void lineDown() {
 		currentFile.setCursorY(getCursorY() + getLineHeight());
 		currentFile.setCursorX(getCursorX()); // Moves the cursor to the end of the life if the line below is shorter.
+		
+		if(getCursorY() > canvas.getHeight() + getScrollY()) {
+			scrollDown();	
+		}
+		
 	}
 
 	public void moveCursorLeft() {
