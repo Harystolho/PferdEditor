@@ -75,4 +75,5 @@ public class StyleLoader {
 		StyleLoader.cursorColor = cursorColor;
 	}
 
+
 }

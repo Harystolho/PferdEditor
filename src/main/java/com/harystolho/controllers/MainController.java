@@ -35,6 +35,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 
@@ -102,6 +103,12 @@ public class MainController implements ResizableInterface {
 
 	@FXML
 	private ListView<File> fileList;
+
+	@FXML
+	private Pane rightScrollBar;
+
+	@FXML
+	private Rectangle rightScrollInside;
 
 	@FXML
 	private Label fileDirectory;
@@ -428,6 +435,27 @@ public class MainController implements ResizableInterface {
 		fileList.refresh();
 	}
 
+	public void updateScrollBar(float x, float y) {
+		updateScrollX(x);
+		updateScrollY(y);
+	}
+
+	private void updateScrollX(float x) {
+		// TODO scroll X
+	}
+
+	private void updateScrollY(float y) {
+		double heightProportion = rightScrollBar.getHeight() / y;
+
+		if (heightProportion <= 1) {
+			rightScrollInside.setVisible(true);
+			rightScrollInside.setHeight(rightScrollBar.getHeight() * heightProportion);
+		} else { // Hides it
+			rightScrollInside.setVisible(false);
+		}
+
+	}
+
 	private void stopRendering() {
 		canvas.setCursor(Cursor.DEFAULT);
 		canvasManager.stopRenderThread();
@@ -454,11 +482,13 @@ public class MainController implements ResizableInterface {
 
 		secundaryMenu.setPrefWidth(width);
 
-		// 10 is right margin
+		// 23 is right margin
 		// 238 is file list on the left
-		canvasBox.setPrefWidth(width - 238 - 10);
+		canvasBox.setPrefWidth(width - 238 - 23);
 
 		canvas.setWidth(canvasBox.getPrefWidth());
+
+		rightScrollBar.setLayoutX(width - 23);
 
 	}
 
@@ -469,6 +499,7 @@ public class MainController implements ResizableInterface {
 
 		// 25 = canvasInformationBar Height
 		canvas.setHeight(canvasBox.getPrefHeight() - 25 - filesTab.getHeight());
+		rightScrollBar.setPrefHeight(canvas.getHeight());
 	}
 
 }

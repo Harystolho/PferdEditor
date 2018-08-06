@@ -2,6 +2,7 @@ package com.harystolho.canvas;
 
 import java.util.ListIterator;
 
+import com.harystolho.Main;
 import com.harystolho.canvas.eventHandler.CanvasMouseEventHandler;
 import com.harystolho.pe.File;
 import com.harystolho.pe.Word;
@@ -23,6 +24,9 @@ public class CanvasManager {
 	private GraphicsContext gc;
 
 	private File currentFile;
+
+	private float biggestX;
+	private float biggestY;
 
 	private int cursorCount = 0;
 	private int lineHeight; // in pixels
@@ -62,6 +66,7 @@ public class CanvasManager {
 		drawBackgroundLine();
 		drawWords();
 		drawCursor();
+
 	}
 
 	private void drawWords() {
@@ -108,6 +113,11 @@ public class CanvasManager {
 					}
 
 				}
+
+				biggestX = x;
+				biggestY = y;
+				updateSrollBar();
+
 			}
 		}
 	}
@@ -137,6 +147,12 @@ public class CanvasManager {
 			// width
 		}
 
+	}
+
+	private void updateSrollBar() {
+		if (Main.getApplication().getMainController() != null) {
+			Main.getApplication().getMainController().updateScrollBar(biggestX, biggestY);
+		}
 	}
 
 	public void initRenderThread() {
@@ -271,7 +287,9 @@ public class CanvasManager {
 
 	public void setScrollY(int y) {
 		if (currentFile != null) {
-			currentFile.setScrollY(y);
+			if (y <= biggestY - canvas.getHeight() + lineHeight) {
+				currentFile.setScrollY(y);
+			}
 		}
 	}
 
@@ -297,5 +315,4 @@ public class CanvasManager {
 			System.out.println(String.format("File - lastWord: %s", currentFile.getLastWord()));
 		}
 	}
-
 }
