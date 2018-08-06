@@ -1,6 +1,9 @@
 package com.harystolho.canvas.eventHandler;
 
+import com.harystolho.Main;
 import com.harystolho.canvas.CanvasManager;
+import com.harystolho.utils.FileUpdaterThread;
+import com.harystolho.utils.PEUtils;
 
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
@@ -64,6 +67,10 @@ public class PEKeyEventHandler {
 			return;
 		case F4:
 			cm.getCurrentFile().getWords().printDebug();
+			return;
+		case F5:
+			System.out.println("X: " + FileUpdaterThread.getBiggestX());
+			System.out.println("Y: " + FileUpdaterThread.getBiggestY());
 			return;
 		default:
 			break;

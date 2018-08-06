@@ -6,6 +6,7 @@ import com.harystolho.Main;
 import com.harystolho.canvas.eventHandler.CanvasMouseEventHandler;
 import com.harystolho.pe.File;
 import com.harystolho.pe.Word;
+import com.harystolho.utils.FileUpdaterThread;
 import com.harystolho.utils.PEUtils;
 import com.harystolho.utils.RenderThread;
 
@@ -24,9 +25,6 @@ public class CanvasManager {
 	private GraphicsContext gc;
 
 	private File currentFile;
-
-	private float biggestX;
-	private float biggestY;
 
 	private int cursorCount = 0;
 	private int lineHeight; // in pixels
@@ -114,8 +112,6 @@ public class CanvasManager {
 
 				}
 
-				biggestX = x;
-				biggestY = y;
 				updateSrollBar();
 
 			}
@@ -151,12 +147,14 @@ public class CanvasManager {
 
 	private void updateSrollBar() {
 		if (Main.getApplication().getMainController() != null) {
-			Main.getApplication().getMainController().updateScrollBar(biggestX, biggestY);
+			Main.getApplication().getMainController().updateScrollBar(FileUpdaterThread.getBiggestX(),
+					FileUpdaterThread.getBiggestY());
 		}
 	}
 
 	public void initRenderThread() {
 		RenderThread.running = true;
+		FileUpdaterThread.setRunning(true);
 		PEUtils.getExecutor().execute(new RenderThread());
 	}
 
@@ -222,21 +220,21 @@ public class CanvasManager {
 
 		currentFile.setCursorY(getCursorY() - getLineHeight());
 		currentFile.setCursorX(getCursorX()); // Moves the cursor to the end of the life if the line above is shorter.
-		
-		if(getCursorY() <= getScrollY()) {
-			scrollUp();	
+
+		if (getCursorY() <= getScrollY()) {
+			scrollUp();
 		}
-		
+
 	}
 
 	public void lineDown() {
 		currentFile.setCursorY(getCursorY() + getLineHeight());
 		currentFile.setCursorX(getCursorX()); // Moves the cursor to the end of the life if the line below is shorter.
-		
-		if(getCursorY() > canvas.getHeight() + getScrollY()) {
-			scrollDown();	
+
+		if (getCursorY() > canvas.getHeight() + getScrollY()) {
+			scrollDown();
 		}
-		
+
 	}
 
 	public void moveCursorLeft() {
@@ -296,7 +294,7 @@ public class CanvasManager {
 
 	public void setScrollY(int y) {
 		if (currentFile != null) {
-			if (y <= biggestY - canvas.getHeight() + lineHeight) {
+			if (y <= FileUpdaterThread.getBiggestY() - canvas.getHeight() + lineHeight) {
 				currentFile.setScrollY(y);
 			}
 		}

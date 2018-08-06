@@ -20,7 +20,7 @@ public class PEUtils {
 
 	private static final Logger logger = Logger.getLogger(PEUtils.class.getName());
 
-	private static ExecutorService executor = Executors.newFixedThreadPool(1);
+	private static ExecutorService executor = Executors.newFixedThreadPool(2);
 
 	private static File saveFolder;
 
@@ -170,6 +170,8 @@ public class PEUtils {
 	public static void exit() {
 		logger.info("Closing application.");
 
+		FileUpdaterThread.stop();
+		
 		executor.shutdown();
 
 		PEConfiguration.saveProperties();
