@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 import com.harystolho.Main;
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.pe.File;
+import com.harystolho.utils.FileUpdaterThread;
 import com.harystolho.utils.PEUtils;
 import com.harystolho.utils.PropertiesWindowFactory;
 import com.harystolho.utils.PropertiesWindowFactory.window_type;
@@ -281,6 +282,9 @@ public class MainController implements ResizableInterface {
 		}
 
 		canvasManager.setCurrentFile(file);
+
+		// Calculates information about the new file
+		FileUpdaterThread.calculate(file);
 
 		if (!RenderThread.isRunning()) {
 			canvas.setCursor(Cursor.TEXT);

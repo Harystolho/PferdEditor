@@ -36,7 +36,7 @@ public class CanvasManager {
 
 		gc = canvas.getGraphicsContext2D();
 
-		setLineHeight(35);
+		setLineHeight(18);
 
 		StyleLoader.setFont(new Font("Arial", lineHeight - 2));
 		gc.setFont(StyleLoader.getFont());
