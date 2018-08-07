@@ -107,7 +107,7 @@ public class MainController implements ResizableInterface {
 
 	@FXML
 	private Pane rightScrollBar;
-	private int lastY = 0;
+	private double lastY = 0;
 
 	@FXML
 	private Rectangle rightScrollInside;
@@ -172,15 +172,20 @@ public class MainController implements ResizableInterface {
 			changeDirectory();
 		});
 
+		rightScrollInside.setOnMousePressed((e)->{
+			lastY = e.getY();
+		});
+		
 		rightScrollInside.setOnMouseDragged((e) -> {
 			double displacement = lastY - e.getY();
 			if (e.getY() > lastY) {
-
+				
 			} else {
-
+				
 			}
-
-			lastY = (int) e.getY();
+			System.out.println(displacement);
+			
+			lastY = e.getY();
 		});
 
 	}
@@ -469,8 +474,9 @@ public class MainController implements ResizableInterface {
 		} else { // Hides it
 			rightScrollInside.setVisible(false);
 		}
-		
-		rightScrollInside.setLayoutY(((canvasManager.getScrollY() + 1) / y) * rightScrollBar.getHeight());
+
+		// Moves it to the correct position
+		rightScrollInside.setLayoutY((canvasManager.getScrollY() / y) * rightScrollBar.getHeight());
 
 	}
 

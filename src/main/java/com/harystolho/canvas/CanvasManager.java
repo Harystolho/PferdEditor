@@ -277,13 +277,30 @@ public class CanvasManager {
 	}
 
 	public void scrollUp() {
+		scrollUp(false);
+	}
+
+	public void scrollUp(boolean twoLines) {
 		if (getScrollY() >= lineHeight) {
 			setScrollY(getScrollY() - lineHeight);
+		}
+		
+		if (twoLines) {
+			// Try to scroll up again
+			scrollUp(false);
 		}
 	}
 
 	public void scrollDown() {
-		setScrollY(getScrollY() + lineHeight);
+		scrollDown(false);
+	}
+
+	public void scrollDown(boolean twoLines) {
+		if (twoLines) {
+			setScrollY(getScrollY() + (2 * lineHeight));
+		} else {
+			setScrollY(getScrollY() + lineHeight);
+		}
 	}
 
 	public void setScrollX(int x) {

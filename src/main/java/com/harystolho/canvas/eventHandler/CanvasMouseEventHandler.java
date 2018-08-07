@@ -35,7 +35,6 @@ public class CanvasMouseEventHandler {
 
 	private void mouseRelease(MouseEvent e) {
 		cm.getCanvas().requestFocus();
-
 	}
 
 	private void mousePressed(MouseEvent e) {
@@ -53,9 +52,9 @@ public class CanvasMouseEventHandler {
 
 	private void scrollMoved(ScrollEvent e) {
 		if (e.getDeltaY() > 0) {
-			cm.scrollUp();
+			cm.scrollUp(true);
 		} else {
-			cm.scrollDown();
+			cm.scrollDown(true);
 		}
 
 	}
