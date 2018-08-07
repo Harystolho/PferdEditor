@@ -280,11 +280,14 @@ public class CanvasManager {
 		scrollUp(false);
 	}
 
+	/**
+	 * @param twoLines if <code>true</code> scrolls 2 lines up
+	 */
 	public void scrollUp(boolean twoLines) {
 		if (getScrollY() >= lineHeight) {
 			setScrollY(getScrollY() - lineHeight);
 		}
-		
+
 		if (twoLines) {
 			// Try to scroll up again
 			scrollUp(false);
@@ -295,11 +298,14 @@ public class CanvasManager {
 		scrollDown(false);
 	}
 
+	/**
+	 * @param twoLines if <code>true</code> scrolls 2 lines down
+	 */
 	public void scrollDown(boolean twoLines) {
+		setScrollY(getScrollY() + lineHeight);
+
 		if (twoLines) {
-			setScrollY(getScrollY() + (2 * lineHeight));
-		} else {
-			setScrollY(getScrollY() + lineHeight);
+			scrollDown(false);
 		}
 	}
 

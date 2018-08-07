@@ -172,19 +172,16 @@ public class MainController implements ResizableInterface {
 			changeDirectory();
 		});
 
-		rightScrollInside.setOnMousePressed((e)->{
+		rightScrollInside.setOnMousePressed((e) -> {
 			lastY = e.getY();
 		});
-		
+
 		rightScrollInside.setOnMouseDragged((e) -> {
 			double displacement = lastY - e.getY();
-			if (e.getY() > lastY) {
-				
-			} else {
-				
-			}
-			System.out.println(displacement);
 			
+			canvasManager.getCurrentFile()
+					.setScrollY((int) (canvasManager.getCurrentFile().getScrollY() - displacement));
+
 			lastY = e.getY();
 		});
 

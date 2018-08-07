@@ -4,6 +4,7 @@ import com.harystolho.Main;
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.pe.Word.TYPES;
 import com.harystolho.pe.linkedList.IndexLinkedList;
+import com.harystolho.thread.FileUpdaterThread;
 
 import javafx.scene.input.KeyEvent;
 
@@ -152,6 +153,9 @@ public class File {
 		if (wordToRemove == null) { // If it's the beginning of a line, it will return null and will remove the last
 									// word in the line above
 			removeLastWordAtTheLineAbove();
+
+			// Update file's biggest Y
+			FileUpdaterThread.decrementBiggestYBy(Main.getApplication().getCanvasManager().getLineHeight());
 			return;
 		}
 
@@ -243,6 +247,9 @@ public class File {
 
 	private void forceLineDown() {
 		if (Main.getApplication().getMainController() != null) {
+			// Update file's biggest Y
+			FileUpdaterThread.incrementBiggestYBy(Main.getApplication().getCanvasManager().getLineHeight());
+
 			cursorY = (getCursorY() + Main.getApplication().getCanvasManager().getLineHeight());
 		}
 	}
@@ -641,6 +648,10 @@ public class File {
 		if (!loaded) {
 			getWords().clear();
 			resetLastWord();
+			scrollX = 0;
+			scrollY = 0;
+			cursorX = 0;
+			cursorY = 0;
 		}
 
 		this.isLoaded = loaded;

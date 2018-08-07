@@ -28,20 +28,24 @@ public class FileUpdaterThread implements Runnable {
 	@Override
 	public void run() {
 
-		while (running) {
+		// TODO fix documentation
+		/*
+		 * while (running) {
+		 * 
+		 * if (Main.getApplication().getMainController() != null) { if
+		 * (Main.getApplication().getMainController().getCanvasManager() != null) { if
+		 * (Main.getApplication().getCanvasManager().getCurrentFile() != null) {
+		 * calculate(Main.getApplication().getCanvasManager().getCurrentFile()); } } }
+		 * 
+		 * try { Thread.sleep(THREAD_INTERVAL); } catch (InterruptedException e) {
+		 * e.printStackTrace(); } }
+		 */
 
-			if (Main.getApplication().getMainController() != null) {
-				if (Main.getApplication().getMainController().getCanvasManager() != null) {
-					if (Main.getApplication().getCanvasManager().getCurrentFile() != null) {
-						calculate(Main.getApplication().getCanvasManager().getCurrentFile());
-					}
+		if (Main.getApplication().getMainController() != null) {
+			if (Main.getApplication().getMainController().getCanvasManager() != null) {
+				if (Main.getApplication().getCanvasManager().getCurrentFile() != null) {
+					calculate(Main.getApplication().getCanvasManager().getCurrentFile());
 				}
-			}
-
-			try {
-				Thread.sleep(THREAD_INTERVAL);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
 			}
 		}
 
@@ -95,6 +99,14 @@ public class FileUpdaterThread implements Runnable {
 
 	public static int getBiggestX() {
 		return biggestX;
+	}
+
+	public static void incrementBiggestYBy(int increment) {
+		biggestY += increment;
+	}
+
+	public static void decrementBiggestYBy(int increment) {
+		biggestY -= increment;
 	}
 
 	public static int getBiggestY() {
