@@ -266,6 +266,18 @@ public class CanvasManager {
 		}
 	}
 
+	public void moveCursorToFirstLine() {
+		setScrollY(0);
+		setCursorY(lineHeight);
+		moveCursorToStartOfTheLine();
+	}
+
+	public void moveCursorToLastLine() {
+		currentFile.setScrollY((int) (FileUpdaterThread.getBiggestY() - canvas.getHeight()));
+		currentFile.setCursorY(FileUpdaterThread.getBiggestY());
+		moveCursorToEndOfTheLine();
+	}
+
 	public void scrollLeft() {
 		if (getScrollX() >= SCROLL_CHANGE) {
 			setScrollX(getScrollX() - SCROLL_CHANGE);
@@ -284,9 +296,7 @@ public class CanvasManager {
 	 * @param twoLines if <code>true</code> scrolls 2 lines up
 	 */
 	public void scrollUp(boolean twoLines) {
-		if (getScrollY() >= lineHeight) {
-			setScrollY(getScrollY() - lineHeight);
-		}
+		setScrollY(getScrollY() - lineHeight);
 
 		if (twoLines) {
 			// Try to scroll up again
@@ -317,9 +327,17 @@ public class CanvasManager {
 
 	public void setScrollY(int y) {
 		if (currentFile != null) {
-			if (y <= FileUpdaterThread.getBiggestY() - canvas.getHeight() + lineHeight) {
-				currentFile.setScrollY(y);
+
+			if (y < lineHeight) { // First Line
+				if (getScrollY() >= lineHeight) {
+					currentFile.setScrollY(y);
+				}
+			} else {
+				if (y <= FileUpdaterThread.getBiggestY() - canvas.getHeight() + lineHeight) {
+					currentFile.setScrollY(y);
+				}
 			}
+
 		}
 	}
 
@@ -345,4 +363,5 @@ public class CanvasManager {
 			System.out.println(String.format("File - lastWord: %s", currentFile.getLastWord()));
 		}
 	}
+
 }

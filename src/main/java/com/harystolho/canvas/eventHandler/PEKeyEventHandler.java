@@ -57,10 +57,10 @@ public class PEKeyEventHandler {
 			e.consume();
 			return;
 		case HOME:
-			cm.moveCursorToStartOfTheLine();
+			pressHOME(e);
 			return;
 		case END:
-			cm.moveCursorToEndOfTheLine();
+			pressEND(e);
 			return;
 		case F3:
 			cm.printDebugMessage();
@@ -83,6 +83,22 @@ public class PEKeyEventHandler {
 			}
 		}
 
+	}
+
+	private void pressHOME(KeyEvent e) {
+		if (e.isControlDown()) {
+			cm.moveCursorToFirstLine();
+		} else {
+			cm.moveCursorToStartOfTheLine();
+		}
+	}
+
+	private void pressEND(KeyEvent e) {
+		if (e.isControlDown()) {
+			cm.moveCursorToLastLine();
+		} else {
+			cm.moveCursorToEndOfTheLine();
+		}
 	}
 
 }
