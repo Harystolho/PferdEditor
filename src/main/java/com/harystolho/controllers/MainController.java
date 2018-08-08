@@ -172,18 +172,21 @@ public class MainController implements ResizableInterface {
 			changeDirectory();
 		});
 
-		rightScrollInside.setOnMousePressed((e) -> {
+		rightScrollBar.setOnMousePressed((e) -> {
 			lastY = e.getY();
+			System.out.println("P");
 		});
 
-		rightScrollInside.setOnMouseDragged((e) -> {
-			double displacement = lastY - e.getY();
+		rightScrollBar.setOnMouseDragged((e) -> {
+			if (e.getY() >= rightScrollInside.getLayoutY()
+					&& e.getY() <= rightScrollInside.getLayoutY() + rightScrollInside.getHeight()) {
+				double displacement = lastY - e.getY();
 
-			System.out.println(displacement);
+				canvasManager.setScrollY((int) (canvasManager.getScrollY()
+						- (FileUpdaterThread.getBiggestY() * (displacement / rightScrollBar.getHeight()))));
 
-			canvasManager.setScrollY((int) (canvasManager.getScrollY() - (5 * displacement)));
-
-			lastY = e.getY();
+				lastY = e.getY();
+			}
 		});
 
 	}
@@ -445,6 +448,7 @@ public class MainController implements ResizableInterface {
 			Node node = filesTab.getChildren().get(0);
 			loadFileInCanvas((File) node.getUserData());
 		} else {
+			hideSrollBar();
 			stopRendering();
 		}
 
@@ -452,6 +456,10 @@ public class MainController implements ResizableInterface {
 
 	public void refrestFileList() {
 		fileList.refresh();
+	}
+
+	private void hideSrollBar() {
+		updateScrollY(0); // 0 hides it
 	}
 
 	public void updateScrollBar(float x, float y) {
