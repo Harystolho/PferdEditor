@@ -25,35 +25,37 @@ public class PEApplication extends Application {
 
 	@Override
 	public void start(Stage window) throws Exception {
-		Main.setApplication(this);
+		setup();
 
-		this.window = window;
-		
+		setWindow(window);
 		window.getIcons().add(new Image(ClassLoader.getSystemResourceAsStream("icon.png")));
-		
 		window.setTitle("Pferd Editor");
-
-		loadMainScene();
+		
+		window.setScene(scene);
 
 		PropertiesWindowFactory.setMainPane(Main.getApplication().getWindow().getScene().getRoot());
-		
+
 		loadEventHandlers();
 
 		window.show();
 	}
 
+	public void setup() {
+		Main.setApplication(this);
+		loadMainScene();
+		
+		keyHandler = new PEKeyEventHandler(scene, mainController.getCanvasManager());
+		mouseHandler = new PEMouseEventHandler(scene);
+	}
+	
 	private void loadEventHandlers() {
 		window.setOnCloseRequest((e) -> {
 			PEUtils.exit();
 		});
 
-		keyHandler = new PEKeyEventHandler(scene, mainController.getCanvasManager());
-		mouseHandler = new PEMouseEventHandler(scene);
-
 	}
 
 	private void loadMainScene() {
-
 		scene = new Scene(PEUtils.loadFXML("main.fxml", (c) -> {
 			mainController = (MainController) c;
 		}));
@@ -61,8 +63,6 @@ public class PEApplication extends Application {
 		scene.getStylesheets().add(ClassLoader.getSystemResource("style.css").toExternalForm());
 
 		PEUtils.addResizeHandler(scene, mainController);
-
-		window.setScene(scene);
 	}
 
 	public MainController getMainController() {
@@ -75,6 +75,10 @@ public class PEApplication extends Application {
 
 	public static void init(String[] args) {
 		launch(args);
+	}
+
+	private void setWindow(Stage window) {
+		this.window = window;
 	}
 
 	public Stage getWindow() {

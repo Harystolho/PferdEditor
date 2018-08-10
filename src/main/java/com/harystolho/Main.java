@@ -13,7 +13,6 @@ public class Main {
 	public static void main(String[] args) {
 
 		PEUtils.start();
-
 		PEApplication.init(args);
 
 	}

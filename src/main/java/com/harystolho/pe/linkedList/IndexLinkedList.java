@@ -159,13 +159,13 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 			case 0: // If the word is at the same position as the middle node, insert it after the
 					// middle node
 				node.setRight(middleNode.getRight());
-				
-				if(middleNode.getRight() != null) {
+
+				if (middleNode.getRight() != null) {
 					middleNode.getRight().setLeft(node);
 				} else {
 					last = node;
 				}
-				
+
 				middleNode.setRight(node);
 				node.setLeft(middleNode);
 				size++;
@@ -510,6 +510,19 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 
 	}
 
+	@Override
+	public E get(int idx) {
+
+		Node node = getRoot();
+		int currentIndex = 0;
+		while (currentIndex < idx && node != null) {
+			node = node.getRight();
+			currentIndex++;
+		}
+
+		return node.getData();
+	}
+
 	public E getFirst() {
 		return root.getData();
 	}
@@ -572,12 +585,6 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 	@Deprecated
 	@Override
 	public boolean containsAll(Collection<?> arg0) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Deprecated
-	@Override
-	public E get(int arg0) {
 		throw new UnsupportedOperationException();
 	}
 
