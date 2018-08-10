@@ -3,23 +3,19 @@ package com.harystolho.thread;
 import java.util.ListIterator;
 
 import com.harystolho.Main;
-import com.harystolho.canvas.CanvasManager;
-import com.harystolho.canvas.StyleLoader;
 import com.harystolho.pe.File;
 import com.harystolho.pe.Word;
 import com.harystolho.utils.PEUtils;
 
 /**
- * A class that runs over the whole file every {@value #THREAD_INTERVAL}
- * milliseconds to calculate information about the file that's to expensive to
- * calculate when drawing it
+ * A class that scans through the whole file to calculate information about the
+ * file such as biggestX and biggestY
  * 
  * @author Harystolho
  *
  */
 public class FileUpdaterThread implements Runnable {
 
-	private static final int THREAD_INTERVAL = 2 * 1000;
 	private static volatile boolean running = false;
 
 	private static int biggestX = 0;
@@ -28,9 +24,8 @@ public class FileUpdaterThread implements Runnable {
 	@Override
 	public void run() {
 
-		// TODO fix documentation
 		/*
-		 * while (running) {
+		 * private static final int THREAD_INTERVAL = 2 * 1000; while (running) {
 		 * 
 		 * if (Main.getApplication().getMainController() != null) { if
 		 * (Main.getApplication().getMainController().getCanvasManager() != null) { if

@@ -9,6 +9,7 @@ import com.harystolho.utils.PropertiesWindowFactory;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class PEApplication extends Application {
@@ -27,7 +28,9 @@ public class PEApplication extends Application {
 		Main.setApplication(this);
 
 		this.window = window;
-
+		
+		window.getIcons().add(new Image(ClassLoader.getSystemResourceAsStream("icon.png")));
+		
 		window.setTitle("Pferd Editor");
 
 		loadMainScene();

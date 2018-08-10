@@ -18,8 +18,6 @@ import com.harystolho.utils.PEUtils;
 import com.harystolho.utils.PropertiesWindowFactory;
 import com.harystolho.utils.PropertiesWindowFactory.window_type;
 
-import javafx.event.Event;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -174,10 +172,11 @@ public class MainController implements ResizableInterface {
 
 		rightScrollBar.setOnMousePressed((e) -> {
 			lastY = e.getY();
-			System.out.println("P");
 		});
 
 		rightScrollBar.setOnMouseDragged((e) -> {
+			
+			// If cursor is inside scroll bar
 			if (e.getY() >= rightScrollInside.getLayoutY()
 					&& e.getY() <= rightScrollInside.getLayoutY() + rightScrollInside.getHeight()) {
 				double displacement = lastY - e.getY();

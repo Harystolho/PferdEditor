@@ -221,7 +221,6 @@ public class Word implements Comparable<Word> {
 		return otherWord;
 	}
 
-	// TODO change if statement order to improve performance if possible
 	@Override
 	public int compareTo(Word w) {
 		

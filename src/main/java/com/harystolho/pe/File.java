@@ -68,6 +68,9 @@ public class File {
 				createNewLine();
 				return;
 			case BACK_SPACE:
+				removeCharBeforeCursor();
+				return;
+			case END:
 				removeCharAtCursor();
 				return;
 			case TAB:
@@ -143,7 +146,7 @@ public class File {
 
 	}
 
-	public void removeCharAtCursor() {
+	public void removeCharBeforeCursor() {
 		if (words.isEmpty()) {
 			return;
 		}
@@ -160,7 +163,7 @@ public class File {
 		}
 
 		// Remove the last char in the word
-		removeCharAtCursor(wordToRemove);
+		removeCharBeforeCursor(wordToRemove);
 
 		// If the word has no chars left
 		if (!wordToRemove.hasChars()) {
@@ -192,7 +195,7 @@ public class File {
 	 * 
 	 * @param word
 	 */
-	private void removeCharAtCursor(Word word) {
+	private void removeCharBeforeCursor(Word word) {
 		double cursorXInWWord = getCursorX() - word.getX(); // Cursor' X in relation to word's X
 		double wordWidthPosition = 0;
 
@@ -207,6 +210,10 @@ public class File {
 				break;
 			}
 		}
+	}
+
+	private void removeCharAtCursor() {
+		
 	}
 
 	/**

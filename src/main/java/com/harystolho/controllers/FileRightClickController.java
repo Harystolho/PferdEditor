@@ -63,14 +63,13 @@ public class FileRightClickController {
 	 */
 	private void renameFile() {
 		Stage stage = new Stage();
+		stage.setTitle("Rename file");
 
 		Parent p = PEUtils.loadFXML("renameFile.fxml", (controller) -> {
 			RenameFileController ctrl = (RenameFileController) controller;
 			ctrl.renameFile(file);
 			ctrl.setStage(stage);
 		});
-
-		// TODO update list when file name changes
 
 		Scene scene = new Scene(p);
 		scene.getStylesheets().add(ClassLoader.getSystemResource("style.css").toExternalForm());

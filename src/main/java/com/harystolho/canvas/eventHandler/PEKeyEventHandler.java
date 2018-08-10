@@ -1,9 +1,7 @@
 package com.harystolho.canvas.eventHandler;
 
-import com.harystolho.Main;
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.thread.FileUpdaterThread;
-import com.harystolho.utils.PEUtils;
 
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;

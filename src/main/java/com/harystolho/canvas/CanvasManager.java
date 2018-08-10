@@ -64,7 +64,6 @@ public class CanvasManager {
 		drawBackgroundLine();
 		drawWords();
 		drawCursor();
-
 	}
 
 	private void drawWords() {

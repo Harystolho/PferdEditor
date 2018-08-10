@@ -77,3 +77,11 @@
 .scrollBar{
     -fx-fill: #8d8d8d;
 }
+
+#fileName{
+    -fx-background-radius: 2px;
+}
+
+#cancel, #rename{
+    -fx-background-color: #fff;
+}
