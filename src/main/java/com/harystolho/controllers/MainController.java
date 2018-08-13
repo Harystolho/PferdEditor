@@ -372,7 +372,7 @@ public class MainController implements ResizableInterface {
 	}
 
 	/**
-	 * Opens a new window to select the new directory
+	 * Opens a new window to select the new save directory
 	 */
 	private void changeDirectory() {
 		DirectoryChooser dc = new DirectoryChooser();
@@ -387,6 +387,9 @@ public class MainController implements ResizableInterface {
 		}
 	}
 
+	/**
+	 * Clears the file list and loads the files from the save directory
+	 */
 	private void loadSaveDirectory() {
 		fileList.getItems().clear();
 
@@ -417,7 +420,7 @@ public class MainController implements ResizableInterface {
 	 * @param file
 	 */
 	private void createFileTabLabel(File file) {
-		Tab tab = new Tab(file, this);
+		Tab tab = new Tab(file);
 		filesTab.getChildren().add(tab);
 	}
 
@@ -435,7 +438,6 @@ public class MainController implements ResizableInterface {
 		}
 
 		Iterator<Node> it = filesTab.getChildren().iterator();
-
 		while (it.hasNext()) {
 			Node node = it.next();
 			if (node.getUserData() == file) {
@@ -448,7 +450,7 @@ public class MainController implements ResizableInterface {
 		if (filesTab.getChildren().size() > 0) {
 			Node node = filesTab.getChildren().get(0);
 			loadFileInCanvas((File) node.getUserData());
-		} else {
+		} else { // If there's no tab left
 			hideSrollBar();
 			stopRendering();
 		}

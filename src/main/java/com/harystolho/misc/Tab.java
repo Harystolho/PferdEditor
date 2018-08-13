@@ -1,5 +1,6 @@
 package com.harystolho.misc;
 
+import com.harystolho.Main;
 import com.harystolho.controllers.MainController;
 import com.harystolho.pe.File;
 
@@ -8,16 +9,21 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
+/**
+ * Class that behaves similarly to a tab
+ * 
+ * @author Harystolho
+ *
+ */
 public class Tab extends HBox {
 
-	private MainController mainController;
+	private static MainController mainController = Main.getApplication().getMainController();
 	private File file;
 
 	private Label modified;
 
-	public Tab(File file, MainController mc) {
+	public Tab(File file) {
 		super();
-		mainController = mc;
 
 		this.file = file;
 
@@ -26,14 +32,14 @@ public class Tab extends HBox {
 
 		Label fileLabel = new Label(file.getName());
 		fileLabel.setOnMouseClicked((e) -> {
-			mc.loadFileInCanvas(file);
+			mainController.loadFileInCanvas(file);
 		});
 
 		Label close = new Label("x");
 		close.getStyleClass().add("closeTab");
 		close.setPadding(new Insets(0, 0, 0, 7));
 		close.setOnMouseClicked((e) -> {
-			mc.closeFile(file);
+			mainController.closeFile(file);
 		});
 
 		setAlignment(Pos.CENTER);
@@ -41,6 +47,11 @@ public class Tab extends HBox {
 		getChildren().addAll(modified, fileLabel, close);
 	}
 
+	/**
+	 * If <code>true</code> will show the '*' before the file other
+	 * 
+	 * @param modified
+	 */
 	public void setModified(boolean modified) {
 		if (modified) {
 			this.modified.setVisible(true);
@@ -48,11 +59,6 @@ public class Tab extends HBox {
 			this.modified.setVisible(false);
 			file.setWasModified(false);
 		}
-	}
-
-	@Override
-	public Object getUserData() {
-		return file;
 	}
 
 	public void setSelected(boolean b) {
@@ -63,6 +69,11 @@ public class Tab extends HBox {
 		} else {
 			getStyleClass().remove("fileTabItem");
 		}
+	}
+
+	@Override
+	public Object getUserData() {
+		return file;
 	}
 
 }
