@@ -180,7 +180,7 @@ public class MainController implements ResizableInterface {
 			if (e.getY() >= rightScrollInside.getLayoutY()
 					&& e.getY() <= rightScrollInside.getLayoutY() + rightScrollInside.getHeight()) {
 				double displacement = lastY - e.getY();
-
+				
 				canvasManager.setScrollY((int) (canvasManager.getScrollY()
 						- (FileUpdaterThread.getBiggestY() * (displacement / rightScrollBar.getHeight()))));
 

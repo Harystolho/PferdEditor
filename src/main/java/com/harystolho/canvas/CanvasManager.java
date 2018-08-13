@@ -326,14 +326,18 @@ public class CanvasManager {
 
 	public void setScrollY(int y) {
 		if (currentFile != null) {
-
+			
 			if (y < lineHeight) { // First Line
-				if (getScrollY() >= lineHeight) {
+				if(y >= 0) {
 					currentFile.setScrollY(y);
+				} else {
+					currentFile.setScrollY(0);
 				}
 			} else {
-				if (y <= FileUpdaterThread.getBiggestY() - canvas.getHeight() + lineHeight) {
+				if (y <= FileUpdaterThread.getBiggestY() - canvas.getHeight()) {
 					currentFile.setScrollY(y);
+				} else {
+					currentFile.setScrollY((int) (FileUpdaterThread.getBiggestY() - canvas.getHeight()));
 				}
 			}
 

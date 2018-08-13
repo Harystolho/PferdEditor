@@ -84,7 +84,7 @@ public class FileTest {
 
 		File f = new File("f");
 		cm.setCurrentFile(f);
-		
+
 		f.type('w');
 		f.type('o');
 		f.type('r');
@@ -106,7 +106,7 @@ public class FileTest {
 		File f = new File("f2");
 		cm.setCurrentFile(f);
 		cm.setCursorY(0);
-		
+
 		f.type(new KeyEvent(null, null, null, null, "w", KeyCode.UNDEFINED, false, false, false, false));
 		f.type(new KeyEvent(null, null, null, null, "o", KeyCode.UNDEFINED, false, false, false, false));
 		f.type(new KeyEvent(null, null, null, null, "r", KeyCode.UNDEFINED, false, false, false, false));
@@ -118,6 +118,30 @@ public class FileTest {
 
 		assertTrue(f.getWords().get(0).getWordAsString().equals("word"));
 		assertTrue(f.getWords().get(1).getWordAsString().equals(" "));
+	}
+
+	@Test
+	public void creatSpaceInTheMiddleOfAWord() {
+		CanvasManager cm = Main.getApplication().getCanvasManager();
+
+		File f = new File("f3");
+		cm.setCurrentFile(f);
+		cm.setCursorY(0);
+
+		f.type(new KeyEvent(null, null, null, null, "w", KeyCode.UNDEFINED, false, false, false, false));
+		f.type(new KeyEvent(null, null, null, null, "o", KeyCode.UNDEFINED, false, false, false, false));
+		f.type(new KeyEvent(null, null, null, null, "r", KeyCode.UNDEFINED, false, false, false, false));
+		f.type(new KeyEvent(null, null, null, null, "d", KeyCode.UNDEFINED, false, false, false, false));
+		cm.update();
+
+		cm.setCursorX(Word.computeCharWidth('w'));
+
+		f.type(new KeyEvent(null, null, null, null, null, KeyCode.SPACE, false, false, false, false));
+		cm.update();
+
+		assertTrue(f.getWords().get(0).getWordAsString().equals("w"));
+		assertTrue(f.getWords().get(1).getWordAsString().equals(" "));
+		assertTrue(f.getWords().get(2).getWordAsString().equals("ord"));
 	}
 
 	@AfterClass
