@@ -6,11 +6,13 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
 
 import com.harystolho.Main;
 import com.harystolho.canvas.CanvasManager;
+import com.harystolho.misc.Tab;
 import com.harystolho.pe.File;
 import com.harystolho.thread.FileUpdaterThread;
 import com.harystolho.thread.RenderThread;
@@ -175,12 +177,12 @@ public class MainController implements ResizableInterface {
 		});
 
 		rightScrollBar.setOnMouseDragged((e) -> {
-			
+
 			// If cursor is inside scroll bar
 			if (e.getY() >= rightScrollInside.getLayoutY()
 					&& e.getY() <= rightScrollInside.getLayoutY() + rightScrollInside.getHeight()) {
 				double displacement = lastY - e.getY();
-				
+
 				canvasManager.setScrollY((int) (canvasManager.getScrollY()
 						- (FileUpdaterThread.getBiggestY() * (displacement / rightScrollBar.getHeight()))));
 
@@ -259,6 +261,23 @@ public class MainController implements ResizableInterface {
 	}
 
 	/**
+	 * Saves the file that is being drawn
+	 */
+	public void saveOpenedFile() {
+		if (canvasManager.getCurrentFile() != null) {
+			PEUtils.saveFile(canvasManager.getCurrentFile(), canvasManager.getCurrentFile().getDiskFile());
+
+			// Updates '*' before the tab's label
+			for (Node node : filesTab.getChildren()) {
+				Tab tab = (Tab) node;
+				if (tab.getUserData() == canvasManager.getCurrentFile()) {
+					tab.setModified(false);
+				}
+			}
+		}
+	}
+
+	/**
 	 * Creates a new {@link File} and adds it to {@link #fileList}
 	 */
 	private void createNewFile() {
@@ -319,12 +338,11 @@ public class MainController implements ResizableInterface {
 	 */
 	private void updateFilesTabSelection(File file) {
 		for (Node node : filesTab.getChildren()) {
-			if (node.getUserData() != file) {
-				node.getStyleClass().remove("fileTabItem");
+			Tab tab = (Tab) node;
+			if (tab.getUserData() != file) {
+				tab.setSelected(false);
 			} else {
-				if (!node.getStyleClass().contains("fileTabItem")) { // If it already contains it, don't add again
-					node.getStyleClass().add("fileTabItem");
-				}
+				tab.setSelected(true);
 			}
 
 		}
@@ -399,26 +417,8 @@ public class MainController implements ResizableInterface {
 	 * @param file
 	 */
 	private void createFileTabLabel(File file) {
-		HBox box = new HBox();
-		box.setUserData(file);
-
-		Label fileLabel = new Label(file.getName());
-		fileLabel.setOnMouseClicked((e) -> {
-			loadFileInCanvas(file);
-		});
-
-		Label close = new Label("x");
-		close.getStyleClass().add("closeTab");
-		close.setPadding(new Insets(0, 0, 0, 7));
-		close.setOnMouseClicked((e) -> {
-			closeFile(file);
-		});
-
-		box.setAlignment(Pos.CENTER);
-		box.setPadding(new Insets(0, 5, 0, 5));
-		box.getChildren().addAll(fileLabel, close);
-
-		filesTab.getChildren().add(box);
+		Tab tab = new Tab(file, this);
+		filesTab.getChildren().add(tab);
 	}
 
 	/**
@@ -427,10 +427,12 @@ public class MainController implements ResizableInterface {
 	 * 
 	 * @param file
 	 */
-	private void closeFile(File file) {
+	public void closeFile(File file) {
 		file.setLoaded(false);
 
-		// TODO ask to save file
+		if (file.wasModified()) {
+			// TODO ask to save file
+		}
 
 		Iterator<Node> it = filesTab.getChildren().iterator();
 
@@ -491,10 +493,24 @@ public class MainController implements ResizableInterface {
 	}
 
 	/**
-	 * @return if a file is selected
+	 * @return <code>true</code> if at least 1 file is selected
 	 */
 	public boolean isFileSelected() {
 		return fileList.getSelectionModel().getSelectedIndices().isEmpty() ? false : true;
+	}
+
+	/**
+	 * Adds a <code>*</code> to the file name to indicate it's been modified
+	 * 
+	 * @param file
+	 */
+	public void setFileModified(File file) {
+		for (Node node : filesTab.getChildren()) {
+			Tab tab = (Tab) node;
+			if (tab.getUserData() == file) {
+				tab.setModified(true);
+			}
+		}
 	}
 
 	public Canvas getCanvas() {

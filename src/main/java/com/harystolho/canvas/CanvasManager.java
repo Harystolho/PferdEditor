@@ -326,9 +326,9 @@ public class CanvasManager {
 
 	public void setScrollY(int y) {
 		if (currentFile != null) {
-			
+
 			if (y < lineHeight) { // First Line
-				if(y >= 0) {
+				if (y >= 0) {
 					currentFile.setScrollY(y);
 				} else {
 					currentFile.setScrollY(0);

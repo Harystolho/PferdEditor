@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.181" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.harystolho.controllers.MainController">
+	<children>
+		<MenuBar fx:id="menuBar" minWidth="550.0" prefHeight="25.0" prefWidth="1280.0">
+			<menus>
+				<Menu mnemonicParsing="false" text="File">
+					<items>
+						<MenuItem fx:id="menuNeFile" mnemonicParsing="false" text="New File" />
+                  <MenuItem fx:id="menuSave" mnemonicParsing="false" text="Save" />
+                  <MenuItem fx:id="menuSaveAs" mnemonicParsing="false" text="Save As" />
+                  <MenuItem fx:id="menuExit" mnemonicParsing="false" text="Exit" />
+					</items>
+				</Menu>
+				<Menu mnemonicParsing="false" text="Edit">
+					<items>
+						<MenuItem fx:id="menuSearch" mnemonicParsing="false" text="Search" />
+                  <MenuItem fx:id="menuReplace" mnemonicParsing="false" text="Replace" />
+                  <MenuItem fx:id="menuSettings" mnemonicParsing="false" text="Settings" />
+					</items>
+				</Menu>
+				<Menu mnemonicParsing="false" text="Help">
+					<items>
+						<MenuItem fx:id="menuCheckForUpdates" mnemonicParsing="false" text="Check for Updates" />
+                  <MenuItem fx:id="menuAbout" mnemonicParsing="false" text="About" />
+					</items>
+				</Menu>
+			</menus>
+		</MenuBar>
+		<FlowPane fx:id="secundaryMenu" layoutY="28.0" minWidth="300.0" prefHeight="33.0" prefWidth="1280.0">
+         <children>
+            <ImageView fx:id="newFile" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="menuIcon">
+               <image>
+                  <Image url="@icons/file.png" />
+               </image>
+               <FlowPane.margin>
+                  <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+               </FlowPane.margin>
+            </ImageView>
+            <ImageView fx:id="saveFile" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="menuIcon">
+               <image>
+                  <Image url="@icons/save.png" />
+               </image>
+               <FlowPane.margin>
+                  <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+               </FlowPane.margin>
+            </ImageView>
+            <ImageView fx:id="deleteFile" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="menuIcon">
+               <image>
+                  <Image url="@icons/trash.png" />
+               </image>
+               <FlowPane.margin>
+                  <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+               </FlowPane.margin>
+            </ImageView>
+            <ImageView fx:id="refresh" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="menuIcon">
+               <image>
+                  <Image url="@icons/refresh.png" />
+               </image>
+               <FlowPane.margin>
+                  <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+               </FlowPane.margin>
+            </ImageView>
+         </children>
+		</FlowPane>
+      <VBox fx:id="canvasBox" layoutX="238.0" layoutY="62.0" prefHeight="663.0" prefWidth="1012.0">
+         <children>
+            <HBox fx:id="filesTab" prefHeight="24.0" prefWidth="1035.0">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </HBox>
+      		<Canvas fx:id="canvas" height="609.0" width="1012.0">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor></Canvas>
+            <Pane fx:id="canvasInformationBar" prefHeight="25.0" prefWidth="1035.0" />
+         </children>
+      </VBox>
+      <ListView fx:id="fileList" layoutX="12.0" layoutY="93.0" prefHeight="362.0" prefWidth="215.0" />
+      <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="8.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@icons/folder.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="fileDirectory" layoutX="34.0" layoutY="70.0" prefHeight="19.0" prefWidth="193.0" text=" Files" wrapText="true">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Label>
+      <Pane fx:id="rightScrollBar" layoutX="1250.0" layoutY="86.0" prefHeight="609.0" prefWidth="17.0">
+         <children>
+            <Rectangle fx:id="rightScrollInside" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" stroke="TRANSPARENT" strokeType="INSIDE" styleClass="scrollBar" visible="false" width="17.0" />
+         </children>
+      </Pane>
+	</children>
+</Pane>

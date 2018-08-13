@@ -22,6 +22,7 @@ public class File {
 
 	private java.io.File diskFile;
 	private boolean isLoaded;
+	private boolean wasModified;
 
 	private String name;
 	private IndexLinkedList<Word> words;
@@ -42,6 +43,8 @@ public class File {
 
 		drawLock = new Object();
 
+		setWasModified(false);
+
 		cursorX = 0;
 		cursorY = 0;
 
@@ -59,7 +62,10 @@ public class File {
 	 */
 	public void type(KeyEvent keyEvent) {
 
+		setWasModified(true);
+
 		synchronized (drawLock) {
+
 			switch (keyEvent.getCode()) {
 			case SPACE:
 				createSpace();
@@ -213,7 +219,7 @@ public class File {
 	}
 
 	private void removeCharAtCursor() {
-		
+
 	}
 
 	/**
@@ -652,13 +658,14 @@ public class File {
 	}
 
 	public void setLoaded(boolean loaded) {
-		if (!loaded) {
+		if (!loaded) { // Reset File
 			getWords().clear();
 			resetLastWord();
 			scrollX = 0;
 			scrollY = 0;
 			cursorX = 0;
 			cursorY = 0;
+			setWasModified(false);
 		}
 
 		this.isLoaded = loaded;
@@ -678,6 +685,18 @@ public class File {
 
 	public void setScrollY(int scrollY) {
 		this.scrollY = scrollY;
+	}
+
+	public boolean wasModified() {
+		return wasModified;
+	}
+
+	public void setWasModified(boolean wasModified) {
+		if (!this.wasModified && wasModified) {
+			Main.getApplication().getMainController().setFileModified(this);
+		}
+		this.wasModified = wasModified;
+
 	}
 
 }

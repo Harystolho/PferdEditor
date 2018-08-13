@@ -35,6 +35,7 @@ public class RenameFileController {
 
 		rename.setOnAction((e) -> {
 			file.setName(fileName.getText());
+			// TODO update file name on file's tab
 			stage.close();
 			Main.getApplication().getMainController().refrestFileList();
 		});

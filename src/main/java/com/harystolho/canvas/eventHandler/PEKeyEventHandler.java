@@ -1,5 +1,6 @@
 package com.harystolho.canvas.eventHandler;
 
+import com.harystolho.Main;
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.thread.FileUpdaterThread;
 
@@ -54,6 +55,9 @@ public class PEKeyEventHandler {
 			cm.moveCursorRight();
 			e.consume();
 			return;
+		case S:
+			pressS(e);
+			return;
 		case HOME:
 			pressHOME(e);
 			return;
@@ -66,21 +70,29 @@ public class PEKeyEventHandler {
 		case F4:
 			cm.getCurrentFile().getWords().printDebug();
 			return;
-		case F5:
-			System.out.println("X: " + FileUpdaterThread.getBiggestX());
-			System.out.println("Y: " + FileUpdaterThread.getBiggestY());
-			return;
 		default:
 			break;
 		}
 
+		pressKeyOnCanvas(e);
+
+	}
+
+	private void pressKeyOnCanvas(KeyEvent e) {
 		if (cm.getCanvas().isFocused()) {
 			if (cm.getCurrentFile() != null) {
 				e.consume();
 				cm.getCurrentFile().type(e);
 			}
 		}
+	}
 
+	private void pressS(KeyEvent e) {
+		if (e.isControlDown()) {
+			Main.getApplication().getMainController().saveOpenedFile();
+		} else {
+			pressKeyOnCanvas(e);
+		}
 	}
 
 	private void pressHOME(KeyEvent e) {
