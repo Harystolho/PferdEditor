@@ -31,6 +31,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
@@ -46,10 +48,13 @@ public class MainController implements ResizableInterface {
 	private Pane pane;
 
 	@FXML
+	private Pane leftPane;
+
+	@FXML
 	private MenuBar menuBar;
 
 	@FXML
-	private MenuItem menuNeFile;
+	private MenuItem menuNewFile;
 
 	@FXML
 	private MenuItem menuSave;
@@ -197,7 +202,7 @@ public class MainController implements ResizableInterface {
 	 */
 	private void loadMenuBarItemHandler() {
 
-		menuNeFile.setOnAction((e) -> {
+		menuNewFile.setOnAction((e) -> {
 			createNewFile();
 		});
 
@@ -206,7 +211,8 @@ public class MainController implements ResizableInterface {
 		});
 
 		menuSaveAs.setOnAction((e) -> {
-			saveFileAs(canvasManager.getCurrentFile());
+			if (canvasManager.getCurrentFile() != null)
+				saveFileAs(canvasManager.getCurrentFile());
 		});
 
 		menuExit.setOnAction((e) -> {

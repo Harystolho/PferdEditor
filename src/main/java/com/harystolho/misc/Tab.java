@@ -10,7 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
 /**
- * Class that behaves similarly to a tab
+ * Class for the tab list above the canvas
  * 
  * @author Harystolho
  *
@@ -61,6 +61,11 @@ public class Tab extends HBox {
 		}
 	}
 
+	/**
+	 * Adds a CSS class to this tab to show it's selected
+	 * 
+	 * @param b
+	 */
 	public void setSelected(boolean b) {
 		if (b) {
 			if (!getStyleClass().contains("fileTabItem")) { // If it already contains it, don't add again

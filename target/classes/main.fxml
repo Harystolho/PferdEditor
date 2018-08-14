@@ -22,7 +22,7 @@
 			<menus>
 				<Menu mnemonicParsing="false" text="File">
 					<items>
-						<MenuItem fx:id="menuNeFile" mnemonicParsing="false" text="New File" />
+						<MenuItem fx:id="menuNewFile" mnemonicParsing="false" text="New File" />
                   <MenuItem fx:id="menuSave" mnemonicParsing="false" text="Save" />
                   <MenuItem fx:id="menuSaveAs" mnemonicParsing="false" text="Save As" />
                   <MenuItem fx:id="menuExit" mnemonicParsing="false" text="Exit" />
@@ -79,7 +79,7 @@
             </ImageView>
          </children>
 		</FlowPane>
-      <VBox fx:id="canvasBox" layoutX="238.0" layoutY="62.0" prefHeight="663.0" prefWidth="1012.0">
+      <VBox fx:id="canvasBox" layoutX="238.0" layoutY="62.0" prefHeight="658.0" prefWidth="1012.0">
          <children>
             <HBox fx:id="filesTab" prefHeight="24.0" prefWidth="1035.0">
                <VBox.margin>
@@ -96,20 +96,24 @@
             <Pane fx:id="canvasInformationBar" prefHeight="25.0" prefWidth="1035.0" />
          </children>
       </VBox>
-      <ListView fx:id="fileList" layoutX="12.0" layoutY="93.0" prefHeight="362.0" prefWidth="215.0" />
-      <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="8.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@icons/folder.png" />
-         </image>
-      </ImageView>
-      <Label fx:id="fileDirectory" layoutX="34.0" layoutY="70.0" prefHeight="19.0" prefWidth="193.0" text=" Files" wrapText="true">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Label>
       <Pane fx:id="rightScrollBar" layoutX="1250.0" layoutY="86.0" prefHeight="609.0" prefWidth="17.0">
          <children>
             <Rectangle fx:id="rightScrollInside" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" stroke="TRANSPARENT" strokeType="INSIDE" styleClass="scrollBar" visible="false" width="17.0" />
+         </children>
+      </Pane>
+      <Pane fx:id="leftPane" layoutX="8.0" layoutY="73.0" prefHeight="647.0" prefWidth="219.0">
+         <children>
+            <ListView fx:id="fileList" layoutX="11.0" layoutY="35.0" prefHeight="418.0" prefWidth="208.0" />
+            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/folder.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="fileDirectory" layoutX="27.0" prefHeight="19.0" prefWidth="192.0" text=" Files" wrapText="true">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
          </children>
       </Pane>
 	</children>

@@ -1,5 +1,7 @@
 package com.harystolho;
 
+import java.awt.MenuBar;
+
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.canvas.eventHandler.PEKeyEventHandler;
 import com.harystolho.canvas.eventHandler.PEMouseEventHandler;
@@ -10,6 +12,8 @@ import com.harystolho.utils.PropertiesWindowFactory;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 public class PEApplication extends Application {
@@ -30,7 +34,7 @@ public class PEApplication extends Application {
 		setWindow(window);
 		window.getIcons().add(new Image(ClassLoader.getSystemResourceAsStream("icon.png")));
 		window.setTitle("Pferd Editor");
-		
+
 		window.setScene(scene);
 
 		PropertiesWindowFactory.setMainPane(Main.getApplication().getWindow().getScene().getRoot());
@@ -43,14 +47,21 @@ public class PEApplication extends Application {
 	public void setup() {
 		Main.setApplication(this);
 		loadMainScene();
-		
+
 		keyHandler = new PEKeyEventHandler(scene, mainController.getCanvasManager());
 		mouseHandler = new PEMouseEventHandler(scene);
 	}
-	
+
 	private void loadEventHandlers() {
 		window.setOnCloseRequest((e) -> {
 			PEUtils.exit();
+		});
+
+		// When ALT is pressed it shouldn't focus on the menu bar
+		scene.addEventHandler(KeyEvent.KEY_PRESSED, (e) -> {
+			if (e.getCode() == KeyCode.ALT) {
+				e.consume();
+			}
 		});
 
 	}
