@@ -1,26 +1,34 @@
 package com.harystolho.canvas.eventHandler;
 
+import java.util.HashMap;
+import java.util.function.Function;
+
 import com.harystolho.Main;
 import com.harystolho.canvas.CanvasManager;
-import com.harystolho.thread.FileUpdaterThread;
 
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 public class PEKeyEventHandler {
 
 	private CanvasManager cm;
 	private Scene scene;
+	private HashMap<KeyCode, Function<KeyEvent, Boolean>> keyMap;
 
 	public PEKeyEventHandler(Scene scene, CanvasManager cm) {
 		this.cm = cm;
 		this.scene = scene;
+
+		keyMap = new HashMap<>();
 
 		init();
 
 	}
 
 	private void init() {
+
+		loadKeyMap();
 
 		scene.setOnKeyPressed((e) -> {
 			keyPress(e);
@@ -38,40 +46,11 @@ public class PEKeyEventHandler {
 
 	private void keyPress(KeyEvent e) {
 
-		switch (e.getCode()) {
-		case UP:
-			cm.lineUp();
-			e.consume();
-			return;
-		case DOWN:
-			cm.lineDown();
-			e.consume();
-			return;
-		case LEFT:
-			cm.moveCursorLeft();
-			e.consume();
-			return;
-		case RIGHT:
-			cm.moveCursorRight();
-			e.consume();
-			return;
-		case S:
-			pressS(e);
-			return;
-		case HOME:
-			pressHOME(e);
-			return;
-		case END:
-			pressEND(e);
-			return;
-		case F3:
-			cm.printDebugMessage();
-			return;
-		case F4:
-			cm.getCurrentFile().getWords().printDebug();
-			return;
-		default:
-			break;
+		Function<KeyEvent, Boolean> key = keyMap.get(e.getCode());
+		if (key != null) { // If there's a function for this key
+			if (key.apply(e)) { // If the function returns true then stop here, else execute code below
+				return;
+			}
 		}
 
 		pressKeyOnCanvas(e);
@@ -87,28 +66,65 @@ public class PEKeyEventHandler {
 		}
 	}
 
-	private void pressS(KeyEvent e) {
-		if (e.isControlDown()) {
-			Main.getApplication().getMainController().saveOpenedFile();
-		} else {
-			pressKeyOnCanvas(e);
-		}
-	}
+	private void loadKeyMap() {
 
-	private void pressHOME(KeyEvent e) {
-		if (e.isControlDown()) {
-			cm.moveCursorToFirstLine();
-		} else {
-			cm.moveCursorToStartOfTheLine();
-		}
-	}
+		keyMap.put(KeyCode.UP, (e) -> {
+			cm.lineUp();
+			e.consume();
+			return true;
+		});
 
-	private void pressEND(KeyEvent e) {
-		if (e.isControlDown()) {
-			cm.moveCursorToLastLine();
-		} else {
-			cm.moveCursorToEndOfTheLine();
-		}
+		keyMap.put(KeyCode.DOWN, (e) -> {
+			cm.lineDown();
+			e.consume();
+			return true;
+		});
+
+		keyMap.put(KeyCode.LEFT, (e) -> {
+			cm.moveCursorLeft();
+			e.consume();
+			return true;
+		});
+
+		keyMap.put(KeyCode.RIGHT, (e) -> {
+			cm.moveCursorRight();
+			e.consume();
+			return true;
+		});
+		keyMap.put(KeyCode.S, (e) -> {
+			if (e.isControlDown()) {
+				Main.getApplication().getMainController().saveOpenedFile();
+			} else {
+				pressKeyOnCanvas(e);
+			}
+			return true;
+		});
+		keyMap.put(KeyCode.HOME, (e) -> {
+			if (e.isControlDown()) {
+				cm.moveCursorToFirstLine();
+			} else {
+				cm.moveCursorToStartOfTheLine();
+			}
+			return true;
+		});
+		keyMap.put(KeyCode.END, (e) -> {
+			if (e.isControlDown()) {
+				cm.moveCursorToLastLine();
+			} else {
+				cm.moveCursorToEndOfTheLine();
+			}
+			return true;
+		});
+		keyMap.put(KeyCode.F3, (e) -> {
+			cm.printDebugMessage();
+			return true;
+		});
+
+		keyMap.put(KeyCode.F4, (e) -> {
+			cm.getCurrentFile().getWords().printDebug();
+			return true;
+		});
+
 	}
 
 }
