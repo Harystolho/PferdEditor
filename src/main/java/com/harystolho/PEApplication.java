@@ -1,7 +1,5 @@
 package com.harystolho;
 
-import java.awt.MenuBar;
-
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.canvas.eventHandler.PEKeyEventHandler;
 import com.harystolho.canvas.eventHandler.PEMouseEventHandler;

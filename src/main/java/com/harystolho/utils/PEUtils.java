@@ -173,7 +173,7 @@ public class PEUtils {
 		logger.info("Closing application.");
 
 		FileUpdaterThread.stop();
-		
+
 		executor.shutdown();
 
 		PEConfiguration.saveProperties();

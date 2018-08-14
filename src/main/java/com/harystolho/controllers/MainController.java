@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
 
@@ -21,8 +20,6 @@ import com.harystolho.utils.PropertiesWindowFactory;
 import com.harystolho.utils.PropertiesWindowFactory.window_type;
 
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
@@ -31,8 +28,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
