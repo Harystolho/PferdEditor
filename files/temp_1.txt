@@ -1,1 +1,0 @@
-package com.harystolho.pe.linkedList;public class Pair<E, F> {	private E e;	private F f;	public Pair(E e, F f) {		this.e = e;		this.f = f;	}}=-=wdwdwd
