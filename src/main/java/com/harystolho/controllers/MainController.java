@@ -216,7 +216,7 @@ public class MainController implements ResizableInterface {
 		});
 
 		menuSearch.setOnAction((e) -> {
-
+			
 		});
 
 		menuReplace.setOnAction((e) -> {

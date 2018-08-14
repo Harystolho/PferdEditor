@@ -40,18 +40,18 @@ public class FileRightClickController {
 		});
 
 		copy.setOnMouseClicked((e) -> {
-			copyFile();
 			PropertiesWindowFactory.removeOpenWindow();
+			copyFile();
 		});
 
 		paste.setOnMouseClicked((e) -> {
-			pasteFile();
 			PropertiesWindowFactory.removeOpenWindow();
+			pasteFile();
 		});
 
 		properties.setOnMouseClicked((e) -> {
-			showProperties();
 			PropertiesWindowFactory.removeOpenWindow();
+			showProperties();
 		});
 
 	}

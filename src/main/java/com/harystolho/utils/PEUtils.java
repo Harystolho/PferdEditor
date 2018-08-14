@@ -81,6 +81,21 @@ public class PEUtils {
 	}
 
 	public static void saveFile(com.harystolho.pe.File fileToSave, File f) {
+
+		// If a new PE file was created the disk file is null
+		if (f == null) {
+			f = new File(getSaveFolder() + "/" + fileToSave.getName());
+			fileToSave.setDiskFile(f);
+		}
+
+		if (!f.exists()) {
+			try {
+				f.createNewFile();
+			} catch (IOException e) {
+				logger.severe("Couldn't create file: " + f.getAbsolutePath());
+			}
+		}
+
 		try (FileWriter fw = new FileWriter(f)) {
 			fileToSave.getWords().stream().forEach((word) -> {
 				try {
@@ -90,7 +105,7 @@ public class PEUtils {
 						fw.write(word.getWordAsString());
 						break;
 					case NEW_LINE:
-						fw.write("\r");
+						fw.write(System.getProperty("line.separator"));
 						break;
 					case TAB:
 						fw.write("\t");
@@ -100,7 +115,7 @@ public class PEUtils {
 					}
 
 				} catch (IOException e) {
-					logger.severe("Couldn't write {" + word.getWordAsString() + "} to " + f.getName());
+					logger.severe("Couldn't write {" + word.getWordAsString() + "} to " + fileToSave.getName());
 				}
 			});
 			fw.flush();
@@ -145,6 +160,10 @@ public class PEUtils {
 	}
 
 	public static File getSaveFolder() {
+		if (!saveFolder.exists()) {
+			saveFolder.mkdir();
+		}
+
 		return saveFolder;
 	}
 

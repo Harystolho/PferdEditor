@@ -6,6 +6,7 @@ import com.harystolho.pe.File;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -33,16 +34,23 @@ public class RenameFileController {
 
 	private void loadEventHandlers() {
 
+		// TODO rename when ENTER is pressed
+
 		rename.setOnAction((e) -> {
-			file.setName(fileName.getText());
-			// TODO update file name on file's tab
-			stage.close();
-			Main.getApplication().getMainController().refrestFileList();
+			rename();
 		});
 
 		cancel.setOnAction((e) -> {
 			stage.close();
 		});
+
+	}
+
+	private void rename() {
+		file.setName(fileName.getText());
+		// TODO update file name on file's tab
+		stage.close();
+		Main.getApplication().getMainController().refrestFileList();
 
 	}
 
