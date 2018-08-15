@@ -45,77 +45,54 @@ public class MainController implements ResizableInterface {
 
 	@FXML
 	private Pane pane;
-
 	@FXML
 	private Pane leftPane;
-
 	@FXML
 	private MenuBar menuBar;
-
 	@FXML
 	private MenuItem menuNewFile;
-
 	@FXML
 	private MenuItem menuSave;
-
 	@FXML
 	private MenuItem menuSaveAs;
-
 	@FXML
 	private MenuItem menuExit;
-
 	@FXML
 	private MenuItem menuSearch;
-
 	@FXML
 	private MenuItem menuReplace;
-
 	@FXML
 	private MenuItem menuSettings;
-
 	@FXML
 	private MenuItem menuCheckForUpdates;
-
 	@FXML
 	private MenuItem menuAbout;
-
 	@FXML
 	private FlowPane secundaryMenu;
-
 	@FXML
 	private ImageView newFile;
-
 	@FXML
 	private ImageView saveFile;
-
 	@FXML
 	private ImageView deleteFile;
-
 	@FXML
 	private ImageView refresh;
-
 	@FXML
 	private HBox filesTab;
-
 	@FXML
 	private VBox canvasBox;
-
 	@FXML
 	private Canvas canvas;
-
 	@FXML
 	private Pane canvasInformationBar;
-
 	@FXML
 	private ListView<File> fileList;
-
 	@FXML
 	private Pane rightScrollBar;
 	private double lastY = 0;
 
 	@FXML
 	private Rectangle rightScrollInside;
-
 	@FXML
 	private Label fileDirectory;
 
@@ -164,12 +141,7 @@ public class MainController implements ResizableInterface {
 		});
 
 		refresh.setOnMouseClicked((e) -> {
-			File f = fileList.getSelectionModel().getSelectedItem();
-			if (f != null) {
-				f.setLoaded(false);
-				f.resetLastWord();
-				fileList.getSelectionModel().clearSelection();
-			}
+			loadSaveDirectory();
 		});
 
 		fileDirectory.setOnMouseClicked((e) -> {
@@ -242,21 +214,6 @@ public class MainController implements ResizableInterface {
 	}
 
 	/**
-	 * Opens this project's GitHub page
-	 */
-	private void openAboutPage() {
-		Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
-		if (desktop != null && desktop.isSupported(Action.BROWSE)) {
-			try {
-				desktop.browse(new URI("https://github.com/Harystolho/PferdEditor"));
-			} catch (IOException | URISyntaxException e) {
-				System.out.println("Couldn't open github link");
-			}
-		}
-
-	}
-
-	/**
 	 * Saves the file that is being drawn
 	 */
 	public void saveOpenedFile() {
@@ -277,11 +234,15 @@ public class MainController implements ResizableInterface {
 	 * Creates a new {@link File} and adds it to {@link #fileList}
 	 */
 	private void createNewFile() {
-		File file = new File("New File" + new Random().nextInt(100));
-		fileList.getItems().add(file);
+		createNewFile("New File" + new Random().nextInt(100));
 	}
 
-	public void addNewFile(File file) {
+	private void createNewFile(String fileName) {
+		File file = new File(fileName);
+		addFileToList(file);
+	}
+
+	public void addFileToList(File file) {
 		fileList.getItems().add(file);
 	}
 
@@ -404,7 +365,7 @@ public class MainController implements ResizableInterface {
 		if (saveFolder.exists()) {
 			for (java.io.File file : saveFolder.listFiles()) {
 				if (!file.isDirectory()) {
-					addNewFile(PEUtils.createFileFromSourceFile(file));
+					addFileToList(PEUtils.createFileFromSourceFile(file));
 				}
 			}
 		}
@@ -546,6 +507,21 @@ public class MainController implements ResizableInterface {
 
 	public CanvasManager getCanvasManager() {
 		return canvasManager;
+	}
+
+	/**
+	 * Opens this project's GitHub page
+	 */
+	private void openAboutPage() {
+		Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+		if (desktop != null && desktop.isSupported(Action.BROWSE)) {
+			try {
+				desktop.browse(new URI("https://github.com/Harystolho/PferdEditor"));
+			} catch (IOException | URISyntaxException e) {
+				System.out.println("Couldn't open github link");
+			}
+		}
+
 	}
 
 	@Override
