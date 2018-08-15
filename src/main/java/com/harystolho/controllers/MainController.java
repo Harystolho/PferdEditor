@@ -257,10 +257,7 @@ public class MainController implements ResizableInterface {
 	}
 
 	/**
-	 * Loads this file in the canvas and updates the selected file tab
-	 * 
-	 * @param file the file to load. If the file is <code>null</code> it does
-	 *             nothing.
+	 * Loads the <code>file</code> in the canvas and updates the selected file tab
 	 */
 	public void loadFileInCanvas(File file) {
 
@@ -269,7 +266,7 @@ public class MainController implements ResizableInterface {
 		}
 
 		if (!file.isLoaded()) {
-			file.getWords().clear();
+			// file.getWords().clear();
 			PEUtils.loadFileFromDisk(file);
 			createFileTabLabel(file);
 		}

@@ -12,9 +12,10 @@
             <Font size="19.0" />
          </font>
       </Label>
-      <Button fx:id="saveAs" layoutX="417.0" layoutY="113.0" mnemonicParsing="false" text="Save As" />
-      <Button fx:id="save" layoutX="362.0" layoutY="113.0" mnemonicParsing="false" text="Save" />
+      <Button fx:id="saveAs" layoutX="334.0" layoutY="113.0" mnemonicParsing="false" text="Save As" />
+      <Button fx:id="save" layoutX="279.0" layoutY="113.0" mnemonicParsing="false" text="Save" />
       <Label fx:id="file" layoutX="141.0" layoutY="17.0" text="File" />
       <Button fx:id="cancel" layoutX="486.0" layoutY="113.0" mnemonicParsing="false" text="Cancel" />
+      <Button fx:id="dontSave" layoutX="403.0" layoutY="113.0" mnemonicParsing="false" text="Don't Save" />
    </children>
 </Pane>

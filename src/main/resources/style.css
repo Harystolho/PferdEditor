@@ -87,6 +87,6 @@
     -fx-background-radius: 2px;
 }
 
-#cancel, #rename, #save, #saveAs{
+#cancel, #rename, #save, #saveAs, #dontSave{
     -fx-background-color: #fff;
 }

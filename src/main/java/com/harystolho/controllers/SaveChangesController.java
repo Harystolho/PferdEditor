@@ -22,6 +22,9 @@ public class SaveChangesController {
 	private Button save;
 
 	@FXML
+	private Button dontSave;
+
+	@FXML
 	private Label file;
 
 	@FXML
@@ -45,6 +48,11 @@ public class SaveChangesController {
 
 		saveAs.setOnAction((e) -> {
 			PEUtils.saveFileAs(PEFile);
+			closeFile(PEFile);
+			stage.close();
+		});
+
+		dontSave.setOnAction((e) -> {
 			closeFile(PEFile);
 			stage.close();
 		});
