@@ -10,6 +10,7 @@ import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 
+import com.harystolho.Main;
 import com.harystolho.controllers.ResizableInterface;
 import com.harystolho.thread.FileUpdaterThread;
 import com.harystolho.thread.RenderThread;
@@ -17,6 +18,7 @@ import com.harystolho.thread.RenderThread;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.FileChooser;
 
 public class PEUtils {
 
@@ -121,6 +123,15 @@ public class PEUtils {
 			fw.flush();
 		} catch (IOException e) {
 			logger.severe("Couldn't save file " + f.getName() + " to " + saveFolder.getAbsolutePath());
+		}
+	}
+
+	public static void saveFileAs(com.harystolho.pe.File currentFile) {
+		FileChooser fc = new FileChooser();
+		java.io.File file = fc.showSaveDialog(Main.getApplication().getWindow());
+
+		if (file != null) {
+			saveFile(currentFile, file);
 		}
 	}
 

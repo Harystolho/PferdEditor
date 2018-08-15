@@ -22,12 +22,15 @@ import com.harystolho.utils.PropertiesWindowFactory.window_type;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
@@ -36,6 +39,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 public class MainController implements ResizableInterface {
 
@@ -207,7 +211,7 @@ public class MainController implements ResizableInterface {
 
 		menuSaveAs.setOnAction((e) -> {
 			if (canvasManager.getCurrentFile() != null)
-				saveFileAs(canvasManager.getCurrentFile());
+				PEUtils.saveFileAs(canvasManager.getCurrentFile());
 		});
 
 		menuExit.setOnAction((e) -> {
@@ -216,7 +220,7 @@ public class MainController implements ResizableInterface {
 		});
 
 		menuSearch.setOnAction((e) -> {
-			
+
 		});
 
 		menuReplace.setOnAction((e) -> {
@@ -250,15 +254,6 @@ public class MainController implements ResizableInterface {
 			}
 		}
 
-	}
-
-	private void saveFileAs(File currentFile) {
-		FileChooser fc = new FileChooser();
-		java.io.File file = fc.showSaveDialog(Main.getApplication().getWindow());
-
-		if (file != null) {
-			PEUtils.saveFile(currentFile, file);
-		}
 	}
 
 	/**
@@ -432,12 +427,27 @@ public class MainController implements ResizableInterface {
 	 * @param file
 	 */
 	public void closeFile(File file) {
-		file.setLoaded(false);
-
 		if (file.wasModified()) {
-			// TODO ask to save file
-		}
+			openSaveChangesWidow(file);
+		} else {
+			removeFileFromFileTab(file);
+			selectFirstFileTab();
 
+			file.setLoaded(false);
+		}
+	}
+
+	void selectFirstFileTab() {
+		if (filesTab.getChildren().size() > 0) {
+			Node node = filesTab.getChildren().get(0);
+			loadFileInCanvas((File) node.getUserData());
+		} else { // If there's no tab left
+			hideSrollBar();
+			stopRendering();
+		}
+	}
+
+	void removeFileFromFileTab(File file) {
 		Iterator<Node> it = filesTab.getChildren().iterator();
 		while (it.hasNext()) {
 			Node node = it.next();
@@ -446,15 +456,29 @@ public class MainController implements ResizableInterface {
 				break;
 			}
 		}
+	}
 
-		// Selects the first tab
-		if (filesTab.getChildren().size() > 0) {
-			Node node = filesTab.getChildren().get(0);
-			loadFileInCanvas((File) node.getUserData());
-		} else { // If there's no tab left
-			hideSrollBar();
-			stopRendering();
-		}
+	private void openSaveChangesWidow(File file) {
+		Stage stage = new Stage();
+		stage.setTitle("Save Changes");
+
+		Parent p = PEUtils.loadFXML("saveChanges.fxml", (controller) -> {
+			SaveChangesController c = (SaveChangesController) controller;
+			c.setStage(stage);
+			c.setPEFile(file);
+		});
+
+		Scene scene = new Scene(p);
+		scene.getStylesheets().add(ClassLoader.getSystemResource("style.css").toExternalForm());
+
+		scene.setOnKeyPressed((e) -> {
+			if (e.getCode() == KeyCode.ESCAPE) {
+				stage.close();
+			}
+		});
+
+		stage.setScene(scene);
+		stage.show();
 
 	}
 
