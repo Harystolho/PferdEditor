@@ -1,5 +1,7 @@
 package com.harystolho.controllers;
 
+import java.nio.file.Files;
+
 import com.harystolho.Main;
 import com.harystolho.pe.File;
 
@@ -7,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -34,8 +37,6 @@ public class RenameFileController {
 
 	private void loadEventHandlers() {
 
-		// TODO rename when ENTER is pressed
-
 		rename.setOnAction((e) -> {
 			rename();
 		});
@@ -60,6 +61,13 @@ public class RenameFileController {
 
 	public void setStage(Stage stage) {
 		this.stage = stage;
+
+		stage.addEventHandler(KeyEvent.KEY_PRESSED, (e) -> {
+			if (e.getCode() == KeyCode.ENTER) {
+				rename();
+			}
+		});
+
 	}
 
 }

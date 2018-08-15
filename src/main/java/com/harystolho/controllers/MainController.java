@@ -220,13 +220,7 @@ public class MainController implements ResizableInterface {
 		if (canvasManager.getCurrentFile() != null) {
 			PEUtils.saveFile(canvasManager.getCurrentFile(), canvasManager.getCurrentFile().getDiskFile());
 
-			// Updates '*' before the tab's label
-			for (Node node : filesTab.getChildren()) {
-				Tab tab = (Tab) node;
-				if (tab.getUserData() == canvasManager.getCurrentFile()) {
-					tab.setModified(false);
-				}
-			}
+			setFileTabModified(canvasManager.getCurrentFile());
 		}
 	}
 
@@ -273,15 +267,14 @@ public class MainController implements ResizableInterface {
 
 		canvasManager.setCurrentFile(file);
 
-		// Calculates information about the new file
-		FileUpdaterThread.calculate(file);
+		FileUpdaterThread.calculate();
 
 		if (!RenderThread.isRunning()) {
 			canvas.setCursor(Cursor.TEXT);
 			canvasManager.initRenderThread();
 		}
 
-		updateFilesTabSelection(file);
+		updateFileTabSelection(file);
 
 	}
 
@@ -290,7 +283,7 @@ public class MainController implements ResizableInterface {
 	 * 
 	 * @param file
 	 */
-	private void updateFilesTabSelection(File file) {
+	private void updateFileTabSelection(File file) {
 		for (Node node : filesTab.getChildren()) {
 			Tab tab = (Tab) node;
 			if (tab.getUserData() != file) {
@@ -299,6 +292,18 @@ public class MainController implements ResizableInterface {
 				tab.setSelected(true);
 			}
 
+		}
+	}
+
+	/**
+	 * Updates the '*' before the tab's file name
+	 */
+	private void setFileTabModified(File currentFile) {
+		for (Node node : filesTab.getChildren()) {
+			Tab tab = (Tab) node;
+			if (tab.getUserData() == canvasManager.getCurrentFile()) {
+				tab.setModified(false);
+			}
 		}
 	}
 

@@ -16,8 +16,6 @@ import com.harystolho.utils.PEUtils;
  */
 public class FileUpdaterThread implements Runnable {
 
-	private static volatile boolean running = false;
-
 	private static int biggestX = 0;
 	private static int biggestY = 0;
 
@@ -46,6 +44,15 @@ public class FileUpdaterThread implements Runnable {
 
 	}
 
+	public static void calculate() {
+		PEUtils.getExecutor().submit(new FileUpdaterThread());
+	}
+
+	/**
+	 * Calculates information about the file
+	 * 
+	 * @param file
+	 */
 	public static void calculate(File file) {
 
 		int lineHeight = Main.getApplication().getCanvasManager().getLineHeight();
@@ -74,22 +81,10 @@ public class FileUpdaterThread implements Runnable {
 
 			FileUpdaterThread.biggestX = biggestX;
 			FileUpdaterThread.biggestY = biggestY;
-
+			
+			System.out.println("$#$");
 		}
-
-	}
-
-	public static void setRunning(boolean b) {
-		if (!running) {
-			running = true;
-			PEUtils.getExecutor().submit(new FileUpdaterThread());
-		}
-
-		running = b;
-	}
-
-	public static void stop() {
-		running = false;
+		
 	}
 
 	public static int getBiggestX() {

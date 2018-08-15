@@ -153,7 +153,6 @@ public class CanvasManager {
 
 	public void initRenderThread() {
 		RenderThread.running = true;
-		FileUpdaterThread.setRunning(true);
 		PEUtils.getExecutor().execute(new RenderThread());
 	}
 
