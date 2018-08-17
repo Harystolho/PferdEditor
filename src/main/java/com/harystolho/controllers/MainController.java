@@ -223,14 +223,32 @@ public class MainController implements ResizableInterface {
 		}
 	}
 
+	private void createNewFile() {
+		Stage stage = new Stage();
+		stage.setTitle("New File");
+
+		Parent p = PEUtils.loadFXML("newFile.fxml", (controller) -> {
+			NewFileController c = (NewFileController) controller;
+			c.setStage(stage);
+		});
+
+		Scene scene = new Scene(p);
+		scene.getStylesheets().add(ClassLoader.getSystemResource("style.css").toExternalForm());
+
+		scene.setOnKeyPressed((e) -> {
+			if (e.getCode() == KeyCode.ESCAPE) {
+				stage.close();
+			}
+		});
+
+		stage.setScene(scene);
+		stage.show();
+	}
+
 	/**
 	 * Creates a new {@link File} and adds it to {@link #fileList}
 	 */
-	private void createNewFile() {
-		createNewFile("New File" + new Random().nextInt(100));
-	}
-
-	private void createNewFile(String fileName) {
+	public void createNewFile(String fileName) {
 		File file = new File(fileName);
 		addFileToList(file);
 	}
@@ -246,7 +264,7 @@ public class MainController implements ResizableInterface {
 			if (file.isLoaded()) {
 				closeFile(file);
 			}
-			
+
 			file.getDiskFile().delete();
 		}
 	}
@@ -442,7 +460,6 @@ public class MainController implements ResizableInterface {
 
 		stage.setScene(scene);
 		stage.show();
-
 	}
 
 	public void refrestFileList() {
