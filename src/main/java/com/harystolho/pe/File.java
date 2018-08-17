@@ -631,9 +631,15 @@ public class File {
 		updateDiskFile(name);
 	}
 
-	private void updateDiskFile(String name2) {
+	/**
+	 * When a {@link File} is renamed it has also to rename the disk file
+	 * 
+	 * @param name
+	 */
+	private void updateDiskFile(String name) {
 		java.io.File newFile = new java.io.File(PEUtils.getSaveFolder() + "/" + name);
 		boolean succeed = diskFile.renameTo(newFile);
+
 		if (!succeed) {
 			System.out.println("Can't rename file");
 			// TODO show error

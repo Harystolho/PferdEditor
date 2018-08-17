@@ -246,6 +246,8 @@ public class MainController implements ResizableInterface {
 			if (file.isLoaded()) {
 				closeFile(file);
 			}
+			
+			file.getDiskFile().delete();
 		}
 	}
 
