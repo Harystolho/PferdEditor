@@ -1,7 +1,5 @@
 package com.harystolho.controllers;
 
-import java.nio.file.Files;
-
 import com.harystolho.Main;
 import com.harystolho.pe.File;
 
@@ -50,7 +48,7 @@ public class RenameFileController {
 	private void rename() {
 		file.setName(fileName.getText());
 		Main.getApplication().getMainController().updateFileNameOnFileTab(file);
-		
+
 		stage.close();
 		Main.getApplication().getMainController().refrestFileList();
 	}

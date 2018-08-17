@@ -485,15 +485,6 @@ public class File {
 		lastWordTyped = null;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-		diskFile = new java.io.File(PEUtils.getSaveFolder() + "/" + name);
-	}
-
 	public IndexLinkedList<Word> getWords() {
 		return words;
 	}
@@ -628,6 +619,26 @@ public class File {
 				Main.getApplication().getCanvasManager().lineDown();
 			}
 
+		}
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+		updateDiskFile(name);
+	}
+
+	private void updateDiskFile(String name2) {
+		java.io.File newFile = new java.io.File(PEUtils.getSaveFolder() + "/" + name);
+		boolean succeed = diskFile.renameTo(newFile);
+		if (!succeed) {
+			System.out.println("Can't rename file");
+			// TODO show error
+		} else {
+			diskFile = newFile;
 		}
 	}
 

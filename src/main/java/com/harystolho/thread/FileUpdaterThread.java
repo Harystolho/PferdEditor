@@ -81,10 +81,9 @@ public class FileUpdaterThread implements Runnable {
 
 			FileUpdaterThread.biggestX = biggestX;
 			FileUpdaterThread.biggestY = biggestY;
-			
-			System.out.println("$#$");
+
 		}
-		
+
 	}
 
 	public static int getBiggestX() {

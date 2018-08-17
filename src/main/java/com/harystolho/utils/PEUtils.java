@@ -12,7 +12,6 @@ import java.util.logging.Logger;
 
 import com.harystolho.Main;
 import com.harystolho.controllers.ResizableInterface;
-import com.harystolho.thread.FileUpdaterThread;
 import com.harystolho.thread.RenderThread;
 
 import javafx.fxml.FXMLLoader;
@@ -151,7 +150,7 @@ public class PEUtils {
 
 	public static void loadFileFromDisk(com.harystolho.pe.File file) {
 		System.out.println("Loading from disk: " + file.getName());
-
+		
 		if (file.getDiskFile() != null) {
 			try (FileReader fr = new FileReader(file.getDiskFile())) {
 
@@ -162,7 +161,7 @@ public class PEUtils {
 				}
 
 			} catch (IOException e) {
-				logger.severe("Couldn't read bytes from " + file.getName());
+				logger.severe("Can't read bytes from \"" + file.getName() + "\"");
 			}
 		}
 

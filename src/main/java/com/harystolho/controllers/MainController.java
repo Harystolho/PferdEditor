@@ -38,7 +38,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class MainController implements ResizableInterface {
@@ -260,7 +259,6 @@ public class MainController implements ResizableInterface {
 		}
 
 		if (!file.isLoaded()) {
-			// file.getWords().clear();
 			PEUtils.loadFileFromDisk(file);
 			createFileTabLabel(file);
 		}
@@ -504,6 +502,12 @@ public class MainController implements ResizableInterface {
 		}
 	}
 
+	/**
+	 * If a file is renamed it has to update its name in the File Tab too, this
+	 * method does that
+	 * 
+	 * @param file
+	 */
 	public void updateFileNameOnFileTab(File file) {
 		for (Node node : filesTab.getChildren()) {
 			Tab tab = (Tab) node;
