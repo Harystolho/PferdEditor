@@ -54,7 +54,7 @@ public class NewFileController {
 	}
 
 	private boolean isNameValid(String text) {
-		// TODO make this
+		// TODO implement
 		return true;
 	}
 

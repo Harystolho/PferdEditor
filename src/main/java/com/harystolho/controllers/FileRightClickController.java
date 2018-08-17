@@ -1,6 +1,7 @@
 package com.harystolho.controllers;
 
 import com.harystolho.pe.File;
+import com.harystolho.utils.OpenWindow;
 import com.harystolho.utils.PEUtils;
 import com.harystolho.utils.PropertiesWindowFactory;
 
@@ -62,26 +63,15 @@ public class FileRightClickController {
 	 * @param file
 	 */
 	private void renameFile() {
-		Stage stage = new Stage();
-		stage.setTitle("Rename file");
+		OpenWindow ow = new OpenWindow("Rename File");
 
 		Parent p = PEUtils.loadFXML("renameFile.fxml", (controller) -> {
 			RenameFileController ctrl = (RenameFileController) controller;
+			ctrl.setStage(ow.getStage());
 			ctrl.renameFile(file);
-			ctrl.setStage(stage);
 		});
 
-		Scene scene = new Scene(p);
-		scene.getStylesheets().add(ClassLoader.getSystemResource("style.css").toExternalForm());
-
-		scene.setOnKeyPressed((e) -> {
-			if (e.getCode() == KeyCode.ESCAPE) {
-				stage.close();
-			}
-		});
-
-		stage.setScene(scene);
-		stage.show();
+		ow.openWindow();
 	}
 
 	private void copyFile() {

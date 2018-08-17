@@ -15,6 +15,7 @@ import com.harystolho.misc.Tab;
 import com.harystolho.pe.File;
 import com.harystolho.thread.FileUpdaterThread;
 import com.harystolho.thread.RenderThread;
+import com.harystolho.utils.OpenWindow;
 import com.harystolho.utils.PEUtils;
 import com.harystolho.utils.PropertiesWindowFactory;
 import com.harystolho.utils.PropertiesWindowFactory.window_type;
@@ -224,25 +225,14 @@ public class MainController implements ResizableInterface {
 	}
 
 	private void createNewFile() {
-		Stage stage = new Stage();
-		stage.setTitle("New File");
-
-		Parent p = PEUtils.loadFXML("newFile.fxml", (controller) -> {
+		OpenWindow ow = new OpenWindow("New File");
+		
+		ow.load("newFile.fxml", (controller) -> {
 			NewFileController c = (NewFileController) controller;
-			c.setStage(stage);
+			c.setStage(ow.getStage());
 		});
 
-		Scene scene = new Scene(p);
-		scene.getStylesheets().add(ClassLoader.getSystemResource("style.css").toExternalForm());
-
-		scene.setOnKeyPressed((e) -> {
-			if (e.getCode() == KeyCode.ESCAPE) {
-				stage.close();
-			}
-		});
-
-		stage.setScene(scene);
-		stage.show();
+		ow.openWindow();
 	}
 
 	/**
@@ -440,26 +430,15 @@ public class MainController implements ResizableInterface {
 	}
 
 	private void openSaveChangesWidow(File file) {
-		Stage stage = new Stage();
-		stage.setTitle("Save Changes");
+		OpenWindow ow = new OpenWindow("Save Changes");
 
-		Parent p = PEUtils.loadFXML("saveChanges.fxml", (controller) -> {
+		ow.load("saveChanges.fxml", (controller) -> {
 			SaveChangesController c = (SaveChangesController) controller;
-			c.setStage(stage);
+			c.setStage(ow.getStage());
 			c.setPEFile(file);
 		});
-
-		Scene scene = new Scene(p);
-		scene.getStylesheets().add(ClassLoader.getSystemResource("style.css").toExternalForm());
-
-		scene.setOnKeyPressed((e) -> {
-			if (e.getCode() == KeyCode.ESCAPE) {
-				stage.close();
-			}
-		});
-
-		stage.setScene(scene);
-		stage.show();
+		
+		ow.openWindow();
 	}
 
 	public void refrestFileList() {
