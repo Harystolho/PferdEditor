@@ -5,6 +5,7 @@ import com.harystolho.canvas.CanvasManager;
 import com.harystolho.pe.Word.TYPES;
 import com.harystolho.pe.linkedList.IndexLinkedList;
 import com.harystolho.thread.FileUpdaterThread;
+import com.harystolho.utils.PEUtils;
 
 import javafx.scene.input.KeyEvent;
 
@@ -490,6 +491,7 @@ public class File {
 
 	public void setName(String name) {
 		this.name = name;
+		diskFile = new java.io.File(PEUtils.getSaveFolder() + "/" + name);
 	}
 
 	public IndexLinkedList<Word> getWords() {

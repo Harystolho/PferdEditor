@@ -499,6 +499,17 @@ public class MainController implements ResizableInterface {
 			Tab tab = (Tab) node;
 			if (tab.getUserData() == file) {
 				tab.setModified(true);
+				break;
+			}
+		}
+	}
+
+	public void updateFileNameOnFileTab(File file) {
+		for (Node node : filesTab.getChildren()) {
+			Tab tab = (Tab) node;
+			if (tab.getUserData() == file) {
+				tab.setTabName(file.getName());
+				break;
 			}
 		}
 	}

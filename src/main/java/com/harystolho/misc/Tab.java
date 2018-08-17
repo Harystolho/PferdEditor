@@ -20,6 +20,8 @@ public class Tab extends HBox {
 	private static MainController mainController = Main.getApplication().getMainController();
 	private File file;
 
+	private Label fileLabel;
+
 	private Label modified;
 
 	public Tab(File file) {
@@ -30,7 +32,7 @@ public class Tab extends HBox {
 		modified = new Label("*");
 		modified.setVisible(false);
 
-		Label fileLabel = new Label(file.getName());
+		fileLabel = new Label(file.getName());
 		fileLabel.setOnMouseClicked((e) -> {
 			mainController.loadFileInCanvas(file);
 		});
@@ -74,6 +76,10 @@ public class Tab extends HBox {
 		} else {
 			getStyleClass().remove("fileTabItem");
 		}
+	}
+
+	public void setTabName(String name) {
+		fileLabel.setText(name);
 	}
 
 	@Override

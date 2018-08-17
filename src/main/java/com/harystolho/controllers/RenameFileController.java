@@ -49,10 +49,10 @@ public class RenameFileController {
 
 	private void rename() {
 		file.setName(fileName.getText());
-		// TODO update file name on file's tab
+		Main.getApplication().getMainController().updateFileNameOnFileTab(file);
+		
 		stage.close();
 		Main.getApplication().getMainController().refrestFileList();
-
 	}
 
 	public void renameFile(File file) {
