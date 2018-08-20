@@ -195,9 +195,7 @@ public class File {
 			default:
 				break;
 			}
-
 		}
-
 	}
 
 	/**
@@ -240,15 +238,14 @@ public class File {
 				if (wordToRemove == lastWordTyped) {
 					lastWordTyped = null;
 				}
-
 			}
-			
-			if(wordToRemove.getType() == TYPES.NEW_LINE) {
+
+			if (wordToRemove.getType() == TYPES.NEW_LINE) {
 				// Update file's biggest Y
 				FileUpdaterThread.decrementBiggestYBy(Main.getApplication().getCanvasManager().getLineHeight());
 			}
 		}
-		
+
 	}
 
 	private void removeCharAtCursor(Word word) {

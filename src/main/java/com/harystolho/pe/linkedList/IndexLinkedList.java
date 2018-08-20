@@ -492,27 +492,40 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 		return array;
 	}
 
-	// TODO improve
+	@SuppressWarnings("unchecked")
 	public Word findLastWordIn(float y) {
 		if (size == 0 || root == null) {
 			return null;
 		}
 
-		Word lastWord = new Word(TYPES.NORMAL);
-		lastWord.setX(0f);
+		Node middleNode = nodeIndexes.getMiddleIndex().getKey();
+		float middleNodeY = middleNode.getData().getY();
 
-		for (Word w : this) {
-			if (w.getY() == y) {
-				if (w.getX() >= lastWord.getX()) {
-					lastWord = w;
+		if (y < middleNodeY) {
+			Node node = middleNode.getLeft();
+			while (node != null) {
+				if (node.getData().getY() == y) {
+					return node.getData();
 				}
-			} else if (w.getY() > y) {
-				break;
+				node = node.getLeft();
 			}
+		} else if (y >= middleNodeY) {
+			Node node = middleNode.getRight();
+			while (node != null) {
+				if (node.getData().getY() > y) {
+					return node.getLeft().getData();
+				}
+
+				if (node.getRight() != null) {
+					node = node.getRight();
+				} else {
+					return node.getData();
+				}
+			}
+
 		}
 
-		return lastWord;
-
+		return null;
 	}
 
 	@Override
