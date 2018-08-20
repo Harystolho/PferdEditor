@@ -234,6 +234,8 @@ public class Word implements Comparable<Word> {
 
 			if (this.getX() < w.getX()) {
 				return -1;
+			} else if ( this.getX() == w.getX()){
+				return 0;
 			} else {
 				if (this.getX() < w.getX() + w.getDrawingSize()) {
 			 // if (this.getX() <= w.getX() + w.getDrawingSize()) {

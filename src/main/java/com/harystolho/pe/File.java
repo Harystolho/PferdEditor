@@ -77,7 +77,7 @@ public class File {
 			case BACK_SPACE:
 				removeCharBeforeCursor();
 				return;
-			case END:
+			case DELETE:
 				removeCharAtCursor();
 				return;
 			case TAB:
@@ -223,7 +223,48 @@ public class File {
 	}
 
 	private void removeCharAtCursor() {
-		// TODO implement
+		if (words.isEmpty()) {
+			return;
+		}
+
+		Word wordToRemove = words.get(getCursorX(), getCursorY()); // Gets the word at the cursor
+
+		if (wordToRemove != null) {
+			// Removes the char at the cursor
+			removeCharAtCursor(wordToRemove);
+
+			// If the word has no chars left
+			if (!wordToRemove.hasChars()) {
+				words.remove(wordToRemove);
+
+				if (wordToRemove == lastWordTyped) {
+					lastWordTyped = null;
+				}
+
+			}
+			
+			if(wordToRemove.getType() == TYPES.NEW_LINE) {
+				// Update file's biggest Y
+				FileUpdaterThread.decrementBiggestYBy(Main.getApplication().getCanvasManager().getLineHeight());
+			}
+		}
+		
+	}
+
+	private void removeCharAtCursor(Word word) {
+		double cursorXInWWord = getCursorX() - word.getX(); // Cursor X in relation to word X
+		double wordWidthPosition = 0;
+
+		for (int x = 0; x < word.getSize(); x++) {
+			char ch = word.getWord()[x];
+
+			if (wordWidthPosition >= cursorXInWWord) {
+				char removed = word.removeCharAt(x); // Removes only 1 char in the word
+				// updateCursorPosition(removed, false);
+				break;
+			}
+			wordWidthPosition += Word.computeCharWidth(ch);
+		}
 	}
 
 	/**

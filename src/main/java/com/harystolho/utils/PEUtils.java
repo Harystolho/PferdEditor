@@ -23,11 +23,11 @@ public class PEUtils {
 
 	private static final Logger logger = Logger.getLogger(PEUtils.class.getName());
 
-	private static ExecutorService executor = Executors.newFixedThreadPool(3);
+	private static final ExecutorService executor = Executors.newFixedThreadPool(3);
 
 	private static File saveFolder;
 
-	public static final String VERSION = "0.4";
+	public static final String VERSION = "0.5";
 
 	/**
 	 * Loads a FXML File.
@@ -46,7 +46,7 @@ public class PEUtils {
 			return p;
 
 		} catch (NullPointerException | IOException e) {
-			logger.severe("Couldn't load file " + file + " // " + ClassLoader.getSystemResource(file));
+			logger.severe("Can't load file: " + file + " // " + ClassLoader.getSystemResource(file));
 			return null;
 		}
 
