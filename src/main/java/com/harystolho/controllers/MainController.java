@@ -404,7 +404,7 @@ public class MainController implements ResizableInterface {
 			removeFileFromFileTab(file);
 			selectFirstFileTab();
 
-			file.setLoaded(false);
+			file.unload();
 		}
 	}
 

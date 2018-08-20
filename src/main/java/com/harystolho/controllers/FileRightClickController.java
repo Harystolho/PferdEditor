@@ -106,7 +106,7 @@ public class FileRightClickController {
 		cd.putString(sb.toString());
 		Clipboard.getSystemClipboard().setContent(cd);
 		
-		file.setLoaded(false);
+		file.unload();
 	}
 
 	private void pasteFile() {

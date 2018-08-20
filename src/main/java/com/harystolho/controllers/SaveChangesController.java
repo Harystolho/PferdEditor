@@ -66,7 +66,7 @@ public class SaveChangesController {
 		Main.getApplication().getMainController().removeFileFromFileTab(file);
 		Main.getApplication().getMainController().selectFirstFileTab();
 
-		file.setLoaded(false);
+		file.unload();
 	}
 
 	public void setStage(Stage stage) {

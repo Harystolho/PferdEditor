@@ -93,7 +93,8 @@ public class File {
 	}
 
 	/**
-	 * Used when a file is loaded from the system. It will add one char after the other.
+	 * Used when a file is loaded from the system. It will add one char after the
+	 * other.
 	 * 
 	 * @param c
 	 */
@@ -601,9 +602,10 @@ public class File {
 
 			// If the word has only 1 char it gets here
 			if (getCursorX() > 0) {
-				/*if (word.getType() != TYPES.TAB) {
-					setCursorX(getCursorX() - Word.computeCharWidth(word.getWord()[x - 1]));
-				}*/
+				/*
+				 * if (word.getType() != TYPES.TAB) { setCursorX(getCursorX() -
+				 * Word.computeCharWidth(word.getWord()[x - 1])); }
+				 */
 				setCursorX(getCursorX() - Word.computeCharWidth(word.getWord()[x - 1]));
 			} else { // Move line up
 				Main.getApplication().getCanvasManager().lineUp();
@@ -701,17 +703,26 @@ public class File {
 	}
 
 	public void setLoaded(boolean loaded) {
-		if (!loaded) { // Reset File
-			getWords().clear();
-			resetLastWord();
-			scrollX = 0;
-			scrollY = 0;
-			cursorX = 0;
-			cursorY = 0;
-			setWasModified(false);
+		if (!loaded) {
+			unload();
+		} else {
+			isLoaded = true;
 		}
+	}
 
-		this.isLoaded = loaded;
+	public void unload() {
+		getWords().clear();
+		resetLastWord();
+
+		scrollX = 0;
+		scrollY = 0;
+		cursorX = 0;
+		cursorY = 0;
+
+		lastWordTyped = null;
+
+		isLoaded = false;
+		setWasModified(false);
 	}
 
 	public int getScrollX() {
