@@ -6,11 +6,11 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 
-public class PEMouseEventHandler {
+public class ApplicationMouseHandler {
 
 	private Scene scene;
 
-	public PEMouseEventHandler(Scene scene) {
+	public ApplicationMouseHandler(Scene scene) {
 		this.scene = scene;
 		init();
 	}

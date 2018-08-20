@@ -319,15 +319,20 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 	}
 
 	public E get(float x, float y) {
+		Word temp = new Word(TYPES.NORMAL);
+		temp.setX(x);
+		temp.setY(y);
+
+		return get(x, y, temp);
+	}
+
+	@SuppressWarnings("unchecked")
+	public E get(float x, float y, Word temp) {
 		if (size == 0 || root == null) {
 			return null;
 		}
 
 		Node middleNode = nodeIndexes.getMiddleIndex().getKey();
-
-		Word temp = new Word(TYPES.NORMAL);
-		temp.setX(x);
-		temp.setY(y);
 
 		switch (temp.compareTo(middleNode.getData())) {
 		case -1:

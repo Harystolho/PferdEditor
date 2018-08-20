@@ -6,11 +6,11 @@ import com.harystolho.utils.PropertiesWindowFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 
-public class CanvasMouseEventHandler {
+public class CanvasMouseHandler {
 
 	private CanvasManager cm;
 
-	public CanvasMouseEventHandler(CanvasManager cm) {
+	public CanvasMouseHandler(CanvasManager cm) {
 		this.cm = cm;
 
 		init();
@@ -38,9 +38,9 @@ public class CanvasMouseEventHandler {
 	}
 
 	private void mousePressed(MouseEvent e) {
-		
+
 		PropertiesWindowFactory.removeOpenWindow();
-		
+
 		cm.getCanvas().requestFocus();
 
 		cm.setCursorY((float) e.getY()); // setCursorY MUST come first

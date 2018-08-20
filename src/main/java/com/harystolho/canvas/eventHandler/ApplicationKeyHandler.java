@@ -10,13 +10,13 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-public class PEKeyEventHandler {
+public class ApplicationKeyHandler {
 
 	private CanvasManager cm;
 	private Scene scene;
 	private HashMap<KeyCode, Function<KeyEvent, Boolean>> keyMap;
 
-	public PEKeyEventHandler(Scene scene, CanvasManager cm) {
+	public ApplicationKeyHandler(Scene scene, CanvasManager cm) {
 		this.cm = cm;
 		this.scene = scene;
 

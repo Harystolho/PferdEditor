@@ -3,7 +3,7 @@ package com.harystolho.canvas;
 import java.util.ListIterator;
 
 import com.harystolho.Main;
-import com.harystolho.canvas.eventHandler.CanvasMouseEventHandler;
+import com.harystolho.canvas.eventHandler.CanvasMouseHandler;
 import com.harystolho.pe.File;
 import com.harystolho.pe.Word;
 import com.harystolho.thread.FileUpdaterThread;
@@ -29,8 +29,6 @@ public class CanvasManager {
 	private int cursorCount = 0;
 	private int lineHeight; // in pixels
 
-	private CanvasMouseEventHandler mouseHandler;
-
 	public CanvasManager(Canvas canvas) {
 		this.canvas = canvas;
 
@@ -41,7 +39,7 @@ public class CanvasManager {
 		StyleLoader.setFont(new Font("Arial", lineHeight - 2));
 		gc.setFont(StyleLoader.getFont());
 
-		mouseHandler = new CanvasMouseEventHandler(this);
+		new CanvasMouseHandler(this);
 
 	}
 

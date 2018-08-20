@@ -239,6 +239,9 @@ public class Word implements Comparable<Word> {
 			 // if (this.getX() <= w.getX() + w.getDrawingSize()) {
 					return 0;
 				} else {
+					if(w.getType() == TYPES.NEW_LINE) {
+						return -1;
+					}
 					return 1;
 				}
 			}

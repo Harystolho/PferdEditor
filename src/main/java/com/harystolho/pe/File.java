@@ -111,7 +111,9 @@ public class File {
 			resetLastWord();
 			return;
 		case '\t':
-			words.addLast(new Word(TYPES.TAB));
+			Word tab = new Word(TYPES.TAB);
+			tab.setDrawingSize(CanvasManager.TAB_SIZE);
+			words.addLast(tab);
 			resetLastWord();
 			return;
 		default:
@@ -528,6 +530,8 @@ public class File {
 			Word lastWord = words.findLastWordIn(getCursorY());
 			if (lastWord != null) {
 				this.cursorX = lastWord.getX() + lastWord.getDrawingSize();
+			} else {
+				this.cursorX = 0;
 			}
 		}
 

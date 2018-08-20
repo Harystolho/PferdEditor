@@ -1,8 +1,8 @@
 package com.harystolho;
 
 import com.harystolho.canvas.CanvasManager;
-import com.harystolho.canvas.eventHandler.PEKeyEventHandler;
-import com.harystolho.canvas.eventHandler.PEMouseEventHandler;
+import com.harystolho.canvas.eventHandler.ApplicationKeyHandler;
+import com.harystolho.canvas.eventHandler.ApplicationMouseHandler;
 import com.harystolho.controllers.MainController;
 import com.harystolho.utils.PEUtils;
 import com.harystolho.utils.PropertiesWindowFactory;
@@ -22,8 +22,8 @@ public class PEApplication extends Application {
 
 	private MainController mainController;
 
-	private PEKeyEventHandler keyHandler;
-	private PEMouseEventHandler mouseHandler;
+	private ApplicationKeyHandler keyHandler;
+	private ApplicationMouseHandler mouseHandler;
 
 	@Override
 	public void start(Stage window) throws Exception {
@@ -46,8 +46,8 @@ public class PEApplication extends Application {
 		Main.setApplication(this);
 		loadMainScene();
 
-		keyHandler = new PEKeyEventHandler(scene, mainController.getCanvasManager());
-		mouseHandler = new PEMouseEventHandler(scene);
+		keyHandler = new ApplicationKeyHandler(scene, mainController.getCanvasManager());
+		mouseHandler = new ApplicationMouseHandler(scene);
 	}
 
 	private void loadEventHandlers() {
