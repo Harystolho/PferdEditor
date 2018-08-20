@@ -7,12 +7,14 @@ import com.harystolho.utils.PEUtils;
 import com.harystolho.utils.PropertiesWindowFactory;
 import com.sun.javafx.tk.Toolkit;
 
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
@@ -80,9 +82,13 @@ public class FileRightClickController {
 
 	private void copyFile() {
 		ClipboardContent cd = new ClipboardContent();
-
 		StringBuilder sb = new StringBuilder();
-		Main.getApplication().getCanvasManager().getCurrentFile().getWords().stream().forEach((word) -> {
+
+		if (!file.isLoaded()) {
+			PEUtils.loadFileFromDisk(file);
+		}
+
+		file.getWords().stream().forEach((word) -> {
 			switch (word.getType()) {
 			case NORMAL:
 			case SPACE:
@@ -99,9 +105,16 @@ public class FileRightClickController {
 
 		cd.putString(sb.toString());
 		Clipboard.getSystemClipboard().setContent(cd);
+		
+		file.setLoaded(false);
 	}
 
 	private void pasteFile() {
+		/*
+		 * Clipboard.getSystemClipboard().getString().chars().forEach((iChar) -> {
+		 * Main.getApplication().getCanvasManager().getCurrentFile().addCharToFile((
+		 * char) iChar); });
+		 */
 		// TODO pasteFile
 	}
 

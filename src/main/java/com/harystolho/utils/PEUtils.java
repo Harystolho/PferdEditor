@@ -111,8 +111,6 @@ public class PEUtils {
 					case TAB:
 						fw.write("\t");
 						break;
-					default:
-						break;
 					}
 
 				} catch (IOException e) {
@@ -150,7 +148,7 @@ public class PEUtils {
 
 	public static void loadFileFromDisk(com.harystolho.pe.File file) {
 		System.out.println("Loading from disk: " + file.getName());
-		
+
 		if (file.getDiskFile() != null) {
 			try (FileReader fr = new FileReader(file.getDiskFile())) {
 

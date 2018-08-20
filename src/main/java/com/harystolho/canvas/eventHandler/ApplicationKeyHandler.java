@@ -134,14 +134,16 @@ public class ApplicationKeyHandler {
 		keyMap.put(KeyCode.CAPS, (e) -> {
 			return true;
 		});
-		
+
 		keyMap.put(KeyCode.F3, (e) -> {
 			cm.printDebugMessage();
 			return true;
 		});
 
 		keyMap.put(KeyCode.F4, (e) -> {
-			cm.getCurrentFile().getWords().printDebug();
+			if (!e.isAltDown()) {
+				cm.getCurrentFile().getWords().printDebug();
+			}
 			return true;
 		});
 

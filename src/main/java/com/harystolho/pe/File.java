@@ -93,7 +93,7 @@ public class File {
 	}
 
 	/**
-	 * Used when a file is loaded from the system.
+	 * Used when a file is loaded from the system. It will add one char after the other.
 	 * 
 	 * @param c
 	 */
@@ -320,7 +320,7 @@ public class File {
 	 * 
 	 * @param c
 	 */
-	private void addCharToFile(char c) {
+	public void addCharToFile(char c) {
 
 		Word wrd = words.get(getCursorX(), getCursorY());
 

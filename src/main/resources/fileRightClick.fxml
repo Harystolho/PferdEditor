@@ -43,7 +43,7 @@
                   <Insets left="5.0" />
                </HBox.margin>
             </ImageView>
-            <Label text="Paste">
+            <Label disable="true" text="Paste">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>
