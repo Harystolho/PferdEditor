@@ -5,6 +5,7 @@ import java.util.function.Consumer;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -21,6 +22,9 @@ public class OpenWindow {
 
 	public OpenWindow(String title) {
 		stage = new Stage();
+		
+		stage.initModality(Modality.APPLICATION_MODAL);
+		
 		stage.setTitle(title);
 	}
 

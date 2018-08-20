@@ -60,8 +60,8 @@ public class ApplicationKeyHandler {
 	private void pressKeyOnCanvas(KeyEvent e) {
 		if (cm.getCanvas().isFocused()) {
 			if (cm.getCurrentFile() != null) {
-				e.consume();
 				cm.getCurrentFile().type(e);
+				e.consume();
 			}
 		}
 	}
@@ -91,6 +91,7 @@ public class ApplicationKeyHandler {
 			e.consume();
 			return true;
 		});
+
 		keyMap.put(KeyCode.S, (e) -> {
 			if (e.isControlDown()) {
 				Main.getApplication().getMainController().saveOpenedFile();
@@ -99,6 +100,7 @@ public class ApplicationKeyHandler {
 			}
 			return true;
 		});
+
 		keyMap.put(KeyCode.HOME, (e) -> {
 			if (e.isControlDown()) {
 				cm.moveCursorToFirstLine();
@@ -107,6 +109,7 @@ public class ApplicationKeyHandler {
 			}
 			return true;
 		});
+
 		keyMap.put(KeyCode.END, (e) -> {
 			if (e.isControlDown()) {
 				cm.moveCursorToLastLine();
@@ -115,10 +118,19 @@ public class ApplicationKeyHandler {
 			}
 			return true;
 		});
+
 		keyMap.put(KeyCode.ALT, (e) -> {
-			// TODO fix alt
 			return true;
 		});
+
+		keyMap.put(KeyCode.SHIFT, (e) -> {
+			return true;
+		});
+
+		keyMap.put(KeyCode.CONTROL, (e) -> {
+			return true;
+		});
+
 		keyMap.put(KeyCode.F3, (e) -> {
 			cm.printDebugMessage();
 			return true;
@@ -129,6 +141,15 @@ public class ApplicationKeyHandler {
 			return true;
 		});
 
+		// Normal Keys
+		keyMap.put(KeyCode.W, (e) -> {
+			if (e.isControlDown()) {
+				Main.getApplication().getMainController().closeFile(cm.getCurrentFile());
+			} else {
+				pressKeyOnCanvas(e);
+			}
+			return true;
+		});
 	}
 
 }
