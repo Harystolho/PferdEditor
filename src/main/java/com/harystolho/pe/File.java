@@ -222,7 +222,7 @@ public class File {
 	}
 
 	private void removeCharAtCursor() {
-
+		// TODO implement
 	}
 
 	/**
@@ -510,19 +510,28 @@ public class File {
 		if (word != null) {
 			double cursorXInWWord = cursorX - word.getX(); // Cursor' X in relation to word's X
 
-			double wordWidthPosition = 0;
-			for (char c : word.getWord()) {
-				float charWidth = Word.computeCharWidth(c);
-
-				if (wordWidthPosition + charWidth > cursorXInWWord) {
-					if (cursorXInWWord - wordWidthPosition <= charWidth / 2) {
-						cursorX -= cursorXInWWord - wordWidthPosition;
-					} else {
-						cursorX += wordWidthPosition + charWidth - cursorXInWWord;
-					}
-					break;
+			if (word.getType() == TYPES.TAB) {
+				if (word.getDrawingSize() / 2 > cursorXInWWord) { // Move cursor to the beginning of the word
+					this.cursorX = word.getX();
+				} else { // Move cursor to the end of the word
+					this.cursorX = word.getX() + word.getDrawingSize();
 				}
-				wordWidthPosition += charWidth;
+				return;
+			} else {
+				double wordWidthPosition = 0;
+				for (char c : word.getWord()) { // TODO fix: looping through the entire array
+					float charWidth = Word.computeCharWidth(c);
+
+					if (wordWidthPosition + charWidth > cursorXInWWord) {
+						if (cursorXInWWord - wordWidthPosition <= charWidth / 2) {
+							cursorX -= cursorXInWWord - wordWidthPosition;
+						} else {
+							cursorX += wordWidthPosition + charWidth - cursorXInWWord;
+						}
+						break;
+					}
+					wordWidthPosition += charWidth;
+				}
 			}
 
 			this.cursorX = cursorX;
@@ -570,6 +579,11 @@ public class File {
 		Word word = getWords().get(getCursorX() - 1, getCursorY());
 
 		if (word != null) {
+			if (word.getType() == TYPES.TAB) {
+				this.cursorX = word.getX();
+				return;
+			}
+
 			double cursorXInWWord = getCursorX() - word.getX(); // Cursor' X in relation to word's X
 			double wordWidthPosition = 0;
 
@@ -585,15 +599,16 @@ public class File {
 				}
 			}
 
+			// If the word has only 1 char it gets here
 			if (getCursorX() > 0) {
-				if (word.getType() != TYPES.TAB) {
+				/*if (word.getType() != TYPES.TAB) {
 					setCursorX(getCursorX() - Word.computeCharWidth(word.getWord()[x - 1]));
-				}
+				}*/
+				setCursorX(getCursorX() - Word.computeCharWidth(word.getWord()[x - 1]));
 			} else { // Move line up
 				Main.getApplication().getCanvasManager().lineUp();
 				setCursorX(-1);
 			}
-
 		}
 
 	}
@@ -604,6 +619,11 @@ public class File {
 		if (word != null) {
 			double cursorXInWWord = getCursorX() - word.getX(); // Cursor' X in relation to word's X
 			double wordWidthPosition = 0;
+
+			if (word.getType() == TYPES.TAB) {
+				this.cursorX = word.getX() + word.getDrawingSize();
+				return;
+			}
 
 			int x = 0;
 			for (x = 0; x < word.getSize(); x++) {

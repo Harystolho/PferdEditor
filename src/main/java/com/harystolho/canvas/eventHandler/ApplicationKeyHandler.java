@@ -115,6 +115,10 @@ public class ApplicationKeyHandler {
 			}
 			return true;
 		});
+		keyMap.put(KeyCode.ALT, (e) -> {
+			// TODO fix alt
+			return true;
+		});
 		keyMap.put(KeyCode.F3, (e) -> {
 			cm.printDebugMessage();
 			return true;
