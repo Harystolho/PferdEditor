@@ -1,13 +1,17 @@
 package com.harystolho.controllers;
 
+import com.harystolho.Main;
 import com.harystolho.pe.File;
 import com.harystolho.utils.OpenWindow;
 import com.harystolho.utils.PEUtils;
 import com.harystolho.utils.PropertiesWindowFactory;
+import com.sun.javafx.tk.Toolkit;
 
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -65,7 +69,7 @@ public class FileRightClickController {
 	private void renameFile() {
 		OpenWindow ow = new OpenWindow("Rename File");
 
-		Parent p = PEUtils.loadFXML("renameFile.fxml", (controller) -> {
+		ow.load("renameFile.fxml", (controller) -> {
 			RenameFileController ctrl = (RenameFileController) controller;
 			ctrl.setStage(ow.getStage());
 			ctrl.renameFile(file);
@@ -75,7 +79,26 @@ public class FileRightClickController {
 	}
 
 	private void copyFile() {
-		// TODO copyFile
+		ClipboardContent cd = new ClipboardContent();
+
+		StringBuilder sb = new StringBuilder();
+		Main.getApplication().getCanvasManager().getCurrentFile().getWords().stream().forEach((word) -> {
+			switch (word.getType()) {
+			case NORMAL:
+			case SPACE:
+				sb.append(word.getWordAsString());
+				break;
+			case NEW_LINE:
+				sb.append(System.getProperty("line.separator"));
+				break;
+			case TAB:
+				sb.append("\t");
+				break;
+			}
+		});
+
+		cd.putString(sb.toString());
+		Clipboard.getSystemClipboard().setContent(cd);
 	}
 
 	private void pasteFile() {

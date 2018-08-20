@@ -131,6 +131,10 @@ public class ApplicationKeyHandler {
 			return true;
 		});
 
+		keyMap.put(KeyCode.CAPS, (e) -> {
+			return true;
+		});
+		
 		keyMap.put(KeyCode.F3, (e) -> {
 			cm.printDebugMessage();
 			return true;
