@@ -57,33 +57,33 @@ public class FileUpdaterThread implements Runnable {
 
 		int lineHeight = Main.getApplication().getCanvasManager().getLineHeight();
 
-		synchronized (file.getDrawLock()) {
-			ListIterator<Word> i = file.getWords().listIterator();
+		file.getDrawLock().readLock().lock();
+		
+		ListIterator<Word> i = file.getWords().listIterator();
 
-			int biggestX = 0;
-			int biggestY = lineHeight;
+		int biggestX = 0;
+		int biggestY = lineHeight;
 
-			while (i.hasNext()) {
-				Word wordObj = i.next();
+		while (i.hasNext()) {
+			Word wordObj = i.next();
 
-				switch (wordObj.getType()) {
-				case NEW_LINE:
-					biggestY += lineHeight;
-					continue;
-				default:
-					break;
-				}
-
-				if (wordObj.getX() > biggestX) {
-					biggestX = (int) (wordObj.getX() + wordObj.getDrawingSize());
-				}
+			switch (wordObj.getType()) {
+			case NEW_LINE:
+				biggestY += lineHeight;
+				continue;
+			default:
+				break;
 			}
 
-			FileUpdaterThread.biggestX = biggestX;
-			FileUpdaterThread.biggestY = biggestY;
-
+			if (wordObj.getX() > biggestX) {
+				biggestX = (int) (wordObj.getX() + wordObj.getDrawingSize());
+			}
 		}
 
+		FileUpdaterThread.biggestX = biggestX;
+		FileUpdaterThread.biggestY = biggestY;
+
+		file.getDrawLock().readLock().unlock();
 	}
 
 	public static int getBiggestX() {

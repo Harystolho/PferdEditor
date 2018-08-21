@@ -66,13 +66,13 @@ public class CanvasManager {
 
 	private void drawWords() {
 		if (currentFile != null) {
-			
+
 			// TODO render only what is shown in the screen
-			
+
 			float x = 0;
 			float y = getLineHeight();
 
-			synchronized (currentFile.getDrawLock()) {
+			if(currentFile.getDrawLock().readLock().tryLock()) {
 				ListIterator<Word> i = currentFile.getWords().listIterator();
 
 				while (i.hasNext()) {
@@ -110,11 +110,13 @@ public class CanvasManager {
 					}
 
 				}
-
-				updateSrollBar();
-
+				
+				currentFile.getDrawLock().readLock().unlock();
 			}
+
+			updateSrollBar();
 		}
+
 	}
 
 	private void drawBackgroundLine() {
@@ -250,7 +252,7 @@ public class CanvasManager {
 		}
 	}
 
-	public void moveCursorToStartOfTheLine() {
+	public void moveCursorToBeginningOfTheLine() {
 		if (currentFile != null) {
 			currentFile.setCursorX(0);
 			resetCursorCount();
@@ -267,14 +269,14 @@ public class CanvasManager {
 	public void moveCursorToFirstLine() {
 		setScrollY(0);
 		setCursorY(lineHeight);
-		moveCursorToStartOfTheLine();
+		moveCursorToBeginningOfTheLine();
 	}
 
 	public void moveCursorToLastLine() {
-		if(FileUpdaterThread.getBiggestY() > canvas.getHeight()) {
-			currentFile.setScrollY((int) (FileUpdaterThread.getBiggestY() - canvas.getHeight()));	
+		if (FileUpdaterThread.getBiggestY() > canvas.getHeight()) {
+			currentFile.setScrollY((int) (FileUpdaterThread.getBiggestY() - canvas.getHeight()));
 		}
-		
+
 		currentFile.setCursorY(FileUpdaterThread.getBiggestY());
 		moveCursorToEndOfTheLine();
 	}

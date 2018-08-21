@@ -106,7 +106,7 @@ public class ApplicationKeyHandler {
 			if (e.isControlDown()) {
 				cm.moveCursorToFirstLine();
 			} else {
-				cm.moveCursorToStartOfTheLine();
+				cm.moveCursorToBeginningOfTheLine();
 			}
 			return true;
 		});

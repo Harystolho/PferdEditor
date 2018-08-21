@@ -1,5 +1,8 @@
 package com.harystolho.pe;
 
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import com.harystolho.Main;
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.pe.Word.TYPES;
@@ -21,7 +24,7 @@ import javafx.scene.input.KeyEvent;
 public class File {
 
 	// Locked used when modifying the LinkedList
-	private Object drawLock;
+	private ReadWriteLock drawLock;
 
 	private java.io.File diskFile;
 	private boolean isLoaded;
@@ -44,7 +47,7 @@ public class File {
 		diskFile = null;
 		isLoaded = false;
 
-		drawLock = new Object();
+		drawLock = new ReentrantReadWriteLock();
 
 		setWasModified(false);
 
@@ -67,31 +70,31 @@ public class File {
 
 		setWasModified(true);
 
-		synchronized (drawLock) {
+		drawLock.writeLock().lock();
 
-			switch (keyEvent.getCode()) {
-			case SPACE:
-				createSpace();
-				return;
-			case ENTER:
-				createNewLine();
-				return;
-			case BACK_SPACE:
-				removeCharBeforeCursor();
-				return;
-			case DELETE:
-				removeCharAtCursor();
-				return;
-			case TAB:
-				createTab();
-				return;
-			default:
-				break;
-			}
-
-			addKeyToFile(keyEvent);
+		switch (keyEvent.getCode()) {
+		case SPACE:
+			createSpace();
+			return;
+		case ENTER:
+			createNewLine();
+			return;
+		case BACK_SPACE:
+			removeCharBeforeCursor();
+			return;
+		case DELETE:
+			removeCharAtCursor();
+			return;
+		case TAB:
+			createTab();
+			return;
+		default:
+			break;
 		}
 
+		addKeyToFile(keyEvent);
+
+		drawLock.writeLock().unlock();
 	}
 
 	/**
@@ -725,7 +728,7 @@ public class File {
 		return name;
 	}
 
-	public Object getDrawLock() {
+	public ReadWriteLock getDrawLock() {
 		return drawLock;
 	}
 
