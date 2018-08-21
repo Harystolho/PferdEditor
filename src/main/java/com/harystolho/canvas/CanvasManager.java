@@ -66,7 +66,9 @@ public class CanvasManager {
 
 	private void drawWords() {
 		if (currentFile != null) {
-
+			
+			// TODO render only what is shown in the screen
+			
 			float x = 0;
 			float y = getLineHeight();
 
@@ -269,7 +271,10 @@ public class CanvasManager {
 	}
 
 	public void moveCursorToLastLine() {
-		currentFile.setScrollY((int) (FileUpdaterThread.getBiggestY() - canvas.getHeight()));
+		if(FileUpdaterThread.getBiggestY() > canvas.getHeight()) {
+			currentFile.setScrollY((int) (FileUpdaterThread.getBiggestY() - canvas.getHeight()));	
+		}
+		
 		currentFile.setCursorY(FileUpdaterThread.getBiggestY());
 		moveCursorToEndOfTheLine();
 	}

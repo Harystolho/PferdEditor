@@ -575,6 +575,8 @@ public class File {
 
 			this.cursorX = cursorX;
 		} else {
+			// TODO because there is not pre render, the last word is at x=0, that's why it
+			// moves the cursor to the beginning of the line
 			Word lastWord = words.findLastWordIn(getCursorY());
 			if (lastWord != null) {
 				this.cursorX = lastWord.getX() + lastWord.getDrawingSize();
