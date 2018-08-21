@@ -7,6 +7,8 @@ import com.harystolho.pe.linkedList.IndexLinkedList;
 import com.harystolho.thread.FileUpdaterThread;
 import com.harystolho.utils.PEUtils;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyEvent;
 
 /**
@@ -710,8 +712,9 @@ public class File {
 		boolean succeed = diskFile.renameTo(newFile);
 
 		if (!succeed) {
-			System.out.println("Can't rename file");
-			// TODO show error
+			Alert error = new Alert(AlertType.ERROR);
+			error.setContentText("Can't rename file");
+			error.showAndWait();
 		} else {
 			diskFile = newFile;
 		}
