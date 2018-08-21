@@ -1,9 +1,13 @@
 package com.harystolho.controllers;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.harystolho.Main;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -24,7 +28,12 @@ public class NewFileController {
 	@FXML
 	private Button createFile;
 
+	@FXML
+	private Label message;
+
 	private Stage stage;
+
+	private static final Pattern validFileName = Pattern.compile("^[\\w\\-. ]+$");
 
 	@FXML
 	void initialize() {
@@ -54,8 +63,13 @@ public class NewFileController {
 	}
 
 	private boolean isNameValid(String text) {
-		// TODO implement
-		return true;
+		if (validFileName.matcher(text).matches()) {
+			message.setText("");
+			return true;
+		} else {
+			message.setText("Error: Invalid File Name");
+			return false;
+		}
 	}
 
 	public void setStage(Stage stage) {

@@ -558,7 +558,10 @@ public class File {
 				return;
 			} else {
 				double wordWidthPosition = 0;
-				for (char c : word.getWord()) { // TODO fix: looping through the entire array
+
+				for (int i = 0; i < word.getSize(); i++) {
+					char c = word.getWord()[i];
+
 					float charWidth = Word.computeCharWidth(c);
 
 					if (wordWidthPosition + charWidth > cursorXInWWord) {
