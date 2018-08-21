@@ -5,9 +5,8 @@ import java.util.function.Function;
 
 import com.harystolho.Main;
 import com.harystolho.canvas.CanvasManager;
-import com.sun.javafx.css.StyleCache.Key;
+import com.harystolho.controllers.FileRightClickController;
 
-import javafx.event.EventType;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -158,6 +157,25 @@ public class ApplicationKeyHandler {
 			}
 			return true;
 		});
+
+		keyMap.put(KeyCode.C, (e) -> {
+			if (e.isControlDown()) {
+				FileRightClickController.copyFile(Main.getApplication().getCanvasManager().getCurrentFile());
+			} else {
+				pressKeyOnCanvas(e);
+			}
+			return true;
+		});
+
+		keyMap.put(KeyCode.V, (e) -> {
+			if (e.isControlDown()) {
+				FileRightClickController.pasteFile(Main.getApplication().getCanvasManager().getCurrentFile());
+			} else {
+				pressKeyOnCanvas(e);
+			}
+			return true;
+		});
+
 	}
 
 }

@@ -1,25 +1,21 @@
 package com.harystolho.controllers;
 
-import com.harystolho.Main;
 import com.harystolho.pe.File;
 import com.harystolho.utils.OpenWindow;
 import com.harystolho.utils.PEUtils;
 import com.harystolho.utils.PropertiesWindowFactory;
-import com.sun.javafx.tk.Toolkit;
 
-import javafx.event.EventType;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
 
 public class FileRightClickController {
 
+	// TODO REFACTOR WHOLE CODE
+	
 	@FXML
 	private HBox rename;
 
@@ -81,17 +77,39 @@ public class FileRightClickController {
 	}
 
 	private void copyFile() {
+		copyFile(file);
+	}
+
+	private void pasteFile() {
+		pasteFile(file);
+	}
+
+	private void showProperties() {
+		// TODO showProperties
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
+
+	public static void copyFile(File f) {
+		if (f == null) {
+			return;
+		}
+
 		ClipboardContent cd = new ClipboardContent();
 		StringBuilder sb = new StringBuilder();
 
+		// If the file is not loaded then load it, copy it and close it. If it already
+		// opened just copy it.
 		boolean wasFileLoaded = true;
 
-		if (!file.isLoaded()) {
-			PEUtils.loadFileFromDisk(file);
+		if (!f.isLoaded()) {
+			PEUtils.loadFileFromDisk(f);
 			wasFileLoaded = false;
 		}
 
-		file.getWords().stream().forEach((word) -> {
+		f.getWords().stream().forEach((word) -> {
 			switch (word.getType()) {
 			case NORMAL:
 			case SPACE:
@@ -110,28 +128,20 @@ public class FileRightClickController {
 		Clipboard.getSystemClipboard().setContent(cd);
 
 		if (!wasFileLoaded) {
-			file.unload();
+			f.unload();
 		}
-
 	}
 
-	private void pasteFile() {
+	public static void pasteFile(File f) {
+		if (f == null) {
+			return;
+		}
 
 		Clipboard.getSystemClipboard().getString().chars().forEach((iChar) -> {
 			KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", String.valueOf((char) iChar),
 					KeyCode.UNDEFINED, false, false, false, false);
-			Main.getApplication().getCanvasManager().getCurrentFile().type(ke);
+			f.type(ke);
 		});
-
-		// TODO pasteFile
-	}
-
-	private void showProperties() {
-		// TODO showProperties
-	}
-
-	public void setFile(File file) {
-		this.file = file;
 	}
 
 }
