@@ -5,7 +5,9 @@ import java.util.function.Function;
 
 import com.harystolho.Main;
 import com.harystolho.canvas.CanvasManager;
+import com.sun.javafx.css.StyleCache.Key;
 
+import javafx.event.EventType;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;

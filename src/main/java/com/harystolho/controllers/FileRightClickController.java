@@ -84,8 +84,11 @@ public class FileRightClickController {
 		ClipboardContent cd = new ClipboardContent();
 		StringBuilder sb = new StringBuilder();
 
+		boolean wasFileLoaded = true;
+
 		if (!file.isLoaded()) {
 			PEUtils.loadFileFromDisk(file);
+			wasFileLoaded = false;
 		}
 
 		file.getWords().stream().forEach((word) -> {
@@ -105,16 +108,21 @@ public class FileRightClickController {
 
 		cd.putString(sb.toString());
 		Clipboard.getSystemClipboard().setContent(cd);
-		
-		file.unload();
+
+		if (!wasFileLoaded) {
+			file.unload();
+		}
+
 	}
 
 	private void pasteFile() {
-		/*
-		 * Clipboard.getSystemClipboard().getString().chars().forEach((iChar) -> {
-		 * Main.getApplication().getCanvasManager().getCurrentFile().addCharToFile((
-		 * char) iChar); });
-		 */
+
+		Clipboard.getSystemClipboard().getString().chars().forEach((iChar) -> {
+			KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", String.valueOf((char) iChar),
+					KeyCode.UNDEFINED, false, false, false, false);
+			Main.getApplication().getCanvasManager().getCurrentFile().type(ke);
+		});
+
 		// TODO pasteFile
 	}
 

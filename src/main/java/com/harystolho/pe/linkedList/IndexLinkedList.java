@@ -519,6 +519,9 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 				if (node.getRight() != null) {
 					node = node.getRight();
 				} else {
+					if(node.getData().getType() == TYPES.NEW_LINE) {
+						return null;
+					}
 					return node.getData();
 				}
 			}
