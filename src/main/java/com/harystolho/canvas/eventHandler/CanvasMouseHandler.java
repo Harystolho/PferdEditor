@@ -6,6 +6,11 @@ import com.harystolho.utils.PropertiesWindowFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 
+/**
+ * Mouse Event Handler for the canvas, it only handles the events that happen inside the canvas
+ * @author Harystolho
+ *
+ */
 public class CanvasMouseHandler {
 
 	private CanvasManager cm;

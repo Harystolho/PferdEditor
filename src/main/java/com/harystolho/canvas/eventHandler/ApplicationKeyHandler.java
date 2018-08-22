@@ -11,10 +11,16 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
+/**
+ * The Key Event Handler for this application
+ * @author Harystolho
+ *
+ */
 public class ApplicationKeyHandler {
 
 	private CanvasManager cm;
 	private Scene scene;
+	
 	private HashMap<KeyCode, Function<KeyEvent, Boolean>> keyMap;
 
 	public ApplicationKeyHandler(Scene scene, CanvasManager cm) {

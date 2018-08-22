@@ -14,11 +14,19 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.text.Font;
 
+/**
+ * This class manages the canvas, it holds a reference to the file that is being
+ * shown in the canvas, it also draws the text, the cursor and the background
+ * line
+ * 
+ * @author Harystolho
+ *
+ */
 public class CanvasManager {
 
+	// Higher numbers mean higher delay
 	public static final int CURSOR_DELAY = 8;
 	public static final int TAB_SIZE = 35;
-	public static final int SCROLL_CHANGE = 5;
 
 	private Canvas canvas;
 
@@ -27,7 +35,7 @@ public class CanvasManager {
 	private File currentFile;
 
 	private int cursorCount = 0;
-	private int lineHeight; // in pixels
+	private int lineHeight;
 
 	public CanvasManager(Canvas canvas) {
 		this.canvas = canvas;
@@ -281,13 +289,15 @@ public class CanvasManager {
 	}
 
 	public void scrollLeft() {
-		if (getScrollX() >= SCROLL_CHANGE) {
-			setScrollX(getScrollX() - SCROLL_CHANGE);
-		}
+		/*
+		 * if (getScrollX() >= SCROLL_CHANGE) { setScrollX(getScrollX() -
+		 * SCROLL_CHANGE); }
+		 */
+		// TODO scroll left
 	}
 
 	public void scrollRight() {
-		setScrollX(getScrollX() + SCROLL_CHANGE);
+
 	}
 
 	public void scrollUp() {

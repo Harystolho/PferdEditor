@@ -12,10 +12,15 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 
+/**
+ * When the user presses RIGHT CLICK on a file in the file list, it shows this
+ * window
+ * 
+ * @author Harystolho
+ *
+ */
 public class FileRightClickController {
 
-	// TODO REFACTOR WHOLE CODE
-	
 	@FXML
 	private HBox rename;
 
@@ -92,6 +97,10 @@ public class FileRightClickController {
 		this.file = file;
 	}
 
+	/**
+	 * Copies the whole file content to the clipboard
+	 * @param f
+	 */
 	public static void copyFile(File f) {
 		if (f == null) {
 			return;
@@ -132,6 +141,10 @@ public class FileRightClickController {
 		}
 	}
 
+	/**
+	 * Pastes the clipboard content to the file at the cursor position
+	 * @param f
+	 */
 	public static void pasteFile(File f) {
 		if (f == null) {
 			return;
