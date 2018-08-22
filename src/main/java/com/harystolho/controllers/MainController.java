@@ -148,7 +148,6 @@ public class MainController implements ResizableInterface {
 		});
 
 		rightScrollBar.setOnMouseDragged((e) -> {
-
 			// If cursor is inside scroll bar
 			if (e.getY() >= rightScrollInside.getLayoutY()
 					&& e.getY() <= rightScrollInside.getLayoutY() + rightScrollInside.getHeight()) {
@@ -221,7 +220,7 @@ public class MainController implements ResizableInterface {
 
 	private void createNewFile() {
 		OpenWindow ow = new OpenWindow("New File");
-		
+
 		ow.load("newFile.fxml", (controller) -> {
 			NewFileController c = (NewFileController) controller;
 			c.setStage(ow.getStage());
@@ -432,7 +431,7 @@ public class MainController implements ResizableInterface {
 			c.setStage(ow.getStage());
 			c.setPEFile(file);
 		});
-		
+
 		ow.openWindow();
 	}
 
@@ -558,6 +557,12 @@ public class MainController implements ResizableInterface {
 		// 25 = canvasInformationBar Height
 		canvas.setHeight(canvasBox.getPrefHeight() - 25 - filesTab.getHeight());
 		rightScrollBar.setPrefHeight(canvas.getHeight());
+
+		// Scrolls the canvas up when the window resized to a bigger size
+		if (canvasManager.getScrollY() >= FileUpdaterThread.getBiggestY() - canvas.getHeight()) {
+			canvasManager.getCurrentFile().setScrollY((int) (FileUpdaterThread.getBiggestY() - canvas.getHeight()));
+		}
+
 	}
 
 }
