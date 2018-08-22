@@ -560,9 +560,10 @@ public class MainController implements ResizableInterface {
 
 		// Scrolls the canvas up when the window resized to a bigger size
 		if (canvasManager.getScrollY() >= FileUpdaterThread.getBiggestY() - canvas.getHeight()) {
-			canvasManager.getCurrentFile().setScrollY((int) (FileUpdaterThread.getBiggestY() - canvas.getHeight()));
+			if (canvasManager.getCurrentFile() != null) {
+				canvasManager.getCurrentFile().setScrollY((int) (FileUpdaterThread.getBiggestY() - canvas.getHeight()));
+			}
 		}
-
 	}
 
 }

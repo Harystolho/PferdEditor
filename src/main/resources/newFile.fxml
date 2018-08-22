@@ -7,9 +7,9 @@
 
 <Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="148.0" prefWidth="552.0" xmlns="http://javafx.com/javafx/8.0.181" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.harystolho.controllers.NewFileController">
    <children>
-      <Button fx:id="cancel" layoutX="486.0" layoutY="113.0" mnemonicParsing="false" text="Cancel" />
+      <Button fx:id="cancel" layoutX="426.0" layoutY="113.0" mnemonicParsing="false" text="Cancel" />
       <TextField fx:id="file" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="527.0" promptText="File Name" />
-      <Button fx:id="createFile" layoutX="423.0" layoutY="113.0" mnemonicParsing="false" text="Create" />
+      <Button fx:id="createFile" layoutX="487.0" layoutY="113.0" mnemonicParsing="false" text="Create" />
       <Label fx:id="message" layoutX="27.0" layoutY="66.0" />
    </children>
 </Pane>

@@ -23,7 +23,7 @@ import javafx.scene.input.KeyEvent;
  */
 public class File {
 
-	// Locked used when modifying the LinkedList
+	// Locked used when iterating the LinkedList
 	private ReadWriteLock drawLock;
 
 	private java.io.File diskFile;
