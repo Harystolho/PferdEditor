@@ -68,11 +68,10 @@ public class CanvasManager {
 		if (currentFile != null) {
 
 			// TODO render only what is shown in the screen
-
 			float x = 0;
 			float y = getLineHeight();
 
-			if(currentFile.getDrawLock().readLock().tryLock()) {
+			if (currentFile.getDrawLock().readLock().tryLock()) {
 				ListIterator<Word> i = currentFile.getWords().listIterator();
 
 				while (i.hasNext()) {
@@ -110,7 +109,7 @@ public class CanvasManager {
 					}
 
 				}
-				
+
 				currentFile.getDrawLock().readLock().unlock();
 			}
 

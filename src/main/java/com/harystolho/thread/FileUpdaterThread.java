@@ -21,19 +21,6 @@ public class FileUpdaterThread implements Runnable {
 
 	@Override
 	public void run() {
-
-		/*
-		 * private static final int THREAD_INTERVAL = 2 * 1000; while (running) {
-		 * 
-		 * if (Main.getApplication().getMainController() != null) { if
-		 * (Main.getApplication().getMainController().getCanvasManager() != null) { if
-		 * (Main.getApplication().getCanvasManager().getCurrentFile() != null) {
-		 * calculate(Main.getApplication().getCanvasManager().getCurrentFile()); } } }
-		 * 
-		 * try { Thread.sleep(THREAD_INTERVAL); } catch (InterruptedException e) {
-		 * e.printStackTrace(); } }
-		 */
-
 		if (Main.getApplication().getMainController() != null) {
 			if (Main.getApplication().getMainController().getCanvasManager() != null) {
 				if (Main.getApplication().getCanvasManager().getCurrentFile() != null) {
@@ -58,7 +45,7 @@ public class FileUpdaterThread implements Runnable {
 		int lineHeight = Main.getApplication().getCanvasManager().getLineHeight();
 
 		file.getDrawLock().readLock().lock();
-		
+
 		ListIterator<Word> i = file.getWords().listIterator();
 
 		int biggestX = 0;
