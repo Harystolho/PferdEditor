@@ -69,30 +69,28 @@ public class File {
 	public void type(KeyEvent keyEvent) {
 
 		setWasModified(true);
-
 		drawLock.writeLock().lock();
 
 		switch (keyEvent.getCode()) {
 		case SPACE:
 			createSpace();
-			return;
+			break;
 		case ENTER:
 			createNewLine();
-			return;
+			break;
 		case BACK_SPACE:
 			removeCharBeforeCursor();
-			return;
+			break;
 		case DELETE:
 			removeCharAtCursor();
-			return;
+			break;
 		case TAB:
 			createTab();
-			return;
+			break;
 		default:
+			addKeyToFile(keyEvent);
 			break;
 		}
-
-		addKeyToFile(keyEvent);
 
 		drawLock.writeLock().unlock();
 	}
@@ -663,6 +661,9 @@ public class File {
 
 	}
 
+	// TODO fix scroll when using up key
+	// TODO fix scroll when typing a new line
+	
 	public void moveCursorRight() {
 		Word word = getWords().get(getCursorX(), getCursorY());
 

@@ -12,6 +12,7 @@ import com.harystolho.utils.PEUtils;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 /**
@@ -96,6 +97,9 @@ public class CanvasManager {
 					case TAB:
 						wordObj.setX(x);
 						wordObj.setY(y);
+
+						//gc.setFill(Color.RED);
+						//gc.fillRect(x - getScrollX(), y - getScrollY() - lineHeight, TAB_SIZE, lineHeight);
 
 						x += TAB_SIZE;
 						continue;

@@ -1,0 +1,109 @@
+* [36m441453e[m - [1;32m(4 minutes ago)[m [37msave#1[m [2;37m- Harystolho[m[1;33m (HEAD -> dev, origin/dev)[m
+* [36m5e214eb[m - [1;32m(17 minutes ago)[m [37mFixed scrolling bug[m [2;37m- Harystolho[m[1;33m[m
+* [36m50efbdb[m - [1;32m(30 minutes ago)[m [37mRefactoring[m [2;37m- Harystolho[m[1;33m[m
+* [36m4ad5e36[m - [1;32m(40 minutes ago)[m [37mImproved code[m [2;37m- Harystolho[m[1;33m[m
+* [36m6d870dd[m - [1;32m(24 hours ago)[m [37mReplaced normal Lock with a ReadWriteLock to improve performance[m [2;37m- Harystolho[m[1;33m[m
+* [36mc76d9c2[m - [1;32m(25 hours ago)[m [37mCTRL + V working[m [2;37m- Harystolho[m[1;33m[m
+* [36m4f2b26a[m - [1;32m(25 hours ago)[m [37mFixed bug when finding the last word in a line[m [2;37m- Harystolho[m[1;33m[m
+* [36md7ccb66[m - [1;32m(25 hours ago)[m [37mShows error window if an error occurs when renaming a file[m [2;37m- Harystolho[m[1;33m[m
+* [36mb9082b8[m - [1;32m(25 hours ago)[m [37mAdded pattern matcher for file name[m [2;37m- Harystolho[m[1;33m[m
+* [36md246e17[m - [1;32m(26 hours ago)[m [37mFixed bug when moving cursor to last line[m [2;37m- Harystolho[m[1;33m[m
+* [36m2f52a10[m - [1;32m(2 days ago)[m [37mImproved performance when searching for the last word in a line[m [2;37m- Harystolho[m[1;33m[m
+* [36m59dab99[m - [1;32m(2 days ago)[m [37mEND deletes char at cursor[m [2;37m- Harystolho[m[1;33m[m
+* [36mb3a5280[m - [1;32m(2 days ago)[m [37mAdded unload method to File[m [2;37m- Harystolho[m[1;33m (origin/master, master)[m
+* [36mc73e967[m - [1;32m(2 days ago)[m [37mRemoved old linked list implementation. Fixed Copy File bug[m [2;37m- Harystolho[m[1;33m[m
+* [36mf89dd4e[m - [1;32m(2 days ago)[m [37mCopy File working[m [2;37m- Harystolho[m[1;33m[m
+* [36m680bed1[m - [1;32m(2 days ago)[m [37mCTRL + W closes the opened tab[m [2;37m- Harystolho[m[1;33m[m
+* [36mb4eef7a[m - [1;32m(2 days ago)[m [37mLeft/Right arrow keys working correctly on TAB[m [2;37m- Harystolho[m[1;33m[m
+* [36m481f238[m - [1;32m(2 days ago)[m [37mFixed bug, if there was only 1 tab in the file it wouldn't remove it[m [2;37m- Harystolho[m[1;33m[m
+* [36mac304c6[m - [1;32m(5 days ago)[m [37mRefactoring. Added OpenWindow object to create windows that are similar[m [2;37m- Harystolho[m[1;33m[m
+* [36mad3d4b0[m - [1;32m(5 days ago)[m [37mNew File Button opens a window to create a new file[m [2;37m- Harystolho[m[1;33m[m
+* [36md1286d8[m - [1;32m(5 days ago)[m [37mDelete icon deletes disk file too[m [2;37m- Harystolho[m[1;33m[m
+* [36m7be0239[m - [1;32m(5 days ago)[m [37mWhen a file is renamed it also renames the disk file[m [2;37m- Harystolho[m[1;33m[m
+* [36m9c9986e[m - [1;32m(5 days ago)[m [37mWhen a file is renamed it changes the file's name in the File Tab too[m [2;37m- Harystolho[m[1;33m[m
+* [36m85dd2c2[m - [1;32m(7 days ago)[m [37mFileUpdateThread runs in another thread now[m [2;37m- Harystolho[m[1;33m[m
+* [36m9af9954[m - [1;32m(7 days ago)[m [37mAdded Don't Save option to SaveChanges Window[m [2;37m- Harystolho[m[1;33m[m
+* [36me1a28a3[m - [1;32m(7 days ago)[m [37mRefresh buttons reloads the files[m [2;37m- Harystolho[m[1;33m[m
+* [36mc4b43e1[m - [1;32m(7 days ago)[m [37mWhen someone tries to close a modified file it opens a window with the options: 'Save, Save As, Close'[m [2;37m- Harystolho[m[1;33m[m
+* [36mf411285[m - [1;32m(8 days ago)[m [37mFixed bug when saving new files[m [2;37m- Harystolho[m[1;33m[m
+* [36m4527482[m - [1;32m(8 days ago)[m [37mRemoved configuration file[m [2;37m- Harystolho[m[1;33m[m
+* [36me08f894[m - [1;32m(8 days ago)[m [37mFixed gitignore[m [2;37m- Harystolho[m[1;33m[m
+* [36m4a3213a[m - [1;32m(8 days ago)[m [37mRemoved Files/ and Target/[m [2;37m- Harystolho[m[1;33m[m
+* [36mc088612[m - [1;32m(8 days ago)[m [37mHashMap<KeyCode, Function>, when a KEY is pressed it will get the function for that key in the hashmap[m [2;37m- Harystolho[m[1;33m[m
+* [36m10b5ecd[m - [1;32m(8 days ago)[m [37mALT doesn't focus on the menu anymore[m [2;37m- Harystolho[m[1;33m[m
+* [36m9170977[m - [1;32m(9 days ago)[m [37mDocumentation[m [2;37m- Harystolho[m[1;33m[m
+* [36me0db02b[m - [1;32m(9 days ago)[m [37mAdded Tab class to manage the tabs. CTRL + S working[m [2;37m- Harystolho[m[1;33m[m
+* [36mf81101b[m - [1;32m(9 days ago)[m [37mScrolling using wheel and cursor working correctly[m [2;37m- Harystolho[m[1;33m[m
+* [36ma91797f[m - [1;32m(12 days ago)[m [37mFile Tests[m [2;37m- Harystolho[m[1;33m[m
+* [36m9fe70ab[m - [1;32m(12 days ago)[m [37madded icon[m [2;37m- Harystolho[m[1;33m[m
+* [36m852c7b4[m - [1;32m(2 weeks ago)[m [37mY scroll bar scrolls when dragging it[m [2;37m- Harystolho[m[1;33m[m
+* [36mbca09b7[m - [1;32m(2 weeks ago)[m [37mCTRL + END moves cursor to last word. CTRL + HOME moves cursor to first word[m [2;37m- Harystolho[m[1;33m[m
+* [36m31ff4c7[m - [1;32m(2 weeks ago)[m [37mWhen the space key is typed it updates the file's biggestY immediately. FileUpdaterThread no longer runs every 2 seconds, it's to has run only once when the file is opened[m [2;37m- Harystolho[m[1;33m[m
+* [36m0d090de[m - [1;32m(2 weeks ago)[m [37mScrolling two lines when using scroll wheel[m [2;37m- Harystolho[m[1;33m[m
+* [36m23aba54[m - [1;32m(2 weeks ago)[m [37mY scroll bar rendering at the correct position[m [2;37m- Harystolho[m[1;33m[m
+* [36m78bd43e[m - [1;32m(2 weeks ago)[m [37mFileUpdaterThread calculating information about the file correctly[m [2;37m- Harystolho[m[1;33m[m
+* [36m8d905e8[m - [1;32m(2 weeks ago)[m [37mAdded FileUpdateThread[m [2;37m- Harystolho[m[1;33m[m
+* [36mf05fe24[m - [1;32m(2 weeks ago)[m [37mScrolling the file up/down using up/down arrow keys[m [2;37m- Harystolho[m[1;33m[m
+* [36m8e07d59[m - [1;32m(2 weeks ago)[m [37mDrawing right scrol bar correctly[m [2;37m- Harystolho[m[1;33m[m
+* [36m7c61fea[m - [1;32m(2 weeks ago)[m [37mFixed bug that caused a file to destroy the first word when it was reopened[m [2;37m- Harystolho[m[1;33m[m
+* [36m307815e[m - [1;32m(2 weeks ago)[m [37mFile List updating when file's name is changed[m [2;37m- Harystolho[m[1;33m[m
+* [36mccbe57f[m - [1;32m(2 weeks ago)[m [37mChanged file tab close icon color:[m [2;37m- Harystolho[m[1;33m[m
+* [36mdcaf023[m - [1;32m(3 weeks ago)[m [37mFixed bug that when the left key was pressed it focused on the file list, instead of moving the cursor to left[m [2;37m- Harystolho[m[1;33m[m
+* [36m4bc0715[m - [1;32m(3 weeks ago)[m [37mDocumentation[m [2;37m- Harystolho[m[1;33m[m
+* [36ma78a8bc[m - [1;32m(3 weeks ago)[m [37mAdded a file tab, if the file is open it will be shown in that tab[m [2;37m- Harystolho[m[1;33m[m
+* [36m35b2b9c[m - [1;32m(3 weeks ago)[m [37mFixed bug that was splitting a word at index 0 and therefore creating a new word that is empty[m [2;37m- Harystolho[m[1;33m[m
+* [36mf27271f[m - [1;32m(3 weeks ago)[m [37mWrote some tests[m [2;37m- Harystolho[m[1;33m[m
+* [36m7dc7ae1[m - [1;32m(3 weeks ago)[m [37mAbout opens the project's github link[m [2;37m- Harystolho[m[1;33m[m
+* [36m75b3401[m - [1;32m(3 weeks ago)[m [37mDocumentation[m [2;37m- Harystolho[m[1;33m[m
+* [36mdc9ca5e[m - [1;32m(3 weeks ago)[m [37mRight click on file opens a properties window[m [2;37m- Harystolho[m[1;33m[m
+* [36mafec5ae[m - [1;32m(3 weeks ago)[m [37mAdded a mouse handler for the main scene. When a file is right clicked it now opens a window to manage the file[m [2;37m- Harystolho[m[1;33m[m
+* [36me8fae0f[m - [1;32m(3 weeks ago)[m [37mEach loaded file now has it's own scrollX and scrolLY[m [2;37m- Harystolho[m[1;33m[m
+* [36m392e883[m - [1;32m(3 weeks ago)[m [37mSave As sets the current file name in the save window[m [2;37m- Harystolho[m[1;33m[m
+* [36m349e0af[m - [1;32m(3 weeks ago)[m [37mChange workplace directory[m [2;37m- Harystolho[m[1;33m[m
+* [36m03cbf41[m - [1;32m(3 weeks ago)[m [37mMenu Item background color is now dark[m [2;37m- Harystolho[m[1;33m[m
+* [36ma8fee7c[m - [1;32m(3 weeks ago)[m [37mDocumentation[m [2;37m- Harystolho[m[1;33m[m
+* [36mb8991f8[m - [1;32m(3 weeks ago)[m [37mFixed bug when saving files[m [2;37m- Harystolho[m[1;33m[m
+* [36m19ac234[m - [1;32m(3 weeks ago)[m [37mReload button reloads the file[m [2;37m- Harystolho[m[1;33m[m
+* [36m235d63f[m - [1;32m(3 weeks ago)[m [37mIgnore \r when reading file[m [2;37m- Harystolho[m[1;33m[m
+* [36m3f6b576[m - [1;32m(3 weeks ago)[m [37mFixed bugs related to cursor position[m [2;37m- Harystolho[m[1;33m[m
+* [36m8cd5945[m - [1;32m(4 weeks ago)[m [37mCanvas only draws until the end of the screen[m [2;37m- Harystolho[m[1;33m[m
+* [36mb830e83[m - [1;32m(4 weeks ago)[m [37mNew Line working[m [2;37m- Harystolho[m[1;33m[m
+* [36mb662027[m - [1;32m(4 weeks ago)[m [37mRename a file[m [2;37m- Harystolho[m[1;33m[m
+* [36m45c3b39[m - [1;32m(4 weeks ago)[m [37mFixed bug where the middle cursor was at a negative position[m [2;37m- Harystolho[m[1;33m[m
+* [36m5c69351[m - [1;32m(4 weeks ago)[m [37mdeleted useless files[m [2;37m- Harystolho[m[1;33m[m
+* [36m571132e[m - [1;32m(4 weeks ago)[m [37mAdded a custom linked list implementation to improve performance[m [2;37m- Harystolho[m[1;33m[m
+* [36m3a634d9[m - [1;32m(4 weeks ago)[m [37mKey event handler problem fix[m [2;37m- Harystolho[m[1;33m[m
+* [36mdd85ba8[m - [1;32m(4 weeks ago)[m [37mTesting Binary Tree for the word list[m [2;37m- Harystolho[m[1;33m[m
+* [36m74de062[m - [1;32m(4 weeks ago)[m [37mRefactoring File[m [2;37m- Harystolho[m[1;33m[m
+* [36mf8bea44[m - [1;32m(5 weeks ago)[m [37mTab working[m [2;37m- Harystolho[m[1;33m[m
+* [36m38d69b7[m - [1;32m(5 weeks ago)[m [37mHome and End keys working[m [2;37m- Harystolho[m[1;33m[m
+* [36m5c2d61c[m - [1;32m(5 weeks ago)[m [37mSaving files[m [2;37m- Harystolho[m[1;33m[m
+* [36m26011cf[m - [1;32m(5 weeks ago)[m [37mMoving cursor using arrow keys[m [2;37m- Harystolho[m[1;33m[m
+* [36m47c57c5[m - [1;32m(5 weeks ago)[m [37mMaster merge[m [2;37m- Harystolho[m[1;33m[m
+* [36m101e5f0[m - [1;32m(5 weeks ago)[m [37mAdding Space in the middle of a word. Adding new line in the middle of a word[m [2;37m- Harystolho[m[1;33m[m
+* [36m9ebf320[m - [1;32m(5 weeks ago)[m [37mDeleteing char at the middle of a word. Adding char to the middle of a word. Moving cursor using arrow keys[m [2;37m- Harystolho[m[1;33m[m
+* [36m2622b46[m - [1;32m(5 weeks ago)[m [37mDeleted at the beggining of a line working[m [2;37m- Harystolho[m[1;33m[m
+* [36m5db3dc9[m - [1;32m(5 weeks ago)[m [37mDelete chars at the middle of the string[m [2;37m- Harystolho[m[1;33m[m
+* [36m337df78[m - [1;32m(6 weeks ago)[m [37mImplemented a custom linked list that inserts words at the correct position.[m [2;37m- Harystolho[m[1;33m[m
+* [36mc61c346[m - [1;32m(6 weeks ago)[m [37mChanged cursor drawing color[m [2;37m- Harystolho[m[1;33m[m
+* [36m6b395c1[m - [1;32m(6 weeks ago)[m [37mScrolling to four sides[m [2;37m- Harystolho[m[1;33m[m
+* [36m297f8fe[m - [1;32m(6 weeks ago)[m [37mRendering cursor at the end of the line.[m [2;37m- Harystolho[m[1;33m[m
+* [36m630f836[m - [1;32m(6 weeks ago)[m [37mRead files from files/ folder[m [2;37m- Harystolho[m[1;33m[m
+* [36m7e13b15[m - [1;32m(6 weeks ago)[m [37mUpdating cursor position when typing or deleting a char[m [2;37m- Harystolho[m[1;33m[m
+* [36mf957d58[m - [1;32m(6 weeks ago)[m [37mWord Tests[m [2;37m- Harystolho[m[1;33m[m
+* [36m5f6275d[m - [1;32m(6 weeks ago)[m [37mAdd new words to file, delete chars, new line[m [2;37m- Harystolho[m[1;33m[m
+* [36m3dcba0c[m - [1;32m(6 weeks ago)[m [37mAdded Tests[m [2;37m- Harystolho[m[1;33m[m
+* [36m010f448[m - [1;32m(6 weeks ago)[m [37mDrawing multiple lines. Scrolling left and right[m [2;37m- Harystolho[m[1;33m[m
+* [36m209e845[m - [1;32m(6 weeks ago)[m [37mBegan text drawing[m [2;37m- Harystolho[m[1;33m[m
+* [36mdbe966f[m - [1;32m(6 weeks ago)[m [37mFixed bug where you couldn't select first line[m [2;37m- Harystolho[m[1;33m[m
+* [36ma60b8bb[m - [1;32m(6 weeks ago)[m [37mCursor selects right line. Drawing background line.[m [2;37m- Harystolho[m[1;33m[m
+* [36m5dc4b4b[m - [1;32m(6 weeks ago)[m [37mAdded StyleSheet Wrapper[m [2;37m- Harystolho[m[1;33m[m
+* [36maa87064[m - [1;32m(6 weeks ago)[m [37mFixed rendering bug when you deleted the last file.[m [2;37m- Harystolho[m[1;33m[m
+* [36m055a8d0[m - [1;32m(6 weeks ago)[m [37mAdd Delete. Add Refresh[m [2;37m- Harystolho[m[1;33m[m
+* [36m4b3a0a0[m - [1;32m(6 weeks ago)[m [37mCanvas rendering cursor.[m [2;37m- Harystolho[m[1;33m[m
+* [36m928ade4[m - [1;32m(6 weeks ago)[m [37mAdd Canvas. New File Icon. Save Icon[m [2;37m- Harystolho[m[1;33m[m
+* [36me1e2cca[m - [1;32m(6 weeks ago)[m [37mAdd Resizable Interface[m [2;37m- Harystolho[m[1;33m[m
+* [36mf2f2032[m - [1;32m(6 weeks ago)[m [37mLoading and saving properties[m [2;37m- Harystolho[m[1;33m[m
+* [36m131e7b9[m - [1;32m(6 weeks ago)[m [37mConfigure Maven[m [2;37m- Harystolho[m[1;33m[m
+* [36m8ab77eb[m - [1;32m(6 weeks ago)[m [37mCreate README.md[m [2;37m- Harystolho[m[1;33m[m
+* [36mab467c5[m - [1;32m(6 weeks ago)[m [37mInitial commit[m [2;37m- Harystolho[m[1;33m[m
