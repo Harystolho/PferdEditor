@@ -182,7 +182,9 @@ public class ApplicationKeyHandler {
 			}
 			return true;
 		});
-
+		
+		
+		// Shift
 		keyMap.put(KeyCode.OPEN_BRACKET, (e) -> {
 			if (e.isShiftDown()) {
 				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "{", KeyCode.BRACELEFT, false, false,
@@ -197,6 +199,28 @@ public class ApplicationKeyHandler {
 		keyMap.put(KeyCode.CLOSE_BRACKET, (e) -> {
 			if (e.isShiftDown()) {
 				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "}", KeyCode.BRACERIGHT, false, false,
+						false, false);
+				pressKeyOnCanvas(ke);
+			} else {
+				pressKeyOnCanvas(e);
+			}
+			return true;
+		});
+		
+		keyMap.put(KeyCode.DIGIT9, (e) -> {
+			if (e.isShiftDown()) {
+				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "(", KeyCode.LEFT_PARENTHESIS, false, false,
+						false, false);
+				pressKeyOnCanvas(ke);
+			} else {
+				pressKeyOnCanvas(e);
+			}
+			return true;
+		});
+
+		keyMap.put(KeyCode.DIGIT0, (e) -> {
+			if (e.isShiftDown()) {
+				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", ")", KeyCode.RIGHT_PARENTHESIS, false, false,
 						false, false);
 				pressKeyOnCanvas(ke);
 			} else {

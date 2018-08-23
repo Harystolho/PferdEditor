@@ -309,6 +309,11 @@ public class File {
 			FileUpdaterThread.incrementBiggestYBy(Main.getApplication().getCanvasManager().getLineHeight());
 
 			cursorY = (getCursorY() + Main.getApplication().getCanvasManager().getLineHeight());
+			
+			if (getCursorY() > Main.getApplication().getMainController().getCanvas().getHeight() + getScrollY()) {
+				Main.getApplication().getCanvasManager().scrollDown();
+			}
+			
 		}
 	}
 
@@ -478,7 +483,6 @@ public class File {
 					} else {
 						createNewLineAtTheEndOfTheWord(); // If the cursor is at the beginning of a word
 					}
-
 					return;
 				}
 			}

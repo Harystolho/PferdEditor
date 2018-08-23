@@ -246,6 +246,7 @@ public class CanvasManager {
 		currentFile.setCursorY(getCursorY() + getLineHeight());
 		currentFile.setCursorX(getCursorX()); // Moves the cursor to the end of the life if the line below is shorter.
 
+		// TODO fix scroll alignment
 		if (getCursorY() > canvas.getHeight() + getScrollY()) {
 			scrollDown();
 		}
