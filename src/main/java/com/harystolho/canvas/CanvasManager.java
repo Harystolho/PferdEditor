@@ -98,9 +98,8 @@ public class CanvasManager {
 						wordObj.setX(x);
 						wordObj.setY(y);
 
-						// gc.setFill(Color.RED);
-						// gc.fillRect(x - getScrollX(), y - getScrollY() - lineHeight, TAB_SIZE,
-						// lineHeight);
+						gc.setFill(Color.RED);
+						gc.fillRect(x - getScrollX(), y - getScrollY() - lineHeight, TAB_SIZE, lineHeight);
 
 						x += TAB_SIZE;
 						continue;

@@ -293,12 +293,16 @@ public class File {
 			CanvasManager cm = Main.getApplication().getCanvasManager();
 
 			if (getCursorX() != 0) {
-				word.setX((float) cm.getCursorX() + 1);
-				word.setY((float) cm.getCursorY());
+				if (word.getType() == TYPES.TAB) {
+					word.setX((float) cm.getCursorX() - 1);
+				}else {
+					word.setX((float) cm.getCursorX() + 1);	
+				}
 			} else {
-				word.setX((float) cm.getCursorX()-1);
-				word.setY((float) cm.getCursorY());
+				word.setX((float) cm.getCursorX() - 1);
 			}
+
+			word.setY((float) cm.getCursorY());
 		}
 
 	}
@@ -308,12 +312,14 @@ public class File {
 			// Update file's biggest Y
 			FileUpdaterThread.incrementBiggestYBy(Main.getApplication().getCanvasManager().getLineHeight());
 
+			// Increase cursor position
 			cursorY = (getCursorY() + Main.getApplication().getCanvasManager().getLineHeight());
-			
+
+			// Scroll down if necessary
 			if (getCursorY() > Main.getApplication().getMainController().getCanvas().getHeight() + getScrollY()) {
 				Main.getApplication().getCanvasManager().scrollDown();
 			}
-			
+
 		}
 	}
 
@@ -325,7 +331,6 @@ public class File {
 	 *            <code>false</code> it will subtract.
 	 */
 	public void updateCursorPosition(char c, boolean add) {
-
 		if (words.size() == 0) {
 			setCursorX(0);
 			return;
@@ -369,7 +374,7 @@ public class File {
 	 */
 	public void addCharToFile(char c) {
 
-		Word wrd = words.get(getCursorX(), getCursorY());
+		Word wrd = words.get(getCursorX()-1, getCursorY());
 
 		if (wrd != null) {
 			if (wrd.getType() == TYPES.SPACE || wrd.getType() == TYPES.NEW_LINE || wrd.getType() == TYPES.TAB) {
@@ -497,19 +502,19 @@ public class File {
 	private void createNewLineInTheMiddleOfTheWord(Word word, int charIndex) {
 		Word newWord = word.split(charIndex); // Split the current word in 2
 
-		createNewLineAtTheEndOfTheWord();
-
 		newWord.setX(word.getX() + word.getDrawingSize());
 		newWord.setY(word.getY());
-
-		words.add(newWord); // Add new word after space
+		words.add(newWord);
+		
+		createNewLineAtTheEndOfTheWord(); // Create New Line between words
+		
 		resetLastWord();
 	}
 
 	private void createNewLineAtTheEndOfTheWord() {
 		Word new_line = new Word(TYPES.NEW_LINE);
 		setWordPosition(new_line);
-		new_line.setX(new_line.getX() - 2);
+		//new_line.setX(new_line.getX() - 2);
 		addWord(new_line);
 
 		// Move cursor at the beginning of the line below
@@ -665,8 +670,6 @@ public class File {
 
 	}
 
-	// TODO fix scroll when typing a new line
-	
 	public void moveCursorRight() {
 		Word word = getWords().get(getCursorX(), getCursorY());
 
