@@ -98,8 +98,9 @@ public class CanvasManager {
 						wordObj.setX(x);
 						wordObj.setY(y);
 
-						//gc.setFill(Color.RED);
-						//gc.fillRect(x - getScrollX(), y - getScrollY() - lineHeight, TAB_SIZE, lineHeight);
+						// gc.setFill(Color.RED);
+						// gc.fillRect(x - getScrollX(), y - getScrollY() - lineHeight, TAB_SIZE,
+						// lineHeight);
 
 						x += TAB_SIZE;
 						continue;
@@ -224,18 +225,21 @@ public class CanvasManager {
 	}
 
 	public void lineUp() {
-		// It can't go above first line.
 		if (getCursorY() <= lineHeight) {
-			return;
+			setScrollY((int) (getCursorY() - (getCursorY() % lineHeight) - lineHeight));
+		} else {
+			currentFile.setCursorY(getCursorY() - getLineHeight());
+			currentFile.setCursorX(getCursorX()); // Moves the cursor to the end of the life if the line above is
+													// shorter.
+
+			if (getCursorY() < getScrollY() + lineHeight) { // If cursor is at the first line in the canvas
+				if (getScrollY() % lineHeight == 0) { // If the scroll is aligned to the line
+					scrollUp();
+				} else { // Else align the scroll
+					setScrollY((int) (getCursorY() - (getCursorY() % lineHeight) - lineHeight));
+				}
+			}
 		}
-
-		currentFile.setCursorY(getCursorY() - getLineHeight());
-		currentFile.setCursorX(getCursorX()); // Moves the cursor to the end of the life if the line above is shorter.
-
-		if (getCursorY() <= getScrollY()) {
-			scrollUp();
-		}
-
 	}
 
 	public void lineDown() {

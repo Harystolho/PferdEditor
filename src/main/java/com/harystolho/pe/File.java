@@ -296,7 +296,7 @@ public class File {
 				word.setX((float) cm.getCursorX() + 1);
 				word.setY((float) cm.getCursorY());
 			} else {
-				word.setX((float) cm.getCursorX());
+				word.setX((float) cm.getCursorX()-1);
 				word.setY((float) cm.getCursorY());
 			}
 		}
@@ -661,7 +661,6 @@ public class File {
 
 	}
 
-	// TODO fix scroll when using up key
 	// TODO fix scroll when typing a new line
 	
 	public void moveCursorRight() {
