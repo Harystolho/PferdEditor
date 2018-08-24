@@ -6,6 +6,12 @@ import com.harystolho.canvas.StyleLoader;
 
 import javafx.scene.paint.Color;
 
+/**
+ * Class to manage words that have different colors
+ * 
+ * @author Harystolho
+ *
+ */
 public class WordDictionary {
 
 	/**

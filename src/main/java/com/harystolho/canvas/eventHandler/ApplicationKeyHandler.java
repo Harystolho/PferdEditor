@@ -182,8 +182,7 @@ public class ApplicationKeyHandler {
 			}
 			return true;
 		});
-		
-		
+
 		// Shift
 		keyMap.put(KeyCode.OPEN_BRACKET, (e) -> {
 			if (e.isShiftDown()) {
@@ -206,11 +205,110 @@ public class ApplicationKeyHandler {
 			}
 			return true;
 		});
+
+		keyMap.put(KeyCode.BACK_QUOTE, (e) -> {
+			if (e.isShiftDown()) {
+				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "~", KeyCode.DEAD_TILDE, false,
+						false, false, false);
+				pressKeyOnCanvas(ke);
+			} else {
+				pressKeyOnCanvas(e);
+			}
+			return true;
+		});
 		
+		keyMap.put(KeyCode.DIGIT1, (e) -> {
+			if (e.isShiftDown()) {
+				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "!", KeyCode.EXCLAMATION_MARK, false,
+						false, false, false);
+				pressKeyOnCanvas(ke);
+			} else {
+				pressKeyOnCanvas(e);
+			}
+			return true;
+		});
+
+		keyMap.put(KeyCode.DIGIT2, (e) -> {
+			if (e.isShiftDown()) {
+				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "@", KeyCode.AT, false, false, false,
+						false);
+				pressKeyOnCanvas(ke);
+			} else {
+				pressKeyOnCanvas(e);
+			}
+			return true;
+		});
+
+		keyMap.put(KeyCode.DIGIT3, (e) -> {
+			if (e.isShiftDown()) {
+				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "#", KeyCode.NUMBER_SIGN, false,
+						false, false, false);
+				pressKeyOnCanvas(ke);
+			} else {
+				pressKeyOnCanvas(e);
+			}
+			return true;
+		});
+
+		keyMap.put(KeyCode.DIGIT4, (e) -> {
+			if (e.isShiftDown()) {
+				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "$", KeyCode.DOLLAR, false, false,
+						false, false);
+				pressKeyOnCanvas(ke);
+			} else {
+				pressKeyOnCanvas(e);
+			}
+			return true;
+		});
+
+		keyMap.put(KeyCode.DIGIT5, (e) -> {
+			if (e.isShiftDown()) {
+				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "%", KeyCode.UNDEFINED, false, false,
+						false, false);
+				pressKeyOnCanvas(ke);
+			} else {
+				pressKeyOnCanvas(e);
+			}
+			return true;
+		});
+
+		keyMap.put(KeyCode.DIGIT6, (e) -> {
+			if (e.isShiftDown()) {
+				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "^", KeyCode.CIRCUMFLEX, false, false,
+						false, false);
+				pressKeyOnCanvas(ke);
+			} else {
+				pressKeyOnCanvas(e);
+			}
+			return true;
+		});
+
+		keyMap.put(KeyCode.DIGIT7, (e) -> {
+			if (e.isShiftDown()) {
+				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "&", KeyCode.AMPERSAND, false, false,
+						false, false);
+				pressKeyOnCanvas(ke);
+			} else {
+				pressKeyOnCanvas(e);
+			}
+			return true;
+		});
+
+		keyMap.put(KeyCode.DIGIT8, (e) -> {
+			if (e.isShiftDown()) {
+				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "*", KeyCode.ASTERISK, false, false,
+						false, false);
+				pressKeyOnCanvas(ke);
+			} else {
+				pressKeyOnCanvas(e);
+			}
+			return true;
+		});
+
 		keyMap.put(KeyCode.DIGIT9, (e) -> {
 			if (e.isShiftDown()) {
-				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "(", KeyCode.LEFT_PARENTHESIS, false, false,
-						false, false);
+				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "(", KeyCode.LEFT_PARENTHESIS, false,
+						false, false, false);
 				pressKeyOnCanvas(ke);
 			} else {
 				pressKeyOnCanvas(e);
@@ -220,8 +318,8 @@ public class ApplicationKeyHandler {
 
 		keyMap.put(KeyCode.DIGIT0, (e) -> {
 			if (e.isShiftDown()) {
-				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", ")", KeyCode.RIGHT_PARENTHESIS, false, false,
-						false, false);
+				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", ")", KeyCode.RIGHT_PARENTHESIS, false,
+						false, false, false);
 				pressKeyOnCanvas(ke);
 			} else {
 				pressKeyOnCanvas(e);
