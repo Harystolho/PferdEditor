@@ -46,10 +46,10 @@ public class CanvasManager {
 
 		gc = canvas.getGraphicsContext2D();
 
-		setLineHeight(30);
-
-		StyleLoader.setFont(new Font("Arial", lineHeight - 2));
+		StyleLoader.setFont(new Font("Inconsolata", 15));
 		gc.setFont(StyleLoader.getFont());
+
+		setLineHeight((int) gc.getFont().getSize() + 2);
 
 		showWhiteSpaces = false;
 
@@ -105,7 +105,7 @@ public class CanvasManager {
 
 						if (showWhiteSpaces) {
 							gc.setFill(StyleLoader.getWhiteSpacesColor());
-							gc.fillRect(x - getScrollX(), y - getScrollY() - lineHeight, TAB_SIZE, lineHeight);
+							gc.fillRect(x + getScrollX(), y - getScrollY() - lineHeight, TAB_SIZE, lineHeight);
 						}
 
 						x += TAB_SIZE;
@@ -115,7 +115,9 @@ public class CanvasManager {
 					}
 
 					gc.setFill(wordObj.getColor());
-					gc.fillText(wordObj.getWordAsString(), x - getScrollX(), y - getScrollY());
+					gc.fillText(wordObj.getWordAsString(), x + getScrollX(), y - getScrollY() - 0); // TODO add some
+																									// number to
+																									// centralize text
 
 					wordObj.setX(x);
 					wordObj.setY(y);
@@ -139,7 +141,7 @@ public class CanvasManager {
 
 	private void drawBackgroundLine() {
 		gc.setFill(StyleLoader.getBackgroundLineColor());
-		gc.fillRect(0, getCursorY() - lineHeight - getScrollY(), canvas.getWidth(), getLineHeight());
+		gc.fillRect(getScrollX(), getCursorY() - lineHeight - getScrollY(), canvas.getWidth(), getLineHeight());
 
 	}
 
@@ -157,7 +159,7 @@ public class CanvasManager {
 
 		if (cursorCount > 0) {
 			gc.setFill(StyleLoader.getCursorColor());
-			gc.fillRect(getCursorX() - getScrollX(), getCursorY() - lineHeight - getScrollY(), 2, lineHeight); // 2 is
+			gc.fillRect(getCursorX() + getScrollX(), getCursorY() - lineHeight - getScrollY(), 2, lineHeight); // 2 is
 																												// cursor's
 			// width
 		}

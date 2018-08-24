@@ -54,7 +54,7 @@ public class File {
 		cursorX = 0;
 		cursorY = 0;
 
-		scrollX = -2;
+		scrollX = 2;
 		scrollY = 0;
 
 		words = new IndexLinkedList<>();

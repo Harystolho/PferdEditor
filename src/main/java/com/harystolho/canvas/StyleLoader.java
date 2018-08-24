@@ -86,5 +86,4 @@ public class StyleLoader {
 		StyleLoader.whiteSpacesColor = whiteSpacesColor;
 	}
 
-
 }
