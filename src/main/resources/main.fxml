@@ -77,43 +77,94 @@
                   <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
                </FlowPane.margin>
             </ImageView>
+            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="menuIcon">
+               <FlowPane.margin>
+                  <Insets bottom="6.0" top="6.0" />
+               </FlowPane.margin>
+               <image>
+                  <Image url="@icons/dots.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="browser" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="menuIcon">
+               <image>
+                  <Image url="@icons/browser.png" />
+               </image>
+               <FlowPane.margin>
+                  <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+               </FlowPane.margin>
+            </ImageView>
+            <ImageView fx:id="donate" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="menuIcon">
+               <image>
+                  <Image url="@icons/donate.png" />
+               </image>
+               <FlowPane.margin>
+                  <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+               </FlowPane.margin>
+            </ImageView>
+            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="menuIcon">
+               <image>
+                  <Image url="@icons/dots.png" />
+               </image>
+               <FlowPane.margin>
+                  <Insets bottom="6.0" top="6.0" />
+               </FlowPane.margin>
+            </ImageView>
+            <ImageView fx:id="addNewIcon" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="menuIcon">
+               <image>
+                  <Image url="@icons/add.png" />
+               </image>
+               <FlowPane.margin>
+                  <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+               </FlowPane.margin>
+            </ImageView>
          </children>
+         <padding>
+            <Insets top="4.0" />
+         </padding>
 		</FlowPane>
-      <VBox fx:id="canvasBox" layoutX="238.0" layoutY="59.0" prefHeight="663.0" prefWidth="1012.0">
+      <VBox fx:id="canvasBox" layoutX="238.0" layoutY="63.0" prefHeight="663.0" prefWidth="1012.0">
          <children>
             <HBox fx:id="filesTab" prefHeight="24.0" prefWidth="1035.0">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
             </HBox>
-      		<Canvas fx:id="canvas" height="610.0" width="1012.0">
+      		<Canvas fx:id="canvas" height="613.0" width="1012.0">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor></Canvas>
-            <Pane fx:id="canvasInformationBar" prefHeight="25.0" prefWidth="1035.0" />
+            <Pane fx:id="canvasInformationBar" prefHeight="19.0" prefWidth="1035.0" />
          </children>
       </VBox>
-      <Pane fx:id="rightScrollBar" layoutX="1250.0" layoutY="82.0" prefHeight="611.0" prefWidth="17.0">
+      <Pane fx:id="rightScrollBar" layoutX="1250.0" layoutY="86.0" prefHeight="614.0" prefWidth="17.0">
          <children>
             <Rectangle fx:id="rightScrollInside" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" stroke="TRANSPARENT" strokeType="INSIDE" styleClass="scrollBar" visible="false" width="17.0" />
          </children>
       </Pane>
-      <Pane fx:id="leftPane" layoutX="6.0" layoutY="72.0" prefHeight="643.0" prefWidth="219.0">
+      <VBox fx:id="leftPane" layoutX="8.0" layoutY="73.0" prefHeight="627.0" prefWidth="219.0">
          <children>
-            <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="4.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@icons/folder.png" />
-               </image>
-            </ImageView>
-            <Label fx:id="fileDirectory" layoutX="31.0" layoutY="1.0" prefHeight="19.0" prefWidth="188.0" text=" Files" wrapText="true">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Label>
-            <ListView fx:id="fileList" layoutX="1.0" layoutY="40.0" prefHeight="410.0" prefWidth="218.0" />
-         </children></Pane>
+            <HBox prefHeight="30.0" prefWidth="219.0">
+               <children>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/folder.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="fileDirectory" prefHeight="19.0" prefWidth="188.0" text=" Files" wrapText="true">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <HBox.margin>
+                        <Insets left="10.0" top="2.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <ListView fx:id="fileList" prefHeight="476.0" prefWidth="219.0" />
+         </children>
+      </VBox>
 	</children>
 </Pane>

@@ -41,7 +41,8 @@ public class MainController implements ResizableInterface {
 	@FXML
 	private Pane pane;
 	@FXML
-	private Pane leftPane;
+	private VBox leftPane;
+
 	@FXML
 	private MenuBar menuBar;
 	@FXML
@@ -62,6 +63,7 @@ public class MainController implements ResizableInterface {
 	private MenuItem menuCheckForUpdates;
 	@FXML
 	private MenuItem menuAbout;
+
 	@FXML
 	private FlowPane secundaryMenu;
 	@FXML
@@ -72,6 +74,13 @@ public class MainController implements ResizableInterface {
 	private ImageView deleteFile;
 	@FXML
 	private ImageView refresh;
+	@FXML
+	private ImageView browser;
+	@FXML
+	private ImageView donate;
+	@FXML
+	private ImageView addNewIcon;
+
 	@FXML
 	private HBox filesTab;
 	@FXML
@@ -555,7 +564,7 @@ public class MainController implements ResizableInterface {
 		canvasBox.setPrefHeight(height - secundaryMenu.getHeight() - menuBar.getHeight());
 
 		// 25 = canvasInformationBar Height
-		canvas.setHeight(canvasBox.getPrefHeight() - 25 - filesTab.getHeight());
+		canvas.setHeight(canvasBox.getPrefHeight() - 20 - filesTab.getHeight());
 		rightScrollBar.setPrefHeight(canvas.getHeight());
 
 		// Scrolls the canvas up when the window resized to a bigger size
