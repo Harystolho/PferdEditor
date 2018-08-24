@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="settingsPane" xmlns="http://javafx.com/javafx/8.0.181" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.harystolho.controllers.SettingsController">
+   <children>
+      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <ListView fx:id="settingsList" prefHeight="200.0" prefWidth="200.0" />
+            <VBox styleClass="settingsRightBox">
+               <children>
+                  <Pane prefHeight="86.0" prefWidth="401.0" styleClass="settingsTopBox" />
+                  <VBox prefHeight="388.0" prefWidth="401.0" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <Pane prefHeight="49.0" prefWidth="600.0" styleClass="settingsBottomBox">
+         <children>
+            <Button fx:id="cancel" layoutX="534.0" layoutY="12.0" mnemonicParsing="false" styleClass="defaultButton" text="Cancel" />
+            <Button fx:id="apply" layoutX="472.0" layoutY="12.0" mnemonicParsing="false" styleClass="defaultButton" text="Apply" />
+         </children>
+      </Pane>
+   </children>
+</VBox>

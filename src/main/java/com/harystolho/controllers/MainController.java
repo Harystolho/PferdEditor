@@ -223,7 +223,12 @@ public class MainController implements ResizableInterface {
 		});
 
 		menuSettings.setOnAction((e) -> {
-
+			OpenWindow ow = new OpenWindow("Settings");
+			ow.load("settings.fxml", (c) -> {
+				SettingsController controller = (SettingsController) c;
+				controller.setStage(ow.getStage());
+			});
+			ow.openWindow();
 		});
 
 		menuCheckForUpdates.setOnAction((e) -> {

@@ -1,7 +1,6 @@
 package com.harystolho.pe;
 
 import java.util.Arrays;
-import java.util.Random;
 
 import com.harystolho.canvas.StyleLoader;
 import com.sun.javafx.tk.Toolkit;

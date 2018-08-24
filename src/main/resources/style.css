@@ -41,7 +41,7 @@
     -fx-background-color: #5b5b5b;
 }
 
-#pane {
+#pane, #settingsPane {
     -fx-background-color: #565656;
 }
 
@@ -89,4 +89,24 @@
 
 #cancel, #rename, #save, #saveAs, #dontSave, #createFile{
     -fx-background-color: #fff;
+}
+
+.defaultButton{
+    -fx-background-color: #fff;
+}
+
+#settingsList, #settingsList .list-cell{
+    -fx-background-color: transparent;
+    -fx-border-width: 0 2px 0 0;
+    -fx-border-color: #000;
+}
+
+.settingsTopBox{
+    -fx-border-width: 0 0 2px 0;
+    -fx-border-color: #000;
+}
+
+.settingsBottomBox{
+    -fx-border-width: 2px 0 0 0;
+    -fx-border-color: #000;
 }

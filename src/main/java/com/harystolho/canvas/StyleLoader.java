@@ -3,7 +3,6 @@ package com.harystolho.canvas;
 import com.harystolho.utils.PEStyleSheet;
 
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 
 /**
@@ -46,6 +45,10 @@ public class StyleLoader {
 		return defaultFont;
 	}
 
+	public static double getFontSize() {
+		return defaultFont.getSize();
+	}
+	
 	public static Color getBackgroundLineColor() {
 		return lineColor;
 	}

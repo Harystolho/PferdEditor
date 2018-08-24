@@ -9,11 +9,9 @@ import com.harystolho.pe.Word;
 import com.harystolho.thread.FileUpdaterThread;
 import com.harystolho.thread.RenderThread;
 import com.harystolho.utils.PEUtils;
-import com.oracle.webservices.internal.api.EnvelopeStyle.Style;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 /**
@@ -47,9 +45,8 @@ public class CanvasManager {
 		gc = canvas.getGraphicsContext2D();
 
 		StyleLoader.setFont(new Font("Inconsolata", 15));
-		gc.setFont(StyleLoader.getFont());
-
-		setLineHeight((int) gc.getFont().getSize() + 2);
+		
+		updateFontAndLineHeight();
 
 		showWhiteSpaces = false;
 
@@ -400,6 +397,11 @@ public class CanvasManager {
 		}
 	}
 
+	public void updateFontAndLineHeight() {
+		gc.setFont(StyleLoader.getFont());
+		setLineHeight((int) StyleLoader.getFontSize() + 2);
+	}
+	
 	public void printDebugMessage() {
 		if (currentFile != null) {
 			System.out.println("---- DEBUG ------");
