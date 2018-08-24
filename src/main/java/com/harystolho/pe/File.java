@@ -295,8 +295,8 @@ public class File {
 			if (getCursorX() != 0) {
 				if (word.getType() == TYPES.TAB) {
 					word.setX((float) cm.getCursorX() - 1);
-				}else {
-					word.setX((float) cm.getCursorX() + 1);	
+				} else {
+					word.setX((float) cm.getCursorX() + 1);
 				}
 			} else {
 				word.setX((float) cm.getCursorX() - 1);
@@ -374,7 +374,7 @@ public class File {
 	 */
 	public void addCharToFile(char c) {
 
-		Word wrd = words.get(getCursorX()-1, getCursorY());
+		Word wrd = words.get(getCursorX() - 1, getCursorY());
 
 		if (wrd != null) {
 			if (wrd.getType() == TYPES.SPACE || wrd.getType() == TYPES.NEW_LINE || wrd.getType() == TYPES.TAB) {
@@ -505,19 +505,18 @@ public class File {
 		newWord.setX(word.getX() + word.getDrawingSize());
 		newWord.setY(word.getY());
 		words.add(newWord);
-		
+
 		createNewLineAtTheEndOfTheWord(); // Create New Line between words
-		
+
 		resetLastWord();
 	}
 
 	private void createNewLineAtTheEndOfTheWord() {
 		Word new_line = new Word(TYPES.NEW_LINE);
 		setWordPosition(new_line);
-		//new_line.setX(new_line.getX() - 2);
 		addWord(new_line);
 
-		// Move cursor at the beginning of the line below
+		// Move cursor to the beginning of the line below
 		forceLineDown();
 		setCursorX(0);
 

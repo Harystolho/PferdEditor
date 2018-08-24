@@ -107,7 +107,7 @@ public class CanvasManager {
 						break;
 					}
 
-					gc.setFill(StyleLoader.getTextColor());
+					gc.setFill(wordObj.getColor());
 					gc.fillText(wordObj.getWordAsString(), x - getScrollX(), y - getScrollY());
 
 					wordObj.setX(x);

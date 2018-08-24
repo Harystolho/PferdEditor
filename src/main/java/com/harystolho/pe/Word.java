@@ -1,9 +1,12 @@
 package com.harystolho.pe;
 
 import java.util.Arrays;
+import java.util.Random;
 
 import com.harystolho.canvas.StyleLoader;
 import com.sun.javafx.tk.Toolkit;
+
+import javafx.scene.paint.Color;
 
 public class Word implements Comparable<Word> {
 
@@ -17,6 +20,8 @@ public class Word implements Comparable<Word> {
 	private String wordAsString;
 
 	private float drawingSize;
+
+	private Color color;
 
 	private float x;
 	private float y;
@@ -32,6 +37,8 @@ public class Word implements Comparable<Word> {
 		size = 0;
 
 		drawingSize = 0f;
+
+		color = StyleLoader.getTextColor();
 
 		x = Float.MAX_VALUE;
 		y = Float.MAX_VALUE;
@@ -139,6 +146,7 @@ public class Word implements Comparable<Word> {
 	private void updateWordAsString() {
 		wordAsString = new String(word, 0, size);
 		updateDrawingSize();
+		updateDrawingColor();
 	}
 
 	/**
@@ -199,6 +207,19 @@ public class Word implements Comparable<Word> {
 		this.drawingSize = drawingSize;
 	}
 
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+
+	// TODO improve performance, don't do this every time a char is added, use some kind of timer after a char is pressed
+	private void updateDrawingColor() {
+		color = WordDictionary.getWordColor(this.getWordAsString());
+	}
+
 	/**
 	 * Removes all chars after the char at index(inclusive) and add them to another
 	 * {@link Word}. In the end there will be 2 words each one containing a part of
@@ -223,25 +244,25 @@ public class Word implements Comparable<Word> {
 
 	@Override
 	public int compareTo(Word w) {
-		
-		if(this == w) {
+
+		if (this == w) {
 			return 0;
 		}
-		
+
 		if (this.getY() < w.getY()) {
 			return -1;
 		} else if (this.getY() == w.getY()) {
 
 			if (this.getX() < w.getX()) {
 				return -1;
-			} else if ( this.getX() == w.getX()){
+			} else if (this.getX() == w.getX()) {
 				return 0;
 			} else {
 				if (this.getX() < w.getX() + w.getDrawingSize()) {
-			 // if (this.getX() <= w.getX() + w.getDrawingSize()) {
+					// if (this.getX() <= w.getX() + w.getDrawingSize()) {
 					return 0;
 				} else {
-					if(w.getType() == TYPES.NEW_LINE) {
+					if (w.getType() == TYPES.NEW_LINE) {
 						return -1;
 					}
 					return 1;

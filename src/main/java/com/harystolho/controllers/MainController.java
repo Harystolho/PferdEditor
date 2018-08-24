@@ -148,6 +148,18 @@ public class MainController implements ResizableInterface {
 			loadSaveDirectory();
 		});
 
+		browser.setOnMouseClicked((e) -> {
+			// TODO browser button
+		});
+
+		donate.setOnMouseClicked((e) -> {
+			// TODO donate button
+		});
+
+		addNewIcon.setOnMouseClicked((e) -> {
+			// TODO custom buttons
+		});
+
 		fileDirectory.setOnMouseClicked((e) -> {
 			changeDirectory();
 		});
