@@ -75,6 +75,8 @@ public class MainController implements ResizableInterface {
 	@FXML
 	private ImageView refresh;
 	@FXML
+	private ImageView pilcrow;
+	@FXML
 	private ImageView browser;
 	@FXML
 	private ImageView donate;
@@ -101,6 +103,8 @@ public class MainController implements ResizableInterface {
 	private Label fileDirectory;
 
 	private CanvasManager canvasManager;
+
+	boolean showWhiteSpaces = false;
 
 	@FXML
 	void initialize() {
@@ -146,6 +150,10 @@ public class MainController implements ResizableInterface {
 
 		refresh.setOnMouseClicked((e) -> {
 			loadSaveDirectory();
+		});
+
+		pilcrow.setOnMouseClicked((e) -> {
+			canvasManager.toggleShowWhiteSpaces();
 		});
 
 		browser.setOnMouseClicked((e) -> {
@@ -537,6 +545,10 @@ public class MainController implements ResizableInterface {
 
 	public CanvasManager getCanvasManager() {
 		return canvasManager;
+	}
+
+	public boolean showWhiteSpaces() {
+		return showWhiteSpaces;
 	}
 
 	/**

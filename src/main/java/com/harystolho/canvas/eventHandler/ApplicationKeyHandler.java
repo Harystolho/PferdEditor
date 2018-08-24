@@ -208,15 +208,15 @@ public class ApplicationKeyHandler {
 
 		keyMap.put(KeyCode.BACK_QUOTE, (e) -> {
 			if (e.isShiftDown()) {
-				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "~", KeyCode.DEAD_TILDE, false,
-						false, false, false);
+				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "~", KeyCode.DEAD_TILDE, false, false,
+						false, false);
 				pressKeyOnCanvas(ke);
 			} else {
 				pressKeyOnCanvas(e);
 			}
 			return true;
 		});
-		
+
 		keyMap.put(KeyCode.DIGIT1, (e) -> {
 			if (e.isShiftDown()) {
 				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "!", KeyCode.EXCLAMATION_MARK, false,

@@ -9,6 +9,7 @@ import com.harystolho.pe.Word;
 import com.harystolho.thread.FileUpdaterThread;
 import com.harystolho.thread.RenderThread;
 import com.harystolho.utils.PEUtils;
+import com.oracle.webservices.internal.api.EnvelopeStyle.Style;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -38,6 +39,8 @@ public class CanvasManager {
 	private int cursorCount = 0;
 	private int lineHeight;
 
+	private boolean showWhiteSpaces;
+
 	public CanvasManager(Canvas canvas) {
 		this.canvas = canvas;
 
@@ -47,6 +50,8 @@ public class CanvasManager {
 
 		StyleLoader.setFont(new Font("Arial", lineHeight - 2));
 		gc.setFont(StyleLoader.getFont());
+
+		showWhiteSpaces = false;
 
 		new CanvasMouseHandler(this);
 
@@ -98,8 +103,10 @@ public class CanvasManager {
 						wordObj.setX(x);
 						wordObj.setY(y);
 
-						gc.setFill(Color.BLUE);
-						gc.fillRect(x - getScrollX(), y - getScrollY() - lineHeight, TAB_SIZE, lineHeight);
+						if (showWhiteSpaces) {
+							gc.setFill(StyleLoader.getWhiteSpacesColor());
+							gc.fillRect(x - getScrollX(), y - getScrollY() - lineHeight, TAB_SIZE, lineHeight);
+						}
 
 						x += TAB_SIZE;
 						continue;
@@ -377,6 +384,18 @@ public class CanvasManager {
 			return currentFile.getScrollY();
 		}
 		return 0;
+	}
+
+	public boolean showWhiteSpaces() {
+		return showWhiteSpaces;
+	}
+
+	public void toggleShowWhiteSpaces() {
+		if (showWhiteSpaces) {
+			showWhiteSpaces = false;
+		} else {
+			showWhiteSpaces = true;
+		}
 	}
 
 	public void printDebugMessage() {

@@ -3,6 +3,7 @@ package com.harystolho.canvas;
 import com.harystolho.utils.PEStyleSheet;
 
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 
 /**
@@ -22,6 +23,7 @@ public class StyleLoader {
 	private static Color bgColor;
 	private static Color textColor;
 	private static Color cursorColor;
+	private static Color whiteSpacesColor;
 
 	static {
 		peStyleSheet = new PEStyleSheet("file.css");
@@ -33,6 +35,7 @@ public class StyleLoader {
 		bgColor = Color.web(peStyleSheet.getRule("#background", "background-color"));
 		textColor = Color.web(peStyleSheet.getRule("#text", "color"));
 		cursorColor = Color.rgb(255, 255, 255, 0.8);
+		whiteSpacesColor = Color.web(peStyleSheet.getRule("#whiteSpace", "color"));
 	}
 
 	public static void setFont(Font font) {
@@ -73,6 +76,14 @@ public class StyleLoader {
 
 	public static void setCursorColor(Color cursorColor) {
 		StyleLoader.cursorColor = cursorColor;
+	}
+
+	public static Color getWhiteSpacesColor() {
+		return whiteSpacesColor;
+	}
+
+	public static void setWhiteSpacesColor(Color whiteSpacesColor) {
+		StyleLoader.whiteSpacesColor = whiteSpacesColor;
 	}
 
 
