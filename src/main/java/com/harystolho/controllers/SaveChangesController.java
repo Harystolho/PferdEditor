@@ -64,7 +64,7 @@ public class SaveChangesController {
 
 	private void closeFile(File file) {
 		Main.getApplication().getMainController().removeFileFromFileTab(file);
-		Main.getApplication().getMainController().selectFirstFileTab();
+		Main.getApplication().getMainController().selectFirstTabOnFileTab();
 
 		file.unload();
 	}

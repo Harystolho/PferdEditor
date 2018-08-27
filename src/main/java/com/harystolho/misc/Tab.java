@@ -87,4 +87,19 @@ public class Tab extends HBox {
 		return file;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (obj instanceof Tab) {
+			Tab tab = (Tab) obj;
+			if (this.getUserData() == tab.getUserData()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 }

@@ -1,4 +1,4 @@
-package com.harystolho.pe;
+package com.harystolho.misc;
 
 import java.util.HashMap;
 

@@ -44,8 +44,8 @@ public class CanvasManager {
 
 		gc = canvas.getGraphicsContext2D();
 
-		StyleLoader.setFont(new Font("Inconsolata", 15));
-		
+		StyleLoader.setFont(new Font("Inconsolata", 33));
+
 		updateFontAndLineHeight();
 
 		showWhiteSpaces = false;
@@ -112,9 +112,8 @@ public class CanvasManager {
 					}
 
 					gc.setFill(wordObj.getColor());
-					gc.fillText(wordObj.getWordAsString(), x + getScrollX(), y - getScrollY() - 0); // TODO add some
-																									// number to
-																									// centralize text
+					// TODO add some number to centralize text
+					gc.fillText(wordObj.getWordAsString(), x + getScrollX(), y - getScrollY() - 0);
 
 					wordObj.setX(x);
 					wordObj.setY(y);
@@ -401,7 +400,7 @@ public class CanvasManager {
 		gc.setFont(StyleLoader.getFont());
 		setLineHeight((int) StyleLoader.getFontSize() + 2);
 	}
-	
+
 	public void printDebugMessage() {
 		if (currentFile != null) {
 			System.out.println("---- DEBUG ------");

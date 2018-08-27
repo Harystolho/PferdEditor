@@ -5,7 +5,9 @@ import java.awt.Desktop.Action;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
+import java.util.ListIterator;
 import java.util.regex.Pattern;
 
 import com.harystolho.Main;
@@ -388,8 +390,11 @@ public class MainController implements ResizableInterface {
 	private void loadSaveDirectory() {
 		fileList.getItems().clear();
 
-		for (Node node : filesTab.getChildren()) {
-			closeFile((File) node.getUserData());
+		// Closes the opened tabs
+		ListIterator<Node> it = filesTab.getChildren().listIterator();
+		while (it.hasNext()) {
+			Node node = it.next();
+			closeFile((File) node.getUserData(), it);
 		}
 
 		loadFileNames();
@@ -421,22 +426,33 @@ public class MainController implements ResizableInterface {
 
 	/**
 	 * Removes the <code>file</code> from the {@link #filesTab} and selects the
-	 * first one if there's one
+	 * first tab if there's one
 	 * 
 	 * @param file
+	 * @param node
 	 */
 	public void closeFile(File file) {
+		ListIterator<Node> it = filesTab.getChildren().listIterator();
+		while (it.hasNext()) {
+			Node node = it.next();
+			if (node.getUserData() == file) {
+				closeFile(file, it);
+			}
+		}
+	}
+
+	private void closeFile(File file, ListIterator<Node> it) {
 		if (file.wasModified()) {
 			openSaveChangesWidow(file);
 		} else {
-			removeFileFromFileTab(file);
-			selectFirstFileTab();
+			it.remove();
+			selectFirstTabOnFileTab();
 
 			file.unload();
 		}
 	}
 
-	void selectFirstFileTab() {
+	public void selectFirstTabOnFileTab() {
 		if (filesTab.getChildren().size() > 0) {
 			Node node = filesTab.getChildren().get(0);
 			loadFileInCanvas((File) node.getUserData());
@@ -446,15 +462,15 @@ public class MainController implements ResizableInterface {
 		}
 	}
 
-	void removeFileFromFileTab(File file) {
-		Iterator<Node> it = filesTab.getChildren().iterator();
-		while (it.hasNext()) {
-			Node node = it.next();
-			if (node.getUserData() == file) {
-				it.remove();
-				break;
-			}
-		}
+	/**
+	 * Removes this  <code>file</code>'s tab from {@link #filesTab}
+	 * 
+	 * @param file
+	 */
+	@SuppressWarnings("unlikely-arg-type")
+	public void removeFileFromFileTab(File file) {
+		filesTab.getChildren().remove(file);
+
 	}
 
 	private void openSaveChangesWidow(File file) {
