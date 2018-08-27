@@ -22,7 +22,12 @@ public class PEConfiguration {
 		prop.putIfAbsent("VERSION", PEUtils.VERSION);
 		prop.putIfAbsent("LANG", "EN");
 		prop.putIfAbsent("PROJ_FOLDER", "files");
-
+		prop.putIfAbsent("TEXT_COLOR", "#fff");
+		prop.putIfAbsent("CANVAS_BACKGROUND_COLOR", "#404040");
+		prop.putIfAbsent("LINE_COLOR", "#b3b3b3");
+		prop.putIfAbsent("CURSOR_COLOR", "#cccccc");
+		prop.putIfAbsent("WHITESPACE_COLOR", "#007f7f");
+		
 		saveProperties();
 	}
 

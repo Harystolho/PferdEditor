@@ -2,7 +2,7 @@ package com.harystolho.pe;
 
 import java.util.Arrays;
 
-import com.harystolho.canvas.StyleLoader;
+import com.harystolho.misc.StyleLoader;
 import com.harystolho.misc.WordDictionary;
 import com.sun.javafx.tk.Toolkit;
 

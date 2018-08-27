@@ -5,8 +5,6 @@ import java.awt.Desktop.Action;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.regex.Pattern;
 

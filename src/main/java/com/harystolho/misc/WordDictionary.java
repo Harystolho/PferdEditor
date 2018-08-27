@@ -2,8 +2,6 @@ package com.harystolho.misc;
 
 import java.util.HashMap;
 
-import com.harystolho.canvas.StyleLoader;
-
 import javafx.scene.paint.Color;
 
 /**

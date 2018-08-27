@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -13,8 +17,39 @@
             <ListView fx:id="settingsList" prefHeight="200.0" prefWidth="200.0" />
             <VBox styleClass="settingsRightBox">
                <children>
-                  <Pane prefHeight="86.0" prefWidth="401.0" styleClass="settingsTopBox" />
-                  <VBox prefHeight="388.0" prefWidth="401.0" />
+                  <Pane prefHeight="50.0" prefWidth="401.0" styleClass="settingsTopBox">
+                     <children>
+                        <Label fx:id="tabName" layoutX="14.0" layoutY="14.0" />
+                     </children></Pane>
+                  <Group fx:id="panesGroup">
+                     <children>
+                        <Pane fx:id="generalTab" prefHeight="354.0" prefWidth="401.0" visible="false">
+                           <padding>
+                              <Insets left="10.0" top="15.0" />
+                           </padding>
+                        </Pane>
+                        <Pane fx:id="fontsTab" layoutX="10.0" layoutY="10.0" prefHeight="354.0" prefWidth="401.0" visible="false">
+                           <padding>
+                              <Insets left="10.0" top="15.0" />
+                           </padding>
+                           <children>
+                              <Label fx:id="textColor" layoutX="15.0" layoutY="19.0" text="Text Color" />
+                              <ColorPicker fx:id="textColorPicker" layoutX="258.0" layoutY="16.0" prefHeight="25.0" prefWidth="129.0" styleClass="colorPicker" />
+                              <Label fx:id="bgColor" layoutX="15.0" layoutY="51.0" text="Background Color" />
+                              <ColorPicker fx:id="bgColorPicker" layoutX="258.0" layoutY="48.0" prefHeight="25.0" prefWidth="129.0" styleClass="colorPicker" />
+                              <ColorPicker fx:id="lineColorPicker" layoutX="258.0" layoutY="80.0" prefHeight="25.0" prefWidth="129.0" styleClass="colorPicker" />
+                              <ColorPicker fx:id="cursorColorPicker" layoutX="258.0" layoutY="112.0" prefHeight="25.0" prefWidth="129.0" styleClass="colorPicker" />
+                              <Label fx:id="lineColor" layoutX="15.0" layoutY="83.0" text="Line Color" />
+                              <Label fx:id="cursorColor" layoutX="15.0" layoutY="115.0" text="Cursor Color" />
+                           </children>
+                        </Pane>
+                        <Pane fx:id="updatesTab" layoutX="10.0" layoutY="10.0" prefHeight="354.0" prefWidth="401.0" visible="false">
+                           <padding>
+                              <Insets left="10.0" top="15.0" />
+                           </padding>
+                        </Pane>
+                     </children>
+                  </Group>
                </children>
             </VBox>
          </children>

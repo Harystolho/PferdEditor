@@ -95,10 +95,24 @@
     -fx-background-color: #fff;
 }
 
+#settingsList{
+	-fx-border-width: 0 2px 0 0;
+    -fx-border-color: #000;
+
+}
+
+#settingsList .list-cell .text {
+    -fx-fill: white;
+    -fx-font-family: "Quicksand";
+}
+
+#settingsList .list-cell:selected{
+    -fx-border-width: 0 0 2px 0;
+    -fx-border-color: #fff;
+}
+
 #settingsList, #settingsList .list-cell{
     -fx-background-color: transparent;
-    -fx-border-width: 0 2px 0 0;
-    -fx-border-color: #000;
 }
 
 .settingsTopBox{
@@ -109,4 +123,9 @@
 .settingsBottomBox{
     -fx-border-width: 2px 0 0 0;
     -fx-border-color: #000;
+    -fx-color: #b3b3b3;
+}
+
+.colorPicker .color-picker-label{
+    -fx-text-fill: black;
 }

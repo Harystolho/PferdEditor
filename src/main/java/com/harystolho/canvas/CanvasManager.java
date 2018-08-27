@@ -4,6 +4,7 @@ import java.util.ListIterator;
 
 import com.harystolho.Main;
 import com.harystolho.canvas.eventHandler.CanvasMouseHandler;
+import com.harystolho.misc.StyleLoader;
 import com.harystolho.pe.File;
 import com.harystolho.pe.Word;
 import com.harystolho.thread.FileUpdaterThread;

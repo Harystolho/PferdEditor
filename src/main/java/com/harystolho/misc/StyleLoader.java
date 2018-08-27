@@ -1,5 +1,6 @@
-package com.harystolho.canvas;
+package com.harystolho.misc;
 
+import com.harystolho.utils.PEConfiguration;
 import com.harystolho.utils.PEStyleSheet;
 
 import javafx.scene.paint.Color;
@@ -14,8 +15,6 @@ import javafx.scene.text.Font;
  */
 public class StyleLoader {
 
-	private static PEStyleSheet peStyleSheet;
-
 	private static Font defaultFont = new Font("Arial", 14);
 
 	private static Color lineColor;
@@ -25,16 +24,15 @@ public class StyleLoader {
 	private static Color whiteSpacesColor;
 
 	static {
-		peStyleSheet = new PEStyleSheet("file.css");
 		loadColors();
 	}
 
 	private static void loadColors() {
-		lineColor = Color.rgb(179, 179, 179, 0.44);
-		bgColor = Color.web(peStyleSheet.getRule("#background", "background-color"));
-		textColor = Color.web(peStyleSheet.getRule("#text", "color"));
-		cursorColor = Color.rgb(255, 255, 255, 0.8);
-		whiteSpacesColor = Color.web(peStyleSheet.getRule("#whiteSpace", "color"));
+		lineColor = Color.web(PEConfiguration.getProperty("LINE_COLOR"), 0.4);
+		bgColor = Color.web(PEConfiguration.getProperty("CANVAS_BACKGROUND_COLOR"));
+		textColor = Color.web(PEConfiguration.getProperty("TEXT_COLOR"));
+		cursorColor = Color.web(PEConfiguration.getProperty("CURSOR_COLOR"));
+		whiteSpacesColor = Color.web(PEConfiguration.getProperty("WHITESPACE_COLOR"));
 	}
 
 	public static void setFont(Font font) {
@@ -48,7 +46,7 @@ public class StyleLoader {
 	public static double getFontSize() {
 		return defaultFont.getSize();
 	}
-	
+
 	public static Color getBackgroundLineColor() {
 		return lineColor;
 	}

@@ -5,6 +5,8 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
+import com.harystolho.misc.StyleLoader;
+
 import javafx.scene.paint.Color;
 
 public class StyleLoaderTest {
