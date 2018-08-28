@@ -282,7 +282,7 @@ public class CanvasManager {
 
 	public void moveCursorToEndOfTheLine() {
 		if (currentFile != null) {
-			setCursorX(-1);
+			setCursorX(-1 - getScrollX());
 			resetCursorCount();
 		}
 	}
