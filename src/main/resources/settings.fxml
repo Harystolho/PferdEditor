@@ -6,6 +6,7 @@
 <?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
@@ -28,7 +29,7 @@
                               <Insets left="10.0" top="15.0" />
                            </padding>
                         </Pane>
-                        <Pane fx:id="fontsTab" layoutX="10.0" layoutY="10.0" prefHeight="354.0" prefWidth="401.0" visible="false">
+                        <Pane fx:id="fontsTab" layoutX="10.0" layoutY="10.0" prefHeight="354.0" prefWidth="401.0">
                            <padding>
                               <Insets left="10.0" top="15.0" />
                            </padding>
@@ -41,6 +42,8 @@
                               <ColorPicker fx:id="cursorColorPicker" layoutX="258.0" layoutY="112.0" prefHeight="25.0" prefWidth="129.0" styleClass="colorPicker" />
                               <Label fx:id="lineColor" layoutX="15.0" layoutY="83.0" text="Line Color" />
                               <Label fx:id="cursorColor" layoutX="15.0" layoutY="115.0" text="Cursor Color" />
+                              <Label fx:id="textSize" layoutX="15.0" layoutY="147.0" text="Text Size" />
+                              <TextField fx:id="textSizeInput" layoutX="258.0" layoutY="144.0" prefHeight="25.0" prefWidth="129.0" />
                            </children>
                         </Pane>
                         <Pane fx:id="updatesTab" layoutX="10.0" layoutY="10.0" prefHeight="354.0" prefWidth="401.0" visible="false">

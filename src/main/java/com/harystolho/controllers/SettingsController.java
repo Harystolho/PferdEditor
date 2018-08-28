@@ -1,9 +1,10 @@
 package com.harystolho.controllers;
 
+import com.harystolho.Main;
 import com.harystolho.misc.StyleLoader;
-import com.harystolho.utils.PEConfiguration;
+import com.harystolho.pe.File;
+import com.harystolho.pe.Word;
 
-import javafx.css.StyleableLongProperty;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -15,7 +16,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class SettingsController {
@@ -98,6 +98,7 @@ public class SettingsController {
 
 	private void saveAll() {
 		saveFontsTab();
+		reRenderWords();
 	}
 
 	private void saveFontsTab() {
@@ -115,9 +116,12 @@ public class SettingsController {
 	private void showFontsAndColor() {
 		hideRightPanes();
 
+		tabName.setText("Fonts and Color");
+		
 		textColorPicker.setValue(StyleLoader.getTextColor());
 		bgColorPicker.setValue(StyleLoader.getBgColor());
 		lineColorPicker.setValue(StyleLoader.getBackgroundLineColor());
+		cursorColorPicker.setValue(StyleLoader.getCursorColor());
 
 		fontsTab.setVisible(true);
 	}
@@ -131,12 +135,32 @@ public class SettingsController {
 		for (Node node : panesGroup.getChildren()) {
 			node.setVisible(false);
 		}
+		tabName.setText("");
 	}
 
 	private void addMenuItems() {
 		settingsList.getItems().add("General");
 		settingsList.getItems().add("Fonts and Color");
 		settingsList.getItems().add("Updates");
+	}
+
+	/**
+	 * If the text color was changed we need to update all the words because they
+	 * contain a field that determines their color
+	 */
+	private void reRenderWords() {
+		File file = Main.getApplication().getCanvasManager().getCurrentFile();
+
+		if (file != null) {
+			file.getDrawLock().readLock().lock();
+
+			for (Word word : file.getWords()) {
+				word.updateDrawingColor();
+			}
+
+			file.getDrawLock().readLock().unlock();
+		}
+
 	}
 
 	public void setStage(Stage stage) {

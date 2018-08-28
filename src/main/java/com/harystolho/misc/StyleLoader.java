@@ -1,7 +1,6 @@
 package com.harystolho.misc;
 
 import com.harystolho.utils.PEConfiguration;
-import com.harystolho.utils.PEStyleSheet;
 
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -32,7 +31,7 @@ public class StyleLoader {
 		bgColor = Color.web(PEConfiguration.getProperty("CANVAS_BACKGROUND_COLOR"));
 		textColor = Color.web(PEConfiguration.getProperty("TEXT_COLOR"));
 		cursorColor = Color.web(PEConfiguration.getProperty("CURSOR_COLOR"));
-		whiteSpacesColor = Color.web(PEConfiguration.getProperty("WHITESPACE_COLOR"));
+		whiteSpacesColor = Color.web(PEConfiguration.getProperty("WHITESPACE_COLOR"), 0.7);
 	}
 
 	public static void setFont(Font font) {

@@ -215,8 +215,16 @@ public class Word implements Comparable<Word> {
 		this.color = color;
 	}
 
-	// TODO improve performance, don't do this every time a char is added, use some kind of timer after a char is pressed
-	private void updateDrawingColor() {
+	/**
+	 * Updates the word color. It checks in the {@link WordDictionary} to get it's
+	 * color, if it can't find a match it will return the default color specified in
+	 * {@link StyleLoader#getTextColor()}
+	 * 
+	 * @see WordDictionary
+	 */
+	public void updateDrawingColor() {
+		// TODO improve performance, don't do this every time a char is added, use some
+		// kind of timer after a char is pressed
 		color = WordDictionary.getWordColor(this.getWordAsString());
 	}
 
