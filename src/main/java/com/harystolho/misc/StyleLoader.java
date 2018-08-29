@@ -66,6 +66,7 @@ public class StyleLoader {
 
 	public static void setLineColor(Color lineColor) {
 		StyleLoader.lineColor = lineColor;
+		PEConfiguration.setProperty("LINE_COLOR", getColorHexFromString(lineColor));
 	}
 
 	public static Color getBgColor() {
@@ -74,6 +75,7 @@ public class StyleLoader {
 
 	public static void setBgColor(Color bgColor) {
 		StyleLoader.bgColor = bgColor;
+		PEConfiguration.setProperty("CANVAS_BACKGROUND_COLOR", getColorHexFromString(bgColor));
 	}
 
 	public static Color getTextColor() {
@@ -82,6 +84,7 @@ public class StyleLoader {
 
 	public static void setTextColor(Color textColor) {
 		StyleLoader.textColor = textColor;
+		PEConfiguration.setProperty("TEXT_COLOR", getColorHexFromString(textColor));
 	}
 
 	public static Color getCursorColor() {
@@ -90,6 +93,7 @@ public class StyleLoader {
 
 	public static void setCursorColor(Color cursorColor) {
 		StyleLoader.cursorColor = cursorColor;
+		PEConfiguration.setProperty("CURSOR_COLOR", getColorHexFromString(cursorColor));
 	}
 
 	public static Color getWhiteSpacesColor() {
@@ -98,6 +102,19 @@ public class StyleLoader {
 
 	public static void setWhiteSpacesColor(Color whiteSpacesColor) {
 		StyleLoader.whiteSpacesColor = whiteSpacesColor;
+		PEConfiguration.setProperty("WHITESPACE_COLOR", getColorHexFromString(whiteSpacesColor));
+	}
+
+	/**
+	 * <code>Color.toString()</code> returns 0x------ff(for exemple 0x000000ff), It
+	 * has to remove the first two and the last two chars to save it as a hex color
+	 * value
+	 * 
+	 * @param color
+	 * @return
+	 */
+	public static String getColorHexFromString(Color color) {
+		return color.toString().substring(2, color.toString().length() - 2);
 	}
 
 }

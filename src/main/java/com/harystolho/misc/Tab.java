@@ -17,7 +17,7 @@ import javafx.scene.layout.HBox;
  */
 public class Tab extends HBox {
 
-	private static MainController mainController = Main.getApplication().getMainController();
+	private static final MainController mainController = Main.getApplication().getMainController();
 	private File file;
 
 	private Label fileLabel;

@@ -461,7 +461,7 @@ public class MainController implements ResizableInterface {
 	}
 
 	/**
-	 * Removes this  <code>file</code>'s tab from {@link #filesTab}
+	 * Removes this <code>file</code>'s tab from {@link #filesTab}
 	 * 
 	 * @param file
 	 */

@@ -136,7 +136,7 @@ public class SettingsController {
 		bgColorPicker.setValue(StyleLoader.getBgColor());
 		lineColorPicker.setValue(StyleLoader.getBackgroundLineColor());
 		cursorColorPicker.setValue(StyleLoader.getCursorColor());
-		textSizeInput.setText(String.valueOf(StyleLoader.getFontSize()));
+		textSizeInput.setText(String.valueOf((int) StyleLoader.getFontSize()));
 
 		fontsTab.setVisible(true);
 	}

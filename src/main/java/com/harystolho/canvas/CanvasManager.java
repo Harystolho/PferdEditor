@@ -38,6 +38,8 @@ public class CanvasManager {
 	private int cursorCount = 0;
 	private int lineHeight;
 
+	private double drawingDisplacementY = 0;
+	
 	private boolean showWhiteSpaces;
 
 	public CanvasManager(Canvas canvas) {
@@ -114,7 +116,7 @@ public class CanvasManager {
 
 					gc.setFill(wordObj.getColor());
 					// TODO add some number to centralize text
-					gc.fillText(wordObj.getWordAsString(), x + getScrollX(), y - getScrollY() - 0);
+					gc.fillText(wordObj.getWordAsString(), x + getScrollX(), y - getScrollY() - drawingDisplacementY);
 
 					wordObj.setX(x);
 					wordObj.setY(y);
@@ -128,6 +130,9 @@ public class CanvasManager {
 
 				}
 
+				// TODO if a file is being rendered and it's tab is closed it will throw an
+				// exception because the canvas manager is going to try to unlock the lock in
+				// another file
 				currentFile.getDrawLock().readLock().unlock();
 			}
 
@@ -399,7 +404,8 @@ public class CanvasManager {
 
 	public void updateFontAndLineHeight() {
 		gc.setFont(StyleLoader.getFont());
-		setLineHeight((int) StyleLoader.getFontSize() + 2);
+		setLineHeight((int) StyleLoader.getFontSize() + 3);
+		drawingDisplacementY = StyleLoader.getFontSize()*0.235;
 	}
 
 	public void printDebugMessage() {
