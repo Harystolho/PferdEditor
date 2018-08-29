@@ -13,7 +13,6 @@ import com.harystolho.utils.PEUtils;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.text.Font;
 
 /**
  * This class manages the canvas, it holds a reference to the file that is being
@@ -115,7 +114,6 @@ public class CanvasManager {
 					}
 
 					gc.setFill(wordObj.getColor());
-					// TODO add some number to centralize text
 					gc.fillText(wordObj.getWordAsString(), x + getScrollX(), y - getScrollY() - drawingDisplacementY);
 
 					wordObj.setX(x);
