@@ -29,7 +29,7 @@
                               <Insets left="10.0" top="15.0" />
                            </padding>
                         </Pane>
-                        <Pane fx:id="fontsTab" layoutX="10.0" layoutY="10.0" prefHeight="354.0" prefWidth="401.0">
+                        <Pane fx:id="fontsTab" layoutX="10.0" layoutY="10.0" prefHeight="354.0" prefWidth="401.0" visible="false">
                            <padding>
                               <Insets left="10.0" top="15.0" />
                            </padding>

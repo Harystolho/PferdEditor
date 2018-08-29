@@ -12,10 +12,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class SettingsController {
@@ -56,6 +58,10 @@ public class SettingsController {
 	private Label cursorColor;
 	@FXML
 	private ColorPicker cursorColorPicker;
+	@FXML
+	private Label textSize;
+	@FXML
+	private TextField textSizeInput;
 
 	@FXML
 	private Pane updatesTab;
@@ -106,6 +112,14 @@ public class SettingsController {
 		StyleLoader.setBgColor(bgColorPicker.getValue());
 		StyleLoader.setLineColor(lineColorPicker.getValue());
 		StyleLoader.setCursorColor(cursorColorPicker.getValue());
+
+		try {
+			double size = Double.valueOf(textSizeInput.getText());
+			StyleLoader.setFontSize(size);
+		} catch (NumberFormatException e) {
+			// do nothing
+		}
+
 	}
 
 	private void showGeneral() {
@@ -117,11 +131,12 @@ public class SettingsController {
 		hideRightPanes();
 
 		tabName.setText("Fonts and Color");
-		
+
 		textColorPicker.setValue(StyleLoader.getTextColor());
 		bgColorPicker.setValue(StyleLoader.getBgColor());
 		lineColorPicker.setValue(StyleLoader.getBackgroundLineColor());
 		cursorColorPicker.setValue(StyleLoader.getCursorColor());
+		textSizeInput.setText(String.valueOf(StyleLoader.getFontSize()));
 
 		fontsTab.setVisible(true);
 	}
@@ -145,8 +160,9 @@ public class SettingsController {
 	}
 
 	/**
-	 * If the text color was changed we need to update all the words because they
-	 * contain a field that determines their color
+	 * If the text color or size was changed we need to update all the words because
+	 * they contain a field that determines their color and their size is also
+	 * different
 	 */
 	private void reRenderWords() {
 		File file = Main.getApplication().getCanvasManager().getCurrentFile();
@@ -156,6 +172,7 @@ public class SettingsController {
 
 			for (Word word : file.getWords()) {
 				word.updateDrawingColor();
+				word.updateDrawingSize();
 			}
 
 			file.getDrawLock().readLock().unlock();
@@ -167,8 +184,8 @@ public class SettingsController {
 		this.stage = stage;
 
 		stage.addEventHandler(KeyEvent.KEY_PRESSED, (e) -> {
-			if (e.getCode() == KeyCode.ENTER) {
-
+			if (e.getCode() == KeyCode.END) {
+				stage.close();
 			}
 		});
 

@@ -1,5 +1,6 @@
 package com.harystolho.misc;
 
+import com.harystolho.Main;
 import com.harystolho.utils.PEConfiguration;
 
 import javafx.scene.paint.Color;
@@ -14,7 +15,9 @@ import javafx.scene.text.Font;
  */
 public class StyleLoader {
 
-	private static Font defaultFont = new Font("Arial", 14);
+	private static final String defaultFontName = "Inconsolata";
+
+	private static Font defaultFont = new Font(defaultFontName, 14);
 
 	private static Color lineColor;
 	private static Color bgColor;
@@ -40,6 +43,17 @@ public class StyleLoader {
 
 	public static Font getFont() {
 		return defaultFont;
+	}
+
+	public static void setFontSize(double size) {
+		defaultFont = new Font(defaultFontName, size);
+
+		if (Main.getApplication().getMainController() != null) {
+			if (Main.getApplication().getMainController().getCanvasManager() != null) {
+				Main.getApplication().getCanvasManager().updateFontAndLineHeight();
+			}
+		}
+
 	}
 
 	public static double getFontSize() {

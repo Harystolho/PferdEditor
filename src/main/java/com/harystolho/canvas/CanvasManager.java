@@ -45,8 +45,8 @@ public class CanvasManager {
 
 		gc = canvas.getGraphicsContext2D();
 
-		StyleLoader.setFont(new Font("Inconsolata", 33));
-
+		StyleLoader.setFontSize(34);
+		
 		updateFontAndLineHeight();
 
 		showWhiteSpaces = false;
