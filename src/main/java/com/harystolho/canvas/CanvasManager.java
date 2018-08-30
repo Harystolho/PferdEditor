@@ -38,7 +38,7 @@ public class CanvasManager {
 	private int lineHeight;
 
 	private double drawingDisplacementY = 0;
-	
+
 	private boolean showWhiteSpaces;
 
 	public CanvasManager(Canvas canvas) {
@@ -47,7 +47,7 @@ public class CanvasManager {
 		gc = canvas.getGraphicsContext2D();
 
 		StyleLoader.setFontSize(34);
-		
+
 		updateFontAndLineHeight();
 
 		showWhiteSpaces = false;
@@ -403,7 +403,7 @@ public class CanvasManager {
 	public void updateFontAndLineHeight() {
 		gc.setFont(StyleLoader.getFont());
 		setLineHeight((int) StyleLoader.getFontSize() + 3);
-		drawingDisplacementY = StyleLoader.getFontSize()*0.235;
+		drawingDisplacementY = StyleLoader.getFontSize() * 0.235;
 	}
 
 	public void printDebugMessage() {

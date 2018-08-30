@@ -323,11 +323,19 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 		temp.setX(x);
 		temp.setY(y);
 
-		return get(x, y, temp);
+		return get(temp);
+	}
+
+	public E get(Word temp) {
+		Node node = getNode(temp);
+		if(node != null) {
+			return node.getData();
+		}
+		return null;
 	}
 
 	@SuppressWarnings("unchecked")
-	public E get(float x, float y, Word temp) {
+	public Node getNode(Word temp) {
 		if (size == 0 || root == null) {
 			return null;
 		}
@@ -340,7 +348,7 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 			if (leftNode != null) {
 				while (leftNode != null) {
 					if (temp.compareTo(leftNode.getData()) == 0) {
-						return leftNode.getData();
+						return leftNode;
 					} else {
 						leftNode = leftNode.getLeft();
 					}
@@ -348,13 +356,13 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 			}
 			break;
 		case 0:
-			return middleNode.getData();
+			return middleNode;
 		case 1:
 			Node rightNode = middleNode.getRight();
 			if (rightNode != null) {
 				while (rightNode != null) {
 					if (temp.compareTo(rightNode.getData()) == 0) {
-						return rightNode.getData();
+						return rightNode;
 					} else {
 						rightNode = rightNode.getRight();
 					}
