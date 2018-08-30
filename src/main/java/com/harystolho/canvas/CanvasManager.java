@@ -185,6 +185,7 @@ public class CanvasManager {
 	 * Moves the pivot node up or down
 	 */
 	// TODO fix >= and <=
+	// TODO call this only when needed, fix values to improve performance
 	public void updatePivotNode() {
 		if (pivotNode.getData().getY() + (lineHeight * 2) >= getScrollY()) {
 			while (pivotNode.getData().getY() + (lineHeight * 4) >= getScrollY()) {
@@ -194,8 +195,8 @@ public class CanvasManager {
 					break;
 				}
 			}
-		} else if (pivotNode.getData().getY() + (lineHeight * 4) <= getScrollY()) {
-			while (pivotNode.getData().getY() + (lineHeight * 2) <= getScrollY()) {
+		} else if (pivotNode.getData().getY() + (lineHeight * 5) < getScrollY()) {
+			while (pivotNode.getData().getY() + (lineHeight * 3) <= getScrollY()) {
 				if (pivotNode.getRight() != null) {
 					pivotNode = pivotNode.getRight();
 				} else {
@@ -462,6 +463,7 @@ public class CanvasManager {
 				}
 			}
 
+			updatePivotNode();
 		}
 	}
 
