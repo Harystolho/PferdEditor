@@ -28,6 +28,7 @@ public class PEConfiguration {
 		prop.putIfAbsent("LINE_COLOR", "#b3b3b3");
 		prop.putIfAbsent("CURSOR_COLOR", "#cccccc");
 		prop.putIfAbsent("WHITESPACE_COLOR", "#007f7f");
+		prop.putIfAbsent("FONT_SIZE", "16");
 
 		saveProperties();
 	}

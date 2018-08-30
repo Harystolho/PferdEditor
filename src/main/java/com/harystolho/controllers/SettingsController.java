@@ -159,9 +159,8 @@ public class SettingsController {
 	}
 
 	/**
-	 * If the text color or size was changed we need to update all the words because
-	 * they contain a field that determines their color and their size is also
-	 * different
+	 * If the text color or size was changed it has to update all the words because
+	 * they contain a field that determines their color and their size
 	 */
 	private void reRenderWords() {
 		File file = Main.getApplication().getCanvasManager().getCurrentFile();

@@ -17,13 +17,14 @@ public class StyleLoader {
 
 	private static final String defaultFontName = "Inconsolata";
 
-	private static Font defaultFont = new Font(defaultFontName, 14);
+	private static Font defaultFont;
 
 	private static Color lineColor;
 	private static Color bgColor;
 	private static Color textColor;
 	private static Color cursorColor;
 	private static Color whiteSpacesColor;
+	private static double fontSize;
 
 	static {
 		loadColors();
@@ -35,6 +36,12 @@ public class StyleLoader {
 		textColor = Color.web(PEConfiguration.getProperty("TEXT_COLOR"));
 		cursorColor = Color.web(PEConfiguration.getProperty("CURSOR_COLOR"));
 		whiteSpacesColor = Color.web(PEConfiguration.getProperty("WHITESPACE_COLOR"), 0.7);
+		fontSize = Double.valueOf(PEConfiguration.getProperty("FONT_SIZE"));
+		createDefaultFonts();
+	}
+
+	private static void createDefaultFonts() {
+		defaultFont = new Font(defaultFontName, fontSize);
 	}
 
 	public static void setFont(Font font) {
@@ -47,6 +54,7 @@ public class StyleLoader {
 
 	public static void setFontSize(double size) {
 		defaultFont = new Font(defaultFontName, size);
+		PEConfiguration.setProperty("FONT_SIZE", String.valueOf(size));
 
 		if (Main.getApplication().getMainController() != null) {
 			if (Main.getApplication().getMainController().getCanvasManager() != null) {

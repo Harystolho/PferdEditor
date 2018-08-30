@@ -51,8 +51,6 @@ public class CanvasManager {
 
 		gc = canvas.getGraphicsContext2D();
 
-		StyleLoader.setFontSize(34);
-
 		updateFontAndLineHeight();
 
 		showWhiteSpaces = false;
@@ -86,16 +84,15 @@ public class CanvasManager {
 
 	@SuppressWarnings("rawtypes")
 	private void drawWords() {
-		if (currentFile != null) {
-			if (currentFile.getDrawLock().readLock().tryLock()) {
-				// In order not to draw the while file, the pivotNode keeps a reference to a
+		if (currentFile != null && pivotNode != null) {
+			if (currentFile.getDrawLock().writeLock().tryLock()) {
+				// In order not to draw the whole file, the pivotNode keeps a reference to a
 				// node some lines above the first visible line. The pivotNode is updated every
-				// time the setCursorY method is called
+				// time setCursorY() is called
 				Node node = pivotNode;
 
 				float x = node.getData().getX();
 				float y = node.getData().getY();
-
 				while (node != null) {
 
 					Word wordObj = node.getData();
@@ -144,7 +141,7 @@ public class CanvasManager {
 				// TODO if a file is being rendered and it's tab is closed it will throw an
 				// exception because the canvas manager is going to try to unlock the lock in
 				// another file
-				currentFile.getDrawLock().readLock().unlock();
+				currentFile.getDrawLock().writeLock().unlock();
 			}
 
 			updateSrollBar();
@@ -252,7 +249,7 @@ public class CanvasManager {
 			float x = 0;
 			float y = getLineHeight();
 
-			if (currentFile.getDrawLock().readLock().tryLock()) {
+			if (currentFile.getDrawLock().writeLock().tryLock()) {
 				ListIterator<Word> i = currentFile.getWords().listIterator();
 
 				// Iterate through all the words fixing their positions
@@ -283,7 +280,7 @@ public class CanvasManager {
 					x += wordObj.getDrawingSize();
 				}
 
-				currentFile.getDrawLock().readLock().unlock();
+				currentFile.getDrawLock().writeLock().unlock();
 			}
 		}
 	}

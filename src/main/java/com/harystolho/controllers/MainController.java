@@ -291,7 +291,6 @@ public class MainController implements ResizableInterface {
 	 * Loads the <code>file</code> in the canvas and updates the selected file tab
 	 */
 	public void loadFileInCanvas(File file) {
-
 		if (file == null) {
 			return;
 		}
@@ -444,9 +443,10 @@ public class MainController implements ResizableInterface {
 			openSaveChangesWidow(file);
 		} else {
 			it.remove();
-			selectFirstTabOnFileTab();
-
 			canvasManager.resetPivotNode();
+			
+			selectFirstTabOnFileTab();
+			
 			file.unload();
 		}
 	}
@@ -469,7 +469,6 @@ public class MainController implements ResizableInterface {
 	@SuppressWarnings("unlikely-arg-type")
 	public void removeFileFromFileTab(File file) {
 		filesTab.getChildren().remove(file);
-
 	}
 
 	private void openSaveChangesWidow(File file) {
