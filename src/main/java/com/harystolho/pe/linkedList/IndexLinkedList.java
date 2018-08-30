@@ -264,6 +264,7 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 		root = null;
 		last = null;
 		size = 0;
+
 		nodeIndexes.setNodesAs(null);
 	}
 

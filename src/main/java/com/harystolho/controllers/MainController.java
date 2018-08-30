@@ -10,14 +10,14 @@ import java.util.regex.Pattern;
 
 import com.harystolho.Main;
 import com.harystolho.canvas.CanvasManager;
+import com.harystolho.misc.OpenWindow;
+import com.harystolho.misc.PropertiesWindowFactory;
+import com.harystolho.misc.PropertiesWindowFactory.window_type;
 import com.harystolho.misc.Tab;
 import com.harystolho.pe.File;
 import com.harystolho.thread.FileUpdaterThread;
 import com.harystolho.thread.RenderThread;
-import com.harystolho.utils.OpenWindow;
 import com.harystolho.utils.PEUtils;
-import com.harystolho.utils.PropertiesWindowFactory;
-import com.harystolho.utils.PropertiesWindowFactory.window_type;
 
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
@@ -184,7 +184,7 @@ public class MainController implements ResizableInterface {
 
 				canvasManager.setScrollY((int) (canvasManager.getScrollY()
 						- (FileUpdaterThread.getBiggestY() * (displacement / rightScrollBar.getHeight()))));
-				
+
 				lastY = e.getY();
 			}
 		});
@@ -446,6 +446,7 @@ public class MainController implements ResizableInterface {
 			it.remove();
 			selectFirstTabOnFileTab();
 
+			canvasManager.resetPivotNode();
 			file.unload();
 		}
 	}

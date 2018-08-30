@@ -769,6 +769,7 @@ public class File {
 		getWords().clear();
 		resetLastWord();
 
+		words = null;
 		scrollX = 0;
 		scrollY = 0;
 		cursorX = 0;

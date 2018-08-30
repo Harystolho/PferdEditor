@@ -1,7 +1,7 @@
 package com.harystolho.canvas.eventHandler;
 
 import com.harystolho.canvas.CanvasManager;
-import com.harystolho.utils.PropertiesWindowFactory;
+import com.harystolho.misc.PropertiesWindowFactory;
 
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;

@@ -1,9 +1,9 @@
 package com.harystolho.controllers;
 
+import com.harystolho.misc.OpenWindow;
+import com.harystolho.misc.PropertiesWindowFactory;
 import com.harystolho.pe.File;
-import com.harystolho.utils.OpenWindow;
 import com.harystolho.utils.PEUtils;
-import com.harystolho.utils.PropertiesWindowFactory;
 
 import javafx.fxml.FXML;
 import javafx.scene.input.Clipboard;

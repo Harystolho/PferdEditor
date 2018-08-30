@@ -1,6 +1,6 @@
 package com.harystolho.canvas.eventHandler;
 
-import com.harystolho.utils.PropertiesWindowFactory;
+import com.harystolho.misc.PropertiesWindowFactory;
 
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;

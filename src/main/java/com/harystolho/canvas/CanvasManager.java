@@ -7,12 +7,10 @@ import com.harystolho.canvas.eventHandler.CanvasMouseHandler;
 import com.harystolho.misc.StyleLoader;
 import com.harystolho.pe.File;
 import com.harystolho.pe.Word;
-import com.harystolho.pe.linkedList.IndexLinkedList;
 import com.harystolho.pe.linkedList.IndexLinkedList.Node;
 import com.harystolho.thread.FileUpdaterThread;
 import com.harystolho.thread.RenderThread;
 import com.harystolho.utils.PEUtils;
-import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -92,7 +90,7 @@ public class CanvasManager {
 			if (currentFile.getDrawLock().readLock().tryLock()) {
 				// In order not to draw the while file, the pivotNode keeps a reference to a
 				// node some lines above the first visible line. The pivotNode is updated every
-				// time the Y scrollBar moves
+				// time the setCursorY method is called
 				Node node = pivotNode;
 
 				float x = node.getData().getX();
@@ -187,6 +185,10 @@ public class CanvasManager {
 	// TODO fix >= and <=
 	// TODO call this only when needed, fix values to improve performance
 	public void updatePivotNode() {
+		if (pivotNode == null) {
+			return;
+		}
+
 		if (pivotNode.getData().getY() + (lineHeight * 2) >= getScrollY()) {
 			while (pivotNode.getData().getY() + (lineHeight * 4) >= getScrollY()) {
 				if (pivotNode.getLeft() != null) {
@@ -220,6 +222,10 @@ public class CanvasManager {
 
 	public void stopRenderThread() {
 		RenderThread.stop();
+	}
+
+	public void resetPivotNode() {
+		pivotNode = null;
 	}
 
 	public File getCurrentFile() {

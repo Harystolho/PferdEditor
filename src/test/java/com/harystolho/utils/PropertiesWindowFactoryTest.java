@@ -6,7 +6,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.harystolho.utils.PropertiesWindowFactory.window_type;
+import com.harystolho.misc.PropertiesWindowFactory;
+import com.harystolho.misc.PropertiesWindowFactory.window_type;
 
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.layout.Pane;

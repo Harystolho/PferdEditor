@@ -4,8 +4,8 @@ import com.harystolho.canvas.CanvasManager;
 import com.harystolho.canvas.eventHandler.ApplicationKeyHandler;
 import com.harystolho.canvas.eventHandler.ApplicationMouseHandler;
 import com.harystolho.controllers.MainController;
+import com.harystolho.misc.PropertiesWindowFactory;
 import com.harystolho.utils.PEUtils;
-import com.harystolho.utils.PropertiesWindowFactory;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
