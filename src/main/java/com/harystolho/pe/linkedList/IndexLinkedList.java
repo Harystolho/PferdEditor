@@ -26,7 +26,7 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 
 	private int size;
 
-	class Node {
+	public class Node {
 
 		public Node() {
 			data = null;
@@ -328,7 +328,7 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 
 	public E get(Word temp) {
 		Node node = getNode(temp);
-		if(node != null) {
+		if (node != null) {
 			return node.getData();
 		}
 		return null;
@@ -555,8 +555,12 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 		return node.getData();
 	}
 
+	public Node getFirstNode() {
+		return root;
+	}
+
 	public E getFirst() {
-		return root.getData();
+		return getFirstNode().getData();
 	}
 
 	public E getLast() {

@@ -7,9 +7,12 @@ import com.harystolho.canvas.eventHandler.CanvasMouseHandler;
 import com.harystolho.misc.StyleLoader;
 import com.harystolho.pe.File;
 import com.harystolho.pe.Word;
+import com.harystolho.pe.linkedList.IndexLinkedList;
+import com.harystolho.pe.linkedList.IndexLinkedList.Node;
 import com.harystolho.thread.FileUpdaterThread;
 import com.harystolho.thread.RenderThread;
 import com.harystolho.utils.PEUtils;
+import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -41,6 +44,10 @@ public class CanvasManager {
 
 	private boolean showWhiteSpaces;
 
+	// The canvas begins to draw at this word
+	@SuppressWarnings("rawtypes")
+	private Node pivotNode;
+
 	public CanvasManager(Canvas canvas) {
 		this.canvas = canvas;
 
@@ -51,6 +58,8 @@ public class CanvasManager {
 		updateFontAndLineHeight();
 
 		showWhiteSpaces = false;
+
+		pivotNode = null;
 
 		new CanvasMouseHandler(this);
 
@@ -77,18 +86,21 @@ public class CanvasManager {
 		drawCursor();
 	}
 
+	@SuppressWarnings("rawtypes")
 	private void drawWords() {
 		if (currentFile != null) {
-
-			// TODO render only what is shown in the screen
-			float x = 0;
-			float y = getLineHeight();
-
 			if (currentFile.getDrawLock().readLock().tryLock()) {
-				ListIterator<Word> i = currentFile.getWords().listIterator();
+				// In order not to draw the while file, the pivotNode keeps a reference to a
+				// node some lines above the first visible line. The pivotNode is updated every
+				// time the Y scrollBar moves
+				Node node = pivotNode;
 
-				while (i.hasNext()) {
-					Word wordObj = i.next();
+				float x = node.getData().getX();
+				float y = node.getData().getY();
+
+				while (node != null) {
+
+					Word wordObj = node.getData();
 
 					switch (wordObj.getType()) {
 					case NEW_LINE:
@@ -97,6 +109,7 @@ public class CanvasManager {
 
 						x = 0;
 						y += getLineHeight();
+						node = node.getRight();
 						continue;
 					case TAB:
 						wordObj.setX(x);
@@ -108,6 +121,7 @@ public class CanvasManager {
 						}
 
 						x += TAB_SIZE;
+						node = node.getRight();
 						continue;
 					default:
 						break;
@@ -126,6 +140,7 @@ public class CanvasManager {
 						break;
 					}
 
+					node = node.getRight();
 				}
 
 				// TODO if a file is being rendered and it's tab is closed it will throw an
@@ -166,6 +181,30 @@ public class CanvasManager {
 
 	}
 
+	/**
+	 * Moves the pivot node up or down
+	 */
+	// TODO fix >= and <=
+	public void updatePivotNode() {
+		if (pivotNode.getData().getY() + (lineHeight * 2) >= getScrollY()) {
+			while (pivotNode.getData().getY() + (lineHeight * 4) >= getScrollY()) {
+				if (pivotNode.getLeft() != null) {
+					pivotNode = pivotNode.getLeft();
+				} else {
+					break;
+				}
+			}
+		} else if (pivotNode.getData().getY() + (lineHeight * 4) <= getScrollY()) {
+			while (pivotNode.getData().getY() + (lineHeight * 2) <= getScrollY()) {
+				if (pivotNode.getRight() != null) {
+					pivotNode = pivotNode.getRight();
+				} else {
+					break;
+				}
+			}
+		}
+	}
+
 	private void updateSrollBar() {
 		if (Main.getApplication().getMainController() != null) {
 			Main.getApplication().getMainController().updateScrollBar(FileUpdaterThread.getBiggestX(),
@@ -187,7 +226,59 @@ public class CanvasManager {
 	}
 
 	public void setCurrentFile(File currentFile) {
-		this.currentFile = currentFile;
+		if (currentFile != null) {
+			this.currentFile = currentFile;
+			pivotNode = currentFile.getWords().getFirstNode(); // Starts drawing at the first word
+			preRender();
+		}
+	}
+
+	/**
+	 * When a file is loaded all the word's positions are wrong, this method fixes
+	 * them by calculating their x and y. This method must be called once before
+	 * calling {@link #drawWords()}
+	 */
+	private void preRender() {
+		if (currentFile != null) {
+
+			// First word, First line
+			float x = 0;
+			float y = getLineHeight();
+
+			if (currentFile.getDrawLock().readLock().tryLock()) {
+				ListIterator<Word> i = currentFile.getWords().listIterator();
+
+				// Iterate through all the words fixing their positions
+				while (i.hasNext()) {
+					Word wordObj = i.next();
+
+					switch (wordObj.getType()) {
+					case NEW_LINE:
+						wordObj.setX(x);
+						wordObj.setY(y);
+
+						x = 0;
+						y += getLineHeight();
+						continue;
+					case TAB:
+						wordObj.setX(x);
+						wordObj.setY(y);
+
+						x += TAB_SIZE;
+						continue;
+					default:
+						break;
+					}
+
+					wordObj.setX(x);
+					wordObj.setY(y);
+
+					x += wordObj.getDrawingSize();
+				}
+
+				currentFile.getDrawLock().readLock().unlock();
+			}
+		}
 	}
 
 	public Canvas getCanvas() {

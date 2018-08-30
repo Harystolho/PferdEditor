@@ -184,7 +184,9 @@ public class MainController implements ResizableInterface {
 
 				canvasManager.setScrollY((int) (canvasManager.getScrollY()
 						- (FileUpdaterThread.getBiggestY() * (displacement / rightScrollBar.getHeight()))));
-
+				
+				canvasManager.updatePivotNode();
+				
 				lastY = e.getY();
 			}
 		});
