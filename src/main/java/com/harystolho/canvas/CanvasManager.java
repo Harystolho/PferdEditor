@@ -337,7 +337,7 @@ public class CanvasManager {
 			setScrollY((int) (getCursorY() - (getCursorY() % lineHeight) - lineHeight));
 		} else {
 			currentFile.setCursorY(getCursorY() - getLineHeight());
-			currentFile.setCursorX(getCursorX()); // Moves the cursor to the end of the life if the line above is
+			currentFile.setCursorX(getCursorX()); // Moves the cursor to the end of the line if the line above is
 													// shorter.
 
 			if (getCursorY() < getScrollY() + lineHeight) { // If cursor is at the first line in the canvas
@@ -346,6 +346,9 @@ public class CanvasManager {
 				} else { // Else align the scroll
 					setScrollY((int) (getCursorY() - (getCursorY() % lineHeight) - lineHeight));
 				}
+			} else if (getCursorY() + getLineHeight() == getScrollY() + canvas.getHeight()) {
+				// If the cursor is at the last line in the canvas
+				scrollUp();
 			}
 		}
 	}
