@@ -4,45 +4,55 @@ import java.util.logging.Logger;
 
 import com.harystolho.Main;
 
-public class RenderThread implements Runnable {
+import javafx.animation.AnimationTimer;
 
-	private static final int FPS = 15;
-	public static volatile boolean running = false;
+public class RenderThread extends AnimationTimer {
+
 	private static final Logger logger = Logger.getLogger(RenderThread.class.getName());
 
+	private static final int FPS = 20; // Even though it's 20 here, it only displays around 15 FPS
+	private static final double timeF = 1e9 / FPS;
+	private static long previousTime = 0;
+	private static long previousFPS = 0;
+	private static long fpsCount = 0;
+
+	public static RenderThread instance;
+
+	public RenderThread() {
+		instance = this;
+	}
+
 	@Override
-	public void run() {
-
-		logger.info("Started Render Thread");
-		
-		long initialTime = System.nanoTime();
-		final double timeF = 1000000000 / FPS;
-		double deltaF = 0;
-
-		while (running) {
-
-			long currentTime = System.nanoTime();
-			deltaF += (currentTime - initialTime) / timeF;
-			initialTime = currentTime;
-
-			if (deltaF >= 1) {
-				Main.getApplication().getMainController().getCanvasManager().update();
-				deltaF--;
-			}
-
+	public void handle(long now) {
+		if (previousTime == 0) {
+			previousTime = now;
+			previousFPS = now;
+			return;
 		}
 
-		Main.getApplication().getMainController().getCanvasManager().makeCanvasTransparent();
+		double elepsed = now - previousTime;
 
+		if (elepsed > timeF) {
+			Main.getApplication().getMainController().getCanvasManager().update();
+
+			/*
+			 * if (previousFPS + 1e9 < now) { fpsCount = 0; previousFPS = now; } else {
+			 * fpsCount++; }
+			 */
+
+			previousTime = now;
+		}
 	}
 
-	public static boolean isRunning() {
-		return running;
-	}
-
-	public static void stop() {
+	@Override
+	public void stop() {
 		logger.info("Stopping Render Thread");
-		running = false;
+		super.stop();
+
+		instance = null;
+		previousTime = 0;
+		previousFPS = 0;
+		Main.getApplication().getMainController().getCanvasManager().makeCanvasTransparent();
 	}
 
 }

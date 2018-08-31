@@ -306,7 +306,7 @@ public class MainController implements ResizableInterface {
 
 		FileUpdaterThread.calculate();
 
-		if (!RenderThread.isRunning()) {
+		if (RenderThread.instance == null) {
 			canvas.setCursor(Cursor.TEXT);
 			canvasManager.initRenderThread();
 		}

@@ -10,6 +10,7 @@ import com.harystolho.pe.Word;
 import com.harystolho.pe.linkedList.IndexLinkedList.Node;
 import com.harystolho.thread.FileUpdaterThread;
 import com.harystolho.thread.RenderThread;
+import com.harystolho.thread.RenderThread;
 import com.harystolho.utils.PEUtils;
 
 import javafx.scene.canvas.Canvas;
@@ -213,12 +214,14 @@ public class CanvasManager {
 	}
 
 	public void initRenderThread() {
-		RenderThread.running = true;
-		PEUtils.getExecutor().execute(new RenderThread());
+		new RenderThread();
+		RenderThread.instance.start();
 	}
 
 	public void stopRenderThread() {
-		RenderThread.stop();
+		if (RenderThread.instance != null) {
+			RenderThread.instance.stop();
+		}
 	}
 
 	public void resetPivotNode() {

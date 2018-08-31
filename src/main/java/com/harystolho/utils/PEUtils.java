@@ -202,8 +202,6 @@ public class PEUtils {
 		executor.shutdown();
 
 		PEConfiguration.saveProperties();
-
-		RenderThread.stop();
 	}
 
 }
