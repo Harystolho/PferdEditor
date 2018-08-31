@@ -85,7 +85,7 @@ public class CanvasManager {
 	@SuppressWarnings("rawtypes")
 	private void drawWords() {
 		if (currentFile != null && pivotNode != null) {
-			if (currentFile.getDrawLock().writeLock().tryLock()) {
+			if (currentFile.getDrawLock().readLock().tryLock()) {
 				// In order not to draw the whole file, the pivotNode keeps a reference to a
 				// node some lines above the first visible line. The pivotNode is updated every
 				// time setCursorY() is called
@@ -141,7 +141,7 @@ public class CanvasManager {
 				// TODO if a file is being rendered and it's tab is closed it will throw an
 				// exception because the canvas manager is going to try to unlock the lock in
 				// another file
-				currentFile.getDrawLock().writeLock().unlock();
+				currentFile.getDrawLock().readLock().unlock();
 			}
 
 			updateSrollBar();
@@ -233,7 +233,11 @@ public class CanvasManager {
 		if (currentFile != null) {
 			this.currentFile = currentFile;
 			pivotNode = currentFile.getWords().getFirstNode(); // Starts drawing at the first word
-			preRender();
+
+			if (!currentFile.wasPreRendered()) {
+				preRender();
+				currentFile.setPreRendered(true);
+			}
 		}
 	}
 
@@ -249,40 +253,41 @@ public class CanvasManager {
 			float x = 0;
 			float y = getLineHeight();
 
-			if (currentFile.getDrawLock().writeLock().tryLock()) {
-				ListIterator<Word> i = currentFile.getWords().listIterator();
+			currentFile.getDrawLock().readLock().lock();
 
-				// Iterate through all the words fixing their positions
-				while (i.hasNext()) {
-					Word wordObj = i.next();
+			ListIterator<Word> i = currentFile.getWords().listIterator();
 
-					switch (wordObj.getType()) {
-					case NEW_LINE:
-						wordObj.setX(x);
-						wordObj.setY(y);
+			// Iterate through all the words fixing their positions
+			while (i.hasNext()) {
+				Word wordObj = i.next();
 
-						x = 0;
-						y += getLineHeight();
-						continue;
-					case TAB:
-						wordObj.setX(x);
-						wordObj.setY(y);
-
-						x += TAB_SIZE;
-						continue;
-					default:
-						break;
-					}
-
+				switch (wordObj.getType()) {
+				case NEW_LINE:
 					wordObj.setX(x);
 					wordObj.setY(y);
 
-					x += wordObj.getDrawingSize();
+					x = 0;
+					y += getLineHeight();
+					continue;
+				case TAB:
+					wordObj.setX(x);
+					wordObj.setY(y);
+
+					x += TAB_SIZE;
+					continue;
+				default:
+					break;
 				}
 
-				currentFile.getDrawLock().writeLock().unlock();
+				wordObj.setX(x);
+				wordObj.setY(y);
+
+				x += wordObj.getDrawingSize();
 			}
+
+			currentFile.getDrawLock().readLock().unlock();
 		}
+
 	}
 
 	public Canvas getCanvas() {

@@ -29,6 +29,7 @@ public class File {
 	private java.io.File diskFile;
 	private boolean isLoaded;
 	private boolean wasModified;
+	private boolean wasPreRendered;
 
 	private String name;
 	private IndexLinkedList<Word> words;
@@ -46,6 +47,7 @@ public class File {
 
 		diskFile = null;
 		isLoaded = false;
+		wasPreRendered = false;
 
 		drawLock = new ReentrantReadWriteLock();
 
@@ -776,7 +778,8 @@ public class File {
 		lastWordTyped = null;
 
 		isLoaded = false;
-		setWasModified(false);
+		wasModified = false;
+		wasPreRendered = false;
 	}
 
 	public int getScrollX() {
@@ -805,6 +808,14 @@ public class File {
 		}
 		this.wasModified = wasModified;
 
+	}
+
+	public boolean wasPreRendered() {
+		return wasPreRendered;
+	}
+
+	public void setPreRendered(boolean wasPreRendered) {
+		this.wasPreRendered = wasPreRendered;
 	}
 
 }
