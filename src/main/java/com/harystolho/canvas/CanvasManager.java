@@ -180,7 +180,7 @@ public class CanvasManager {
 	 * Moves the pivot node up or down
 	 */
 	// TODO fix >= and <=
-	// TODO call this only when needed, fix values to improve performance
+	// TODO call updatePivotNode only when needed, fix values to improve performance
 	public void updatePivotNode() {
 		if (pivotNode == null) {
 			return;

@@ -8,6 +8,8 @@ import java.net.URISyntaxException;
 import java.util.ListIterator;
 import java.util.regex.Pattern;
 
+import javax.xml.stream.XMLInputFactory;
+
 import com.harystolho.Main;
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.misc.OpenWindow;
@@ -434,6 +436,7 @@ public class MainController implements ResizableInterface {
 			Node node = it.next();
 			if (node.getUserData() == file) {
 				closeFile(file, it);
+				break;
 			}
 		}
 	}
@@ -444,9 +447,9 @@ public class MainController implements ResizableInterface {
 		} else {
 			it.remove();
 			canvasManager.resetPivotNode();
-			
+
 			selectFirstTabOnFileTab();
-			
+
 			file.unload();
 		}
 	}
@@ -466,9 +469,15 @@ public class MainController implements ResizableInterface {
 	 * 
 	 * @param file
 	 */
-	@SuppressWarnings("unlikely-arg-type")
 	public void removeFileFromFileTab(File file) {
-		filesTab.getChildren().remove(file);
+		ListIterator<Node> it = filesTab.getChildren().listIterator();
+		while (it.hasNext()) {
+			Node node = it.next();
+			if (node.getUserData() == file) {
+				filesTab.getChildren().remove(node);
+				break;
+			}
+		}
 	}
 
 	private void openSaveChangesWidow(File file) {
