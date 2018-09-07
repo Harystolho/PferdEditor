@@ -100,7 +100,14 @@ public class MainController implements ResizableInterface {
 	private double lastY = 0;
 
 	@FXML
+	private Pane bottomScrollBar;
+	private double lastX = 0;
+
+	@FXML
 	private Rectangle rightScrollInside;
+	@FXML
+	private Rectangle bottomScrollInside;
+
 	@FXML
 	private Label fileDirectory;
 
@@ -188,6 +195,23 @@ public class MainController implements ResizableInterface {
 						- (FileUpdaterThread.getBiggestY() * (displacement / rightScrollBar.getHeight()))));
 
 				lastY = e.getY();
+			}
+		});
+
+		bottomScrollBar.setOnMousePressed((e) -> {
+			lastX = e.getX();
+		});
+
+		bottomScrollBar.setOnMouseDragged((e) -> {
+			// If cursor is inside scroll bar
+			if (e.getX() >= bottomScrollInside.getLayoutX()
+					&& e.getX() <= bottomScrollInside.getLayoutX() + bottomScrollInside.getWidth()) {
+				double displacement = lastX - e.getX();
+
+				canvasManager.setScrollX((int) (canvasManager.getScrollX()
+						- (FileUpdaterThread.getBiggestX() * (displacement / bottomScrollInside.getWidth()))));
+
+				lastX = e.getX();
 			}
 		});
 
@@ -506,7 +530,19 @@ public class MainController implements ResizableInterface {
 	}
 
 	private void updateScrollX(float x) {
-		// TODO scroll X
+		double widthProportion = bottomScrollBar.getWidth() / x;
+		
+		//		System.out.println(widthProportion);
+		
+		if (widthProportion <= 1) {
+			bottomScrollInside.setVisible(true);
+			bottomScrollInside.setWidth(bottomScrollBar.getWidth() * widthProportion);
+		} else { // Hides it
+			bottomScrollInside.setVisible(false);
+		}
+
+		// Moves it to the correct position
+		bottomScrollInside.setLayoutX((canvasManager.getScrollX() / x) * bottomScrollBar.getWidth());
 	}
 
 	private void updateScrollY(float y) {
@@ -616,7 +652,7 @@ public class MainController implements ResizableInterface {
 		canvasBox.setPrefHeight(height - secundaryMenu.getHeight() - menuBar.getHeight());
 
 		// 25 = canvasInformationBar Height
-		canvas.setHeight(canvasBox.getPrefHeight() - 20 - filesTab.getHeight());
+		canvas.setHeight(canvasBox.getPrefHeight() - 20 - filesTab.getHeight() - bottomScrollBar.getHeight());
 		rightScrollBar.setPrefHeight(canvas.getHeight());
 
 		// Scrolls the canvas up when the window resized to a bigger size

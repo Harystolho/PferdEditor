@@ -1,5 +1,6 @@
 package com.harystolho.pe;
 
+import java.nio.file.attribute.FileTime;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -219,6 +220,7 @@ public class File {
 
 			if (wordWidthPosition >= cursorXInWWord) {
 				char removed = word.removeCharAt(x); // Removes only 1 char in the word
+				FileUpdaterThread.decrementBiggestXBy((int) Word.computeCharWidth(removed));
 				updateCursorPosition(removed, false);
 				break;
 			}
@@ -262,6 +264,8 @@ public class File {
 
 			if (wordWidthPosition >= cursorXInWWord) {
 				char removed = word.removeCharAt(x); // Removes only 1 char in the word
+				FileUpdaterThread.decrementBiggestXBy((int) Word.computeCharWidth(removed));
+				;
 				// updateCursorPosition(removed, false);
 				break;
 			}
@@ -340,8 +344,10 @@ public class File {
 
 		if (add) {
 			cursorX = cursorX + Word.computeCharWidth(c);
+			FileUpdaterThread.incrementBiggestXBy((int) Word.computeCharWidth(c));
 		} else {
 			cursorX = cursorX - Word.computeCharWidth(c);
+			FileUpdaterThread.decrementBiggestXBy((int) Word.computeCharWidth(c));
 		}
 
 	}
@@ -423,7 +429,6 @@ public class File {
 		}
 
 		wrd.addChar(c); // Add the char to the end of the word
-
 	}
 
 	private void createSpace() {

@@ -228,6 +228,11 @@ public class CanvasManager {
 		pivotNode = null;
 	}
 
+	@SuppressWarnings("rawtypes")
+	public void setPivotNode(Node node) {
+		pivotNode = node;
+	}
+
 	public File getCurrentFile() {
 		return currentFile;
 	}

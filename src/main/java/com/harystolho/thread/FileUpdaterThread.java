@@ -77,16 +77,25 @@ public class FileUpdaterThread implements Runnable {
 		return biggestX;
 	}
 
+	public static void incrementBiggestXBy(int increment) {
+		System.out.println(biggestX);
+		biggestX += increment;
+	}
+
+	public static void decrementBiggestXBy(int increment) {
+		biggestX -= increment;
+	}
+
+	public static int getBiggestY() {
+		return biggestY;
+	}
+
 	public static void incrementBiggestYBy(int increment) {
 		biggestY += increment;
 	}
 
 	public static void decrementBiggestYBy(int increment) {
 		biggestY -= increment;
-	}
-
-	public static int getBiggestY() {
-		return biggestY;
 	}
 
 }
