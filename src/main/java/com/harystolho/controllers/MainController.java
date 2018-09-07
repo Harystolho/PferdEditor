@@ -8,8 +8,6 @@ import java.net.URISyntaxException;
 import java.util.ListIterator;
 import java.util.regex.Pattern;
 
-import javax.xml.stream.XMLInputFactory;
-
 import com.harystolho.Main;
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.misc.OpenWindow;

@@ -10,8 +10,6 @@ import com.harystolho.pe.Word;
 import com.harystolho.pe.linkedList.IndexLinkedList.Node;
 import com.harystolho.thread.FileUpdaterThread;
 import com.harystolho.thread.RenderThread;
-import com.harystolho.thread.RenderThread;
-import com.harystolho.utils.PEUtils;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;

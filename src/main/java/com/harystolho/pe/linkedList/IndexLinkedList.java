@@ -111,7 +111,7 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 			// Because this is the first node, it has to update the pivot node in
 			// CanvasManager
 			Main.getApplication().getCanvasManager().setPivotNode(node);
-			node.getData().setX(0);
+			//node.getData().setX(0);
 		} else {
 			Node middleNode = nodeIndexes.getMiddleIndex().getKey();
 

@@ -1,6 +1,5 @@
 package com.harystolho.pe;
 
-import java.nio.file.attribute.FileTime;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -300,12 +299,12 @@ public class File {
 
 			if (getCursorX() != 0) {
 				if (word.getType() == TYPES.TAB) {
-					word.setX((float) cm.getCursorX() - 1);
+					word.setX((float) cm.getCursorX() - 1 + scrollX);
 				} else {
-					word.setX((float) cm.getCursorX() + 1);
+					word.setX((float) cm.getCursorX() + 1 + scrollX);
 				}
 			} else {
-				word.setX((float) cm.getCursorX() - 1);
+				word.setX((float) cm.getCursorX() + scrollX);
 			}
 
 			word.setY((float) cm.getCursorY());
