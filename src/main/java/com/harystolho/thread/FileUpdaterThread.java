@@ -16,7 +16,7 @@ import com.harystolho.utils.PEUtils;
  */
 public class FileUpdaterThread implements Runnable {
 
-	private static int biggestX = 0;
+	private static float biggestX = 0;
 	private static int biggestY = 0;
 
 	@Override
@@ -73,17 +73,18 @@ public class FileUpdaterThread implements Runnable {
 		file.getDrawLock().readLock().unlock();
 	}
 
-	public static int getBiggestX() {
+	public static float getBiggestX() {
 		return biggestX;
 	}
 
-	public static void incrementBiggestXBy(int increment) {
-		System.out.println(biggestX);
+	public static void incrementBiggestXBy(float increment) {
 		biggestX += increment;
+		System.out.println("> " + biggestX);
 	}
 
-	public static void decrementBiggestXBy(int increment) {
+	public static void decrementBiggestXBy(float increment) {
 		biggestX -= increment;
+		System.out.println("< " + biggestX);
 	}
 
 	public static int getBiggestY() {

@@ -1,5 +1,6 @@
 package com.harystolho.pe;
 
+import java.nio.file.attribute.FileTime;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -196,6 +197,7 @@ public class File {
 				break;
 			case TAB:
 				updateCursorPosition(wordToRemove, false);
+				FileUpdaterThread.decrementBiggestXBy(CanvasManager.TAB_SIZE);
 				break;
 			default:
 				break;
@@ -219,7 +221,6 @@ public class File {
 
 			if (wordWidthPosition >= cursorXInWWord) {
 				char removed = word.removeCharAt(x); // Removes only 1 char in the word
-				FileUpdaterThread.decrementBiggestXBy((int) Word.computeCharWidth(removed));
 				updateCursorPosition(removed, false);
 				break;
 			}
@@ -263,8 +264,7 @@ public class File {
 
 			if (wordWidthPosition >= cursorXInWWord) {
 				char removed = word.removeCharAt(x); // Removes only 1 char in the word
-				FileUpdaterThread.decrementBiggestXBy((int) Word.computeCharWidth(removed));
-				;
+				FileUpdaterThread.decrementBiggestXBy(Word.computeCharWidth(removed));
 				// updateCursorPosition(removed, false);
 				break;
 			}
@@ -304,7 +304,7 @@ public class File {
 					word.setX((float) cm.getCursorX() + 1 + scrollX);
 				}
 			} else {
-				word.setX((float) cm.getCursorX() + scrollX);
+				word.setX((float) cm.getCursorX());
 			}
 
 			word.setY((float) cm.getCursorY());
@@ -343,10 +343,10 @@ public class File {
 
 		if (add) {
 			cursorX = cursorX + Word.computeCharWidth(c);
-			FileUpdaterThread.incrementBiggestXBy((int) Word.computeCharWidth(c));
+			FileUpdaterThread.incrementBiggestXBy(Word.computeCharWidth(c));
 		} else {
 			cursorX = cursorX - Word.computeCharWidth(c);
-			FileUpdaterThread.decrementBiggestXBy((int) Word.computeCharWidth(c));
+			FileUpdaterThread.decrementBiggestXBy(Word.computeCharWidth(c));
 		}
 
 	}
@@ -536,6 +536,9 @@ public class File {
 
 		addWord(tab);
 		updateCursorPosition(tab, true);
+		// Because the TAB's drawing size is 0, we need to increment it here using the
+		// right value
+		FileUpdaterThread.incrementBiggestXBy(CanvasManager.TAB_SIZE);
 		resetLastWord();
 	}
 
