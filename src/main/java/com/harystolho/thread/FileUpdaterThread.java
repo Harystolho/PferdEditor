@@ -62,7 +62,7 @@ public class FileUpdaterThread implements Runnable {
 				break;
 			}
 
-			if (wordObj.getX() > biggestX) {
+			if (wordObj.getX() + wordObj.getDrawingSize() >= biggestX) {
 				biggestX = (int) (wordObj.getX() + wordObj.getDrawingSize());
 			}
 		}

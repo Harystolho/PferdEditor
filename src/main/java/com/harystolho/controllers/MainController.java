@@ -529,9 +529,9 @@ public class MainController implements ResizableInterface {
 
 	private void updateScrollX(float x) {
 		double widthProportion = bottomScrollBar.getWidth() / x;
-		
-		//		System.out.println(widthProportion);
-		
+
+		// System.out.println(widthProportion);
+
 		if (widthProportion <= 1) {
 			bottomScrollInside.setVisible(true);
 			bottomScrollInside.setWidth(bottomScrollBar.getWidth() * widthProportion);
