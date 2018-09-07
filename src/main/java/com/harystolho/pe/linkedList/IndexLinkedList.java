@@ -512,6 +512,10 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 			return null;
 		}
 
+		if (size == 1) {
+			return nodeIndexes.getMiddleIndex().getKey().getData();
+		}
+
 		Node middleNode = nodeIndexes.getMiddleIndex().getKey();
 		float middleNodeY = middleNode.getData().getY();
 
