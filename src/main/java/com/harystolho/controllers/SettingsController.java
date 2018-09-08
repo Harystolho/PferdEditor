@@ -1,6 +1,5 @@
 package com.harystolho.controllers;
 
-import com.harystolho.PEApplication;
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.misc.StyleLoader;
 import com.harystolho.pe.File;

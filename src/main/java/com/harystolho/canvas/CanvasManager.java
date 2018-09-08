@@ -30,7 +30,7 @@ public class CanvasManager {
 	public static final int CURSOR_DELAY = 8;
 	public static final int TAB_SIZE = 35;
 
-	private Canvas canvas;
+	private static Canvas canvas;
 
 	private GraphicsContext gc;
 
@@ -47,10 +47,8 @@ public class CanvasManager {
 	@SuppressWarnings("rawtypes")
 	private Node pivotNode;
 
-	private CanvasManager(Canvas canvas) {
+	private CanvasManager() {
 		instance = this;
-
-		this.canvas = canvas;
 
 		gc = canvas.getGraphicsContext2D();
 
@@ -64,11 +62,20 @@ public class CanvasManager {
 
 	}
 
+	/**
+	 * Call {@link #setCanvas(Canvas)} once before calling this method
+	 * 
+	 * @return
+	 */
 	public static CanvasManager getInstance() {
 		if (instance == null) {
-			new CanvasManager(PEApplication.getInstance().getMainController().getCanvas());
+			new CanvasManager();
 		}
 		return instance;
+	}
+
+	public static void setCanvas(Canvas canvas) {
+		CanvasManager.canvas = canvas;
 	}
 
 	// TODO don't render when the canvas is not focused.

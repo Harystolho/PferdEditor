@@ -115,6 +115,8 @@ public class MainController implements ResizableInterface {
 	void initialize() {
 		loadEventHandlers();
 
+		CanvasManager.setCanvas(canvas);
+		
 		loadSaveDirectory();
 		setCurrentDirectoryLabel(PEUtils.getSaveFolder());
 	}

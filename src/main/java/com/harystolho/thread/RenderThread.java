@@ -2,7 +2,6 @@ package com.harystolho.thread;
 
 import java.util.logging.Logger;
 
-import com.harystolho.PEApplication;
 import com.harystolho.canvas.CanvasManager;
 
 import javafx.animation.AnimationTimer;

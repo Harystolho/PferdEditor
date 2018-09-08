@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-import com.harystolho.PEApplication;
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.pe.Word;
 import com.harystolho.pe.Word.TYPES;
