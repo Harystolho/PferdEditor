@@ -74,14 +74,20 @@ public class CanvasManager {
 		return instance;
 	}
 
+	/**
+	 * This method must be called once before calling {@link #getInstance()}
+	 * 
+	 * @param canvas
+	 */
 	public static void setCanvas(Canvas canvas) {
 		CanvasManager.canvas = canvas;
 	}
 
-	// TODO don't render when the canvas is not focused.
 	public void update() {
-		clear();
-		draw();
+		if (canvas.isFocused()) {
+			clear();
+			draw();
+		}
 	}
 
 	public void clear() {
@@ -174,10 +180,6 @@ public class CanvasManager {
 
 	private void drawCursor() {
 
-		if (!canvas.isFocused()) {
-			return;
-		}
-
 		if (cursorCount <= -CURSOR_DELAY) {
 			cursorCount = CURSOR_DELAY;
 		}
@@ -186,9 +188,8 @@ public class CanvasManager {
 
 		if (cursorCount > 0) {
 			gc.setFill(StyleLoader.getCursorColor());
-			gc.fillRect(getCursorX() - getScrollX(), getCursorY() - lineHeight - getScrollY(), 2, lineHeight); // 2 is
-																												// cursor's
-			// width
+			// 2 is the cursor's width
+			gc.fillRect(getCursorX() - getScrollX(), getCursorY() - lineHeight - getScrollY(), 2, lineHeight);
 		}
 
 	}
@@ -262,6 +263,8 @@ public class CanvasManager {
 				preRender();
 				currentFile.setPreRendered(true);
 			}
+
+			canvas.requestFocus();
 		}
 	}
 
