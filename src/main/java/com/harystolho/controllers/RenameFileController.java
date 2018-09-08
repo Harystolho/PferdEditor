@@ -1,6 +1,6 @@
 package com.harystolho.controllers;
 
-import com.harystolho.Main;
+import com.harystolho.PEApplication;
 import com.harystolho.pe.File;
 
 import javafx.fxml.FXML;
@@ -47,10 +47,10 @@ public class RenameFileController {
 
 	private void rename() {
 		file.setName(fileName.getText());
-		Main.getApplication().getMainController().updateFileNameOnFileTab(file);
+		PEApplication.getInstance().getMainController().updateFileNameOnFileTab(file);
 
 		stage.close();
-		Main.getApplication().getMainController().refrestFileList();
+		PEApplication.getInstance().getMainController().refrestFileList();
 	}
 
 	public void renameFile(File file) {

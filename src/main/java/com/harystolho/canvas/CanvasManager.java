@@ -2,7 +2,7 @@ package com.harystolho.canvas;
 
 import java.util.ListIterator;
 
-import com.harystolho.Main;
+import com.harystolho.PEApplication;
 import com.harystolho.canvas.eventHandler.CanvasMouseHandler;
 import com.harystolho.misc.StyleLoader;
 import com.harystolho.pe.File;
@@ -23,6 +23,8 @@ import javafx.scene.canvas.GraphicsContext;
  *
  */
 public class CanvasManager {
+
+	private static CanvasManager instance;
 
 	// Higher numbers mean higher delay
 	public static final int CURSOR_DELAY = 8;
@@ -45,7 +47,9 @@ public class CanvasManager {
 	@SuppressWarnings("rawtypes")
 	private Node pivotNode;
 
-	public CanvasManager(Canvas canvas) {
+	private CanvasManager(Canvas canvas) {
+		instance = this;
+
 		this.canvas = canvas;
 
 		gc = canvas.getGraphicsContext2D();
@@ -58,6 +62,13 @@ public class CanvasManager {
 
 		new CanvasMouseHandler(this);
 
+	}
+
+	public static CanvasManager getInstance() {
+		if (instance == null) {
+			new CanvasManager(PEApplication.getInstance().getMainController().getCanvas());
+		}
+		return instance;
 	}
 
 	// TODO don't render when the canvas is not focused.
@@ -205,8 +216,8 @@ public class CanvasManager {
 	}
 
 	private void updateSrollBar() {
-		if (Main.getApplication().getMainController() != null) {
-			Main.getApplication().getMainController().updateScrollBar(FileUpdaterThread.getBiggestX(),
+		if (PEApplication.getInstance().getMainController() != null) {
+			PEApplication.getInstance().getMainController().updateScrollBar(FileUpdaterThread.getBiggestX(),
 					FileUpdaterThread.getBiggestY());
 		}
 	}
@@ -459,12 +470,12 @@ public class CanvasManager {
 
 	public void setScrollX(int x) {
 		if (currentFile != null) {
-			
-			if(x < 0 ) {
-				currentFile.setScrollX(0);	
+
+			if (x < 0) {
+				currentFile.setScrollX(0);
 			} else {
-				if(x<= FileUpdaterThread.getBiggestX() - canvas.getWidth()) {
-					currentFile.setScrollX(x);	
+				if (x <= FileUpdaterThread.getBiggestX() - canvas.getWidth()) {
+					currentFile.setScrollX(x);
 				}
 			}
 		}

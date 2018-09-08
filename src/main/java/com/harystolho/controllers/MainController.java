@@ -8,7 +8,7 @@ import java.net.URISyntaxException;
 import java.util.ListIterator;
 import java.util.regex.Pattern;
 
-import com.harystolho.Main;
+import com.harystolho.PEApplication;
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.misc.OpenWindow;
 import com.harystolho.misc.PropertiesWindowFactory;
@@ -109,15 +109,11 @@ public class MainController implements ResizableInterface {
 	@FXML
 	private Label fileDirectory;
 
-	private CanvasManager canvasManager;
-
 	boolean showWhiteSpaces = false;
 
 	@FXML
 	void initialize() {
 		loadEventHandlers();
-
-		canvasManager = new CanvasManager(canvas);
 
 		loadSaveDirectory();
 		setCurrentDirectoryLabel(PEUtils.getSaveFolder());
@@ -160,7 +156,7 @@ public class MainController implements ResizableInterface {
 		});
 
 		pilcrow.setOnMouseClicked((e) -> {
-			canvasManager.toggleShowWhiteSpaces();
+			CanvasManager.getInstance().toggleShowWhiteSpaces();
 		});
 
 		browser.setOnMouseClicked((e) -> {
@@ -189,7 +185,7 @@ public class MainController implements ResizableInterface {
 					&& e.getY() <= rightScrollInside.getLayoutY() + rightScrollInside.getHeight()) {
 				double displacement = lastY - e.getY();
 
-				canvasManager.setScrollY((int) (canvasManager.getScrollY()
+				CanvasManager.getInstance().setScrollY((int) (CanvasManager.getInstance().getScrollY()
 						- (FileUpdaterThread.getBiggestY() * (displacement / rightScrollBar.getHeight()))));
 
 				lastY = e.getY();
@@ -206,7 +202,7 @@ public class MainController implements ResizableInterface {
 					&& e.getX() <= bottomScrollInside.getLayoutX() + bottomScrollInside.getWidth()) {
 				double displacement = lastX - e.getX();
 
-				canvasManager.setScrollX((int) (canvasManager.getScrollX()
+				CanvasManager.getInstance().setScrollX((int) (CanvasManager.getInstance().getScrollX()
 						- (FileUpdaterThread.getBiggestX() * (displacement / bottomScrollInside.getWidth()))));
 
 				lastX = e.getX();
@@ -229,12 +225,12 @@ public class MainController implements ResizableInterface {
 		});
 
 		menuSaveAs.setOnAction((e) -> {
-			if (canvasManager.getCurrentFile() != null)
-				PEUtils.saveFileAs(canvasManager.getCurrentFile());
+			if (CanvasManager.getInstance().getCurrentFile() != null)
+				PEUtils.saveFileAs(CanvasManager.getInstance().getCurrentFile());
 		});
 
 		menuExit.setOnAction((e) -> {
-			Main.getApplication().getWindow().close();
+			PEApplication.getInstance().getWindow().close();
 			PEUtils.exit();
 		});
 
@@ -269,10 +265,11 @@ public class MainController implements ResizableInterface {
 	 * Saves the file that is being drawn
 	 */
 	public void saveOpenedFile() {
-		if (canvasManager.getCurrentFile() != null) {
-			PEUtils.saveFile(canvasManager.getCurrentFile(), canvasManager.getCurrentFile().getDiskFile());
+		if (CanvasManager.getInstance().getCurrentFile() != null) {
+			PEUtils.saveFile(CanvasManager.getInstance().getCurrentFile(),
+					CanvasManager.getInstance().getCurrentFile().getDiskFile());
 
-			setFileTabModified(canvasManager.getCurrentFile());
+			setFileTabModified(CanvasManager.getInstance().getCurrentFile());
 		}
 	}
 
@@ -324,13 +321,13 @@ public class MainController implements ResizableInterface {
 			createFileTabLabel(file);
 		}
 
-		canvasManager.setCurrentFile(file);
+		CanvasManager.getInstance().setCurrentFile(file);
 
 		FileUpdaterThread.calculate();
 
 		if (RenderThread.instance == null) {
 			canvas.setCursor(Cursor.TEXT);
-			canvasManager.initRenderThread();
+			CanvasManager.getInstance().initRenderThread();
 		}
 
 		updateFileTabSelection(file);
@@ -360,7 +357,7 @@ public class MainController implements ResizableInterface {
 	private void setFileTabModified(File currentFile) {
 		for (Node node : filesTab.getChildren()) {
 			Tab tab = (Tab) node;
-			if (tab.getUserData() == canvasManager.getCurrentFile()) {
+			if (tab.getUserData() == CanvasManager.getInstance().getCurrentFile()) {
 				tab.setModified(false);
 			}
 		}
@@ -396,7 +393,7 @@ public class MainController implements ResizableInterface {
 		DirectoryChooser dc = new DirectoryChooser();
 
 		dc.setTitle("Choose the new directory folder");
-		java.io.File newDir = dc.showDialog(Main.getApplication().getWindow());
+		java.io.File newDir = dc.showDialog(PEApplication.getInstance().getWindow());
 
 		if (newDir != null && newDir.isDirectory()) {
 			PEUtils.setSaveFolder(newDir); // Updates the save folder
@@ -468,7 +465,7 @@ public class MainController implements ResizableInterface {
 			openSaveChangesWidow(file);
 		} else {
 			it.remove();
-			canvasManager.resetPivotNode();
+			CanvasManager.getInstance().resetPivotNode();
 
 			selectFirstTabOnFileTab();
 
@@ -540,7 +537,7 @@ public class MainController implements ResizableInterface {
 		}
 
 		// Moves it to the correct position
-		bottomScrollInside.setLayoutX((canvasManager.getScrollX() / x) * bottomScrollBar.getWidth());
+		bottomScrollInside.setLayoutX((CanvasManager.getInstance().getScrollX() / x) * bottomScrollBar.getWidth());
 	}
 
 	private void updateScrollY(float y) {
@@ -554,13 +551,13 @@ public class MainController implements ResizableInterface {
 		}
 
 		// Moves it to the correct position
-		rightScrollInside.setLayoutY((canvasManager.getScrollY() / y) * rightScrollBar.getHeight());
+		rightScrollInside.setLayoutY((CanvasManager.getInstance().getScrollY() / y) * rightScrollBar.getHeight());
 
 	}
 
 	private void stopRendering() {
 		canvas.setCursor(Cursor.DEFAULT);
-		canvasManager.stopRenderThread();
+		CanvasManager.getInstance().stopRenderThread();
 	}
 
 	/**
@@ -603,10 +600,6 @@ public class MainController implements ResizableInterface {
 
 	public Canvas getCanvas() {
 		return canvas;
-	}
-
-	public CanvasManager getCanvasManager() {
-		return canvasManager;
 	}
 
 	public boolean showWhiteSpaces() {
@@ -654,10 +647,11 @@ public class MainController implements ResizableInterface {
 		rightScrollBar.setPrefHeight(canvas.getHeight());
 
 		// Scrolls the canvas up when the window resized to a bigger size
-		if (canvasManager.getScrollY() >= FileUpdaterThread.getBiggestY() - canvas.getHeight()) {
-			if (canvasManager.getCurrentFile() != null) {
-				canvasManager.getCurrentFile().setScrollY((int) (FileUpdaterThread.getBiggestY() - canvas.getHeight()));
-				canvasManager.updatePivotNode();
+		if (CanvasManager.getInstance().getScrollY() >= FileUpdaterThread.getBiggestY() - canvas.getHeight()) {
+			if (CanvasManager.getInstance().getCurrentFile() != null) {
+				CanvasManager.getInstance().getCurrentFile()
+						.setScrollY((int) (FileUpdaterThread.getBiggestY() - canvas.getHeight()));
+				CanvasManager.getInstance().updatePivotNode();
 			}
 		}
 	}

@@ -2,7 +2,8 @@ package com.harystolho.thread;
 
 import java.util.ListIterator;
 
-import com.harystolho.Main;
+import com.harystolho.PEApplication;
+import com.harystolho.canvas.CanvasManager;
 import com.harystolho.pe.File;
 import com.harystolho.pe.Word;
 import com.harystolho.utils.PEUtils;
@@ -21,10 +22,10 @@ public class FileUpdaterThread implements Runnable {
 
 	@Override
 	public void run() {
-		if (Main.getApplication().getMainController() != null) {
-			if (Main.getApplication().getMainController().getCanvasManager() != null) {
-				if (Main.getApplication().getCanvasManager().getCurrentFile() != null) {
-					calculate(Main.getApplication().getCanvasManager().getCurrentFile());
+		if (PEApplication.getInstance().getMainController() != null) {
+			if (CanvasManager.getInstance() != null) {
+				if (CanvasManager.getInstance().getCurrentFile() != null) {
+					calculate(CanvasManager.getInstance().getCurrentFile());
 				}
 			}
 		}
@@ -42,7 +43,7 @@ public class FileUpdaterThread implements Runnable {
 	 */
 	public static void calculate(File file) {
 
-		int lineHeight = Main.getApplication().getCanvasManager().getLineHeight();
+		int lineHeight = CanvasManager.getInstance().getLineHeight();
 
 		file.getDrawLock().readLock().lock();
 

@@ -1,6 +1,6 @@
 package com.harystolho.controllers;
 
-import com.harystolho.Main;
+import com.harystolho.PEApplication;
 import com.harystolho.pe.File;
 import com.harystolho.utils.PEUtils;
 
@@ -63,8 +63,8 @@ public class SaveChangesController {
 	}
 
 	private void closeFile(File file) {
-		Main.getApplication().getMainController().removeFileFromFileTab(file);
-		Main.getApplication().getMainController().selectFirstTabOnFileTab();
+		PEApplication.getInstance().getMainController().removeFileFromFileTab(file);
+		PEApplication.getInstance().getMainController().selectFirstTabOnFileTab();
 
 		file.unload();
 	}

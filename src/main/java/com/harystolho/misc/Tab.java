@@ -1,6 +1,6 @@
 package com.harystolho.misc;
 
-import com.harystolho.Main;
+import com.harystolho.PEApplication;
 import com.harystolho.controllers.MainController;
 import com.harystolho.pe.File;
 
@@ -17,7 +17,7 @@ import javafx.scene.layout.HBox;
  */
 public class Tab extends HBox {
 
-	private static final MainController mainController = Main.getApplication().getMainController();
+	private static final MainController mainController = PEApplication.getInstance().getMainController();
 	private File file;
 
 	private Label fileLabel;

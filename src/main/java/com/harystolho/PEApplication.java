@@ -16,6 +16,8 @@ import javafx.stage.Stage;
 
 public class PEApplication extends Application {
 
+	private static PEApplication instance;
+
 	private Stage window;
 
 	private Scene scene;
@@ -24,6 +26,20 @@ public class PEApplication extends Application {
 
 	private ApplicationKeyHandler keyHandler;
 	private ApplicationMouseHandler mouseHandler;
+
+	/**
+	 * Don't call this method. Call {@link #getInstance()}
+	 */
+	@Deprecated
+	public PEApplication() {
+	}
+
+	public static PEApplication getInstance() {
+		if (instance == null) {
+			new PEApplication().setup();
+		}
+		return instance;
+	}
 
 	@Override
 	public void start(Stage window) throws Exception {
@@ -35,18 +51,18 @@ public class PEApplication extends Application {
 
 		window.setScene(scene);
 
-		PropertiesWindowFactory.setMainPane(Main.getApplication().getWindow().getScene().getRoot());
+		PropertiesWindowFactory.setMainPane(PEApplication.getInstance().getWindow().getScene().getRoot());
 
 		loadEventHandlers();
 
 		window.show();
 	}
 
-	public void setup() {
-		Main.setApplication(this);
+	private void setup() {
+		instance = this;
 		loadMainScene();
 
-		keyHandler = new ApplicationKeyHandler(scene, mainController.getCanvasManager());
+		keyHandler = new ApplicationKeyHandler(scene, CanvasManager.getInstance());
 		mouseHandler = new ApplicationMouseHandler(scene);
 	}
 
@@ -76,10 +92,6 @@ public class PEApplication extends Application {
 
 	public MainController getMainController() {
 		return mainController;
-	}
-
-	public CanvasManager getCanvasManager() {
-		return mainController.getCanvasManager();
 	}
 
 	public static void init(String[] args) {

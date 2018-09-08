@@ -10,7 +10,6 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.harystolho.Main;
 import com.harystolho.PEApplication;
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.pe.Word.TYPES;
@@ -28,8 +27,7 @@ public class FileTest {
 		new JFXPanel();
 		PEUtils.start();
 
-		PEApplication app = new PEApplication();
-		app.setup();
+		PEApplication app = PEApplication.getInstance();
 	}
 
 	@Test
@@ -66,7 +64,7 @@ public class FileTest {
 	@Test
 	public void createSpace() {
 		File f = new File("f");
-		Main.getApplication().getCanvasManager().setCurrentFile(f);
+		CanvasManager.getInstance().setCurrentFile(f);
 
 		KeyEvent kv = new KeyEvent(null, null, null, null, null, KeyCode.SPACE, false, false, false, false);
 
@@ -78,7 +76,7 @@ public class FileTest {
 	@Test
 	public void createSpaceBeforeAnotherWord() {
 
-		CanvasManager cm = Main.getApplication().getCanvasManager();
+		CanvasManager cm = CanvasManager.getInstance();
 
 		File f = new File("f");
 		cm.setCurrentFile(f);
@@ -99,7 +97,7 @@ public class FileTest {
 
 	@Test
 	public void createSpaceAfterAnotherWord() {
-		CanvasManager cm = Main.getApplication().getCanvasManager();
+		CanvasManager cm = CanvasManager.getInstance();
 
 		File f = new File("f2");
 		cm.setCurrentFile(f);
@@ -120,7 +118,7 @@ public class FileTest {
 
 	@Test
 	public void creatSpaceInTheMiddleOfAWord() {
-		CanvasManager cm = Main.getApplication().getCanvasManager();
+		CanvasManager cm = CanvasManager.getInstance();
 
 		File f = new File("f3");
 		cm.setCurrentFile(f);

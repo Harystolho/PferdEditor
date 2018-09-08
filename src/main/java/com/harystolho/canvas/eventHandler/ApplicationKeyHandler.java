@@ -3,7 +3,7 @@ package com.harystolho.canvas.eventHandler;
 import java.util.HashMap;
 import java.util.function.Function;
 
-import com.harystolho.Main;
+import com.harystolho.PEApplication;
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.controllers.FileRightClickController;
 
@@ -102,7 +102,7 @@ public class ApplicationKeyHandler {
 
 		keyMap.put(KeyCode.S, (e) -> {
 			if (e.isControlDown()) {
-				Main.getApplication().getMainController().saveOpenedFile();
+				PEApplication.getInstance().getMainController().saveOpenedFile();
 			} else {
 				pressKeyOnCanvas(e);
 			}
@@ -158,7 +158,7 @@ public class ApplicationKeyHandler {
 		// Normal Keys
 		keyMap.put(KeyCode.W, (e) -> {
 			if (e.isControlDown()) {
-				Main.getApplication().getMainController().closeFile(cm.getCurrentFile());
+				PEApplication.getInstance().getMainController().closeFile(cm.getCurrentFile());
 			} else {
 				pressKeyOnCanvas(e);
 			}
@@ -167,7 +167,7 @@ public class ApplicationKeyHandler {
 
 		keyMap.put(KeyCode.C, (e) -> {
 			if (e.isControlDown()) {
-				FileRightClickController.copyFile(Main.getApplication().getCanvasManager().getCurrentFile());
+				FileRightClickController.copyFile(CanvasManager.getInstance().getCurrentFile());
 			} else {
 				pressKeyOnCanvas(e);
 			}
@@ -176,7 +176,7 @@ public class ApplicationKeyHandler {
 
 		keyMap.put(KeyCode.V, (e) -> {
 			if (e.isControlDown()) {
-				FileRightClickController.pasteFile(Main.getApplication().getCanvasManager().getCurrentFile());
+				FileRightClickController.pasteFile(CanvasManager.getInstance().getCurrentFile());
 			} else {
 				pressKeyOnCanvas(e);
 			}

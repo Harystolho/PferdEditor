@@ -5,7 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-import com.harystolho.Main;
+import com.harystolho.PEApplication;
+import com.harystolho.canvas.CanvasManager;
 import com.harystolho.pe.Word;
 import com.harystolho.pe.Word.TYPES;
 
@@ -110,8 +111,8 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 
 			// Because this is the first node, it has to update the pivot node in
 			// CanvasManager
-			Main.getApplication().getCanvasManager().setPivotNode(node);
-			//node.getData().setX(0);
+			CanvasManager.getInstance().setPivotNode(node);
+			// node.getData().setX(0);
 		} else {
 			Node middleNode = nodeIndexes.getMiddleIndex().getKey();
 

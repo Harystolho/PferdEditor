@@ -2,7 +2,8 @@ package com.harystolho.thread;
 
 import java.util.logging.Logger;
 
-import com.harystolho.Main;
+import com.harystolho.PEApplication;
+import com.harystolho.canvas.CanvasManager;
 
 import javafx.animation.AnimationTimer;
 
@@ -33,7 +34,7 @@ public class RenderThread extends AnimationTimer {
 		double elepsed = now - previousTime;
 
 		if (elepsed > timeF) {
-			Main.getApplication().getMainController().getCanvasManager().update();
+			CanvasManager.getInstance().update();
 
 			/*
 			 * if (previousFPS + 1e9 < now) { fpsCount = 0; previousFPS = now; } else {
@@ -52,7 +53,7 @@ public class RenderThread extends AnimationTimer {
 		instance = null;
 		previousTime = 0;
 		previousFPS = 0;
-		Main.getApplication().getMainController().getCanvasManager().makeCanvasTransparent();
+		CanvasManager.getInstance().makeCanvasTransparent();
 	}
 
 }

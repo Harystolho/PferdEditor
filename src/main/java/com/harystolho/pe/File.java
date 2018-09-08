@@ -1,10 +1,9 @@
 package com.harystolho.pe;
 
-import java.nio.file.attribute.FileTime;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import com.harystolho.Main;
+import com.harystolho.PEApplication;
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.pe.Word.TYPES;
 import com.harystolho.pe.linkedList.IndexLinkedList;
@@ -174,7 +173,7 @@ public class File {
 			removeLastWordAtTheLineAbove();
 
 			// Update file's biggest Y
-			FileUpdaterThread.decrementBiggestYBy(Main.getApplication().getCanvasManager().getLineHeight());
+			FileUpdaterThread.decrementBiggestYBy(CanvasManager.getInstance().getLineHeight());
 			return;
 		}
 
@@ -192,7 +191,7 @@ public class File {
 			// Updates the cursor position
 			switch (wordToRemove.getType()) {
 			case NEW_LINE:
-				Main.getApplication().getCanvasManager().lineUp();
+				CanvasManager.getInstance().lineUp();
 				setCursorX(-1);
 				break;
 			case TAB:
@@ -249,7 +248,7 @@ public class File {
 
 			if (wordToRemove.getType() == TYPES.NEW_LINE) {
 				// Update file's biggest Y
-				FileUpdaterThread.decrementBiggestYBy(Main.getApplication().getCanvasManager().getLineHeight());
+				FileUpdaterThread.decrementBiggestYBy(CanvasManager.getInstance().getLineHeight());
 			}
 		}
 
@@ -278,12 +277,12 @@ public class File {
 	 */
 	private void removeLastWordAtTheLineAbove() {
 		// The new line will always be the last word in a line
-		Word newLine = words.findLastWordIn(getCursorY() - Main.getApplication().getCanvasManager().getLineHeight());
+		Word newLine = words.findLastWordIn(getCursorY() - CanvasManager.getInstance().getLineHeight());
 		if (newLine != null) {
 			words.remove(newLine);
 		}
 
-		Main.getApplication().getCanvasManager().lineUp();
+		CanvasManager.getInstance().lineUp();
 		setCursorX(-1); // Sets cursor to the end of the line
 	}
 
@@ -293,9 +292,9 @@ public class File {
 	 * @param word
 	 */
 	private void setWordPosition(Word word) {
-		if (Main.getApplication().getMainController() != null) {
+		if (PEApplication.getInstance().getMainController() != null) {
 
-			CanvasManager cm = Main.getApplication().getCanvasManager();
+			CanvasManager cm = CanvasManager.getInstance();
 
 			if (getCursorX() != 0) {
 				if (word.getType() == TYPES.TAB) {
@@ -313,16 +312,16 @@ public class File {
 	}
 
 	private void forceLineDown() {
-		if (Main.getApplication().getMainController() != null) {
+		if (PEApplication.getInstance().getMainController() != null) {
 			// Update file's biggest Y
-			FileUpdaterThread.incrementBiggestYBy(Main.getApplication().getCanvasManager().getLineHeight());
+			FileUpdaterThread.incrementBiggestYBy(CanvasManager.getInstance().getLineHeight());
 
 			// Increase cursor position
-			cursorY = (getCursorY() + Main.getApplication().getCanvasManager().getLineHeight());
+			cursorY = (getCursorY() + CanvasManager.getInstance().getLineHeight());
 
 			// Scroll down if necessary
-			if (getCursorY() > Main.getApplication().getMainController().getCanvas().getHeight() + getScrollY()) {
-				Main.getApplication().getCanvasManager().scrollDown();
+			if (getCursorY() > PEApplication.getInstance().getMainController().getCanvas().getHeight() + getScrollY()) {
+				CanvasManager.getInstance().scrollDown();
 			}
 
 		}
@@ -610,13 +609,13 @@ public class File {
 
 	public void setCursorY(float cursorY) {
 
-		float biggestY = Main.getApplication().getCanvasManager().getLineHeight();
+		float biggestY = CanvasManager.getInstance().getLineHeight();
 
 		if (!words.isEmpty()) {
 			biggestY = words.getLast().getY();
 
 			if (words.getLast().getType() == TYPES.NEW_LINE) {
-				biggestY += Main.getApplication().getCanvasManager().getLineHeight();
+				biggestY += CanvasManager.getInstance().getLineHeight();
 			}
 
 			if (cursorY > biggestY) {
@@ -669,7 +668,7 @@ public class File {
 				 */
 				setCursorX(getCursorX() - Word.computeCharWidth(word.getWord()[x - 1]));
 			} else { // Move line up
-				Main.getApplication().getCanvasManager().lineUp();
+				CanvasManager.getInstance().lineUp();
 				setCursorX(-1);
 			}
 		}
@@ -703,7 +702,7 @@ public class File {
 			if (nextWord != null) {
 				setCursorX(getCursorX() + Word.computeCharWidth(nextWord.getWord()[0]));
 			} else {
-				Main.getApplication().getCanvasManager().lineDown();
+				CanvasManager.getInstance().lineDown();
 			}
 
 		}
@@ -811,7 +810,7 @@ public class File {
 
 	public void setWasModified(boolean wasModified) {
 		if (!this.wasModified && wasModified) {
-			Main.getApplication().getMainController().setFileModified(this);
+			PEApplication.getInstance().getMainController().setFileModified(this);
 		}
 		this.wasModified = wasModified;
 

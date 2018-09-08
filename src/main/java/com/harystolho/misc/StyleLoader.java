@@ -1,6 +1,7 @@
 package com.harystolho.misc;
 
-import com.harystolho.Main;
+import com.harystolho.PEApplication;
+import com.harystolho.canvas.CanvasManager;
 import com.harystolho.utils.PEConfiguration;
 
 import javafx.scene.paint.Color;
@@ -56,9 +57,9 @@ public class StyleLoader {
 		defaultFont = new Font(defaultFontName, size);
 		PEConfiguration.setProperty("FONT_SIZE", String.valueOf(size));
 
-		if (Main.getApplication().getMainController() != null) {
-			if (Main.getApplication().getMainController().getCanvasManager() != null) {
-				Main.getApplication().getCanvasManager().updateFontAndLineHeight();
+		if (PEApplication.getInstance().getMainController() != null) {
+			if (CanvasManager.getInstance() != null) {
+				CanvasManager.getInstance().updateFontAndLineHeight();
 			}
 		}
 

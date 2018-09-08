@@ -2,7 +2,7 @@ package com.harystolho.controllers;
 
 import java.util.regex.Pattern;
 
-import com.harystolho.Main;
+import com.harystolho.PEApplication;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -54,7 +54,7 @@ public class NewFileController {
 	private void createNewFile(String name) {
 		if (!name.isEmpty()) {
 			if (isNameValid(name)) {
-				Main.getApplication().getMainController().createNewFile(name);
+				PEApplication.getInstance().getMainController().createNewFile(name);
 				stage.close();
 			}
 		}

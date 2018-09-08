@@ -1,6 +1,7 @@
 package com.harystolho.controllers;
 
-import com.harystolho.Main;
+import com.harystolho.PEApplication;
+import com.harystolho.canvas.CanvasManager;
 import com.harystolho.misc.StyleLoader;
 import com.harystolho.pe.File;
 import com.harystolho.pe.Word;
@@ -163,7 +164,7 @@ public class SettingsController {
 	 * they contain a field that determines their color and their size
 	 */
 	private void reRenderWords() {
-		File file = Main.getApplication().getCanvasManager().getCurrentFile();
+		File file = CanvasManager.getInstance().getCurrentFile();
 
 		if (file != null) {
 			file.getDrawLock().readLock().lock();

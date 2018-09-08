@@ -10,7 +10,7 @@ import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 
-import com.harystolho.Main;
+import com.harystolho.PEApplication;
 import com.harystolho.controllers.ResizableInterface;
 
 import javafx.fxml.FXMLLoader;
@@ -124,7 +124,7 @@ public class PEUtils {
 
 	public static void saveFileAs(com.harystolho.pe.File currentFile) {
 		FileChooser fc = new FileChooser();
-		java.io.File file = fc.showSaveDialog(Main.getApplication().getWindow());
+		java.io.File file = fc.showSaveDialog(PEApplication.getInstance().getWindow());
 
 		if (file != null) {
 			saveFile(currentFile, file);

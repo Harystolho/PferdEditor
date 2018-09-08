@@ -22,8 +22,6 @@ public class CanvasManagerTest {
 	public void init() {
 		new JFXPanel();
 
-		Canvas canvas = new Canvas(width, heigh);
-		cm = new CanvasManager(canvas);
 	}
 
 	@Test
