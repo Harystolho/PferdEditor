@@ -116,7 +116,7 @@ public class MainController implements ResizableInterface {
 		loadEventHandlers();
 
 		CanvasManager.setCanvas(canvas);
-		
+
 		loadSaveDirectory();
 		setCurrentDirectoryLabel(PEUtils.getSaveFolder());
 	}
@@ -518,7 +518,8 @@ public class MainController implements ResizableInterface {
 	}
 
 	private void hideSrollBar() {
-		updateScrollY(0); // 0 hides it
+		updateScrollX(1); // 1 hides it
+		updateScrollY(1); // 1 hides it
 	}
 
 	public void updateScrollBar(float x, float y) {
