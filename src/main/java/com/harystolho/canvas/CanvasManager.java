@@ -146,7 +146,7 @@ public class CanvasManager {
 					}
 
 					gc.setFill(wordObj.getColor());
-					gc.fillText(wordObj.getWordAsString(), x - getScrollX(), y - getScrollY() - drawingDisplacementY);
+					gc.fillText(wordObj.getWordAsString(), x + getScrollX(), y - getScrollY() - drawingDisplacementY);
 
 					wordObj.setX(x);
 					wordObj.setY(y);
@@ -179,7 +179,6 @@ public class CanvasManager {
 	}
 
 	private void drawCursor() {
-
 		if (cursorCount <= -CURSOR_DELAY) {
 			cursorCount = CURSOR_DELAY;
 		}
@@ -189,13 +188,13 @@ public class CanvasManager {
 		if (cursorCount > 0) {
 			gc.setFill(StyleLoader.getCursorColor());
 			// 2 is the cursor's width
-			gc.fillRect(getCursorX() - getScrollX(), getCursorY() - lineHeight - getScrollY(), 2, lineHeight);
+			gc.fillRect(getCursorX() + getScrollX(), getCursorY() - lineHeight - getScrollY(), 2, lineHeight);
 		}
 
 	}
 
 	/**
-	 * Moves the pivot node up or down
+	 * Moves the pivot node backward or forward.
 	 */
 	// TODO fix >= and <=
 	// TODO call updatePivotNode only when needed, fix values to improve performance
