@@ -115,7 +115,7 @@ public class CanvasManager {
 				Node node = pivotNode;
 
 				float x = node.getData().getX() >= 0 ? node.getData().getX() : 0;
-				//float x = node.getData().getX();
+				// float x = node.getData().getX();
 				float y = node.getData().getY();
 				while (node != null) {
 
@@ -220,6 +220,18 @@ public class CanvasManager {
 					break;
 				}
 			}
+		}
+	}
+
+	public void movePivotNodeLeft() {
+		if (pivotNode.getLeft() != null) {
+			pivotNode = pivotNode.getLeft();
+		}
+	}
+
+	public void movePivotNodeRight() {
+		if (pivotNode.getRight() != null) {
+			pivotNode = pivotNode.getRight();
 		}
 	}
 

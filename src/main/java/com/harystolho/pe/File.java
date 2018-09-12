@@ -196,7 +196,6 @@ public class File {
 				break;
 			case TAB:
 				updateCursorPosition(wordToRemove, false);
-				FileUpdaterThread.decrementBiggestXBy(CanvasManager.TAB_SIZE);
 				break;
 			default:
 				break;

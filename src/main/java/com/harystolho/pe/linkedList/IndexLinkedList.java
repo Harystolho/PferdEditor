@@ -431,6 +431,8 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 						leftNode.getLeft().setRight(leftNode.getRight());
 					} else {
 						root = leftNode.getRight();
+						root.getData().setX(0);
+						CanvasManager.getInstance().movePivotNodeRight();
 					}
 					if (leftNode.getRight() != null) {
 						leftNode.getRight().setLeft(leftNode.getLeft());
