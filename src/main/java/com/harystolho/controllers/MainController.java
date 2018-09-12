@@ -12,7 +12,6 @@ import com.harystolho.PEApplication;
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.misc.OpenWindow;
 import com.harystolho.misc.PropertiesWindowFactory;
-import com.harystolho.misc.StyleLoader;
 import com.harystolho.misc.PropertiesWindowFactory.window_type;
 import com.harystolho.misc.Tab;
 import com.harystolho.pe.File;
@@ -34,7 +33,6 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.DirectoryChooser;
 
@@ -466,7 +464,7 @@ public class MainController implements ResizableInterface {
 
 	private void closeFile(File file, ListIterator<Node> it) {
 		if (file.wasModified()) {
-			openSaveChangesWidow(file);
+			openSaveChangesWindow(file);
 		} else {
 			it.remove();
 			CanvasManager.getInstance().resetPivotNode();
@@ -503,7 +501,7 @@ public class MainController implements ResizableInterface {
 		}
 	}
 
-	private void openSaveChangesWidow(File file) {
+	private void openSaveChangesWindow(File file) {
 		OpenWindow ow = new OpenWindow("Save Changes");
 
 		ow.load("saveChanges.fxml", (controller) -> {
@@ -636,7 +634,7 @@ public class MainController implements ResizableInterface {
 		// 238 is file list on the left
 		canvasBox.setPrefWidth(width - 238 - 23);
 
-		canvas.setWidth(canvasBox.getPrefWidth() - 3);
+		canvas.setWidth(canvasBox.getPrefWidth());
 
 		rightScrollBar.setLayoutX(width - 23);
 

@@ -114,6 +114,9 @@ public class CanvasManager {
 				// time setCursorY() is called
 				Node node = pivotNode;
 
+				// Biggest X position in the file
+				float biggestX = 0;
+
 				float x = node.getData().getX() >= 0 ? node.getData().getX() : 0;
 				// float x = node.getData().getX();
 				float y = node.getData().getY();
@@ -125,6 +128,10 @@ public class CanvasManager {
 					case NEW_LINE:
 						wordObj.setX(x);
 						wordObj.setY(y);
+
+						if (x > biggestX) {
+							biggestX = x;
+						}
 
 						x = 0;
 						y += getLineHeight();
@@ -140,6 +147,11 @@ public class CanvasManager {
 						}
 
 						x += TAB_SIZE;
+
+						if (x > biggestX) {
+							biggestX = x;
+						}
+
 						node = node.getRight();
 						continue;
 					default:
@@ -154,6 +166,10 @@ public class CanvasManager {
 
 					x += wordObj.getDrawingSize();
 
+					if (x > biggestX) {
+						biggestX = x;
+					}
+
 					// Stop drawing if it's out of the canvas
 					if (y > canvas.getHeight() + getScrollY()) {
 						break;
@@ -161,6 +177,8 @@ public class CanvasManager {
 
 					node = node.getRight();
 				}
+
+				FileUpdaterThread.setBiggestX(biggestX);
 
 				// TODO if a file is being rendered and it's tab is closed it will throw an
 				// exception because the canvas manager is going to try to unlock the lock in
@@ -445,18 +463,6 @@ public class CanvasManager {
 
 		currentFile.setCursorY(FileUpdaterThread.getBiggestY());
 		moveCursorToEndOfTheLine();
-	}
-
-	public void scrollLeft() {
-		/*
-		 * if (getScrollX() >= SCROLL_CHANGE) { setScrollX(getScrollX() -
-		 * SCROLL_CHANGE); }
-		 */
-		// TODO scroll left
-	}
-
-	public void scrollRight() {
-
 	}
 
 	public void scrollUp() {

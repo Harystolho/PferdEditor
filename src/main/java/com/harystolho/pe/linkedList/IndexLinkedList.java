@@ -9,8 +9,6 @@ import com.harystolho.canvas.CanvasManager;
 import com.harystolho.pe.Word;
 import com.harystolho.pe.Word.TYPES;
 
-import javafx.scene.canvas.Canvas;
-
 /**
  * A Doubly LinkedList implementation used to store words in a file. It has
  * O(n/2) in all operations. It keeps track of the middle node using
