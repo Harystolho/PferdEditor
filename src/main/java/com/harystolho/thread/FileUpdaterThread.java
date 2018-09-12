@@ -78,6 +78,10 @@ public class FileUpdaterThread implements Runnable {
 		return biggestX;
 	}
 
+	public static void setBiggestX(float x) {
+		biggestX = x;
+	}
+
 	public static void incrementBiggestXBy(float increment) {
 		biggestX += increment;
 		System.out.println("> " + biggestX);

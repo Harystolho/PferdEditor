@@ -142,7 +142,21 @@ public class File {
 	 */
 	public void addWord(Word word) {
 		words.add(word);
+		updateBiggestX(word);
 		updateCursorPosition(word.getWord()[0], true);
+	}
+
+	/**
+	 * Increments or Decrements the biggest X position in the file. This is used to
+	 * measure the horizontal scroll bar's width
+	 * 
+	 * @param word
+	 */
+	private void updateBiggestX(Word word) {
+		float wordWidth = word.getX() + word.getDrawingSize();
+		if (wordWidth > FileUpdaterThread.getBiggestX()) {
+			FileUpdaterThread.setBiggestX(wordWidth);
+		}
 	}
 
 	private void addKeyToFile(KeyEvent key) {
@@ -170,6 +184,10 @@ public class File {
 
 		if (wordToRemove == null) { // If it's the beginning of a line, it will return null and will remove the last
 									// word in the line above
+			if (getCursorX() == 0 && getCursorY() == CanvasManager.getInstance().getLineHeight()) {
+				return;
+			}
+
 			removeLastWordAtTheLineAbove();
 
 			// Update file's biggest Y
@@ -341,10 +359,8 @@ public class File {
 
 		if (add) {
 			cursorX = cursorX + Word.computeCharWidth(c);
-			FileUpdaterThread.incrementBiggestXBy(Word.computeCharWidth(c));
 		} else {
 			cursorX = cursorX - Word.computeCharWidth(c);
-			FileUpdaterThread.decrementBiggestXBy(Word.computeCharWidth(c));
 		}
 
 	}
@@ -387,6 +403,7 @@ public class File {
 			} else {
 				addCharToExistingWord(wrd, c);
 				updateCursorPosition(c, true);
+				updateBiggestX(wrd);
 				return;
 			}
 		}
@@ -534,9 +551,6 @@ public class File {
 
 		addWord(tab);
 		updateCursorPosition(tab, true);
-		// Because the TAB's drawing size is 0, we need to increment it here using the
-		// right value
-		FileUpdaterThread.incrementBiggestXBy(CanvasManager.TAB_SIZE);
 		resetLastWord();
 	}
 
