@@ -49,7 +49,7 @@ public class FileUpdaterThread implements Runnable {
 
 		ListIterator<Word> i = file.getWords().listIterator();
 
-		int biggestX = 0;
+		float biggestX = 0;
 		int biggestY = lineHeight;
 
 		while (i.hasNext()) {
@@ -63,8 +63,9 @@ public class FileUpdaterThread implements Runnable {
 				break;
 			}
 
-			if (wordObj.getX() + wordObj.getDrawingSize() >= biggestX) {
-				biggestX = (int) (wordObj.getX() + wordObj.getDrawingSize());
+			float wordWidth = wordObj.getX() + wordObj.getDrawingSize();
+			if (wordWidth > biggestX) {
+				biggestX = wordWidth;
 			}
 		}
 

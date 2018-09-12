@@ -142,21 +142,7 @@ public class File {
 	 */
 	public void addWord(Word word) {
 		words.add(word);
-		updateBiggestX(word);
 		updateCursorPosition(word.getWord()[0], true);
-	}
-
-	/**
-	 * Increments or Decrements the biggest X position in the file. This is used to
-	 * measure the horizontal scroll bar's width
-	 * 
-	 * @param word
-	 */
-	private void updateBiggestX(Word word) {
-		float wordWidth = word.getX() + word.getDrawingSize();
-		if (wordWidth > FileUpdaterThread.getBiggestX()) {
-			FileUpdaterThread.setBiggestX(wordWidth);
-		}
 	}
 
 	private void addKeyToFile(KeyEvent key) {
@@ -279,9 +265,11 @@ public class File {
 			char ch = word.getWord()[x];
 
 			if (wordWidthPosition >= cursorXInWWord) {
-				char removed = word.removeCharAt(x); // Removes only 1 char in the word
-				FileUpdaterThread.decrementBiggestXBy(Word.computeCharWidth(removed));
-				// updateCursorPosition(removed, false);
+				// Removes only 1 char in the word
+				word.removeCharAt(x);
+				/*
+				 * char removed = word.removeCharAt(x); updateCursorPosition(removed, false);
+				 */
 				break;
 			}
 			wordWidthPosition += Word.computeCharWidth(ch);
@@ -403,7 +391,6 @@ public class File {
 			} else {
 				addCharToExistingWord(wrd, c);
 				updateCursorPosition(c, true);
-				updateBiggestX(wrd);
 				return;
 			}
 		}
