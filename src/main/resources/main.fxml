@@ -138,12 +138,10 @@
                </VBox.margin>
             </HBox>
       		<Canvas fx:id="canvas" height="597.0" width="1012.0">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
-               </cursor></Canvas>
+               </cursor>
+            </Canvas>
             <Pane fx:id="bottomScrollBar" prefHeight="17.0" prefWidth="1012.0">
                <children>
                   <Rectangle fx:id="bottomScrollInside" arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="17.0" layoutY="-1.0" stroke="TRANSPARENT" strokeType="INSIDE" styleClass="scrollBar" visible="false" width="178.0" />

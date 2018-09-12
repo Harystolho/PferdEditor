@@ -12,6 +12,7 @@ import com.harystolho.PEApplication;
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.misc.OpenWindow;
 import com.harystolho.misc.PropertiesWindowFactory;
+import com.harystolho.misc.StyleLoader;
 import com.harystolho.misc.PropertiesWindowFactory.window_type;
 import com.harystolho.misc.Tab;
 import com.harystolho.pe.File;
@@ -33,6 +34,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.DirectoryChooser;
 
@@ -634,7 +636,7 @@ public class MainController implements ResizableInterface {
 		// 238 is file list on the left
 		canvasBox.setPrefWidth(width - 238 - 23);
 
-		canvas.setWidth(canvasBox.getPrefWidth());
+		canvas.setWidth(canvasBox.getPrefWidth() - 3);
 
 		rightScrollBar.setLayoutX(width - 23);
 

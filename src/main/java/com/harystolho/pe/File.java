@@ -56,7 +56,7 @@ public class File {
 		cursorX = 0;
 		cursorY = 0;
 
-		scrollX = 2;
+		scrollX = 0;
 		scrollY = 0;
 
 		words = new IndexLinkedList<>();
@@ -303,7 +303,7 @@ public class File {
 					word.setX((float) cm.getCursorX() + 1 + scrollX);
 				}
 			} else {
-				word.setX((float) cm.getCursorX());
+				word.setX((float) cm.getCursorX() + scrollX - 1);
 			}
 
 			word.setY((float) cm.getCursorY());

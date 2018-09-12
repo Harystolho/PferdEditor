@@ -114,7 +114,8 @@ public class CanvasManager {
 				// time setCursorY() is called
 				Node node = pivotNode;
 
-				float x = node.getData().getX();
+				float x = node.getData().getX() >= 0 ? node.getData().getX() : 0;
+				//float x = node.getData().getX();
 				float y = node.getData().getY();
 				while (node != null) {
 
@@ -146,7 +147,7 @@ public class CanvasManager {
 					}
 
 					gc.setFill(wordObj.getColor());
-					gc.fillText(wordObj.getWordAsString(), x + getScrollX(), y - getScrollY() - drawingDisplacementY);
+					gc.fillText(wordObj.getWordAsString(), x - getScrollX(), y - getScrollY() - drawingDisplacementY);
 
 					wordObj.setX(x);
 					wordObj.setY(y);
@@ -188,7 +189,7 @@ public class CanvasManager {
 		if (cursorCount > 0) {
 			gc.setFill(StyleLoader.getCursorColor());
 			// 2 is the cursor's width
-			gc.fillRect(getCursorX() + getScrollX(), getCursorY() - lineHeight - getScrollY(), 2, lineHeight);
+			gc.fillRect(getCursorX() - getScrollX(), getCursorY() - lineHeight - getScrollY(), 2, lineHeight);
 		}
 
 	}
@@ -479,6 +480,8 @@ public class CanvasManager {
 
 	public void setScrollX(int x) {
 		if (currentFile != null) {
+
+			System.out.println(x);
 
 			if (x < 0) {
 				currentFile.setScrollX(0);
