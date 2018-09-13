@@ -83,6 +83,9 @@ public class CanvasManager {
 		CanvasManager.canvas = canvas;
 	}
 
+	/**
+	 * Don't call this method when testing because the canvas can't be focused.
+	 */
 	public void update() {
 		if (canvas.isFocused()) {
 			clear();
@@ -115,10 +118,10 @@ public class CanvasManager {
 				Node node = pivotNode;
 
 				// Biggest X position in the file
+				// Used to calculate the horizontal scroll bar's width
 				float biggestX = 0;
 
 				float x = node.getData().getX() >= 0 ? node.getData().getX() : 0;
-				// float x = node.getData().getX();
 				float y = node.getData().getY();
 				while (node != null) {
 

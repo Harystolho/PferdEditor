@@ -10,12 +10,12 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.harystolho.PEApplication;
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.pe.Word.TYPES;
 import com.harystolho.utils.PEUtils;
 
 import javafx.embed.swing.JFXPanel;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
@@ -27,7 +27,8 @@ public class FileTest {
 		new JFXPanel();
 		PEUtils.start();
 
-		PEApplication app = PEApplication.getInstance();
+		Canvas canvas = new Canvas(1280, 720);
+		CanvasManager.setCanvas(canvas);
 	}
 
 	@Test
@@ -44,7 +45,7 @@ public class FileTest {
 		assertEquals(f.getCursorX(), 0, 0);
 		assertEquals(f.getCursorY(), 0, 0);
 
-		assertEquals(f.getScrollX(), -2);
+		assertEquals(f.getScrollX(), 0);
 		assertEquals(f.getScrollY(), 0);
 
 	}
@@ -128,16 +129,59 @@ public class FileTest {
 		f.type(new KeyEvent(null, null, null, null, "o", KeyCode.UNDEFINED, false, false, false, false));
 		f.type(new KeyEvent(null, null, null, null, "r", KeyCode.UNDEFINED, false, false, false, false));
 		f.type(new KeyEvent(null, null, null, null, "d", KeyCode.UNDEFINED, false, false, false, false));
-		cm.update();
+		cm.draw();
 
 		cm.setCursorX(Word.computeCharWidth('w'));
 
 		f.type(new KeyEvent(null, null, null, null, null, KeyCode.SPACE, false, false, false, false));
-		cm.update();
+		cm.draw();
 
 		assertTrue(f.getWords().get(0).getWordAsString().equals("w"));
 		assertTrue(f.getWords().get(1).getWordAsString().equals(" "));
 		assertTrue(f.getWords().get(2).getWordAsString().equals("ord"));
+	}
+
+	@Test
+	public void deleteSpace_And_TypeSpaceAgain() {
+		File f = new File("fDelete");
+		CanvasManager cm = CanvasManager.getInstance();
+
+		cm.setCurrentFile(f);
+
+		typeStringToFile(f, "newlife");
+
+		cm.draw();
+		assertEquals(f.getWords().size(), 1);
+
+		cm.setCursorX(0);
+		assertEquals(cm.getCursorX(), 0, 0);
+
+		cm.moveCursorRight();
+		cm.moveCursorRight();
+		cm.moveCursorRight();
+
+		f.type(new KeyEvent(null, null, null, null, null, KeyCode.SPACE, false, false, false, false));
+
+		cm.draw();
+
+		assertEquals(f.getWords().size(), 3);
+
+		f.removeCharBeforeCursor();
+		cm.draw();
+
+		assertEquals(f.getWords().size(), 2);
+
+		f.type(new KeyEvent(null, null, null, null, null, KeyCode.SPACE, false, false, false, false));
+		cm.draw();
+		
+		assertEquals(f.getWords().size(), 3);
+	}
+
+	private void typeStringToFile(File file, String string) {
+		for (char c : string.toCharArray()) {
+			file.type(new KeyEvent(null, null, null, null, String.valueOf(c), KeyCode.UNDEFINED, false, false, false,
+					false));
+		}
 	}
 
 	@AfterClass

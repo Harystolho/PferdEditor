@@ -302,7 +302,7 @@ public class File {
 			CanvasManager cm = CanvasManager.getInstance();
 
 			if (getCursorX() != 0) {
-				if (word.getType() == TYPES.TAB) {
+				if (word.getType() == TYPES.TAB || word.getType() == TYPES.NEW_LINE) {
 					word.setX((float) cm.getCursorX() - 1 + scrollX);
 				} else {
 					word.setX((float) cm.getCursorX() + 1 + scrollX);
@@ -444,7 +444,11 @@ public class File {
 				wordWidthPosition += Word.computeCharWidth(wordAtCursor.getWord()[x]);
 
 				if (wordWidthPosition > cursorXInWWord) { // If the cursor is in the middle of a word
-					createSpaceInTheMiddleOfTheWord(wordAtCursor, x);
+					if (x > 0) {
+						createSpaceInTheMiddleOfTheWord(wordAtCursor, x);// If the cursor is in the middle of a word
+					} else {
+						createSpaceBeforeWord(); // If the cursor is at the beginning of a word
+					}
 					return;
 				}
 			}
@@ -455,6 +459,17 @@ public class File {
 			createSpaceAtTheEndOfTheWord();
 		}
 
+	}
+
+	private void createSpaceBeforeWord() {
+		Word space = new Word(' ', TYPES.SPACE);
+
+		space.setX((float) CanvasManager.getInstance().getCursorX() + scrollX - 1);
+		space.setY((float) CanvasManager.getInstance().getCursorY());
+
+		addWord(space);
+
+		resetLastWord();
 	}
 
 	private void createSpaceInTheMiddleOfTheWord(Word word, int charIndex) {
@@ -526,7 +541,7 @@ public class File {
 
 		// Move cursor to the beginning of the line below
 		forceLineDown();
-		setCursorX(0);
+		cursorX = 0;
 
 		resetLastWord();
 	}
@@ -723,6 +738,10 @@ public class File {
 	 * @param name
 	 */
 	private void updateDiskFile(String name) {
+		if (diskFile == null) {
+			return;
+		}
+
 		java.io.File newFile = new java.io.File(PEUtils.getSaveFolder() + "/" + name);
 		boolean succeed = diskFile.renameTo(newFile);
 
