@@ -1,5 +1,6 @@
 package com.harystolho.controllers;
 
+import java.io.File;
 import java.util.regex.Pattern;
 
 import com.harystolho.PEApplication;
@@ -12,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
 public class NewFileController {
@@ -21,6 +23,9 @@ public class NewFileController {
 
 	@FXML
 	private Button cancel;
+
+	@FXML
+	private TextField directory;
 
 	@FXML
 	private TextField file;
@@ -37,10 +42,23 @@ public class NewFileController {
 
 	@FXML
 	void initialize() {
+		directory.setText(PEUtils.getSaveFolder().getAbsolutePath());
 		loadEventHandlers();
 	}
 
 	private void loadEventHandlers() {
+
+		directory.setOnMouseClicked((e) -> {
+			DirectoryChooser dc = new DirectoryChooser();
+
+			dc.setInitialDirectory(PEUtils.getSaveFolder());
+			
+			File dir = dc.showDialog(PEApplication.getInstance().getWindow());
+
+			if (dir != null && dir.exists()) {
+				directory.setText(dir.getAbsolutePath());
+			}
+		});
 
 		createFile.setOnAction((e) -> {
 			createNewFile(file.getText());
@@ -55,9 +73,14 @@ public class NewFileController {
 	private void createNewFile(String name) {
 		if (!name.isEmpty()) {
 			if (isNameValid(name)) {
-				// TODO change default folder
-				PEApplication.getInstance().getMainController().createNewFile(PEUtils.getSaveFolder(), name);
-				stage.close();
+				File folder = new File(directory.getText());
+
+				if (folder.exists()) {
+					PEApplication.getInstance().getMainController().createNewFile(folder, name);
+					stage.close();
+				} else {
+					// TODO show error message
+				}
 			}
 		}
 
