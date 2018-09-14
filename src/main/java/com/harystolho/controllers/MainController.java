@@ -133,12 +133,7 @@ public class MainController implements ResizableInterface {
 		});
 
 		saveFile.setOnMouseClicked((e) -> {
-			List<File> files = new ArrayList<>();
-
-			/*
-			 * fileList.getItems().forEach((p) -> { addFileToList(files, p); });
-			 */
-			PEUtils.saveFiles(files);
+			PEUtils.saveFiles(fileExplorer.getFiles());
 		});
 
 		refresh.setOnMouseClicked((e) -> {
@@ -211,12 +206,7 @@ public class MainController implements ResizableInterface {
 		});
 
 		menuSave.setOnAction((e) -> {
-			List<File> files = new ArrayList<>();
-
-			/*
-			 * fileList.getItems().forEach((p) -> { addFileToList(files, p); });
-			 */
-			PEUtils.saveFiles(files);
+			PEUtils.saveFiles(fileExplorer.getFiles());
 		});
 
 		menuSaveAs.setOnAction((e) -> {
@@ -301,16 +291,7 @@ public class MainController implements ResizableInterface {
 		CommonFile cFile = new CommonFile(fileName, false);
 		cFile.setFile(file);
 
-		addFileToList(cFile);
-	}
-
-	public void addFileToList(Pane file) {
-		if (fileExplorer.getContent() != null) {
-			CommonFolder cFolder = (CommonFolder) fileExplorer.getContent();
-			cFolder.add(file);
-		} else {
-			fileExplorer.setContent(file);
-		}
+		fileExplorer.add(cFile);
 	}
 
 	private void deleteFile(File file) {
@@ -445,7 +426,7 @@ public class MainController implements ResizableInterface {
 			for (java.io.File file : saveFolder.listFiles()) {
 				PEUtils.createFileFromSourceFile(root, file);
 			}
-			addFileToList(root);
+			fileExplorer.add(root);
 		}
 	}
 
@@ -614,18 +595,6 @@ public class MainController implements ResizableInterface {
 			if (tab.getUserData() == file) {
 				tab.setTabName(file.getName());
 				break;
-			}
-		}
-	}
-
-	private void addFileToList(List<File> list, Pane p) {
-		if (p instanceof CommonFile) {
-			CommonFile cFile = (CommonFile) p;
-			list.add(cFile.getFile());
-		} else if (p instanceof CommonFolder) {
-			CommonFolder cFolder = (CommonFolder) p;
-			for (Pane pp : cFolder.getFiles()) {
-				addFileToList(list, pp);
 			}
 		}
 	}

@@ -19,6 +19,9 @@ public class CommonFolder extends VBox {
 
 		CommonFile folder = new CommonFile(diskFile.getName(), true);
 		getChildren().add(folder);
+
+		// 219 is the File Explorer's width
+		setPrefWidth(219);
 	}
 
 	public void add(Pane file) {

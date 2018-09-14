@@ -74,10 +74,9 @@ public class PEUtils {
 	}
 
 	public static void saveFiles(List<com.harystolho.pe.File> files) {
-		files.stream().forEach((fileToSave) -> {
+		files.forEach((fileToSave) -> {
 			if (fileToSave.isLoaded()) {
-				File f = new File(saveFolder + "/" + fileToSave.getName());
-				saveFile(fileToSave, f);
+				saveFile(fileToSave, fileToSave.getDiskFile());
 			}
 		});
 	}

@@ -12,10 +12,13 @@ import javafx.scene.layout.HBox;
 
 public class CommonFile extends HBox {
 
-	File file;
+	private boolean isDirectory;
+	private File file;
 
 	public CommonFile(String name, boolean isDirectory) {
 		ImageView icon;
+
+		this.isDirectory = isDirectory;
 
 		if (isDirectory) {
 			icon = new ImageView(ClassLoader.getSystemResource("icons/common_folder.png").toExternalForm());
@@ -57,6 +60,10 @@ public class CommonFile extends HBox {
 
 	public File getFile() {
 		return file;
+	}
+
+	public boolean isDirectory() {
+		return isDirectory;
 	}
 
 }
