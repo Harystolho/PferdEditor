@@ -32,7 +32,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseButton;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -74,8 +73,6 @@ public class MainController implements ResizableInterface {
 	private ImageView newFile;
 	@FXML
 	private ImageView saveFile;
-	@FXML
-	private ImageView deleteFile;
 	@FXML
 	private ImageView refresh;
 	@FXML
@@ -140,14 +137,6 @@ public class MainController implements ResizableInterface {
 				addFileToList(files, p);
 			});
 			PEUtils.saveFiles(files);
-		});
-
-		deleteFile.setOnMouseClicked((e) -> {
-			Pane p = fileList.getSelectionModel().getSelectedItem();
-			if (p instanceof CommonFile) {
-				CommonFile cFile = (CommonFile) p;
-				deleteFile(cFile.getFile());
-			}
 		});
 
 		refresh.setOnMouseClicked((e) -> {

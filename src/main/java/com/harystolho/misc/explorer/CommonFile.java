@@ -48,7 +48,6 @@ public class CommonFile extends HBox {
 				PEApplication.getInstance().getMainController().openFileRightClickWindow(file, e.getSceneX(),
 						e.getSceneY());
 			}
-
 		});
 	}
 

@@ -62,6 +62,8 @@ public class FileRightClickController {
 			showProperties();
 		});
 
+		// TODO delete file
+
 	}
 
 	/**
@@ -71,7 +73,7 @@ public class FileRightClickController {
 	 */
 	private void renameFile() {
 		OpenWindow ow = new OpenWindow("Rename File");
-
+// TODO renaming not working correctly
 		ow.load("renameFile.fxml", (controller) -> {
 			RenameFileController ctrl = (RenameFileController) controller;
 			ctrl.setStage(ow.getStage());
@@ -99,6 +101,7 @@ public class FileRightClickController {
 
 	/**
 	 * Copies the whole file content to the clipboard
+	 * 
 	 * @param f
 	 */
 	public static void copyFile(File f) {
@@ -143,6 +146,7 @@ public class FileRightClickController {
 
 	/**
 	 * Pastes the clipboard content to the file at the cursor position
+	 * 
 	 * @param f
 	 */
 	public static void pasteFile(File f) {
