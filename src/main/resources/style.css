@@ -17,9 +17,8 @@
     -fx-background-color: transparent;
 }
 
-#fileList .list-cell:selected{
-    -fx-border-width: 2px;
-    -fx-border-color: #6d6d6d;
+.commonFile:hover{
+    -fx-background-color: #6d6d6d;
 }
 
 #fileList .list-cell:selected .text {

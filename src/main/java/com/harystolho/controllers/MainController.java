@@ -129,36 +129,6 @@ public class MainController implements ResizableInterface {
 
 		loadMenuBarItemHandler();
 
-		fileList.setOnMouseClicked((e) -> {
-			PropertiesWindowFactory.removeOpenWindow();
-
-			if (e.getButton() == MouseButton.PRIMARY) {
-				if (e.getClickCount() == 2) { // Double click
-					Pane p = fileList.getSelectionModel().getSelectedItem();
-					if (p instanceof CommonFile) {
-						CommonFile cFile = (CommonFile) p;
-						loadFileInCanvas(cFile.getFile());
-					} else if (p instanceof CommonFolder) {
-						CommonFolder cFolder = (CommonFolder) p;
-						// TODO openFolder(cFolder);
-					}
-
-				}
-			} else if (e.getButton() == MouseButton.SECONDARY) {
-				if (fileList.getSelectionModel().getSelectedItem() != null) {
-					// Opens right click properties window
-					Pane p = fileList.getSelectionModel().getSelectedItem();
-					if (p instanceof CommonFile) {
-						CommonFile cFile = (CommonFile) p;
-						openFileRightClickWindow(cFile.getFile(), e.getSceneX(), e.getSceneY());
-					} else if (p instanceof CommonFolder) {
-						// TODO
-					}
-
-				}
-			}
-		});
-
 		newFile.setOnMouseClicked((e) -> {
 			createNewFile();
 		});
@@ -418,7 +388,7 @@ public class MainController implements ResizableInterface {
 	 * @param x
 	 * @param y
 	 */
-	private void openFileRightClickWindow(File file, double x, double y) {
+	public void openFileRightClickWindow(File file, double x, double y) {
 		PropertiesWindowFactory.open(window_type.FILE, x, y, (controller) -> {
 			FileRightClickController fileController = (FileRightClickController) controller;
 			fileController.setFile(file);
