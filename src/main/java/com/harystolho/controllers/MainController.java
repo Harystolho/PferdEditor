@@ -283,10 +283,15 @@ public class MainController implements ResizableInterface {
 	}
 
 	/**
-	 * Creates a new {@link File} and adds it to {@link #fileList}
+	 * Creates a new {@link File} inside <code>folder</code> and adds it to
+	 * {@link #fileList}
+	 * 
+	 * @param folder
+	 * @param fileName
 	 */
-	public void createNewFile(String fileName) {
+	public void createNewFile(java.io.File folder, String fileName) {
 		File file = new File(fileName);
+		file.setDiskFile(new java.io.File(folder + java.io.File.separator + fileName));
 
 		CommonFile cFile = new CommonFile(fileName, false);
 		cFile.setFile(file);

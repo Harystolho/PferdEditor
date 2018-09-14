@@ -3,6 +3,7 @@ package com.harystolho.controllers;
 import java.util.regex.Pattern;
 
 import com.harystolho.PEApplication;
+import com.harystolho.utils.PEUtils;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -54,7 +55,8 @@ public class NewFileController {
 	private void createNewFile(String name) {
 		if (!name.isEmpty()) {
 			if (isNameValid(name)) {
-				PEApplication.getInstance().getMainController().createNewFile(name);
+				// TODO change default folder
+				PEApplication.getInstance().getMainController().createNewFile(PEUtils.getSaveFolder(), name);
 				stage.close();
 			}
 		}

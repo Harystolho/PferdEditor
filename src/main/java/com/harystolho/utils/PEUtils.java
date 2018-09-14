@@ -82,11 +82,9 @@ public class PEUtils {
 	}
 
 	public static void saveFile(com.harystolho.pe.File fileToSave, File f) {
-
 		// If a new PE file was created the disk file is null
 		if (f == null) {
-			f = new File(getSaveFolder() + "/" + fileToSave.getName());
-			fileToSave.setDiskFile(f);
+			return;
 		}
 
 		if (!f.exists()) {
