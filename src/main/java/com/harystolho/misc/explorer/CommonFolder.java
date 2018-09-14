@@ -11,7 +11,7 @@ import javafx.scene.layout.VBox;
 public class CommonFolder extends VBox {
 
 	private File diskFile;
-	List<Pane> files;
+	private List<Pane> files;
 
 	public CommonFolder(File diskFile) {
 		this.diskFile = diskFile;
@@ -37,6 +37,10 @@ public class CommonFolder extends VBox {
 	public List<Pane> getFiles() {
 		List<? extends Object> list = getChildren();
 		return (List<Pane>) list;
+	}
+
+	public File getDiskFile() {
+		return diskFile;
 	}
 
 }

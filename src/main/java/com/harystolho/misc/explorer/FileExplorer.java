@@ -24,15 +24,59 @@ public class FileExplorer extends ScrollPane {
 
 	public void add(Pane file) {
 		if (getContent() != null) {
-			CommonFolder cFolder = (CommonFolder) getContent();
-			cFolder.add(file);
+			CommonFolder root = (CommonFolder) getContent();
+
+			addFileToCorrectFolder(root, file);
 		} else {
 			setContent(file);
 		}
 	}
 
 	/**
-	 * @return a list containing all the files under the save folder
+	 * If the file is at the same directory as the <code>folder</code> it will add
+	 * the <code>file</code> to that folder, if it's not then it will loop through
+	 * all the folders in the <code>folder</code> directory and call this method
+	 * until it finds the correct one.
+	 * 
+	 * @param folder
+	 * @param file
+	 * @return
+	 */
+	private boolean addFileToCorrectFolder(CommonFolder folder, Pane file) {
+		if (file instanceof CommonFile) {
+			CommonFile cFile = (CommonFile) file;
+			// If the folder is parent to cFile
+			if (folder.getDiskFile().equals(cFile.getFile().getDiskFile().getParentFile())) {
+				folder.add(file);
+				return true;
+			} else {
+				for (Pane p : folder.getFiles()) {
+					if (p instanceof CommonFolder) {
+						CommonFolder cF = (CommonFolder) p;
+						return addFileToCorrectFolder(cF, cFile);
+					}
+				}
+			}
+		} else if (file instanceof CommonFolder) {
+			CommonFolder cFolder = (CommonFolder) file;
+			// If the folder is parent to cFolder
+			if (folder.getDiskFile().equals(cFolder.getDiskFile().getParentFile())) {
+				folder.add(file);
+				return true;
+			} else {
+				for (Pane p : folder.getFiles()) {
+					if (p instanceof CommonFolder) {
+						CommonFolder cF = (CommonFolder) p;
+						return addFileToCorrectFolder(cF, cFolder);
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * @return A list containing all the files under the save folder
 	 * @see {@link PEUtils#getSaveFolder()}
 	 */
 	public List<File> getFiles() {
@@ -55,8 +99,8 @@ public class FileExplorer extends ScrollPane {
 	private void addFilesToList(List<File> list, Pane p) {
 		if (p instanceof CommonFile) {
 			CommonFile cFile = (CommonFile) p;
-			if(!cFile.isDirectory()) {
-				list.add(cFile.getFile());	
+			if (!cFile.isDirectory()) {
+				list.add(cFile.getFile());
 			}
 		} else if (p instanceof CommonFolder) {
 			CommonFolder cFolder = (CommonFolder) p;
