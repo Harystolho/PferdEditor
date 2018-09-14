@@ -5,6 +5,8 @@ import java.awt.Desktop.Action;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ListIterator;
 import java.util.regex.Pattern;
 
@@ -14,6 +16,8 @@ import com.harystolho.misc.OpenWindow;
 import com.harystolho.misc.PropertiesWindowFactory;
 import com.harystolho.misc.PropertiesWindowFactory.window_type;
 import com.harystolho.misc.Tab;
+import com.harystolho.misc.explorer.CommonFile;
+import com.harystolho.misc.explorer.CommonFolder;
 import com.harystolho.pe.File;
 import com.harystolho.thread.FileUpdaterThread;
 import com.harystolho.thread.RenderThread;
@@ -92,7 +96,7 @@ public class MainController implements ResizableInterface {
 	@FXML
 	private Pane canvasInformationBar;
 	@FXML
-	private ListView<File> fileList;
+	private ListView<Pane> fileList;
 	@FXML
 	private Pane rightScrollBar;
 	private double lastY = 0;
@@ -130,13 +134,27 @@ public class MainController implements ResizableInterface {
 
 			if (e.getButton() == MouseButton.PRIMARY) {
 				if (e.getClickCount() == 2) { // Double click
-					loadFileInCanvas(fileList.getSelectionModel().getSelectedItem());
+					Pane p = fileList.getSelectionModel().getSelectedItem();
+					if (p instanceof CommonFile) {
+						CommonFile cFile = (CommonFile) p;
+						loadFileInCanvas(cFile.getFile());
+					} else if (p instanceof CommonFolder) {
+						CommonFolder cFolder = (CommonFolder) p;
+						// TODO openFolder(cFolder);
+					}
+
 				}
 			} else if (e.getButton() == MouseButton.SECONDARY) {
 				if (fileList.getSelectionModel().getSelectedItem() != null) {
 					// Opens right click properties window
-					openFileRightClickWindow(fileList.getSelectionModel().getSelectedItem(), e.getSceneX(),
-							e.getSceneY());
+					Pane p = fileList.getSelectionModel().getSelectedItem();
+					if (p instanceof CommonFile) {
+						CommonFile cFile = (CommonFile) p;
+						openFileRightClickWindow(cFile.getFile(), e.getSceneX(), e.getSceneY());
+					} else if (p instanceof CommonFolder) {
+						// TODO
+					}
+
 				}
 			}
 		});
@@ -146,11 +164,20 @@ public class MainController implements ResizableInterface {
 		});
 
 		saveFile.setOnMouseClicked((e) -> {
-			PEUtils.saveFiles(fileList.getItems());
+			List<File> files = new ArrayList<>();
+
+			fileList.getItems().forEach((p) -> {
+				addFileToList(files, p);
+			});
+			PEUtils.saveFiles(files);
 		});
 
 		deleteFile.setOnMouseClicked((e) -> {
-			deleteFile(fileList.getSelectionModel().getSelectedItem());
+			Pane p = fileList.getSelectionModel().getSelectedItem();
+			if (p instanceof CommonFile) {
+				CommonFile cFile = (CommonFile) p;
+				deleteFile(cFile.getFile());
+			}
 		});
 
 		refresh.setOnMouseClicked((e) -> {
@@ -223,7 +250,13 @@ public class MainController implements ResizableInterface {
 		});
 
 		menuSave.setOnAction((e) -> {
-			PEUtils.saveFiles(fileList.getItems());
+			List<File> files = new ArrayList<>();
+
+			fileList.getItems().forEach((p) -> {
+				addFileToList(files, p);
+			});
+
+			PEUtils.saveFiles(files);
 		});
 
 		menuSaveAs.setOnAction((e) -> {
@@ -291,10 +324,14 @@ public class MainController implements ResizableInterface {
 	 */
 	public void createNewFile(String fileName) {
 		File file = new File(fileName);
-		addFileToList(file);
+
+		CommonFile cFile = new CommonFile(fileName, false);
+		cFile.setFile(file);
+
+		addFileToList(cFile);
 	}
 
-	public void addFileToList(File file) {
+	public void addFileToList(Pane file) {
 		fileList.getItems().add(file);
 	}
 
@@ -426,11 +463,11 @@ public class MainController implements ResizableInterface {
 	private void loadFileNames() {
 		java.io.File saveFolder = PEUtils.getSaveFolder();
 		if (saveFolder.exists()) {
+			CommonFolder root = new CommonFolder(saveFolder);
 			for (java.io.File file : saveFolder.listFiles()) {
-				if (!file.isDirectory()) {
-					addFileToList(PEUtils.createFileFromSourceFile(file));
-				}
+				PEUtils.createFileFromSourceFile(root, file);
 			}
+			addFileToList(root);
 		}
 	}
 
@@ -597,6 +634,18 @@ public class MainController implements ResizableInterface {
 			if (tab.getUserData() == file) {
 				tab.setTabName(file.getName());
 				break;
+			}
+		}
+	}
+
+	private void addFileToList(List<File> list, Pane p) {
+		if (p instanceof CommonFile) {
+			CommonFile cFile = (CommonFile) p;
+			list.add(cFile.getFile());
+		} else if (p instanceof CommonFolder) {
+			CommonFolder cFolder = (CommonFolder) p;
+			for (Pane pp : cFolder.getFiles()) {
+				addFileToList(list, pp);
 			}
 		}
 	}

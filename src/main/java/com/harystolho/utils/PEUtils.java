@@ -12,6 +12,8 @@ import java.util.logging.Logger;
 
 import com.harystolho.PEApplication;
 import com.harystolho.controllers.ResizableInterface;
+import com.harystolho.misc.explorer.CommonFile;
+import com.harystolho.misc.explorer.CommonFolder;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -135,14 +137,29 @@ public class PEUtils {
 	 * Loads the file names from disk but not the content inside it, to load the
 	 * content use {@link #loadFileFromDisk(com.harystolho.pe.File)}
 	 * 
-	 * @param f file to be read
+	 * @param root
+	 * 
+	 * @param f    file to be read
 	 * @return a <code>File</code> object containing the file name
 	 */
-	public static com.harystolho.pe.File createFileFromSourceFile(File f) {
-		com.harystolho.pe.File file = new com.harystolho.pe.File(f.getName());
-		file.setDiskFile(f);
+	public static void createFileFromSourceFile(CommonFolder root, File f) {
+		if (f.isDirectory()) {
+			CommonFolder folder = new CommonFolder(f);
 
-		return file;
+			for (File ff : f.listFiles()) {
+				createFileFromSourceFile(folder, ff);
+			}
+
+			root.add(folder);
+		} else {
+			com.harystolho.pe.File file = new com.harystolho.pe.File(f.getName());
+			file.setDiskFile(f);
+
+			CommonFile cFile = new CommonFile(f.getName(), false);
+			cFile.setFile(file);
+
+			root.add(cFile);
+		}
 	}
 
 	public static void loadFileFromDisk(com.harystolho.pe.File file) {
