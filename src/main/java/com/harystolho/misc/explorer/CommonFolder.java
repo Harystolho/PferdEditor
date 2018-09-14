@@ -22,7 +22,7 @@ public class CommonFolder extends VBox {
 	}
 
 	public void add(Pane file) {
-		setMargin(file, new Insets(1, 0, 1, 10));
+		file.setPadding(new Insets(1, 0, 1, 10));
 		getChildren().add(file);
 	}
 

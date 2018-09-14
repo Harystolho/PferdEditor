@@ -13,16 +13,18 @@
     -fx-border-color: #404040;
 }
 
-#fileList, #fileList .list-cell {
+#fileExplorer{
+    -fx-background-insets: 0;
+    -fx-padding: 0;
     -fx-background-color: transparent;
 }
 
-.commonFile:hover{
-    -fx-background-color: #6d6d6d;
+#fileExplorer > .viewport {
+    -fx-background-color: transparent;
 }
 
-#fileList .list-cell:selected .text {
-
+.commonFile:hover {
+    -fx-background-color: #6d6d6d;
 }
 
 #fileList .list-cell .text {
@@ -44,58 +46,58 @@
     -fx-background-color: #565656;
 }
 
-.label{
-	-fx-text-fill: white;
-	-fx-font-size: 15px;
+.label {
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
     -fx-font-family: "Quicksand";
 }
 
-.menu-item{
+.menu-item {
     -fx-background-color: #565656;
 }
 
-.menu-item:hover{
+.menu-item:hover {
     -fx-background-color: #939393;
 }
 
-#fileRightClick{
-	-fx-background-color: #fff; 
+#fileRightClick {
+    -fx-background-color: #fff;
 }
 
-#fileRightClick .label{
-	-fx-text-fill: black;
+#fileRightClick .label {
+    -fx-text-fill: black;
 }
 
-.propLine:hover{
-	-fx-background-color: #939393;
+.propLine:hover {
+    -fx-background-color: #939393;
 }
 
-.fileTabItem{
-	-fx-background-color: #0061ce;
+.fileTabItem {
+    -fx-background-color: #0061ce;
 }
 
-.closeTab:hover{
+.closeTab:hover {
     -fx-text-fill: #ff383f;
 }
 
-.scrollBar{
+.scrollBar {
     -fx-fill: #8d8d8d;
 }
 
-#fileName{
+#fileName {
     -fx-background-radius: 2px;
 }
 
-#cancel, #rename, #save, #saveAs, #dontSave, #createFile{
+#cancel, #rename, #save, #saveAs, #dontSave, #createFile {
     -fx-background-color: #fff;
 }
 
-.defaultButton{
+.defaultButton {
     -fx-background-color: #fff;
 }
 
-#settingsList{
-	-fx-border-width: 0 2px 0 0;
+#settingsList {
+    -fx-border-width: 0 2px 0 0;
     -fx-border-color: #000;
 
 }
@@ -105,26 +107,26 @@
     -fx-font-family: "Quicksand";
 }
 
-#settingsList .list-cell:selected{
+#settingsList .list-cell:selected {
     -fx-border-width: 0 0 2px 0;
     -fx-border-color: #fff;
 }
 
-#settingsList, #settingsList .list-cell{
+#settingsList, #settingsList .list-cell {
     -fx-background-color: transparent;
 }
 
-.settingsTopBox{
+.settingsTopBox {
     -fx-border-width: 0 0 2px 0;
     -fx-border-color: #000;
 }
 
-.settingsBottomBox{
+.settingsBottomBox {
     -fx-border-width: 2px 0 0 0;
     -fx-border-color: #000;
     -fx-color: #b3b3b3;
 }
 
-.colorPicker .color-picker-label{
+.colorPicker .color-picker-label {
     -fx-text-fill: black;
 }

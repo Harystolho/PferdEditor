@@ -18,6 +18,7 @@ import com.harystolho.misc.PropertiesWindowFactory.window_type;
 import com.harystolho.misc.Tab;
 import com.harystolho.misc.explorer.CommonFile;
 import com.harystolho.misc.explorer.CommonFolder;
+import com.harystolho.misc.explorer.FileExplorer;
 import com.harystolho.pe.File;
 import com.harystolho.thread.FileUpdaterThread;
 import com.harystolho.thread.RenderThread;
@@ -28,7 +29,6 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
@@ -93,8 +93,6 @@ public class MainController implements ResizableInterface {
 	@FXML
 	private Pane canvasInformationBar;
 	@FXML
-	private ListView<Pane> fileList;
-	@FXML
 	private Pane rightScrollBar;
 	private double lastY = 0;
 
@@ -112,11 +110,15 @@ public class MainController implements ResizableInterface {
 
 	boolean showWhiteSpaces = false;
 
+	private FileExplorer fileExplorer;
+
 	@FXML
 	void initialize() {
 		loadEventHandlers();
 
 		CanvasManager.setCanvas(canvas);
+
+		addFileExplorer();
 
 		loadSaveDirectory();
 		setCurrentDirectoryLabel(PEUtils.getSaveFolder());
@@ -133,9 +135,9 @@ public class MainController implements ResizableInterface {
 		saveFile.setOnMouseClicked((e) -> {
 			List<File> files = new ArrayList<>();
 
-			fileList.getItems().forEach((p) -> {
-				addFileToList(files, p);
-			});
+			/*
+			 * fileList.getItems().forEach((p) -> { addFileToList(files, p); });
+			 */
 			PEUtils.saveFiles(files);
 		});
 
@@ -211,10 +213,9 @@ public class MainController implements ResizableInterface {
 		menuSave.setOnAction((e) -> {
 			List<File> files = new ArrayList<>();
 
-			fileList.getItems().forEach((p) -> {
-				addFileToList(files, p);
-			});
-
+			/*
+			 * fileList.getItems().forEach((p) -> { addFileToList(files, p); });
+			 */
 			PEUtils.saveFiles(files);
 		});
 
@@ -256,6 +257,19 @@ public class MainController implements ResizableInterface {
 	}
 
 	/**
+	 * The {@link FileExplorer} is used to navigate folders.
+	 */
+	private void addFileExplorer() {
+		fileExplorer = new FileExplorer();
+
+		// TODO fix height resize
+		fileExplorer.setPrefHeight(canvas.getHeight());
+		fileExplorer.setPrefWidth(219);
+
+		leftPane.getChildren().add(fileExplorer);
+	}
+
+	/**
 	 * Saves the file that is being drawn
 	 */
 	public void saveOpenedFile() {
@@ -291,12 +305,17 @@ public class MainController implements ResizableInterface {
 	}
 
 	public void addFileToList(Pane file) {
-		fileList.getItems().add(file);
+		if (fileExplorer.getContent() != null) {
+			CommonFolder cFolder = (CommonFolder) fileExplorer.getContent();
+			cFolder.add(file);
+		} else {
+			fileExplorer.setContent(file);
+		}
 	}
 
 	private void deleteFile(File file) {
 		if (file != null) {
-			fileList.getItems().remove(file);
+			fileExplorer.remove(file);
 
 			if (file.isLoaded()) {
 				closeFile(file);
@@ -404,7 +423,7 @@ public class MainController implements ResizableInterface {
 	 * Clears the file list and loads the files from the save directory
 	 */
 	private void loadSaveDirectory() {
-		fileList.getItems().clear();
+		fileExplorer.setContent(null);
 
 		// Closes the opened tabs
 		ListIterator<Node> it = filesTab.getChildren().listIterator();
@@ -510,7 +529,7 @@ public class MainController implements ResizableInterface {
 	}
 
 	public void refrestFileList() {
-		fileList.refresh();
+		// fileList.refresh();
 	}
 
 	private void hideSrollBar() {
@@ -563,7 +582,9 @@ public class MainController implements ResizableInterface {
 	 * @return <code>true</code> if at least 1 file is selected
 	 */
 	public boolean isFileSelected() {
-		return fileList.getSelectionModel().getSelectedIndices().isEmpty() ? false : true;
+		return true;
+		// return fileList.getSelectionModel().getSelectedIndices().isEmpty() ? false :
+		// true;
 	}
 
 	/**
