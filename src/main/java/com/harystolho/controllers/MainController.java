@@ -5,8 +5,6 @@ import java.awt.Desktop.Action;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ListIterator;
 import java.util.regex.Pattern;
 
@@ -299,7 +297,7 @@ public class MainController implements ResizableInterface {
 		fileExplorer.add(cFile);
 	}
 
-	private void deleteFile(File file) {
+	public void deleteFile(File file) {
 		if (file != null) {
 			fileExplorer.remove(file);
 

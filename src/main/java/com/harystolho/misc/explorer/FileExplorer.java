@@ -19,7 +19,7 @@ public class FileExplorer extends ScrollPane {
 	}
 
 	public void remove(File file) {
-		// TODO Auto-generated method stub
+		// TODO remove file
 	}
 
 	public void add(Pane file) {
@@ -90,8 +90,8 @@ public class FileExplorer extends ScrollPane {
 	}
 
 	/**
-	 * If <code>p</code> is a file add it to the <code>list</code>, if it's a folder
-	 * call this method for each file under it.
+	 * If <code>p</code> is a file, add it to the <code>list</code>, if it's a
+	 * folder call this method for each file under it.
 	 * 
 	 * @param list
 	 * @param p
