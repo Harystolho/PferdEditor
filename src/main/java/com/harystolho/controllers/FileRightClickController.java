@@ -1,5 +1,6 @@
 package com.harystolho.controllers;
 
+import com.harystolho.PEApplication;
 import com.harystolho.misc.OpenWindow;
 import com.harystolho.misc.PropertiesWindowFactory;
 import com.harystolho.pe.File;
@@ -31,6 +32,9 @@ public class FileRightClickController {
 	private HBox paste;
 
 	@FXML
+	private HBox delete;
+
+	@FXML
 	private HBox properties;
 
 	private File file;
@@ -49,12 +53,12 @@ public class FileRightClickController {
 
 		copy.setOnMouseClicked((e) -> {
 			PropertiesWindowFactory.removeOpenWindow();
-			copyFile();
+			copyFile(file);
 		});
 
 		paste.setOnMouseClicked((e) -> {
 			PropertiesWindowFactory.removeOpenWindow();
-			pasteFile();
+			pasteFile(file);
 		});
 
 		properties.setOnMouseClicked((e) -> {
@@ -62,8 +66,10 @@ public class FileRightClickController {
 			showProperties();
 		});
 
-		// TODO delete file
-
+		delete.setOnMouseClicked((e) -> {
+			PropertiesWindowFactory.removeOpenWindow();
+			PEApplication.getInstance().getMainController().deleteFile(file);
+		});
 	}
 
 	/**
@@ -81,14 +87,6 @@ public class FileRightClickController {
 		});
 
 		ow.openWindow();
-	}
-
-	private void copyFile() {
-		copyFile(file);
-	}
-
-	private void pasteFile() {
-		pasteFile(file);
 	}
 
 	private void showProperties() {

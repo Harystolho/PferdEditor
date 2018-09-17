@@ -32,7 +32,7 @@ public class CommonFolder extends VBox {
 	}
 
 	public void remove(Pane file) {
-
+		getChildren().remove(file);
 	}
 
 	@SuppressWarnings("unchecked")

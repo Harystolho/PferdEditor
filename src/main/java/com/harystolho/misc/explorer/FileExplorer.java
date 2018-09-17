@@ -1,12 +1,15 @@
 package com.harystolho.misc.explorer;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
 import com.harystolho.pe.File;
 import com.harystolho.utils.PEUtils;
 
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 
@@ -19,7 +22,24 @@ public class FileExplorer extends ScrollPane {
 	}
 
 	public void remove(File file) {
-		// TODO remove file
+		Queue<CommonFolder> folders = new ArrayDeque<>();
+
+		CommonFolder currentFolder = (CommonFolder) getContent();
+
+		while (currentFolder != null) {
+			for (Pane p : currentFolder.getFiles()) {
+				if (p instanceof CommonFile) {
+					CommonFile cFile = (CommonFile) p;
+					if (cFile.getFile() == file) {
+						currentFolder.getChildren().remove(p);
+						return;
+					}
+				} else if (p instanceof CommonFolder) {
+					folders.add((CommonFolder) p);
+				}
+			}
+			currentFolder = folders.poll();
+		}
 	}
 
 	public void add(Pane file) {

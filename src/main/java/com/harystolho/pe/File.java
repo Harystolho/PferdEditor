@@ -805,6 +805,8 @@ public class File {
 		isLoaded = false;
 		wasModified = false;
 		wasPreRendered = false;
+
+		System.out.println("Unloading file from disk: " + getName());
 	}
 
 	public int getScrollX() {

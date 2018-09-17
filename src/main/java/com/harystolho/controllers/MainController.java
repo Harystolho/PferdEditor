@@ -650,7 +650,6 @@ public class MainController implements ResizableInterface {
 
 	@Override
 	public void onHeightResize(int height) {
-
 		bottomBox.setPrefHeight(height - menuBar.getHeight() - secundaryMenu.getHeight());
 
 		canvasBox.setPrefHeight(height - secundaryMenu.getHeight() - menuBar.getHeight());

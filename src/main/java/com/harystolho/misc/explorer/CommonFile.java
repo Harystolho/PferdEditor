@@ -43,6 +43,10 @@ public class CommonFile extends HBox {
 	private void eventHandler() {
 		setOnMouseClicked((e) -> {
 			PropertiesWindowFactory.removeOpenWindow();
+
+			if (isDirectory)
+				return;
+
 			if (e.getButton() == MouseButton.PRIMARY) {
 				if (e.getClickCount() == 2) { // Double click
 					PEApplication.getInstance().getMainController().loadFileInCanvas(file);
