@@ -3,6 +3,8 @@ package com.harystolho.misc.explorer;
 import java.io.File;
 import java.util.List;
 
+import com.harystolho.PEApplication;
+
 import javafx.geometry.Insets;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -17,8 +19,10 @@ public class CommonFolder extends VBox {
 		CommonFile folder = new CommonFile(diskFile.getName(), true);
 		getChildren().add(folder);
 
-		// 219 is the File Explorer's width
-		setPrefWidth(219);
+		// Update the width to draw the correct shadow around the file name
+		setOnMouseEntered((e) -> {
+			setPrefWidth(PEApplication.getInstance().getMainController().getLeftPaneWidth());
+		});
 	}
 
 	public void add(Pane file) {

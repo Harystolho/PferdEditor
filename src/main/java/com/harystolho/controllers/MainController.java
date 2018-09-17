@@ -83,6 +83,9 @@ public class MainController implements ResizableInterface {
 	private ImageView addNewIcon;
 
 	@FXML
+	private HBox bottomBox;
+
+	@FXML
 	private HBox filesTab;
 	@FXML
 	private VBox canvasBox;
@@ -625,24 +628,30 @@ public class MainController implements ResizableInterface {
 
 	}
 
+	public double getLeftPaneWidth() {
+		return leftPane.getWidth();
+	}
+
 	@Override
 	public void onWidthResize(int width) {
 		menuBar.setPrefWidth(width);
-
 		secundaryMenu.setPrefWidth(width);
+		bottomBox.setPrefWidth(width);
 
-		// 23 is right margin
-		// 238 is file list on the left
-		canvasBox.setPrefWidth(width - 238 - 23);
+		leftPane.setPrefWidth(width * 0.17d);
+
+		// 42 is right margin + left margin + some spacing
+		canvasBox.setPrefWidth(width - leftPane.getPrefWidth() - 42);
 
 		canvas.setWidth(canvasBox.getPrefWidth());
 
 		rightScrollBar.setLayoutX(width - 23);
-
 	}
 
 	@Override
 	public void onHeightResize(int height) {
+
+		bottomBox.setPrefHeight(height - menuBar.getHeight() - secundaryMenu.getHeight());
 
 		canvasBox.setPrefHeight(height - secundaryMenu.getHeight() - menuBar.getHeight());
 
