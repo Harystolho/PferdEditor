@@ -218,7 +218,6 @@ public class CanvasManager {
 	/**
 	 * Moves the pivot node backward or forward.
 	 */
-	// TODO fix >= and <=
 	// TODO call updatePivotNode only when needed, fix values to improve performance
 	public void updatePivotNode() {
 		if (pivotNode == null) {
@@ -501,8 +500,6 @@ public class CanvasManager {
 
 	public void setScrollX(int x) {
 		if (currentFile != null) {
-
-			System.out.println(x);
 
 			if (x < 0) {
 				currentFile.setScrollX(0);

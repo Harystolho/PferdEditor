@@ -123,8 +123,11 @@ public class PEUtils {
 
 	public static void saveFileAs(com.harystolho.pe.File currentFile) {
 		FileChooser fc = new FileChooser();
+		
+		fc.setInitialDirectory(currentFile.getDiskFile().getParentFile());
+		
 		java.io.File file = fc.showSaveDialog(PEApplication.getInstance().getWindow());
-
+		
 		if (file != null) {
 			saveFile(currentFile, file);
 		}

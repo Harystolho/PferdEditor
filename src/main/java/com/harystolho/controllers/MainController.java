@@ -189,7 +189,7 @@ public class MainController implements ResizableInterface {
 				double displacement = lastX - e.getX();
 
 				CanvasManager.getInstance().setScrollX((int) (CanvasManager.getInstance().getScrollX()
-						- (FileUpdaterThread.getBiggestX() * (displacement / bottomScrollInside.getWidth()))));
+						- (FileUpdaterThread.getBiggestX() * (displacement / bottomScrollBar.getWidth()))));
 
 				lastX = e.getX();
 			}
@@ -253,9 +253,7 @@ public class MainController implements ResizableInterface {
 	private void addFileExplorer() {
 		fileExplorer = new FileExplorer();
 
-		// TODO fix height resize
 		fileExplorer.setPrefHeight(canvas.getHeight());
-		fileExplorer.setPrefWidth(219);
 
 		leftPane.getChildren().add(fileExplorer);
 	}
