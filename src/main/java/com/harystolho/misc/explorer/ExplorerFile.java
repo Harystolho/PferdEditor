@@ -10,6 +10,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 
+/**
+ * A class to represent a disk file in the file explorer
+ * 
+ * @author Harystolho
+ *
+ */
 public class ExplorerFile extends HBox {
 
 	private File file;

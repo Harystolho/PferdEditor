@@ -12,6 +12,12 @@ import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
+/**
+ * A class to represent a disk folder in the file explorer
+ * 
+ * @author Harystolho
+ *
+ */
 public class ExplorerFolder extends VBox {
 
 	private File diskFile;
@@ -33,7 +39,6 @@ public class ExplorerFolder extends VBox {
 		setOnMouseEntered((e) -> {
 			setPrefWidth(PEApplication.getInstance().getMainController().getLeftPaneWidth());
 		});
-
 	}
 
 	/**

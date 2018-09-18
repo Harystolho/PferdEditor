@@ -12,6 +12,13 @@ import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 
+/**
+ * Wrapper for a file explorer. You can use this class to add, remove or get a
+ * list of the files in the working directory.
+ * 
+ * @author Harystolho
+ *
+ */
 public class FileExplorer extends ScrollPane {
 
 	public FileExplorer() {
