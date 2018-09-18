@@ -14,8 +14,8 @@ import com.harystolho.misc.OpenWindow;
 import com.harystolho.misc.PropertiesWindowFactory;
 import com.harystolho.misc.PropertiesWindowFactory.window_type;
 import com.harystolho.misc.Tab;
-import com.harystolho.misc.explorer.CommonFile;
-import com.harystolho.misc.explorer.CommonFolder;
+import com.harystolho.misc.explorer.ExplorerFile;
+import com.harystolho.misc.explorer.ExplorerFolder;
 import com.harystolho.misc.explorer.FileExplorer;
 import com.harystolho.pe.File;
 import com.harystolho.thread.FileUpdaterThread;
@@ -294,7 +294,7 @@ public class MainController implements ResizableInterface {
 		File file = new File(fileName);
 		file.setDiskFile(new java.io.File(folder + java.io.File.separator + fileName));
 
-		CommonFile cFile = new CommonFile(fileName);
+		ExplorerFile cFile = new ExplorerFile(fileName);
 		cFile.setFile(file);
 
 		fileExplorer.add(cFile);
@@ -428,7 +428,7 @@ public class MainController implements ResizableInterface {
 	private void loadFileNames() {
 		java.io.File saveFolder = PEUtils.getSaveFolder();
 		if (saveFolder.exists()) {
-			CommonFolder root = new CommonFolder(saveFolder);
+			ExplorerFolder root = new ExplorerFolder(saveFolder);
 			for (java.io.File file : saveFolder.listFiles()) {
 				PEUtils.createFileFromSourceFile(root, file);
 			}

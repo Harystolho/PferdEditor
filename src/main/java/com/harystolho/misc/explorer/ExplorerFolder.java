@@ -12,17 +12,17 @@ import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
-public class CommonFolder extends VBox {
+public class ExplorerFolder extends VBox {
 
 	private File diskFile;
 	private List<Node> hiddenNodes;
 
-	public CommonFolder(File diskFile) {
+	public ExplorerFolder(File diskFile) {
 		this.diskFile = diskFile;
 
 		hiddenNodes = new ArrayList<>();
 
-		CommonFolderFile folder = new CommonFolderFile(diskFile.getName(), this);
+		ExplorerFolderName folder = new ExplorerFolderName(diskFile.getName(), this);
 		getChildren().add(folder);
 
 		eventHandler();

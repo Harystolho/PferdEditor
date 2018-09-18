@@ -21,20 +21,20 @@ public class FileExplorer extends ScrollPane {
 	}
 
 	public void remove(File file) {
-		Queue<CommonFolder> folders = new ArrayDeque<>();
+		Queue<ExplorerFolder> folders = new ArrayDeque<>();
 
-		CommonFolder currentFolder = (CommonFolder) getContent();
+		ExplorerFolder currentFolder = (ExplorerFolder) getContent();
 
 		while (currentFolder != null) {
 			for (Pane p : currentFolder.getFiles()) {
-				if (p instanceof CommonFile) {
-					CommonFile cFile = (CommonFile) p;
+				if (p instanceof ExplorerFile) {
+					ExplorerFile cFile = (ExplorerFile) p;
 					if (cFile.getFile() == file) {
 						currentFolder.getChildren().remove(p);
 						return;
 					}
-				} else if (p instanceof CommonFolder) {
-					folders.add((CommonFolder) p);
+				} else if (p instanceof ExplorerFolder) {
+					folders.add((ExplorerFolder) p);
 				}
 			}
 			currentFolder = folders.poll();
@@ -43,7 +43,7 @@ public class FileExplorer extends ScrollPane {
 
 	public void add(Pane file) {
 		if (getContent() != null) {
-			CommonFolder root = (CommonFolder) getContent();
+			ExplorerFolder root = (ExplorerFolder) getContent();
 
 			addFileToCorrectFolder(root, file);
 		} else {
@@ -61,31 +61,31 @@ public class FileExplorer extends ScrollPane {
 	 * @param file
 	 * @return
 	 */
-	private boolean addFileToCorrectFolder(CommonFolder folder, Pane file) {
-		if (file instanceof CommonFile) {
-			CommonFile cFile = (CommonFile) file;
+	private boolean addFileToCorrectFolder(ExplorerFolder folder, Pane file) {
+		if (file instanceof ExplorerFile) {
+			ExplorerFile cFile = (ExplorerFile) file;
 			// If the folder is parent to cFile
 			if (folder.getDiskFile().equals(cFile.getFile().getDiskFile().getParentFile())) {
 				folder.add(file);
 				return true;
 			} else {
 				for (Pane p : folder.getFiles()) {
-					if (p instanceof CommonFolder) {
-						CommonFolder cF = (CommonFolder) p;
+					if (p instanceof ExplorerFolder) {
+						ExplorerFolder cF = (ExplorerFolder) p;
 						return addFileToCorrectFolder(cF, cFile);
 					}
 				}
 			}
-		} else if (file instanceof CommonFolder) {
-			CommonFolder cFolder = (CommonFolder) file;
+		} else if (file instanceof ExplorerFolder) {
+			ExplorerFolder cFolder = (ExplorerFolder) file;
 			// If the folder is parent to cFolder
 			if (folder.getDiskFile().equals(cFolder.getDiskFile().getParentFile())) {
 				folder.add(file);
 				return true;
 			} else {
 				for (Pane p : folder.getFiles()) {
-					if (p instanceof CommonFolder) {
-						CommonFolder cF = (CommonFolder) p;
+					if (p instanceof ExplorerFolder) {
+						ExplorerFolder cF = (ExplorerFolder) p;
 						return addFileToCorrectFolder(cF, cFolder);
 					}
 				}
@@ -101,7 +101,7 @@ public class FileExplorer extends ScrollPane {
 	public List<File> getFiles() {
 		List<File> files = new ArrayList<>();
 
-		CommonFolder root = (CommonFolder) getContent();
+		ExplorerFolder root = (ExplorerFolder) getContent();
 
 		addFilesToList(files, root);
 
@@ -116,11 +116,11 @@ public class FileExplorer extends ScrollPane {
 	 * @param p
 	 */
 	private void addFilesToList(List<File> list, Pane p) {
-		if (p instanceof CommonFolderFile) {
-			CommonFile cFile = (CommonFile) p;
+		if (p instanceof ExplorerFolderName) {
+			ExplorerFile cFile = (ExplorerFile) p;
 			list.add(cFile.getFile());
-		} else if (p instanceof CommonFolder) {
-			CommonFolder cFolder = (CommonFolder) p;
+		} else if (p instanceof ExplorerFolder) {
+			ExplorerFolder cFolder = (ExplorerFolder) p;
 			for (Pane pp : cFolder.getFiles()) {
 				addFilesToList(list, pp);
 			}

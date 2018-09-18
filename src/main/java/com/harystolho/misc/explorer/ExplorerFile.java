@@ -10,11 +10,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 
-public class CommonFile extends HBox {
+public class ExplorerFile extends HBox {
 
 	private File file;
 
-	public CommonFile(String name) {
+	public ExplorerFile(String name) {
 		ImageView icon = new ImageView(ClassLoader.getSystemResource("icons/common_file.png").toExternalForm());
 
 		icon.setFitWidth(16);

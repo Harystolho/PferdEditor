@@ -6,13 +6,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 
-public class CommonFolderFile extends CommonFile {
+public class ExplorerFolderName extends ExplorerFile {
 
-	CommonFolder parent;
+	ExplorerFolder parent;
 
 	private boolean isOpened;
 
-	public CommonFolderFile(String name, CommonFolder parent) {
+	public ExplorerFolderName(String name, ExplorerFolder parent) {
 		super(name);
 
 		this.parent = parent;
@@ -41,11 +41,11 @@ public class CommonFolderFile extends CommonFile {
 		});
 	}
 
-	public CommonFolder getFolderParent() {
+	public ExplorerFolder getFolderParent() {
 		return parent;
 	}
 
-	public void setFolderParent(CommonFolder parent) {
+	public void setFolderParent(ExplorerFolder parent) {
 		this.parent = parent;
 	}
 
