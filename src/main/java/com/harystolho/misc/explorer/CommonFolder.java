@@ -1,24 +1,28 @@
 package com.harystolho.misc.explorer;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 import com.harystolho.PEApplication;
 
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 public class CommonFolder extends VBox {
 
 	private File diskFile;
-	private boolean isOpened;
+	private List<Node> hiddenNodes;
 
 	public CommonFolder(File diskFile) {
 		this.diskFile = diskFile;
-		this.isOpened = false;
 
-		CommonFolderFile folder = new CommonFolderFile(diskFile.getName());
+		hiddenNodes = new ArrayList<>();
+
+		CommonFolderFile folder = new CommonFolderFile(diskFile.getName(), this);
 		getChildren().add(folder);
 
 		eventHandler();
@@ -30,6 +34,27 @@ public class CommonFolder extends VBox {
 			setPrefWidth(PEApplication.getInstance().getMainController().getLeftPaneWidth());
 		});
 
+	}
+
+	/**
+	 * Shows or hides the files inside this folder
+	 * 
+	 * @param show
+	 */
+	protected void showFile(boolean show) {
+		if (show) {
+			hiddenNodes.forEach((node) -> {
+				getChildren().add(node);
+			});
+			hiddenNodes.clear();
+		} else {
+			// Start at 1 because the first Node is the folder's name
+			ListIterator<Node> nodes = getChildren().listIterator(1);
+			while (nodes.hasNext()) {
+				hiddenNodes.add(nodes.next());
+				nodes.remove();
+			}
+		}
 	}
 
 	public void add(Pane file) {
