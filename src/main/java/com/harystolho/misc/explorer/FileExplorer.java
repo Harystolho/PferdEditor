@@ -9,7 +9,6 @@ import com.harystolho.pe.File;
 import com.harystolho.utils.PEUtils;
 
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 
@@ -117,11 +116,9 @@ public class FileExplorer extends ScrollPane {
 	 * @param p
 	 */
 	private void addFilesToList(List<File> list, Pane p) {
-		if (p instanceof CommonFile) {
+		if (p instanceof CommonFolderFile) {
 			CommonFile cFile = (CommonFile) p;
-			if (!cFile.isDirectory()) {
-				list.add(cFile.getFile());
-			}
+			list.add(cFile.getFile());
 		} else if (p instanceof CommonFolder) {
 			CommonFolder cFolder = (CommonFolder) p;
 			for (Pane pp : cFolder.getFiles()) {

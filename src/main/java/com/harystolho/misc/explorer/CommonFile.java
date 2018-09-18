@@ -12,19 +12,10 @@ import javafx.scene.layout.HBox;
 
 public class CommonFile extends HBox {
 
-	private boolean isDirectory;
 	private File file;
 
-	public CommonFile(String name, boolean isDirectory) {
-		ImageView icon;
-
-		this.isDirectory = isDirectory;
-
-		if (isDirectory) {
-			icon = new ImageView(ClassLoader.getSystemResource("icons/common_folder.png").toExternalForm());
-		} else {
-			icon = new ImageView(ClassLoader.getSystemResource("icons/common_file.png").toExternalForm());
-		}
+	public CommonFile(String name) {
+		ImageView icon = new ImageView(ClassLoader.getSystemResource("icons/common_file.png").toExternalForm());
 
 		icon.setFitWidth(16);
 		icon.setFitHeight(16);
@@ -40,12 +31,9 @@ public class CommonFile extends HBox {
 		eventHandler();
 	}
 
-	private void eventHandler() {
+	protected void eventHandler() {
 		setOnMouseClicked((e) -> {
 			PropertiesWindowFactory.removeOpenWindow();
-
-			if (isDirectory)
-				return;
 
 			if (e.getButton() == MouseButton.PRIMARY) {
 				if (e.getClickCount() == 2) { // Double click
@@ -64,10 +52,6 @@ public class CommonFile extends HBox {
 
 	public File getFile() {
 		return file;
-	}
-
-	public boolean isDirectory() {
-		return isDirectory;
 	}
 
 }

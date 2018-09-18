@@ -294,7 +294,7 @@ public class MainController implements ResizableInterface {
 		File file = new File(fileName);
 		file.setDiskFile(new java.io.File(folder + java.io.File.separator + fileName));
 
-		CommonFile cFile = new CommonFile(fileName, false);
+		CommonFile cFile = new CommonFile(fileName);
 		cFile.setFile(file);
 
 		fileExplorer.add(cFile);

@@ -12,17 +12,24 @@ import javafx.scene.layout.VBox;
 public class CommonFolder extends VBox {
 
 	private File diskFile;
+	private boolean isOpened;
 
 	public CommonFolder(File diskFile) {
 		this.diskFile = diskFile;
+		this.isOpened = false;
 
-		CommonFile folder = new CommonFile(diskFile.getName(), true);
+		CommonFolderFile folder = new CommonFolderFile(diskFile.getName());
 		getChildren().add(folder);
 
+		eventHandler();
+	}
+
+	private void eventHandler() {
 		// Update the width to draw the correct shadow around the file name
 		setOnMouseEntered((e) -> {
 			setPrefWidth(PEApplication.getInstance().getMainController().getLeftPaneWidth());
 		});
+
 	}
 
 	public void add(Pane file) {

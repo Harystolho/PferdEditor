@@ -152,7 +152,7 @@ public class PEUtils {
 			com.harystolho.pe.File file = new com.harystolho.pe.File(f.getName());
 			file.setDiskFile(f);
 
-			CommonFile cFile = new CommonFile(f.getName(), false);
+			CommonFile cFile = new CommonFile(f.getName());
 			cFile.setFile(file);
 
 			root.add(cFile);
