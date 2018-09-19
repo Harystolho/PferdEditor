@@ -19,6 +19,8 @@ import javafx.scene.layout.HBox;
 public class ExplorerFile extends HBox {
 
 	private File file;
+	
+	private Label fileName;
 
 	public ExplorerFile(String name) {
 		ImageView icon = new ImageView(ClassLoader.getSystemResource("icons/common_file.png").toExternalForm());
@@ -28,7 +30,7 @@ public class ExplorerFile extends HBox {
 
 		setMargin(icon, new Insets(0, 5, 0, 0));
 
-		Label fileName = new Label(name);
+		fileName = new Label(name);
 
 		getStyleClass().add("commonFile");
 
@@ -58,6 +60,10 @@ public class ExplorerFile extends HBox {
 
 	public File getFile() {
 		return file;
+	}
+
+	public void update() {
+		fileName.setText(file.getName());
 	}
 
 }

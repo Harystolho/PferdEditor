@@ -85,7 +85,6 @@ public class FileRightClickController {
 			ctrl.setStage(ow.getStage());
 			ctrl.renameFile(file);
 		});
-
 		ow.openWindow();
 	}
 

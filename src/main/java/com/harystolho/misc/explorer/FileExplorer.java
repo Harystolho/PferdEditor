@@ -4,6 +4,9 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 import com.harystolho.pe.File;
 import com.harystolho.utils.PEUtils;
@@ -99,6 +102,46 @@ public class FileExplorer extends ScrollPane {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * 
+	 * 
+	 * @param file
+	 */
+	public void updateFile(File file) {
+		findFileAndApply(file, (cFile) -> {
+			cFile.update();
+		});
+	}
+
+	/**
+	 * Finds the {@link ExplorerFile} that corresponds to this <code>file</code> and
+	 * calls <code>function.accept()</code>
+	 * 
+	 * @param file
+	 * @param function when it finds the file it will call this function passing the
+	 *                 ExplorerFile that was found
+	 */
+	private void findFileAndApply(File file, Consumer<ExplorerFile> function) {
+		Queue<ExplorerFolder> folders = new ArrayDeque<>();
+
+		ExplorerFolder currentFolder = (ExplorerFolder) getContent();
+
+		while (currentFolder != null) {
+			for (Pane p : currentFolder.getFiles()) {
+				if (p instanceof ExplorerFile) {
+					ExplorerFile cFile = (ExplorerFile) p;
+					if (cFile.getFile() == file) {
+						function.accept(cFile);
+						return;
+					}
+				} else if (p instanceof ExplorerFolder) {
+					folders.add((ExplorerFolder) p);
+				}
+			}
+			currentFolder = folders.poll();
+		}
 	}
 
 	/**

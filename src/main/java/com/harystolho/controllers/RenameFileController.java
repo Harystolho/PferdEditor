@@ -50,7 +50,7 @@ public class RenameFileController {
 		PEApplication.getInstance().getMainController().updateFileNameOnFileTab(file);
 
 		stage.close();
-		PEApplication.getInstance().getMainController().refrestFileList();
+		PEApplication.getInstance().getMainController().refreshFile(file);
 	}
 
 	public void renameFile(File file) {

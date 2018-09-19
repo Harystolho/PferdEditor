@@ -513,8 +513,8 @@ public class MainController implements ResizableInterface {
 		ow.openWindow();
 	}
 
-	public void refrestFileList() {
-		// fileList.refresh();
+	public void refreshFile(File file) {
+		fileExplorer.updateFile(file);
 	}
 
 	private void hideSrollBar() {
