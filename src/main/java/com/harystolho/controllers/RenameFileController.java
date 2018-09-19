@@ -47,14 +47,15 @@ public class RenameFileController {
 
 	private void rename() {
 		file.setName(fileName.getText());
-		PEApplication.getInstance().getMainController().updateFileNameOnFileTab(file);
-
 		stage.close();
+
+		PEApplication.getInstance().getMainController().updateFileNameOnFileTab(file);
 		PEApplication.getInstance().getMainController().refreshFile(file);
 	}
 
 	public void renameFile(File file) {
 		this.file = file;
+		fileName.setText(file.getName());
 	}
 
 	public void setStage(Stage stage) {

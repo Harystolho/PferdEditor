@@ -742,7 +742,7 @@ public class File {
 			return;
 		}
 
-		java.io.File newFile = new java.io.File(PEUtils.getSaveFolder() + "/" + name);
+		java.io.File newFile = new java.io.File(diskFile.getParent() + "/" + name);
 		boolean succeed = diskFile.renameTo(newFile);
 
 		if (!succeed) {

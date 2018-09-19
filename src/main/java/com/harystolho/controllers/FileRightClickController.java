@@ -79,7 +79,6 @@ public class FileRightClickController {
 	 */
 	private void renameFile() {
 		OpenWindow ow = new OpenWindow("Rename File");
-// TODO renaming not working correctly
 		ow.load("renameFile.fxml", (controller) -> {
 			RenameFileController ctrl = (RenameFileController) controller;
 			ctrl.setStage(ow.getStage());
