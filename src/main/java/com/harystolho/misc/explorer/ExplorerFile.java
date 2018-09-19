@@ -19,7 +19,7 @@ import javafx.scene.layout.HBox;
 public class ExplorerFile extends HBox {
 
 	private File file;
-	
+
 	private Label fileName;
 
 	public ExplorerFile(String name) {
@@ -44,7 +44,7 @@ public class ExplorerFile extends HBox {
 			PropertiesWindowFactory.removeOpenWindow();
 
 			if (e.getButton() == MouseButton.PRIMARY) {
-				if (e.getClickCount() == 2) { // Double click
+				if (e.getClickCount() >= 2) { // Double click
 					PEApplication.getInstance().getMainController().loadFileInCanvas(file);
 				}
 			} else if (e.getButton() == MouseButton.SECONDARY) {

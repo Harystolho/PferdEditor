@@ -6,9 +6,18 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 
+/**
+ * Similar to {@link ExplorerFile} but instead of naming a file it names a
+ * directory
+ * 
+ * @author Harystolho
+ *
+ */
 public class ExplorerFolderName extends ExplorerFile {
 
 	ExplorerFolder parent;
+
+	private ImageView img;
 
 	private boolean isOpened;
 
@@ -18,8 +27,8 @@ public class ExplorerFolderName extends ExplorerFile {
 		this.parent = parent;
 		this.isOpened = true;
 
-		ImageView img = (ImageView) getChildren().get(0);
-		img.setImage(new Image(ClassLoader.getSystemResource("icons/common_folder.png").toExternalForm()));
+		img = (ImageView) getChildren().get(0);
+		img.setImage(new Image(ClassLoader.getSystemResource("icons/common_folder_open.png").toExternalForm()));
 	}
 
 	@Override
@@ -28,17 +37,27 @@ public class ExplorerFolderName extends ExplorerFile {
 			PropertiesWindowFactory.removeOpenWindow();
 
 			if (e.getButton() == MouseButton.PRIMARY) {
-				if (e.getClickCount() == 2) { // Double click
+				if (e.getClickCount() >= 2) { // Double click
 					if (isOpened) {
-						isOpened = false;
+						showOpenIcon(false);
 						getFolderParent().showFile(false);
 					} else {
-						isOpened = true;
+						showOpenIcon(true);
 						getFolderParent().showFile(true);
 					}
 				}
 			}
 		});
+	}
+
+	private void showOpenIcon(boolean show) {
+		if (show) {
+			isOpened = true;
+			img.setImage(new Image(ClassLoader.getSystemResource("icons/common_folder_open.png").toExternalForm()));
+		} else {
+			isOpened = false;
+			img.setImage(new Image(ClassLoader.getSystemResource("icons/common_folder_closed.png").toExternalForm()));
+		}
 	}
 
 	public ExplorerFolder getFolderParent() {
