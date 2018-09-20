@@ -67,9 +67,7 @@ public class FileTest {
 		File f = new File("f");
 		CanvasManager.getInstance().setCurrentFile(f);
 
-		KeyEvent kv = new KeyEvent(null, null, null, null, null, KeyCode.SPACE, false, false, false, false);
-
-		f.type(kv);
+		typeSpace(f);
 
 		assertEquals(f.getWords().getLast().getType(), TYPES.SPACE);
 	}
@@ -89,8 +87,7 @@ public class FileTest {
 		cm.update();
 		cm.setCursorX(0);
 
-		KeyEvent kv = new KeyEvent(null, null, null, null, null, KeyCode.SPACE, false, false, false, false);
-		f.type(kv);
+		typeSpace(f);
 
 		assertTrue(f.getWords().get(0).getWordAsString().equals(" "));
 		assertTrue(f.getWords().get(1).getWordAsString().equals("word"));
@@ -133,8 +130,7 @@ public class FileTest {
 
 		cm.setCursorX(Word.computeCharWidth('w'));
 
-		f.type(new KeyEvent(null, null, null, null, null, KeyCode.SPACE, false, false, false, false));
-		cm.draw();
+		typeSpace(f);
 
 		assertTrue(f.getWords().get(0).getWordAsString().equals("w"));
 		assertTrue(f.getWords().get(1).getWordAsString().equals(" "));
@@ -160,9 +156,7 @@ public class FileTest {
 		cm.moveCursorRight();
 		cm.moveCursorRight();
 
-		f.type(new KeyEvent(null, null, null, null, null, KeyCode.SPACE, false, false, false, false));
-
-		cm.draw();
+		typeSpace(f);
 
 		assertEquals(f.getWords().size(), 3);
 
@@ -171,17 +165,24 @@ public class FileTest {
 
 		assertEquals(f.getWords().size(), 2);
 
-		f.type(new KeyEvent(null, null, null, null, null, KeyCode.SPACE, false, false, false, false));
-		cm.draw();
-		
+		typeSpace(f);
+
 		assertEquals(f.getWords().size(), 3);
 	}
 
+	
+	
 	private void typeStringToFile(File file, String string) {
 		for (char c : string.toCharArray()) {
 			file.type(new KeyEvent(null, null, null, null, String.valueOf(c), KeyCode.UNDEFINED, false, false, false,
 					false));
+			CanvasManager.getInstance().draw();
 		}
+	}
+
+	private void typeSpace(File file) {
+		file.type(new KeyEvent(null, null, null, null, null, KeyCode.SPACE, false, false, false, false));
+		CanvasManager.getInstance().draw();
 	}
 
 	@AfterClass
