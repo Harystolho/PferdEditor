@@ -141,12 +141,10 @@ public class FileTest {
 	public void deleteSpace_And_TypeSpaceAgain() {
 		File f = new File("fDelete");
 		CanvasManager cm = CanvasManager.getInstance();
-
 		cm.setCurrentFile(f);
 
 		typeStringToFile(f, "newlife");
 
-		cm.draw();
 		assertEquals(f.getWords().size(), 1);
 
 		cm.setCursorX(0);
@@ -170,8 +168,105 @@ public class FileTest {
 		assertEquals(f.getWords().size(), 3);
 	}
 
-	
-	
+	@Test
+	public void typeCharInsideWord() {
+		File f = new File("fcharInTheMiddle");
+		CanvasManager cm = CanvasManager.getInstance();
+		cm.setCurrentFile(f);
+
+		typeStringToFile(f, "middle");
+
+		cm.setCursorX(0);
+		cm.moveCursorRight();
+
+		typeStringToFile(f, "1");
+
+		assertEquals(f.getWords().get(0).getWordAsString(), "m1iddle");
+
+		cm.moveCursorRight();
+		cm.moveCursorRight();
+
+		typeStringToFile(f, "2");
+
+		assertEquals(f.getWords().get(0).getWordAsString(), "m1id2dle");
+
+		cm.moveCursorRight();
+		cm.moveCursorRight();
+		cm.moveCursorRight();
+
+		typeStringToFile(f, "3");
+
+		assertEquals(f.getWords().get(0).getWordAsString(), "m1id2dle3");
+	}
+
+	@Test
+	public void typeCharBeforeFirstWord() {
+		File f = new File("fCharBefore");
+		CanvasManager cm = CanvasManager.getInstance();
+		cm.setCurrentFile(f);
+
+		typeStringToFile(f, "before");
+
+		cm.setCursorX(0);
+
+		typeStringToFile(f, "-");
+
+		f.getWords().printDebug();
+		
+		assertEquals(f.getWords().get(0).getWordAsString(), "-");
+		assertEquals(f.getWords().get(1).getWordAsString(), "before");
+	}
+
+	@Test
+	public void typeCharAtTheBegginnigOfAWord() {
+		File f = new File("fCharBefore");
+		CanvasManager cm = CanvasManager.getInstance();
+		cm.setCurrentFile(f);
+
+		typeStringToFile(f, "fWord");
+		typeSpace(f);
+		typeStringToFile(f, "sWord");
+
+		assertEquals(f.getWords().get(0).getWordAsString(), "fWord");
+		assertEquals(f.getWords().get(1).getWordAsString(), " ");
+		assertEquals(f.getWords().get(2).getWordAsString(), "sWord");
+
+		cm.setCursorX(0);
+		cm.moveCursorRight();
+		cm.moveCursorRight();
+		cm.moveCursorRight();
+		cm.moveCursorRight();
+		cm.moveCursorRight();
+		cm.moveCursorRight(); // Cursor before sWord
+
+		typeStringToFile(f, "+");
+
+		assertEquals(f.getWords().get(2).getWordAsString(), "+");
+		assertEquals(f.getWords().get(3).getWordAsString(), "sWord");
+	}
+
+	@Test
+	public void typeCharBeforeSpace() {
+		File f = new File("fCharBeforeSpace");
+		CanvasManager cm = CanvasManager.getInstance();
+		cm.setCurrentFile(f);
+
+		typeStringToFile(f, "my");
+		typeSpace(f);
+		typeStringToFile(f, "life");
+
+		cm.setCursorX(0);
+		cm.moveCursorRight();
+		cm.moveCursorRight();
+
+		typeStringToFile(f, "-");
+		
+		assertEquals(f.getWords().get(0).getWordAsString(), "my-");
+		assertEquals(f.getWords().get(1).getWordAsString(), " ");
+		assertEquals(f.getWords().get(2).getWordAsString(), "life");
+
+	}
+
 	private void typeStringToFile(File file, String string) {
 		for (char c : string.toCharArray()) {
 			file.type(new KeyEvent(null, null, null, null, String.valueOf(c), KeyCode.UNDEFINED, false, false, false,

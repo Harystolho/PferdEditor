@@ -305,7 +305,7 @@ public class File {
 				if (word.getType() == TYPES.TAB || word.getType() == TYPES.NEW_LINE) {
 					word.setX((float) cm.getCursorX() - 1 + scrollX);
 				} else {
-					word.setX((float) cm.getCursorX() + 1 + scrollX);
+					word.setX((float) cm.getCursorX() - 1 + scrollX);
 				}
 			} else {
 				word.setX((float) cm.getCursorX() + scrollX - 1);
@@ -395,7 +395,7 @@ public class File {
 			}
 		}
 
-		if (lastWordTyped == null) {
+		if (lastWordTyped == null || getCursorX() == 0) {
 			Word word = new Word(c);
 			lastWordTyped = word;
 
