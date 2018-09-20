@@ -212,7 +212,7 @@ public class FileTest {
 		typeStringToFile(f, "-");
 
 		f.getWords().printDebug();
-		
+
 		assertEquals(f.getWords().get(0).getWordAsString(), "-");
 		assertEquals(f.getWords().get(1).getWordAsString(), "before");
 	}
@@ -246,6 +246,33 @@ public class FileTest {
 	}
 
 	@Test
+	public void typeCharAtTheBegginnigOfAWord2() {
+		File f = new File("fCharBefore");
+		CanvasManager cm = CanvasManager.getInstance();
+		cm.setCurrentFile(f);
+
+		typeStringToFile(f, "a");
+		typeSpace(f);
+		typeStringToFile(f, "b");
+		typeSpace(f);
+		typeStringToFile(f, "c");
+		typeSpace(f);
+
+		cm.setCursorX(0);
+		cm.moveCursorRight();
+		cm.moveCursorRight();
+
+		typeStringToFile(f, "d");
+
+		f.getWords().printDebug();
+
+		assertEquals(f.getWords().get(0).getWordAsString(), "a");
+		assertEquals(f.getWords().get(1).getWordAsString(), " ");
+		assertEquals(f.getWords().get(2).getWordAsString(), "d");
+		assertEquals(f.getWords().get(3).getWordAsString(), "b");
+	}
+
+	@Test
 	public void typeCharBeforeSpace() {
 		File f = new File("fCharBeforeSpace");
 		CanvasManager cm = CanvasManager.getInstance();
@@ -260,7 +287,7 @@ public class FileTest {
 		cm.moveCursorRight();
 
 		typeStringToFile(f, "-");
-		
+
 		assertEquals(f.getWords().get(0).getWordAsString(), "my-");
 		assertEquals(f.getWords().get(1).getWordAsString(), " ");
 		assertEquals(f.getWords().get(2).getWordAsString(), "life");

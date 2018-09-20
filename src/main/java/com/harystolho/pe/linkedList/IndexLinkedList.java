@@ -122,7 +122,8 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 					// While the word's position is smaller then the leftNode, go left
 					// If the leftNode becomes null the inserted boolean will remain false
 					while (leftNode != null) {
-						if (data.compareTo(leftNode.getData()) == 1) { // Insert after the node
+						// Insert after the leftNode
+						if (data.compareTo(leftNode.getData()) == 1 || data.compareTo(leftNode.getData()) == 0) {
 							node.setRight(leftNode.getRight());
 							node.setLeft(leftNode);
 							leftNode.getRight().setLeft(node);

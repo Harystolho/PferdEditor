@@ -144,7 +144,7 @@ public class File {
 		words.add(word);
 		updateCursorPosition(word.getWord()[0], true);
 	}
-
+	
 	private void addKeyToFile(KeyEvent key) {
 		String keyString = key.getText(); // Get String representing this key
 
@@ -301,16 +301,7 @@ public class File {
 
 			CanvasManager cm = CanvasManager.getInstance();
 
-			if (getCursorX() != 0) {
-				if (word.getType() == TYPES.TAB || word.getType() == TYPES.NEW_LINE) {
-					word.setX((float) cm.getCursorX() - 1 + scrollX);
-				} else {
-					word.setX((float) cm.getCursorX() - 1 + scrollX);
-				}
-			} else {
-				word.setX((float) cm.getCursorX() + scrollX - 1);
-			}
-
+			word.setX((float) cm.getCursorX() + scrollX - 1);
 			word.setY((float) cm.getCursorY());
 		}
 
@@ -383,11 +374,12 @@ public class File {
 	 */
 	public void addCharToFile(char c) {
 
-		Word wrd = words.get(getCursorX() - 1, getCursorY());
+ 		Word wrd = words.get(getCursorX() - 1, getCursorY());
 
 		if (wrd != null) {
 			if (wrd.getType() == TYPES.SPACE || wrd.getType() == TYPES.NEW_LINE || wrd.getType() == TYPES.TAB) {
-				lastWordTyped = null;
+				createWordAfterSpecialWord(wrd, c);
+				return;
 			} else {
 				addCharToExistingWord(wrd, c);
 				updateCursorPosition(c, true);
@@ -406,6 +398,25 @@ public class File {
 			updateCursorPosition(c, true);
 		}
 
+	}
+
+	/**
+	 * A special word is either a {@link TYPES#TAB}, {@link TYPES#NEW_LINE} or a
+	 * {@link TYPES#SPACE}
+	 * 
+	 * @param wrd the word before the cursor
+	 * @param ch  the char to be added
+	 */
+	private void createWordAfterSpecialWord(Word wrd, char ch) {
+		resetLastWord();
+
+		Word word = new Word(ch);
+		lastWordTyped = word;
+
+		word.setX((float) wrd.getX() + 1);
+		word.setY((float) wrd.getY());
+
+		addWord(word);
 	}
 
 	/**
