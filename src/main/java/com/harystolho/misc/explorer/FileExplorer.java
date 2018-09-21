@@ -51,6 +51,7 @@ public class FileExplorer extends ScrollPane {
 		}
 	}
 
+	// TODO add using alphabetical order
 	public void add(Pane file) {
 		if (getContent() != null) {
 			ExplorerFolder root = (ExplorerFolder) getContent();

@@ -1,6 +1,7 @@
 package com.harystolho.canvas.eventHandler;
 
 import java.util.HashMap;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 import com.harystolho.PEApplication;
@@ -22,7 +23,7 @@ public class ApplicationKeyHandler {
 	private CanvasManager cm;
 	private Scene scene;
 
-	private HashMap<KeyCode, Function<KeyEvent, Boolean>> keyMap;
+	private HashMap<KeyCode, Consumer<KeyEvent>> keyMap;
 
 	public ApplicationKeyHandler(Scene scene, CanvasManager cm) {
 		this.cm = cm;
@@ -54,11 +55,10 @@ public class ApplicationKeyHandler {
 
 	private void keyPress(KeyEvent e) {
 
-		Function<KeyEvent, Boolean> key = keyMap.get(e.getCode());
+		Consumer<KeyEvent> key = keyMap.get(e.getCode());
 		if (key != null) { // If there's a function for this key
-			if (key.apply(e)) { // If the function returns true then stop here, else execute code below
-				return;
-			}
+			key.accept(e);
+			return;
 		}
 
 		pressKeyOnCanvas(e);
@@ -79,25 +79,21 @@ public class ApplicationKeyHandler {
 		keyMap.put(KeyCode.UP, (e) -> {
 			cm.lineUp();
 			e.consume();
-			return true;
 		});
 
 		keyMap.put(KeyCode.DOWN, (e) -> {
 			cm.lineDown();
 			e.consume();
-			return true;
 		});
 
 		keyMap.put(KeyCode.LEFT, (e) -> {
 			cm.moveCursorLeft();
 			e.consume();
-			return true;
 		});
 
 		keyMap.put(KeyCode.RIGHT, (e) -> {
 			cm.moveCursorRight();
 			e.consume();
-			return true;
 		});
 
 		keyMap.put(KeyCode.S, (e) -> {
@@ -106,7 +102,6 @@ public class ApplicationKeyHandler {
 			} else {
 				pressKeyOnCanvas(e);
 			}
-			return true;
 		});
 
 		keyMap.put(KeyCode.HOME, (e) -> {
@@ -115,7 +110,6 @@ public class ApplicationKeyHandler {
 			} else {
 				cm.moveCursorToBeginningOfTheLine();
 			}
-			return true;
 		});
 
 		keyMap.put(KeyCode.END, (e) -> {
@@ -124,35 +118,32 @@ public class ApplicationKeyHandler {
 			} else {
 				cm.moveCursorToEndOfTheLine();
 			}
-			return true;
 		});
 
 		keyMap.put(KeyCode.ALT, (e) -> {
-			return true;
+			// IGNORE
 		});
 
 		keyMap.put(KeyCode.SHIFT, (e) -> {
-			return true;
+			// IGNORE
 		});
 
 		keyMap.put(KeyCode.CONTROL, (e) -> {
-			return true;
+			// IGNORE
 		});
 
 		keyMap.put(KeyCode.CAPS, (e) -> {
-			return true;
+			// IGNORE
 		});
 
 		keyMap.put(KeyCode.F3, (e) -> {
 			cm.printDebugMessage();
-			return true;
 		});
 
 		keyMap.put(KeyCode.F4, (e) -> {
 			if (!e.isAltDown()) {
 				cm.getCurrentFile().getWords().printDebug();
 			}
-			return true;
 		});
 
 		// Normal Keys
@@ -162,7 +153,6 @@ public class ApplicationKeyHandler {
 			} else {
 				pressKeyOnCanvas(e);
 			}
-			return true;
 		});
 
 		keyMap.put(KeyCode.C, (e) -> {
@@ -171,7 +161,6 @@ public class ApplicationKeyHandler {
 			} else {
 				pressKeyOnCanvas(e);
 			}
-			return true;
 		});
 
 		keyMap.put(KeyCode.V, (e) -> {
@@ -180,7 +169,6 @@ public class ApplicationKeyHandler {
 			} else {
 				pressKeyOnCanvas(e);
 			}
-			return true;
 		});
 
 		// Shift
@@ -192,7 +180,6 @@ public class ApplicationKeyHandler {
 			} else {
 				pressKeyOnCanvas(e);
 			}
-			return true;
 		});
 
 		keyMap.put(KeyCode.CLOSE_BRACKET, (e) -> {
@@ -203,7 +190,6 @@ public class ApplicationKeyHandler {
 			} else {
 				pressKeyOnCanvas(e);
 			}
-			return true;
 		});
 
 		keyMap.put(KeyCode.BACK_QUOTE, (e) -> {
@@ -214,7 +200,6 @@ public class ApplicationKeyHandler {
 			} else {
 				pressKeyOnCanvas(e);
 			}
-			return true;
 		});
 
 		keyMap.put(KeyCode.DIGIT1, (e) -> {
@@ -225,7 +210,6 @@ public class ApplicationKeyHandler {
 			} else {
 				pressKeyOnCanvas(e);
 			}
-			return true;
 		});
 
 		keyMap.put(KeyCode.DIGIT2, (e) -> {
@@ -236,7 +220,6 @@ public class ApplicationKeyHandler {
 			} else {
 				pressKeyOnCanvas(e);
 			}
-			return true;
 		});
 
 		keyMap.put(KeyCode.DIGIT3, (e) -> {
@@ -247,7 +230,6 @@ public class ApplicationKeyHandler {
 			} else {
 				pressKeyOnCanvas(e);
 			}
-			return true;
 		});
 
 		keyMap.put(KeyCode.DIGIT4, (e) -> {
@@ -258,7 +240,6 @@ public class ApplicationKeyHandler {
 			} else {
 				pressKeyOnCanvas(e);
 			}
-			return true;
 		});
 
 		keyMap.put(KeyCode.DIGIT5, (e) -> {
@@ -269,7 +250,6 @@ public class ApplicationKeyHandler {
 			} else {
 				pressKeyOnCanvas(e);
 			}
-			return true;
 		});
 
 		keyMap.put(KeyCode.DIGIT6, (e) -> {
@@ -280,7 +260,6 @@ public class ApplicationKeyHandler {
 			} else {
 				pressKeyOnCanvas(e);
 			}
-			return true;
 		});
 
 		keyMap.put(KeyCode.DIGIT7, (e) -> {
@@ -291,7 +270,6 @@ public class ApplicationKeyHandler {
 			} else {
 				pressKeyOnCanvas(e);
 			}
-			return true;
 		});
 
 		keyMap.put(KeyCode.DIGIT8, (e) -> {
@@ -302,7 +280,6 @@ public class ApplicationKeyHandler {
 			} else {
 				pressKeyOnCanvas(e);
 			}
-			return true;
 		});
 
 		keyMap.put(KeyCode.DIGIT9, (e) -> {
@@ -313,7 +290,6 @@ public class ApplicationKeyHandler {
 			} else {
 				pressKeyOnCanvas(e);
 			}
-			return true;
 		});
 
 		keyMap.put(KeyCode.DIGIT0, (e) -> {
@@ -324,9 +300,38 @@ public class ApplicationKeyHandler {
 			} else {
 				pressKeyOnCanvas(e);
 			}
-			return true;
 		});
 
+		keyMap.put(KeyCode.COMMA, (e) -> {
+			if (e.isShiftDown()) {
+				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "<", KeyCode.LESS, false, false,
+						false, false);
+				pressKeyOnCanvas(ke);
+			} else {
+				pressKeyOnCanvas(e);
+			}
+		});
+
+		keyMap.put(KeyCode.PERIOD, (e) -> {
+			if (e.isShiftDown()) {
+				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", ">", KeyCode.GREATER, false, false,
+						false, false);
+				pressKeyOnCanvas(ke);
+			} else {
+				pressKeyOnCanvas(e);
+			}
+		});
+
+		keyMap.put(KeyCode.SEMICOLON, (e) -> {
+			if (e.isShiftDown()) {
+				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", ":", KeyCode.COLON, false, false,
+						false, false);
+				pressKeyOnCanvas(ke);
+			} else {
+				pressKeyOnCanvas(e);
+			}
+		});
+		
 	}
 
 }
