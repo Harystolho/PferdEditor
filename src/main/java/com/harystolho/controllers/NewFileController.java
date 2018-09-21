@@ -7,9 +7,11 @@ import com.harystolho.PEApplication;
 import com.harystolho.utils.PEUtils;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
@@ -52,7 +54,7 @@ public class NewFileController {
 			DirectoryChooser dc = new DirectoryChooser();
 
 			dc.setInitialDirectory(PEUtils.getSaveFolder());
-			
+
 			File dir = dc.showDialog(PEApplication.getInstance().getWindow());
 
 			if (dir != null && dir.exists()) {
@@ -79,7 +81,9 @@ public class NewFileController {
 					PEApplication.getInstance().getMainController().createNewFile(folder, name);
 					stage.close();
 				} else {
-					// TODO show error message
+					Alert error = new Alert(AlertType.ERROR);
+					error.setContentText("The selected directory is not valid or does not exist.");
+					error.showAndWait();
 				}
 			}
 		}

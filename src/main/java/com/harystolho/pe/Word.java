@@ -192,7 +192,6 @@ public class Word implements Comparable<Word> {
 	}
 
 	public static float computeCharWidth(char c) {
-		// TODO test if a hash map is faster
 		return Toolkit.getToolkit().getFontLoader().computeStringWidth(String.valueOf(c), StyleLoader.getFont());
 	}
 

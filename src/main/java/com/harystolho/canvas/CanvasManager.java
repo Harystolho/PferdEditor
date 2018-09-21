@@ -558,6 +558,25 @@ public class CanvasManager {
 		}
 	}
 
+	/**
+	 * If the text color or size has been changed, it must updates all the words
+	 * color and size
+	 */
+	public void reRenderWords() {
+
+		if (currentFile != null) {
+			currentFile.getDrawLock().readLock().lock();
+
+			for (Word word : currentFile.getWords()) {
+				word.updateDrawingColor();
+				word.updateDrawingSize();
+			}
+
+			currentFile.getDrawLock().readLock().unlock();
+		}
+
+	}
+
 	public void updateFontAndLineHeight() {
 		gc.setFont(StyleLoader.getFont());
 		setLineHeight((int) StyleLoader.getFontSize() + 3);

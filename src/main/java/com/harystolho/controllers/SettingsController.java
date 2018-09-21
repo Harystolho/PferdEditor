@@ -95,6 +95,7 @@ public class SettingsController {
 		apply.setOnAction((e) -> {
 			// TODO freezes application
 			saveAll();
+			stage.close();
 		});
 
 		cancel.setOnAction((e) -> {
@@ -104,7 +105,7 @@ public class SettingsController {
 
 	private void saveAll() {
 		saveFontsTab();
-		reRenderWords();
+		CanvasManager.getInstance().reRenderWords();
 	}
 
 	private void saveFontsTab() {
@@ -129,6 +130,7 @@ public class SettingsController {
 
 	private void showFontsAndColor() {
 		hideRightPanes();
+		fontsTab.setVisible(true);
 
 		tabName.setText("Fonts and Color");
 
@@ -137,8 +139,6 @@ public class SettingsController {
 		lineColorPicker.setValue(StyleLoader.getBackgroundLineColor());
 		cursorColorPicker.setValue(StyleLoader.getCursorColor());
 		textSizeInput.setText(String.valueOf((int) StyleLoader.getFontSize()));
-
-		fontsTab.setVisible(true);
 	}
 
 	private void showUpdates() {
@@ -147,9 +147,10 @@ public class SettingsController {
 	}
 
 	private void hideRightPanes() {
-		for (Node node : panesGroup.getChildren()) {
-			node.setVisible(false);
-		}
+		panesGroup.getChildren().forEach((p) -> {
+			p.setVisible(false);
+		});
+		
 		tabName.setText("");
 	}
 
@@ -157,26 +158,6 @@ public class SettingsController {
 		settingsList.getItems().add("General");
 		settingsList.getItems().add("Fonts and Color");
 		settingsList.getItems().add("Updates");
-	}
-
-	/**
-	 * If the text color or size was changed it has to update all the words because
-	 * they contain a field that determines their color and their size
-	 */
-	private void reRenderWords() {
-		File file = CanvasManager.getInstance().getCurrentFile();
-
-		if (file != null) {
-			file.getDrawLock().readLock().lock();
-
-			for (Word word : file.getWords()) {
-				word.updateDrawingColor();
-				word.updateDrawingSize();
-			}
-
-			file.getDrawLock().readLock().unlock();
-		}
-
 	}
 
 	public void setStage(Stage stage) {

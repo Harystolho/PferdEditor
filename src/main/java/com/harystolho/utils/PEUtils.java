@@ -28,7 +28,7 @@ public class PEUtils {
 
 	private static File saveFolder;
 
-	public static final String VERSION = "0.7";
+	public static final String VERSION = "0.8";
 
 	/**
 	 * Loads a FXML File.
