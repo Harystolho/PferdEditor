@@ -4,6 +4,7 @@ import com.harystolho.canvas.CanvasManager;
 import com.harystolho.misc.StyleLoader;
 import com.harystolho.pe.File;
 import com.harystolho.pe.Word;
+import com.harystolho.thread.FileUpdaterThread;
 
 import javafx.fxml.FXML;
 import javafx.scene.Group;
@@ -114,9 +115,28 @@ public class SettingsController {
 		StyleLoader.setLineColor(lineColorPicker.getValue());
 		StyleLoader.setCursorColor(cursorColorPicker.getValue());
 
+		changeFontSize();
+
+	}
+
+	private void changeFontSize() {
+		int oldFontSize = (int) StyleLoader.getFontSize();
+
 		try {
-			double size = Double.valueOf(textSizeInput.getText());
-			StyleLoader.setFontSize(size);
+			double newFontSize = Double.valueOf(textSizeInput.getText());
+
+			// If the new font size is different from the old one then it has to recalculate
+			// some information
+			if (oldFontSize != newFontSize) {
+				StyleLoader.setFontSize(newFontSize);
+
+				// Recalculate
+				FileUpdaterThread.calculate();
+				CanvasManager.getInstance().preRender();
+				CanvasManager.getInstance().setCursorY(CanvasManager.getInstance().getCursorY());
+				CanvasManager.getInstance().setCursorX(CanvasManager.getInstance().getCursorX());
+			}
+
 		} catch (NumberFormatException e) {
 			// do nothing
 		}
@@ -150,7 +170,7 @@ public class SettingsController {
 		panesGroup.getChildren().forEach((p) -> {
 			p.setVisible(false);
 		});
-		
+
 		tabName.setText("");
 	}
 

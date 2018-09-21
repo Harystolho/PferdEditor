@@ -305,7 +305,7 @@ public class CanvasManager {
 	 * them by calculating their x and y. This method must be called once before
 	 * calling {@link #drawWords()}
 	 */
-	private void preRender() {
+	public void preRender() {
 		if (currentFile != null) {
 
 			// First word, First line
@@ -581,6 +581,7 @@ public class CanvasManager {
 		gc.setFont(StyleLoader.getFont());
 		setLineHeight((int) StyleLoader.getFontSize() + 3);
 		drawingDisplacementY = StyleLoader.getFontSize() * 0.235;
+		System.out.println(drawingDisplacementY);
 	}
 
 	public void printDebugMessage() {
