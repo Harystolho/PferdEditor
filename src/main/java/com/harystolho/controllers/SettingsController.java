@@ -2,13 +2,10 @@ package com.harystolho.controllers;
 
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.misc.StyleLoader;
-import com.harystolho.pe.File;
-import com.harystolho.pe.Word;
 import com.harystolho.thread.FileUpdaterThread;
 
 import javafx.fxml.FXML;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;

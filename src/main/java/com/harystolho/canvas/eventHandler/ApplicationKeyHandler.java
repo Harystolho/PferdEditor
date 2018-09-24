@@ -2,7 +2,6 @@ package com.harystolho.canvas.eventHandler;
 
 import java.util.HashMap;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 import com.harystolho.PEApplication;
 import com.harystolho.canvas.CanvasManager;

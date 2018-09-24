@@ -8,7 +8,6 @@ import com.harystolho.canvas.CanvasManager;
 import com.harystolho.pe.Word.TYPES;
 import com.harystolho.pe.linkedList.IndexLinkedList;
 import com.harystolho.thread.FileUpdaterThread;
-import com.harystolho.utils.PEUtils;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;

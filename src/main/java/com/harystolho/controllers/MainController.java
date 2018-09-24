@@ -22,11 +22,11 @@ import com.harystolho.thread.FileUpdaterThread;
 import com.harystolho.thread.RenderThread;
 import com.harystolho.utils.PEUtils;
 import com.harystolho.utils.SceneReverser;
+import com.sun.org.apache.xml.internal.security.keys.storage.StorageResolver;
 
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
@@ -38,6 +38,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class MainController implements ResizableInterface {
 
@@ -54,6 +57,8 @@ public class MainController implements ResizableInterface {
 	private MenuItem menuSave;
 	@FXML
 	private MenuItem menuSaveAs;
+	@FXML
+	private MenuItem menuChangeWorkspace;
 	@FXML
 	private MenuItem menuExit;
 	@FXML
@@ -108,9 +113,6 @@ public class MainController implements ResizableInterface {
 	@FXML
 	private Rectangle bottomScrollInside;
 
-	@FXML
-	private Label fileDirectory;
-
 	boolean showWhiteSpaces = false;
 
 	private FileExplorer fileExplorer;
@@ -157,10 +159,6 @@ public class MainController implements ResizableInterface {
 
 		addNewIcon.setOnMouseClicked((e) -> {
 			// TODO custom buttons
-		});
-
-		fileDirectory.setOnMouseClicked((e) -> {
-			changeDirectory();
 		});
 
 		rightScrollBar.setOnMousePressed((e) -> {
@@ -372,7 +370,6 @@ public class MainController implements ResizableInterface {
 		String fullDirName[] = directory.getPath().split(Pattern.quote(java.io.File.separator));
 		// Get only the last part (Eg: C:/file_to/folder/LAST_PART)
 		String lastDirName = fullDirName[fullDirName.length - 1];
-		fileDirectory.setText(lastDirName);
 	}
 
 	/**
@@ -392,18 +389,29 @@ public class MainController implements ResizableInterface {
 
 	/**
 	 * Opens a new window to select the new save directory
+	 * 
+	 * @param dir
 	 */
-	private void changeDirectory() {
-		DirectoryChooser dc = new DirectoryChooser();
-
-		dc.setTitle("Choose the new directory folder");
-		java.io.File newDir = dc.showDialog(PEApplication.getInstance().getWindow());
-
-		if (newDir != null && newDir.isDirectory()) {
-			PEUtils.setSaveFolder(newDir); // Updates the save folder
-			setCurrentDirectoryLabel(newDir); // Updates the directory label
+	public void changeDirectory(java.io.File dir) {
+		if (dir != null && dir.isDirectory()) {
+			PEUtils.setSaveFolder(dir); // Updates the save folder
+			setCurrentDirectoryLabel(dir); // Updates the directory label
 			loadSaveDirectory(); // Loads the new directory
 		}
+	}
+
+	private void showWorkspaceLoader() {
+		OpenWindow ow = new OpenWindow("Workspace Loader");
+
+		ow.load("workspaceLoader.fxml", (controller) -> {
+			WorkspaceLoaderController c = (WorkspaceLoaderController) controller;
+			c.setStage(ow.getStage());
+		});
+
+		ow.getStage().initStyle(StageStyle.UNDECORATED);
+
+		PEApplication.getInstance().getWindow().hide();
+		ow.openWindow();
 	}
 
 	/**

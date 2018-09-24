@@ -24,9 +24,9 @@ public class OpenWindow {
 
 	public OpenWindow(String title) {
 		stage = new Stage();
-		
+
 		stage.initModality(Modality.APPLICATION_MODAL);
-		
+
 		stage.setTitle(title);
 	}
 

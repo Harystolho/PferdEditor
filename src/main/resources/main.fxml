@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.canvas.Canvas?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -24,6 +23,7 @@
 						<MenuItem fx:id="menuNewFile" mnemonicParsing="false" text="New File" />
                   <MenuItem fx:id="menuSave" mnemonicParsing="false" text="Save" />
                   <MenuItem fx:id="menuSaveAs" mnemonicParsing="false" text="Save As" />
+                  <MenuItem fx:id="menuChangeWorkspace" mnemonicParsing="false" text="Change Workspace" />
                   <MenuItem fx:id="menuExit" mnemonicParsing="false" text="Exit" />
 					</items>
 				</Menu>
@@ -124,25 +124,6 @@
       <HBox fx:id="bottomBox" layoutY="62.0" prefHeight="658.0" prefWidth="1280.0">
          <children>
             <VBox fx:id="leftPane" prefHeight="665.0" prefWidth="219.0">
-               <children>
-                  <HBox prefHeight="30.0" prefWidth="219.0">
-                     <children>
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@icons/folder.png" />
-                           </image>
-                        </ImageView>
-                        <Label fx:id="fileDirectory" prefHeight="19.0" prefWidth="188.0" text=" Files" wrapText="true">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <HBox.margin>
-                              <Insets left="10.0" top="2.0" />
-                           </HBox.margin>
-                        </Label>
-                     </children>
-                  </HBox>
-               </children>
                <HBox.margin>
                   <Insets bottom="7.0" left="6.0" right="12.0" top="6.0" />
                </HBox.margin>
