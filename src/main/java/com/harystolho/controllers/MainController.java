@@ -21,14 +21,11 @@ import com.harystolho.pe.File;
 import com.harystolho.thread.FileUpdaterThread;
 import com.harystolho.thread.RenderThread;
 import com.harystolho.utils.PEUtils;
-import com.harystolho.utils.SceneReverser;
-import com.sun.org.apache.xml.internal.security.keys.storage.StorageResolver;
 
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
@@ -37,9 +34,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.DirectoryChooser;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class MainController implements ResizableInterface {

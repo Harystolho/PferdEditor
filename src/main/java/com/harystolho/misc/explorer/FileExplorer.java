@@ -70,18 +70,19 @@ public class FileExplorer extends ScrollPane {
 	 * @param file
 	 * @return
 	 */
-	private boolean addFileToCorrectFolder(ExplorerFolder folder, Pane file) {
+	// TODO fix this to stop when the file is added
+	private void addFileToCorrectFolder(ExplorerFolder folder, Pane file) {
 		if (file instanceof ExplorerFile) {
 			ExplorerFile cFile = (ExplorerFile) file;
 			// If the folder is parent to cFile
 			if (folder.getDiskFile().equals(cFile.getFile().getDiskFile().getParentFile())) {
 				folder.add(file);
-				return true;
+				return;
 			} else {
 				for (Pane p : folder.getFiles()) {
 					if (p instanceof ExplorerFolder) {
 						ExplorerFolder cF = (ExplorerFolder) p;
-						return addFileToCorrectFolder(cF, cFile);
+						addFileToCorrectFolder(cF, cFile);
 					}
 				}
 			}
@@ -90,17 +91,16 @@ public class FileExplorer extends ScrollPane {
 			// If the folder is parent to cFolder
 			if (folder.getDiskFile().equals(cFolder.getDiskFile().getParentFile())) {
 				folder.add(file);
-				return true;
+				return;
 			} else {
 				for (Pane p : folder.getFiles()) {
 					if (p instanceof ExplorerFolder) {
 						ExplorerFolder cF = (ExplorerFolder) p;
-						return addFileToCorrectFolder(cF, cFolder);
+						addFileToCorrectFolder(cF, cFolder);
 					}
 				}
 			}
 		}
-		return false;
 	}
 
 	/**
