@@ -71,7 +71,7 @@ public class File {
 	public void type(KeyEvent keyEvent) {
 
 		setWasModified(true);
-		drawLock.writeLock().lock();
+		drawLock.writeLock().lock(); // TODO lock only when modifying the list
 
 		switch (keyEvent.getCode()) {
 		case SPACE:
@@ -144,7 +144,7 @@ public class File {
 		words.add(word);
 		updateCursorPosition(word.getWord()[0], true);
 	}
-	
+
 	private void addKeyToFile(KeyEvent key) {
 		String keyString = key.getText(); // Get String representing this key
 
@@ -374,7 +374,7 @@ public class File {
 	 */
 	public void addCharToFile(char c) {
 
- 		Word wrd = words.get(getCursorX() - 1, getCursorY());
+		Word wrd = words.get(getCursorX() - 1, getCursorY());
 
 		if (wrd != null) {
 			if (wrd.getType() == TYPES.SPACE || wrd.getType() == TYPES.NEW_LINE || wrd.getType() == TYPES.TAB) {

@@ -6,6 +6,7 @@ import com.harystolho.canvas.eventHandler.ApplicationMouseHandler;
 import com.harystolho.controllers.MainController;
 import com.harystolho.misc.PropertiesWindowFactory;
 import com.harystolho.utils.PEUtils;
+import com.harystolho.utils.SceneReverser;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -100,6 +101,7 @@ public class PEApplication extends Application {
 
 	private void setWindow(Stage window) {
 		this.window = window;
+		SceneReverser.setWindow(window);
 	}
 
 	public Stage getWindow() {

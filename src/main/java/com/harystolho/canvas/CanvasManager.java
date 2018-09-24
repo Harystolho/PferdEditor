@@ -293,7 +293,6 @@ public class CanvasManager {
 
 			if (!currentFile.wasPreRendered()) {
 				preRender();
-				currentFile.setPreRendered(true);
 			}
 
 			canvas.requestFocus();
@@ -345,6 +344,8 @@ public class CanvasManager {
 			}
 
 			currentFile.getDrawLock().readLock().unlock();
+			
+			currentFile.setPreRendered(true);
 		}
 
 	}
@@ -581,7 +582,6 @@ public class CanvasManager {
 		gc.setFont(StyleLoader.getFont());
 		setLineHeight((int) StyleLoader.getFontSize() + 3);
 		drawingDisplacementY = StyleLoader.getFontSize() * 0.235;
-		System.out.println(drawingDisplacementY);
 	}
 
 	public void printDebugMessage() {

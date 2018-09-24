@@ -21,10 +21,12 @@ import com.harystolho.pe.File;
 import com.harystolho.thread.FileUpdaterThread;
 import com.harystolho.thread.RenderThread;
 import com.harystolho.utils.PEUtils;
+import com.harystolho.utils.SceneReverser;
 
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
