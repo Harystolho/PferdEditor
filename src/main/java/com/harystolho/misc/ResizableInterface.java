@@ -1,4 +1,4 @@
-package com.harystolho.controllers;
+package com.harystolho.misc;
 
 public interface ResizableInterface {
 

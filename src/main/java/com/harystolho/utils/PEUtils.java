@@ -11,7 +11,7 @@ import java.util.function.Consumer;
 import java.util.logging.Logger;
 
 import com.harystolho.PEApplication;
-import com.harystolho.controllers.ResizableInterface;
+import com.harystolho.misc.ResizableInterface;
 import com.harystolho.misc.explorer.ExplorerFile;
 import com.harystolho.misc.explorer.ExplorerFolder;
 

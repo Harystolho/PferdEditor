@@ -6,6 +6,12 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 
+/**
+ * Mouse event handler for this application.
+ * 
+ * @author Harystolho
+ *
+ */
 public class ApplicationMouseHandler {
 
 	private Scene scene;

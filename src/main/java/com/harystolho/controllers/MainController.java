@@ -12,6 +12,7 @@ import com.harystolho.PEApplication;
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.misc.OpenWindow;
 import com.harystolho.misc.PropertiesWindowFactory;
+import com.harystolho.misc.ResizableInterface;
 import com.harystolho.misc.PropertiesWindowFactory.window_type;
 import com.harystolho.misc.Tab;
 import com.harystolho.misc.explorer.ExplorerFile;

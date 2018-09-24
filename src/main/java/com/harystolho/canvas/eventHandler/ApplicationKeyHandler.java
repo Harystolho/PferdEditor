@@ -12,7 +12,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 /**
- * The Key Event Handler for this application
+ * Key event handler for this application
  * 
  * @author Harystolho
  *
@@ -22,6 +22,7 @@ public class ApplicationKeyHandler {
 	private CanvasManager cm;
 	private Scene scene;
 
+	// Maps a key to a function that will get called when the key is pressed
 	private HashMap<KeyCode, Consumer<KeyEvent>> keyMap;
 
 	public ApplicationKeyHandler(Scene scene, CanvasManager cm) {
@@ -73,6 +74,10 @@ public class ApplicationKeyHandler {
 		}
 	}
 
+	/**
+	 * Maps KeyCodes to functions that will be called when their KeyCode event is
+	 * fired
+	 */
 	private void loadKeyMap() {
 
 		keyMap.put(KeyCode.UP, (e) -> {
@@ -330,7 +335,7 @@ public class ApplicationKeyHandler {
 				pressKeyOnCanvas(e);
 			}
 		});
-		
+
 	}
 
 }

@@ -149,7 +149,7 @@ public class FileRightClickController {
 		if (f == null) {
 			return;
 		}
-
+		// TODO fix paste command
 		Clipboard.getSystemClipboard().getString().chars().forEach((iChar) -> {
 			KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", String.valueOf((char) iChar),
 					KeyCode.UNDEFINED, false, false, false, false);
