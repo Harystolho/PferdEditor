@@ -215,6 +215,10 @@ public class MainController implements ResizableInterface {
 				PEUtils.saveFileAs(CanvasManager.getInstance().getCurrentFile());
 		});
 
+		menuChangeWorkspace.setOnAction((e) -> {
+			showWorkspaceLoader();
+		});
+
 		menuExit.setOnAction((e) -> {
 			PEApplication.getInstance().getWindow().close();
 			PEUtils.exit();

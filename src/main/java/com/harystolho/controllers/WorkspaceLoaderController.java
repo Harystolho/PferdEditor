@@ -35,6 +35,7 @@ public class WorkspaceLoaderController {
 			java.io.File workspaceDir = dc.showDialog(PEApplication.getInstance().getWindow());
 
 			if (workspaceDir != null) {
+				// TODO choice list not showing file name
 				workspaceList.getItems().add(workspaceDir);
 			}
 		});
