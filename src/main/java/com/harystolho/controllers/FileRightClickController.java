@@ -29,9 +29,6 @@ public class FileRightClickController {
 	private HBox copy;
 
 	@FXML
-	private HBox paste;
-
-	@FXML
 	private HBox delete;
 
 	@FXML
@@ -54,11 +51,6 @@ public class FileRightClickController {
 		copy.setOnMouseClicked((e) -> {
 			PropertiesWindowFactory.removeOpenWindow();
 			copyFile(file);
-		});
-
-		paste.setOnMouseClicked((e) -> {
-			PropertiesWindowFactory.removeOpenWindow();
-			pasteFile(file);
 		});
 
 		properties.setOnMouseClicked((e) -> {
@@ -138,23 +130,6 @@ public class FileRightClickController {
 		if (!wasFileLoaded) {
 			f.unload();
 		}
-	}
-
-	/**
-	 * Pastes the clipboard content to the file at the cursor position
-	 * 
-	 * @param f
-	 */
-	public static void pasteFile(File f) {
-		if (f == null) {
-			return;
-		}
-		// TODO fix paste command
-		Clipboard.getSystemClipboard().getString().chars().forEach((iChar) -> {
-			KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", String.valueOf((char) iChar),
-					KeyCode.UNDEFINED, false, false, false, false);
-			f.type(ke);
-		});
 	}
 
 }

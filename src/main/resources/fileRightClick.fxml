@@ -40,23 +40,6 @@
             </Label>
          </children>
       </HBox>
-      <HBox fx:id="paste" alignment="CENTER_LEFT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="32.0" prefWidth="262.0" styleClass="propLine">
-         <children>
-            <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-               <HBox.margin>
-                  <Insets left="5.0" />
-               </HBox.margin>
-               <image>
-                  <Image url="@icons/paste.png" />
-               </image>
-            </ImageView>
-            <Label text="Paste">
-               <HBox.margin>
-                  <Insets left="10.0" />
-               </HBox.margin>
-            </Label>
-         </children>
-      </HBox>
       <HBox fx:id="delete" alignment="CENTER_LEFT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="32.0" prefWidth="262.0" styleClass="propLine">
          <children>
             <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">

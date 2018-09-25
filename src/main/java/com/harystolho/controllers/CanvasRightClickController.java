@@ -4,11 +4,15 @@ import com.harystolho.PEApplication;
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.misc.PropertiesWindowFactory;
 import com.harystolho.pe.File;
+import com.harystolho.pe.Word;
+import com.harystolho.pe.Word.TYPES;
 import com.sun.org.apache.bcel.internal.generic.IFNULL;
 
 import javafx.fxml.FXML;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.DataFormat;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 
 /**
@@ -62,6 +66,7 @@ public class CanvasRightClickController {
 
 		paste.setOnMouseClicked((e) -> {
 			PropertiesWindowFactory.removeOpenWindow();
+			pasteFile(CanvasManager.getInstance().getCurrentFile());
 		});
 	}
 
@@ -78,8 +83,44 @@ public class CanvasRightClickController {
 			} else {
 				save.setDisable(true);
 			}
-			
 		}
-
 	}
+
+	/**
+	 * Pastes the clipboard content to the file at the cursor position
+	 * 
+	 * @param f
+	 */
+	public static void pasteFile(File f) {
+		if (f == null) {
+			return;
+		}
+		Clipboard.getSystemClipboard().getString().chars().forEach((iChar) -> {
+			KeyEvent ke = null;
+
+			switch (iChar) {
+			case ' ':
+				ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, "", String.valueOf((char) iChar), KeyCode.SPACE,
+						false, false, false, false);
+				break;
+			case '\n':
+				return;// Ignore
+			case '\r':
+				ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, "", String.valueOf((char) iChar), KeyCode.ENTER,
+						false, false, false, false);
+				break;
+			case '\t':
+				ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, "", String.valueOf((char) iChar), KeyCode.TAB,
+						false, false, false, false);
+				break;
+			default:
+				ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, "", String.valueOf((char) iChar), KeyCode.UNDEFINED,
+						false, false, false, false);
+				break;
+			}
+
+			f.type(ke);
+		});
+	}
+
 }

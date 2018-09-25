@@ -60,11 +60,11 @@
     -fx-background-color: #939393;
 }
 
-#fileRightClick {
+#fileRightClick, #canvasRightClick {
     -fx-background-color: #fff;
 }
 
-#fileRightClick .label {
+#fileRightClick .label, #canvasRightClick .label {
     -fx-text-fill: black;
 }
 

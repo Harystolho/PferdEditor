@@ -5,6 +5,7 @@ import java.util.function.Consumer;
 
 import com.harystolho.PEApplication;
 import com.harystolho.canvas.CanvasManager;
+import com.harystolho.controllers.CanvasRightClickController;
 import com.harystolho.controllers.FileRightClickController;
 
 import javafx.scene.Scene;
@@ -169,7 +170,7 @@ public class ApplicationKeyHandler {
 
 		keyMap.put(KeyCode.V, (e) -> {
 			if (e.isControlDown()) {
-				FileRightClickController.pasteFile(CanvasManager.getInstance().getCurrentFile());
+				CanvasRightClickController.pasteFile(CanvasManager.getInstance().getCurrentFile());
 			} else {
 				pressKeyOnCanvas(e);
 			}

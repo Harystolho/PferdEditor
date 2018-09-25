@@ -82,7 +82,7 @@ public class File {
 		case BACK_SPACE:
 			removeCharBeforeCursor();
 			break;
-		case DELETE:
+		case DELETE: // TODO fix delete at first line
 			removeCharAtCursor();
 			break;
 		case TAB:
