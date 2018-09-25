@@ -18,7 +18,7 @@ public class PropertiesWindowFactory {
 
 	// FILE - Window that opens when the user right clicks on a file
 	public static enum window_type {
-		FILE
+		FILE, CANVAS
 	}
 
 	public static Pane mainPane;
@@ -46,7 +46,11 @@ public class PropertiesWindowFactory {
 				controller.accept(c);
 			});
 			break;
-
+		case CANVAS:
+			p = PEUtils.loadFXML("canvasRightClick.fxml", (c) -> {
+				controller.accept(c);
+			});
+			break;
 		default:
 			return;
 		}

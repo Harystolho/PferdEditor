@@ -7,16 +7,47 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="fileRightClick" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="128.0" prefWidth="152.0" xmlns="http://javafx.com/javafx/8.0.181" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.harystolho.controllers.FileRightClickController">
+<VBox fx:id="canvasRightClick" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="128.0" prefWidth="152.0" xmlns="http://javafx.com/javafx/8.0.181" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.harystolho.controllers.CanvasRightClickController">
    <children>
-      <HBox fx:id="rename" alignment="CENTER_LEFT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="32.0" prefWidth="262.0" styleClass="propLine">
+      <HBox fx:id="undo" alignment="CENTER_LEFT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="32.0" prefWidth="262.0" styleClass="propLine">
          <children>
-            <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>
             </ImageView>
-            <Label text="Rename">
+            <Label text="Undo">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
+      <HBox fx:id="save" alignment="CENTER_LEFT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="32.0" prefWidth="262.0" styleClass="propLine">
+         <children>
+            <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
+            </ImageView>
+            <Label text="Save">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
+      <HBox fx:id="cut" alignment="CENTER_LEFT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="32.0" prefWidth="262.0" styleClass="propLine">
+         <children>
+            <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@icons/scissor.png" />
+               </image>
+            </ImageView>
+            <Label text="Cut">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>
@@ -35,7 +66,7 @@
             </ImageView>
             <Label text="Copy">
                <HBox.margin>
-                  <Insets left="10.0" />
+                  <Insets left="18.0" />
                </HBox.margin>
             </Label>
          </children>
@@ -52,35 +83,7 @@
             </ImageView>
             <Label text="Paste">
                <HBox.margin>
-                  <Insets left="10.0" />
-               </HBox.margin>
-            </Label>
-         </children>
-      </HBox>
-      <HBox fx:id="delete" alignment="CENTER_LEFT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="32.0" prefWidth="262.0" styleClass="propLine">
-         <children>
-            <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-               <HBox.margin>
-                  <Insets left="5.0" />
-               </HBox.margin>
-            </ImageView>
-            <Label text="Delete">
-               <HBox.margin>
-                  <Insets left="10.0" />
-               </HBox.margin>
-            </Label>
-         </children>
-      </HBox>
-      <HBox fx:id="properties" alignment="CENTER_LEFT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="32.0" prefWidth="262.0" styleClass="propLine">
-         <children>
-            <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-               <HBox.margin>
-                  <Insets left="5.0" />
-               </HBox.margin>
-            </ImageView>
-            <Label text="Properties">
-               <HBox.margin>
-                  <Insets left="10.0" />
+                  <Insets left="18.0" />
                </HBox.margin>
             </Label>
          </children>

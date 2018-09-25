@@ -106,6 +106,7 @@ public class CanvasManager {
 		drawBackgroundLine();
 		drawWords();
 		drawCursor();
+		// TODO draw selection
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -344,7 +345,7 @@ public class CanvasManager {
 			}
 
 			currentFile.getDrawLock().readLock().unlock();
-			
+
 			currentFile.setPreRendered(true);
 		}
 
