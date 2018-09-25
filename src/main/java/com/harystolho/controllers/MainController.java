@@ -206,8 +206,7 @@ public class MainController implements ResizableInterface {
 		});
 
 		menuSaveAs.setOnAction((e) -> {
-			if (CanvasManager.getInstance().getCurrentFile() != null)
-				PEUtils.saveFileAs(CanvasManager.getInstance().getCurrentFile());
+			PEUtils.saveFileAs(CanvasManager.getInstance().getCurrentFile());
 		});
 
 		menuChangeWorkspace.setOnAction((e) -> {

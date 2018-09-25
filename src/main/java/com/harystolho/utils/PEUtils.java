@@ -122,6 +122,10 @@ public class PEUtils {
 	}
 
 	public static void saveFileAs(com.harystolho.pe.File currentFile) {
+		if(currentFile == null) {
+			return;
+		}
+		
 		FileChooser fc = new FileChooser();
 		
 		fc.setInitialDirectory(currentFile.getDiskFile().getParentFile());
