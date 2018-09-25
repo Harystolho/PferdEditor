@@ -4,6 +4,7 @@ import java.util.ListIterator;
 
 import com.harystolho.PEApplication;
 import com.harystolho.canvas.eventHandler.CanvasMouseHandler;
+import com.harystolho.misc.BeforeUsing;
 import com.harystolho.misc.StyleLoader;
 import com.harystolho.pe.File;
 import com.harystolho.pe.Word;
@@ -68,6 +69,10 @@ public class CanvasManager {
 	 * @return
 	 */
 	public static CanvasManager getInstance() {
+		if (canvas == null) {
+			throw new NullPointerException("canvas object is null. Call setCanvas() before using this method");
+		}
+
 		if (instance == null) {
 			new CanvasManager();
 		}
@@ -79,6 +84,7 @@ public class CanvasManager {
 	 * 
 	 * @param canvas
 	 */
+	@BeforeUsing
 	public static void setCanvas(Canvas canvas) {
 		CanvasManager.canvas = canvas;
 	}

@@ -4,8 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.HBox;
 
 /**
- * When the user presses RIGHT CLICK on a file in the file list, it shows this
- * window
+ * When the user presses RIGHT CLICK on the canvas, it shows this window
  * 
  * @author Harystolho
  *
@@ -35,6 +34,24 @@ public class CanvasRightClickController {
 	}
 
 	private void loadEventHandlers() {
+		undo.setOnMouseClicked((e) -> {
 
+		});
+
+		save.setOnMouseClicked((e) -> {
+
+		});
+
+		cut.setOnMouseClicked((e) -> {
+
+		});
+
+		copy.setOnMouseClicked((e) -> {
+
+		});
+
+		paste.setOnMouseClicked((e) -> {
+
+		});
 	}
 }

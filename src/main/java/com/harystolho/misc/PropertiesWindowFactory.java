@@ -8,9 +8,9 @@ import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 
 /**
- * Class to manage windows inside the application. Call
- * {@link #setMainPane(Parent)} before using it.
- * 
+ * Class to manage windows inside the application.<br>
+ *
+ * Call {@link #setMainPane(Parent)} before using it.
  * @author Harystolho
  *
  */
@@ -100,6 +100,7 @@ public class PropertiesWindowFactory {
 		return mainPane;
 	}
 
+	@BeforeUsing
 	public static void setMainPane(Parent p) {
 		mainPane = (Pane) p;
 	}
