@@ -4,7 +4,6 @@ import java.util.ListIterator;
 
 import com.harystolho.PEApplication;
 import com.harystolho.canvas.CanvasManager;
-import com.harystolho.controllers.MainController;
 import com.harystolho.pe.File;
 
 import javafx.collections.ObservableList;
@@ -53,12 +52,6 @@ public class FileTabManager extends HBox {
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
-	public ObservableList<Tab> getTabs() {
-		ObservableList tabs = getChildren();
-		return tabs;
-	}
-
 	public void closeTabs() {
 		ListIterator<Tab> it = getTabs().listIterator();
 		while (it.hasNext()) {
@@ -96,6 +89,52 @@ public class FileTabManager extends HBox {
 
 			file.unload();
 		}
+	}
+
+	public void removeFileFromFileTab(File file) {
+		ListIterator<Tab> it = getTabs().listIterator();
+		while (it.hasNext()) {
+			Tab tab = it.next();
+			if (tab.getFile() == file) {
+				removeTab(tab);
+				break;
+			}
+		}
+	}
+
+	/**
+	 * Adds a <code>*</code> to the file name to indicate it's been modified
+	 * 
+	 * @param file
+	 */
+	public void setFileModified(File file) {
+		for (Tab tab : getTabs()) {
+			if (tab.getFile() == file) {
+				tab.setModified(true);
+				break;
+			}
+		}
+	}
+
+	/**
+	 * If a file is renamed it has to update its name in the File Tab too, this
+	 * method does that
+	 * 
+	 * @param file
+	 */
+	public void updateFileNameOnFileTab(File file) {
+		for (Tab tab : getTabs()) {
+			if (tab.getFile() == file) {
+				tab.setTabName(file.getName());
+				break;
+			}
+		}
+	}
+
+	@SuppressWarnings("rawtypes")
+	public ObservableList<Tab> getTabs() {
+		ObservableList tabs = getChildren();
+		return tabs;
 	}
 
 	public boolean isEmpty() {

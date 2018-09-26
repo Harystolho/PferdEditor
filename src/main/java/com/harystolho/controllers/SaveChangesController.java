@@ -63,7 +63,7 @@ public class SaveChangesController {
 	}
 
 	private void closeFile(File file) {
-		PEApplication.getInstance().getMainController().removeFileFromFileTab(file);
+		PEApplication.getInstance().getMainController().getFileTabManager().removeFileFromFileTab(file);
 		PEApplication.getInstance().getMainController().selectFirstTabOnFileTab();
 
 		file.unload();

@@ -5,7 +5,6 @@ import java.awt.Desktop.Action;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ListIterator;
 
 import com.harystolho.PEApplication;
 import com.harystolho.canvas.CanvasManager;
@@ -25,7 +24,6 @@ import com.harystolho.utils.PEUtils;
 
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -429,22 +427,6 @@ public class MainController implements ResizableInterface {
 		}
 	}
 
-	/**
-	 * Removes this <code>file</code>'s tab from {@link #filesTab}
-	 * 
-	 * @param file
-	 */
-	public void removeFileFromFileTab(File file) {
-		ListIterator<Node> it = filesTab.getChildren().listIterator();
-		while (it.hasNext()) {
-			Node node = it.next();
-			if (node.getUserData() == file) {
-				filesTab.getChildren().remove(node);
-				break;
-			}
-		}
-	}
-
 	public void openSaveChangesWindow(File file) {
 		OpenWindow ow = new OpenWindow("Save Changes");
 
@@ -509,37 +491,6 @@ public class MainController implements ResizableInterface {
 	private void stopRendering() {
 		canvas.setCursor(Cursor.DEFAULT);
 		CanvasManager.getInstance().stopRenderThread();
-	}
-
-	/**
-	 * Adds a <code>*</code> to the file name to indicate it's been modified
-	 * 
-	 * @param file
-	 */
-	public void setFileModified(File file) {
-		for (Node node : filesTab.getChildren()) {
-			Tab tab = (Tab) node;
-			if (tab.getUserData() == file) {
-				tab.setModified(true);
-				break;
-			}
-		}
-	}
-
-	/**
-	 * If a file is renamed it has to update its name in the File Tab too, this
-	 * method does that
-	 * 
-	 * @param file
-	 */
-	public void updateFileNameOnFileTab(File file) {
-		for (Node node : filesTab.getChildren()) {
-			Tab tab = (Tab) node;
-			if (tab.getUserData() == file) {
-				tab.setTabName(file.getName());
-				break;
-			}
-		}
 	}
 
 	public Canvas getCanvas() {

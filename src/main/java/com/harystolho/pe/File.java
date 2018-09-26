@@ -841,7 +841,7 @@ public class File {
 
 	public void setWasModified(boolean wasModified) {
 		if (!this.wasModified && wasModified) {
-			PEApplication.getInstance().getMainController().setFileModified(this);
+			PEApplication.getInstance().getMainController().getFileTabManager().setFileModified(this);
 		}
 		this.wasModified = wasModified;
 
