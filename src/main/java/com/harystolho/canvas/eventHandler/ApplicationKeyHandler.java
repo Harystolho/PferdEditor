@@ -154,7 +154,7 @@ public class ApplicationKeyHandler {
 		// Normal Keys
 		keyMap.put(KeyCode.W, (e) -> {
 			if (e.isControlDown()) {
-				PEApplication.getInstance().getMainController().closeFile(cm.getCurrentFile());
+				PEApplication.getInstance().getMainController().getFileTabManager().closeFile(cm.getCurrentFile());
 			} else {
 				pressKeyOnCanvas(e);
 			}

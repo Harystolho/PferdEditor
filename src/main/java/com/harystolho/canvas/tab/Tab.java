@@ -41,7 +41,7 @@ public class Tab extends HBox {
 		close.getStyleClass().add("closeTab");
 		close.setPadding(new Insets(0, 0, 0, 7));
 		close.setOnMouseClicked((e) -> {
-			mainController.closeFile(file);
+			mainController.getFileTabManager().closeFile(file);
 		});
 
 		setAlignment(Pos.CENTER);
@@ -85,6 +85,10 @@ public class Tab extends HBox {
 	@Override
 	public Object getUserData() {
 		return file;
+	}
+
+	public File getFile() {
+		return (File) getUserData();
 	}
 
 	@Override

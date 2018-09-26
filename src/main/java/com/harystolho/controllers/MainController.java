@@ -299,7 +299,7 @@ public class MainController implements ResizableInterface {
 			fileExplorer.remove(file);
 
 			if (file.isLoaded()) {
-				closeFile(file);
+				filesTab.closeFile(file);
 			}
 
 			file.getDiskFile().delete();
@@ -313,7 +313,7 @@ public class MainController implements ResizableInterface {
 		if (file != null) {
 			if (!file.isLoaded()) {
 				PEUtils.loadFileFromDisk(file);
-				createFileTabLabel(file);
+				filesTab.addTab(file);
 			}
 
 			CanvasManager.getInstance().setCurrentFile(file);
@@ -326,35 +326,6 @@ public class MainController implements ResizableInterface {
 			}
 
 			updateFileTabSelection(file);
-		}
-	}
-
-	/**
-	 * Adds a CSS class to the select file tab to show it's select
-	 * 
-	 * @param file
-	 */
-	private void updateFileTabSelection(File file) {
-		for (Node node : filesTab.getChildren()) {
-			Tab tab = (Tab) node;
-			if (tab.getUserData() != file) {
-				tab.setSelected(false);
-			} else {
-				tab.setSelected(true);
-			}
-
-		}
-	}
-
-	/**
-	 * Removes the '*' before the tab's file name
-	 */
-	private void removeFileTabModified(File currentFile) {
-		for (Node node : filesTab.getChildren()) {
-			Tab tab = (Tab) node;
-			if (tab.getUserData() == currentFile) {
-				tab.setModified(false);
-			}
 		}
 	}
 
@@ -409,14 +380,29 @@ public class MainController implements ResizableInterface {
 	private void loadWorkspaceDirectory() {
 		fileExplorer.setContent(null);
 
-		// Closes the opened tabs
-		ListIterator<Node> it = filesTab.getChildren().listIterator();
-		while (it.hasNext()) {
-			Node node = it.next();
-			closeFile((File) node.getUserData(), it);
-		}
+		filesTab.closeTabs();
 
 		loadFileNames();
+	}
+
+	public FileTabManager getFileTabManager() {
+		return filesTab;
+	}
+
+	/**
+	 * Changes the tab's color to indicate it's selected
+	 * 
+	 * @param file
+	 */
+	private void updateFileTabSelection(File file) {
+		filesTab.select(file);
+	}
+
+	/**
+	 * Removes the '*' before the tab's file name
+	 */
+	private void removeFileTabModified(File file) {
+		filesTab.removeModified(file);
 	}
 
 	/**
@@ -433,51 +419,10 @@ public class MainController implements ResizableInterface {
 		}
 	}
 
-	/**
-	 * Creates and adds a new tab in the {@link #filesTab}
-	 * 
-	 * @param file
-	 */
-	private void createFileTabLabel(File file) {
-		Tab tab = new Tab(file);
-		filesTab.getChildren().add(tab);
-	}
-
-	/**
-	 * Removes the <code>file</code> from the {@link #filesTab} and selects the
-	 * first tab if there's one
-	 * 
-	 * @param file
-	 * @param node
-	 */
-	public void closeFile(File file) {
-		ListIterator<Node> it = filesTab.getChildren().listIterator();
-		while (it.hasNext()) {
-			Node node = it.next();
-			if (node.getUserData() == file) {
-				closeFile(file, it);
-				break;
-			}
-		}
-	}
-
-	private void closeFile(File file, ListIterator<Node> it) {
-		if (file.wasModified()) {
-			openSaveChangesWindow(file);
-		} else {
-			it.remove();
-			CanvasManager.getInstance().resetPivotNode();
-
-			selectFirstTabOnFileTab();
-
-			file.unload();
-		}
-	}
-
 	public void selectFirstTabOnFileTab() {
-		if (filesTab.getChildren().size() > 0) {
-			Node node = filesTab.getChildren().get(0);
-			loadFileInCanvas((File) node.getUserData());
+		if (!filesTab.isEmpty()) {
+			Tab tab = filesTab.getTabs().get(0);
+			loadFileInCanvas(tab.getFile());
 		} else { // If there's no tab left
 			hideSrollBar();
 			stopRendering();
@@ -500,7 +445,7 @@ public class MainController implements ResizableInterface {
 		}
 	}
 
-	private void openSaveChangesWindow(File file) {
+	public void openSaveChangesWindow(File file) {
 		OpenWindow ow = new OpenWindow("Save Changes");
 
 		ow.load("saveChanges.fxml", (controller) -> {
