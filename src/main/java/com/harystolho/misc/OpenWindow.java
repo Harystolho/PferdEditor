@@ -30,7 +30,7 @@ public class OpenWindow {
 		stage.setTitle(title);
 	}
 
-	public void load(String fxmlName, Consumer<Object> controller) {
+	public <T> void load(String fxmlName, Consumer<T> controller) {
 		parent = PEUtils.loadFXML(fxmlName, controller);
 
 		scene = new Scene(parent);

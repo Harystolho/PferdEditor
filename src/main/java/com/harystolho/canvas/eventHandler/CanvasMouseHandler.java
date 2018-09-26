@@ -1,6 +1,5 @@
 package com.harystolho.canvas.eventHandler;
 
-import com.harystolho.PEApplication;
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.controllers.CanvasRightClickController;
 import com.harystolho.misc.PropertiesWindowFactory;

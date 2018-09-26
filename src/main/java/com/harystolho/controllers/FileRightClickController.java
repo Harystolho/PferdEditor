@@ -9,8 +9,6 @@ import com.harystolho.utils.PEUtils;
 import javafx.fxml.FXML;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 
 /**
@@ -97,11 +95,11 @@ public class FileRightClickController {
 			return;
 		}
 
-		ClipboardContent cd = new ClipboardContent();
+		ClipboardContent clipboardContent = new ClipboardContent();
 		StringBuilder sb = new StringBuilder();
 
-		// If the file is not loaded then load it, copy it and close it. If it already
-		// opened just copy it.
+		// If the file is not loaded then load it, copy it and close it. If it is
+		// already opened just copy it.
 		boolean wasFileLoaded = true;
 
 		if (!f.isLoaded()) {
@@ -124,8 +122,8 @@ public class FileRightClickController {
 			}
 		});
 
-		cd.putString(sb.toString());
-		Clipboard.getSystemClipboard().setContent(cd);
+		clipboardContent.putString(sb.toString());
+		Clipboard.getSystemClipboard().setContent(clipboardContent);
 
 		if (!wasFileLoaded) {
 			f.unload();

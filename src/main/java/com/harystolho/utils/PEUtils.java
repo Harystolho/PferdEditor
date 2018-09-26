@@ -187,7 +187,7 @@ public class PEUtils {
 
 	}
 
-	public static File getSaveFolder() {
+	public static File getWorkspaceFolder() {
 		if (!saveFolder.exists()) {
 			saveFolder.mkdir();
 		}
@@ -195,7 +195,7 @@ public class PEUtils {
 		return saveFolder;
 	}
 
-	public static void setSaveFolder(File dir) {
+	public static void setWorkspaceFolder(File dir) {
 		saveFolder = dir;
 		PEConfiguration.setProperty("PROJ_FOLDER", dir.getAbsolutePath());
 	}

@@ -6,15 +6,15 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ListIterator;
-import java.util.regex.Pattern;
 
 import com.harystolho.PEApplication;
 import com.harystolho.canvas.CanvasManager;
+import com.harystolho.canvas.tab.FileTabManager;
+import com.harystolho.canvas.tab.Tab;
 import com.harystolho.misc.OpenWindow;
 import com.harystolho.misc.PropertiesWindowFactory;
 import com.harystolho.misc.PropertiesWindowFactory.window_type;
 import com.harystolho.misc.ResizableInterface;
-import com.harystolho.misc.Tab;
 import com.harystolho.misc.explorer.ExplorerFile;
 import com.harystolho.misc.explorer.ExplorerFolder;
 import com.harystolho.misc.explorer.FileExplorer;
@@ -88,7 +88,7 @@ public class MainController implements ResizableInterface {
 	private HBox bottomBox;
 
 	@FXML
-	private HBox filesTab;
+	private FileTabManager filesTab;
 	@FXML
 	private VBox canvasBox;
 	@FXML
@@ -120,8 +120,7 @@ public class MainController implements ResizableInterface {
 
 		addFileExplorer();
 
-		loadSaveDirectory();
-		setCurrentDirectoryLabel(PEUtils.getSaveFolder());
+		loadWorkspaceDirectory();
 	}
 
 	private void loadEventHandlers() {
@@ -137,7 +136,7 @@ public class MainController implements ResizableInterface {
 		});
 
 		refresh.setOnMouseClicked((e) -> {
-			loadSaveDirectory();
+			loadWorkspaceDirectory();
 		});
 
 		pilcrow.setOnMouseClicked((e) -> {
@@ -160,16 +159,16 @@ public class MainController implements ResizableInterface {
 			lastY = e.getY();
 		});
 
-		rightScrollBar.setOnMouseDragged((e) -> {
+		rightScrollBar.setOnMouseDragged((mouse) -> {
 			// If cursor is inside scroll bar
-			if (e.getY() >= rightScrollInside.getLayoutY()
-					&& e.getY() <= rightScrollInside.getLayoutY() + rightScrollInside.getHeight()) {
-				double displacement = lastY - e.getY();
+			if (mouse.getY() >= rightScrollInside.getLayoutY()
+					&& mouse.getY() <= rightScrollInside.getLayoutY() + rightScrollInside.getHeight()) {
+				double displacement = lastY - mouse.getY();
 
 				CanvasManager.getInstance().setScrollY((int) (CanvasManager.getInstance().getScrollY()
 						- (FileUpdaterThread.getBiggestY() * (displacement / rightScrollBar.getHeight()))));
 
-				lastY = e.getY();
+				lastY = mouse.getY();
 			}
 		});
 
@@ -177,16 +176,16 @@ public class MainController implements ResizableInterface {
 			lastX = e.getX();
 		});
 
-		bottomScrollBar.setOnMouseDragged((e) -> {
+		bottomScrollBar.setOnMouseDragged((mouse) -> {
 			// If cursor is inside scroll bar
-			if (e.getX() >= bottomScrollInside.getLayoutX()
-					&& e.getX() <= bottomScrollInside.getLayoutX() + bottomScrollInside.getWidth()) {
-				double displacement = lastX - e.getX();
+			if (mouse.getX() >= bottomScrollInside.getLayoutX()
+					&& mouse.getX() <= bottomScrollInside.getLayoutX() + bottomScrollInside.getWidth()) {
+				double displacement = lastX - mouse.getX();
 
 				CanvasManager.getInstance().setScrollX((int) (CanvasManager.getInstance().getScrollX()
 						- (FileUpdaterThread.getBiggestX() * (displacement / bottomScrollBar.getWidth()))));
 
-				lastX = e.getX();
+				lastX = mouse.getX();
 			}
 		});
 
@@ -261,16 +260,15 @@ public class MainController implements ResizableInterface {
 	 */
 	public void saveOpenedFile() {
 		if (CanvasManager.getInstance().getCurrentFile() != null) {
-			PEUtils.saveFile(CanvasManager.getInstance().getCurrentFile(),
-					CanvasManager.getInstance().getCurrentFile().getDiskFile());
+			File file = CanvasManager.getInstance().getCurrentFile();
+			PEUtils.saveFile(file, file.getDiskFile());
 
-			setFileTabModified(CanvasManager.getInstance().getCurrentFile());
+			removeFileTabModified(file);
 		}
 	}
 
 	private void createNewFile() {
 		OpenWindow ow = new OpenWindow("New File");
-
 		ow.load("newFile.fxml", (controller) -> {
 			NewFileController c = (NewFileController) controller;
 			c.setStage(ow.getStage());
@@ -290,10 +288,10 @@ public class MainController implements ResizableInterface {
 		File file = new File(fileName);
 		file.setDiskFile(new java.io.File(folder + java.io.File.separator + fileName));
 
-		ExplorerFile cFile = new ExplorerFile(fileName);
-		cFile.setFile(file);
+		ExplorerFile eFile = new ExplorerFile(fileName);
+		eFile.setFile(file);
 
-		fileExplorer.add(cFile);
+		fileExplorer.add(eFile);
 	}
 
 	public void deleteFile(File file) {
@@ -312,26 +310,23 @@ public class MainController implements ResizableInterface {
 	 * Loads the <code>file</code> in the canvas and updates the selected file tab
 	 */
 	public void loadFileInCanvas(File file) {
-		if (file == null) {
-			return;
+		if (file != null) {
+			if (!file.isLoaded()) {
+				PEUtils.loadFileFromDisk(file);
+				createFileTabLabel(file);
+			}
+
+			CanvasManager.getInstance().setCurrentFile(file);
+
+			FileUpdaterThread.calculate();
+
+			if (RenderThread.instance == null) {
+				canvas.setCursor(Cursor.TEXT);
+				CanvasManager.getInstance().initRenderThread();
+			}
+
+			updateFileTabSelection(file);
 		}
-
-		if (!file.isLoaded()) {
-			PEUtils.loadFileFromDisk(file);
-			createFileTabLabel(file);
-		}
-
-		CanvasManager.getInstance().setCurrentFile(file);
-
-		FileUpdaterThread.calculate();
-
-		if (RenderThread.instance == null) {
-			canvas.setCursor(Cursor.TEXT);
-			CanvasManager.getInstance().initRenderThread();
-		}
-
-		updateFileTabSelection(file);
-
 	}
 
 	/**
@@ -352,27 +347,20 @@ public class MainController implements ResizableInterface {
 	}
 
 	/**
-	 * Updates the '*' before the tab's file name
+	 * Removes the '*' before the tab's file name
 	 */
-	private void setFileTabModified(File currentFile) {
+	private void removeFileTabModified(File currentFile) {
 		for (Node node : filesTab.getChildren()) {
 			Tab tab = (Tab) node;
-			if (tab.getUserData() == CanvasManager.getInstance().getCurrentFile()) {
+			if (tab.getUserData() == currentFile) {
 				tab.setModified(false);
 			}
 		}
 	}
 
-	public void setCurrentDirectoryLabel(java.io.File directory) {
-		// Split the full directory name
-		String fullDirName[] = directory.getPath().split(Pattern.quote(java.io.File.separator));
-		// Get only the last part (Eg: C:/file_to/folder/LAST_PART)
-		String lastDirName = fullDirName[fullDirName.length - 1];
-	}
-
 	/**
-	 * Opens a properties window( this is the window that opens when you press right
-	 * click) at the cursor's position
+	 * Opens a file properties window (this is the window that opens when you press
+	 * right click) at the cursor's position
 	 * 
 	 * @param file
 	 * @param x
@@ -386,18 +374,20 @@ public class MainController implements ResizableInterface {
 	}
 
 	/**
-	 * Opens a new window to select the new save directory
+	 * Updates the workspace directory
 	 * 
 	 * @param dir
 	 */
 	public void changeDirectory(java.io.File dir) {
 		if (dir != null && dir.isDirectory()) {
-			PEUtils.setSaveFolder(dir); // Updates the save folder
-			setCurrentDirectoryLabel(dir); // Updates the directory label
-			loadSaveDirectory(); // Loads the new directory
+			PEUtils.setWorkspaceFolder(dir); // Updates the save folder
+			loadWorkspaceDirectory(); // Loads the new directory
 		}
 	}
 
+	/**
+	 * Opens a window to select the a workspace folder
+	 */
 	private void showWorkspaceLoader() {
 		OpenWindow ow = new OpenWindow("Workspace Loader");
 
@@ -408,14 +398,15 @@ public class MainController implements ResizableInterface {
 
 		ow.getStage().initStyle(StageStyle.UNDECORATED);
 
-		PEApplication.getInstance().getWindow().hide();
+		PEApplication.getInstance().getWindow().hide(); // Hides the application window
 		ow.openWindow();
 	}
 
 	/**
-	 * Clears the file list and loads the files from the save directory
+	 * Clears the {@link #fileExplorer} and loads the files from the workspace
+	 * directory
 	 */
-	private void loadSaveDirectory() {
+	private void loadWorkspaceDirectory() {
 		fileExplorer.setContent(null);
 
 		// Closes the opened tabs
@@ -429,13 +420,13 @@ public class MainController implements ResizableInterface {
 	}
 
 	/**
-	 * Loads the files name from the current directory
+	 * Loads the files name from the workspace directory
 	 */
 	private void loadFileNames() {
-		java.io.File saveFolder = PEUtils.getSaveFolder();
-		if (saveFolder.exists()) {
-			ExplorerFolder root = new ExplorerFolder(saveFolder);
-			for (java.io.File file : saveFolder.listFiles()) {
+		java.io.File workspace = PEUtils.getWorkspaceFolder();
+		if (workspace.exists()) {
+			ExplorerFolder root = new ExplorerFolder(workspace);
+			for (java.io.File file : workspace.listFiles()) {
 				PEUtils.createFileFromSourceFile(root, file);
 			}
 			fileExplorer.add(root);
@@ -521,6 +512,12 @@ public class MainController implements ResizableInterface {
 		ow.openWindow();
 	}
 
+	/**
+	 * If the file name or some visible information about the file is modified, this
+	 * method must be called to update the information in the file explorer
+	 * 
+	 * @param file
+	 */
 	public void refreshFile(File file) {
 		fileExplorer.updateFile(file);
 	}
@@ -537,8 +534,6 @@ public class MainController implements ResizableInterface {
 
 	private void updateScrollX(float x) {
 		double widthProportion = bottomScrollBar.getWidth() / x;
-
-		// System.out.println(widthProportion);
 
 		if (widthProportion <= 1) {
 			bottomScrollInside.setVisible(true);
@@ -569,15 +564,6 @@ public class MainController implements ResizableInterface {
 	private void stopRendering() {
 		canvas.setCursor(Cursor.DEFAULT);
 		CanvasManager.getInstance().stopRenderThread();
-	}
-
-	/**
-	 * @return <code>true</code> if at least 1 file is selected
-	 */
-	public boolean isFileSelected() {
-		return true;
-		// return fileList.getSelectionModel().getSelectedIndices().isEmpty() ? false :
-		// true;
 	}
 
 	/**

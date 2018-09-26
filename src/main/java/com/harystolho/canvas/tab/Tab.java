@@ -1,4 +1,4 @@
-package com.harystolho.misc;
+package com.harystolho.canvas.tab;
 
 import com.harystolho.PEApplication;
 import com.harystolho.controllers.MainController;

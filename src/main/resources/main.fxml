@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.harystolho.canvas.tab.FileTabManager?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.canvas.Canvas?>
@@ -130,11 +131,7 @@
             </VBox>
             <VBox fx:id="canvasBox" prefHeight="663.0" prefWidth="1012.0">
                <children>
-                  <HBox fx:id="filesTab" prefHeight="24.0" prefWidth="1035.0">
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </HBox>
+                  <FileTabManager fx:id="filesTab" prefHeight="24.0" />
             		<Canvas fx:id="canvas" height="597.0" width="1012.0">
                      <cursor>
                         <Cursor fx:constant="DEFAULT" />

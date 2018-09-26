@@ -145,7 +145,7 @@ public class FileExplorer extends ScrollPane {
 
 	/**
 	 * @return A list containing all the files under the save folder
-	 * @see {@link PEUtils#getSaveFolder()}
+	 * @see {@link PEUtils#getWorkspaceFolder()}
 	 */
 	public List<File> getFiles() {
 		List<File> files = new ArrayList<>();

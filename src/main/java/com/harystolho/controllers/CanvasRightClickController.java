@@ -4,13 +4,9 @@ import com.harystolho.PEApplication;
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.misc.PropertiesWindowFactory;
 import com.harystolho.pe.File;
-import com.harystolho.pe.Word;
-import com.harystolho.pe.Word.TYPES;
-import com.sun.org.apache.bcel.internal.generic.IFNULL;
 
 import javafx.fxml.FXML;
 import javafx.scene.input.Clipboard;
-import javafx.scene.input.DataFormat;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
@@ -22,8 +18,6 @@ import javafx.scene.layout.HBox;
  *
  */
 public class CanvasRightClickController {
-
-	// TODO fix hovering issue
 
 	@FXML
 	private HBox undo;
@@ -95,6 +89,7 @@ public class CanvasRightClickController {
 		if (f == null) {
 			return;
 		}
+		
 		Clipboard.getSystemClipboard().getString().chars().forEach((iChar) -> {
 			KeyEvent ke = null;
 

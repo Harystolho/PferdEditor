@@ -44,7 +44,7 @@ public class NewFileController {
 
 	@FXML
 	void initialize() {
-		directory.setText(PEUtils.getSaveFolder().getAbsolutePath());
+		directory.setText(PEUtils.getWorkspaceFolder().getAbsolutePath());
 		loadEventHandlers();
 	}
 
@@ -53,7 +53,7 @@ public class NewFileController {
 		directory.setOnMouseClicked((e) -> {
 			DirectoryChooser dc = new DirectoryChooser();
 
-			dc.setInitialDirectory(PEUtils.getSaveFolder());
+			dc.setInitialDirectory(PEUtils.getWorkspaceFolder());
 
 			File dir = dc.showDialog(PEApplication.getInstance().getWindow());
 
