@@ -49,7 +49,7 @@ public class RenameFileController {
 		file.setName(fileName.getText());
 		stage.close();
 
-		PEApplication.getInstance().getMainController().updateFileNameOnFileTab(file);
+		PEApplication.getInstance().getMainController().getFileTabManager().updateFileNameOnFileTab(file);
 		PEApplication.getInstance().getMainController().refreshFile(file);
 	}
 

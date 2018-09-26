@@ -216,11 +216,11 @@ public class MainController implements ResizableInterface {
 		});
 
 		menuSearch.setOnAction((e) -> {
-
+			// TODO search
 		});
 
 		menuReplace.setOnAction((e) -> {
-
+			// TODO replace
 		});
 
 		menuSettings.setOnAction((e) -> {
@@ -233,7 +233,7 @@ public class MainController implements ResizableInterface {
 		});
 
 		menuCheckForUpdates.setOnAction((e) -> {
-
+			// TODO check for updates
 		});
 
 		menuAbout.setOnAction((e) -> {
@@ -257,8 +257,8 @@ public class MainController implements ResizableInterface {
 	 * Saves the file that is being drawn
 	 */
 	public void saveOpenedFile() {
-		if (CanvasManager.getInstance().getCurrentFile() != null) {
-			File file = CanvasManager.getInstance().getCurrentFile();
+		File file = CanvasManager.getInstance().getCurrentFile();
+		if (file != null) {
 			PEUtils.saveFile(file, file.getDiskFile());
 
 			removeFileTabModified(file);
@@ -288,7 +288,7 @@ public class MainController implements ResizableInterface {
 
 		ExplorerFile eFile = new ExplorerFile(fileName);
 		eFile.setFile(file);
-
+		
 		fileExplorer.add(eFile);
 	}
 
@@ -347,7 +347,7 @@ public class MainController implements ResizableInterface {
 	 * 
 	 * @param dir
 	 */
-	public void changeDirectory(java.io.File dir) {
+	public void updateWorkspaceDirectory(java.io.File dir) {
 		if (dir != null && dir.isDirectory()) {
 			PEUtils.setWorkspaceFolder(dir); // Updates the save folder
 			loadWorkspaceDirectory(); // Loads the new directory
@@ -355,7 +355,7 @@ public class MainController implements ResizableInterface {
 	}
 
 	/**
-	 * Opens a window to select the a workspace folder
+	 * Opens a window to select the workspace folder
 	 */
 	private void showWorkspaceLoader() {
 		OpenWindow ow = new OpenWindow("Workspace Loader");

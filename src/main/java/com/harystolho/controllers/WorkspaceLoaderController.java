@@ -49,7 +49,7 @@ public class WorkspaceLoaderController {
 	}
 
 	private void openSelectedDir(File dir) {
-		PEApplication.getInstance().getMainController().changeDirectory(dir);
+		PEApplication.getInstance().getMainController().updateWorkspaceDirectory(dir);
 		stage.close();
 		PEApplication.getInstance().getWindow().show();
 	}
