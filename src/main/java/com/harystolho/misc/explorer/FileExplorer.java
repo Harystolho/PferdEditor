@@ -34,7 +34,7 @@ public class FileExplorer extends ScrollPane {
 		ExplorerFolder currentFolder = (ExplorerFolder) getContent();
 
 		while (currentFolder != null) {
-			for (Pane p : currentFolder.getFiles()) {
+			for (FileInterface p : currentFolder.getFiles()) {
 				if (p instanceof ExplorerFile) {
 					ExplorerFile cFile = (ExplorerFile) p;
 					if (cFile.getFile() == file) {
@@ -53,7 +53,7 @@ public class FileExplorer extends ScrollPane {
 		if (getContent() != null) {
 			ExplorerFolder root = (ExplorerFolder) getContent();
 
-			addFileToCorrectFolder(root, file);
+			addFileToCorrectFolder(root, (FileInterface) file);
 		} else {
 			setContent(file);
 		}
@@ -70,33 +70,15 @@ public class FileExplorer extends ScrollPane {
 	 * @return
 	 */
 	// TODO fix this to stop when the file is added
-	private void addFileToCorrectFolder(ExplorerFolder folder, Pane file) {
-		if (file instanceof ExplorerFile) {
-			ExplorerFile cFile = (ExplorerFile) file;
-			// If the folder is parent to cFile
-			if (folder.getDiskFile().equals(cFile.getFile().getDiskFile().getParentFile())) {
-				folder.add(file);
-				return;
-			} else {
-				for (Pane p : folder.getFiles()) {
-					if (p instanceof ExplorerFolder) {
-						ExplorerFolder cF = (ExplorerFolder) p;
-						addFileToCorrectFolder(cF, cFile);
-					}
-				}
-			}
-		} else if (file instanceof ExplorerFolder) {
-			ExplorerFolder cFolder = (ExplorerFolder) file;
-			// If the folder is parent to cFolder
-			if (folder.getDiskFile().equals(cFolder.getDiskFile().getParentFile())) {
-				folder.add(file);
-				return;
-			} else {
-				for (Pane p : folder.getFiles()) {
-					if (p instanceof ExplorerFolder) {
-						ExplorerFolder cF = (ExplorerFolder) p;
-						addFileToCorrectFolder(cF, cFolder);
-					}
+	private void addFileToCorrectFolder(ExplorerFolder folder, FileInterface file) {
+		// If the folder is parent to cFile
+		if (folder.getDiskFile().equals(file.getDiskFile().getParentFile())) {
+			folder.add((Pane) file);
+			return;
+		} else {
+			for (FileInterface fFile : folder.getFiles()) {
+				if (fFile instanceof ExplorerFolder) {
+					addFileToCorrectFolder((ExplorerFolder) fFile, file);
 				}
 			}
 		}
@@ -127,7 +109,7 @@ public class FileExplorer extends ScrollPane {
 		ExplorerFolder currentFolder = (ExplorerFolder) getContent();
 
 		while (currentFolder != null) {
-			for (Pane p : currentFolder.getFiles()) {
+			for (FileInterface p : currentFolder.getFiles()) {
 				if (p instanceof ExplorerFile) {
 					ExplorerFile cFile = (ExplorerFile) p;
 					if (cFile.getFile() == file) {
@@ -169,8 +151,8 @@ public class FileExplorer extends ScrollPane {
 			list.add(cFile.getFile());
 		} else if (p instanceof ExplorerFolder) {
 			ExplorerFolder cFolder = (ExplorerFolder) p;
-			for (Pane pp : cFolder.getFiles()) {
-				addFilesToList(list, pp);
+			for (FileInterface pp : cFolder.getFiles()) {
+				addFilesToList(list, (Pane) pp);
 			}
 		}
 	}

@@ -60,6 +60,11 @@ public class ExplorerFile extends HBox implements FileInterface {
 		return file;
 	}
 
+	@Override
+	public java.io.File getDiskFile() {
+		return file.getDiskFile();
+	}
+
 	public void update() {
 		fileName.setText(file.getName());
 	}

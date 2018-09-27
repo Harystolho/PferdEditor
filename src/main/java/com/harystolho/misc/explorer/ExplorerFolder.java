@@ -75,10 +75,9 @@ public class ExplorerFolder extends VBox implements FileInterface {
 	 * @return
 	 */
 	private int getFileNameIndex(FileInterface fi) {
-		int idx = 1;
-		
 		// Start at 1 because the first Node is the folder's name
-		ListIterator<Node> nodes = getChildren().listIterator(1);
+		int idx = 1;
+		ListIterator<Node> nodes = getChildren().listIterator(idx);
 		while (nodes.hasNext()) {
 			if (fi.compareTo((FileInterface) nodes.next()) < 0) { // Comes before
 				return idx;
@@ -95,11 +94,12 @@ public class ExplorerFolder extends VBox implements FileInterface {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Pane> getFiles() {
+	public List<FileInterface> getFiles() {
 		List<? extends Object> list = getChildren();
-		return (List<Pane>) list;
+		return (List<FileInterface>) list;
 	}
 
+	@Override
 	public File getDiskFile() {
 		return diskFile;
 	}

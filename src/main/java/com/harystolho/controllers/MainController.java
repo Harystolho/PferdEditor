@@ -409,7 +409,7 @@ public class MainController implements ResizableInterface {
 	private void loadFileNames() {
 		java.io.File workspace = PEUtils.getWorkspaceFolder();
 		if (workspace.exists()) {
-			ExplorerFolder root = new ExplorerFolder(workspace);
+			ExplorerFolder root = new ExplorerFolder(workspace.getAbsoluteFile());
 			for (java.io.File file : workspace.listFiles()) {
 				PEUtils.createFileFromSourceFile(root, file);
 			}
