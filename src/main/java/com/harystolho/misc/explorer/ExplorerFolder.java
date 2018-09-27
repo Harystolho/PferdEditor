@@ -16,12 +16,12 @@ import javafx.scene.layout.VBox;
  * A class to represent a disk folder in the file explorer
  * 
  * @author Harystolho
- *
+ * @see FileExplorer
  */
-public class ExplorerFolder extends VBox {
+public class ExplorerFolder extends VBox implements FileInterface {
 
 	private File diskFile;
-	private List<Node> hiddenNodes;
+	private List<Node> hiddenNodes; // If the folder is closed this list contains all the folders
 
 	public ExplorerFolder(File diskFile) {
 		this.diskFile = diskFile;
@@ -52,7 +52,7 @@ public class ExplorerFolder extends VBox {
 				getChildren().add(node);
 			});
 			hiddenNodes.clear();
-		} else {
+		} else { // Hide
 			// Start at 1 because the first Node is the folder's name
 			ListIterator<Node> nodes = getChildren().listIterator(1);
 			while (nodes.hasNext()) {
@@ -64,8 +64,30 @@ public class ExplorerFolder extends VBox {
 
 	public void add(Pane file) {
 		file.setPadding(new Insets(1, 0, 1, 10));
+		getChildren().add(getFileNameIndex((FileInterface) file), file);
+	}
 
-		getChildren().add(file);
+	/**
+	 * To add files in alphabetical order it has to compare their names and return
+	 * the index where the new file should go
+	 * 
+	 * @param fi
+	 * @return
+	 */
+	private int getFileNameIndex(FileInterface fi) {
+		int idx = 1;
+		
+		// Start at 1 because the first Node is the folder's name
+		ListIterator<Node> nodes = getChildren().listIterator(1);
+		while (nodes.hasNext()) {
+			if (fi.compareTo((FileInterface) nodes.next()) < 0) { // Comes before
+				return idx;
+			} else { // Comes after
+				idx++;
+			}
+		}
+
+		return idx;
 	}
 
 	public void remove(Pane file) {
@@ -80,6 +102,11 @@ public class ExplorerFolder extends VBox {
 
 	public File getDiskFile() {
 		return diskFile;
+	}
+
+	@Override
+	public String getName() {
+		return getDiskFile().getName();
 	}
 
 }

@@ -40,10 +40,10 @@ public class ExplorerFolderName extends ExplorerFile {
 				if (e.getClickCount() >= 2) { // Double click
 					if (isOpened) {
 						showOpenIcon(false);
-						getFolderParent().showFile(false);
+						getParentFolder().showFile(false);
 					} else {
 						showOpenIcon(true);
-						getFolderParent().showFile(true);
+						getParentFolder().showFile(true);
 					}
 				}
 			}
@@ -60,7 +60,7 @@ public class ExplorerFolderName extends ExplorerFile {
 		}
 	}
 
-	public ExplorerFolder getFolderParent() {
+	public ExplorerFolder getParentFolder() {
 		return parent;
 	}
 

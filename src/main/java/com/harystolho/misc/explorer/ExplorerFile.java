@@ -14,25 +14,23 @@ import javafx.scene.layout.HBox;
  * A class to represent a disk file in the file explorer
  * 
  * @author Harystolho
- *
+ * @see FileExplorer
  */
-public class ExplorerFile extends HBox {
+public class ExplorerFile extends HBox implements FileInterface {
 
 	private File file;
 
 	private Label fileName;
 
 	public ExplorerFile(String name) {
-		ImageView icon = new ImageView(ClassLoader.getSystemResource("icons/common_file.png").toExternalForm());
+		getStyleClass().add("commonFile");
 
+		ImageView icon = new ImageView(ClassLoader.getSystemResource("icons/common_file.png").toExternalForm());
 		icon.setFitWidth(16);
 		icon.setFitHeight(16);
-
 		setMargin(icon, new Insets(0, 5, 0, 0));
 
 		fileName = new Label(name);
-
-		getStyleClass().add("commonFile");
 
 		getChildren().addAll(icon, fileName);
 
@@ -40,16 +38,16 @@ public class ExplorerFile extends HBox {
 	}
 
 	protected void eventHandler() {
-		setOnMouseClicked((e) -> {
+		setOnMouseClicked((mouse) -> {
 			PropertiesWindowFactory.removeOpenWindow();
 
-			if (e.getButton() == MouseButton.PRIMARY) {
-				if (e.getClickCount() >= 2) { // Double click
+			if (mouse.getButton() == MouseButton.PRIMARY) {
+				if (mouse.getClickCount() >= 2) { // Double click
 					PEApplication.getInstance().getMainController().loadFileInCanvas(file);
 				}
-			} else if (e.getButton() == MouseButton.SECONDARY) {
-				PEApplication.getInstance().getMainController().openFileRightClickWindow(file, e.getSceneX(),
-						e.getSceneY());
+			} else if (mouse.getButton() == MouseButton.SECONDARY) {
+				PEApplication.getInstance().getMainController().openFileRightClickWindow(file, mouse.getSceneX(),
+						mouse.getSceneY());
 			}
 		});
 	}
@@ -64,6 +62,11 @@ public class ExplorerFile extends HBox {
 
 	public void update() {
 		fileName.setText(file.getName());
+	}
+
+	@Override
+	public String getName() {
+		return getFile().getName();
 	}
 
 }
