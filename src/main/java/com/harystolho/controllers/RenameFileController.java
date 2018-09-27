@@ -11,6 +11,12 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+/**
+ * Controller used to rename a file
+ * 
+ * @author Harystolho
+ *
+ */
 public class RenameFileController {
 
 	@FXML

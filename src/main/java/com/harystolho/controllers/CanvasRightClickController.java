@@ -89,7 +89,7 @@ public class CanvasRightClickController {
 		if (f == null) {
 			return;
 		}
-		
+
 		Clipboard.getSystemClipboard().getString().chars().forEach((iChar) -> {
 			KeyEvent ke = null;
 

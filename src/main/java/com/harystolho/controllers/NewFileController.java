@@ -18,6 +18,12 @@ import javafx.scene.layout.Pane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
+/**
+ * Controller used to create a new file
+ * 
+ * @author Harystolho
+ *
+ */
 public class NewFileController {
 
 	@FXML
@@ -50,7 +56,7 @@ public class NewFileController {
 
 	private void loadEventHandlers() {
 
-		directory.setOnMouseClicked((e) -> {
+		directory.setOnMouseClicked((e) -> { // To select the file directory
 			DirectoryChooser dc = new DirectoryChooser();
 
 			dc.setInitialDirectory(PEUtils.getWorkspaceFolder());

@@ -17,13 +17,28 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/**
+ * Controller used to change the application settings
+ * 
+ * @author Harystolho
+ *
+ */
 public class SettingsController {
 
 	@FXML
 	private VBox settingsPane;
 
 	@FXML
-	private ListView<String> settingsList;
+	private VBox settingsBox;
+
+	// Settings List
+	@FXML
+	private Label general;
+	@FXML
+	private Label fontsAndColor;
+	@FXML
+	private Label updates;
+	// END
 
 	@FXML
 	private Button cancel;
@@ -34,9 +49,12 @@ public class SettingsController {
 	@FXML
 	private Group panesGroup;
 
+	// General Tab
 	@FXML
 	private Pane generalTab;
+	// END
 
+	// Fonts Tab
 	@FXML
 	private Pane fontsTab;
 	@FXML
@@ -59,9 +77,12 @@ public class SettingsController {
 	private Label textSize;
 	@FXML
 	private TextField textSizeInput;
+	// END
 
+	// Updates Tab
 	@FXML
 	private Pane updatesTab;
+	// END
 
 	@FXML
 	private Button apply;
@@ -70,24 +91,21 @@ public class SettingsController {
 
 	@FXML
 	void initialize() {
-		addMenuItems();
 		loadEventHandlers();
 	}
 
 	private void loadEventHandlers() {
 
-		settingsList.setOnMouseClicked((e) -> {
-			switch (settingsList.getSelectionModel().getSelectedIndex()) {
-			case 0:
-				showGeneral();
-				break;
-			case 1:
-				showFontsAndColor();
-				break;
-			case 2:
-				showUpdates();
-				break;
-			}
+		general.setOnMouseClicked((e) -> {
+			showGeneral();
+		});
+
+		fontsAndColor.setOnMouseClicked((e) -> {
+			showFontsAndColor();
+		});
+
+		updates.setOnMouseClicked((e) -> {
+			showUpdates();
 		});
 
 		apply.setOnAction((e) -> {
@@ -101,6 +119,9 @@ public class SettingsController {
 		});
 	}
 
+	/**
+	 * Saves all the settings
+	 */
 	private void saveAll() {
 		saveFontsTab();
 		CanvasManager.getInstance().reRenderWords();
@@ -169,12 +190,6 @@ public class SettingsController {
 		});
 
 		tabName.setText("");
-	}
-
-	private void addMenuItems() {
-		settingsList.getItems().add("General");
-		settingsList.getItems().add("Fonts and Color");
-		settingsList.getItems().add("Updates");
 	}
 
 	public void setStage(Stage stage) {

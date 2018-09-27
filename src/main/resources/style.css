@@ -96,24 +96,24 @@
     -fx-background-color: #fff;
 }
 
-#settingsList {
+#settingsScrollPane {
     -fx-border-width: 0 2px 0 0;
     -fx-border-color: #000;
-
+    -fx-background-color: transparent;
 }
 
-#settingsList .list-cell .text {
+#settingsScrollPane, #settingsScrollPane .viewport{
+    -fx-background-color: transparent;
+}
+
+#settingsBox .text {
     -fx-fill: white;
     -fx-font-family: "Quicksand";
 }
 
-#settingsList .list-cell:selected {
+#settingsBox .text:selected {
     -fx-border-width: 0 0 2px 0;
     -fx-border-color: #fff;
-}
-
-#settingsList, #settingsList .list-cell {
-    -fx-background-color: transparent;
 }
 
 .settingsTopBox {

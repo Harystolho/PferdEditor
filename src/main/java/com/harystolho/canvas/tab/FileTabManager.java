@@ -9,6 +9,13 @@ import com.harystolho.pe.File;
 import javafx.collections.ObservableList;
 import javafx.scene.layout.HBox;
 
+/**
+ * Class to manage file tabs. The file tab is that box with the file name inside
+ * it above the canvas.
+ * 
+ * @author Harystolho
+ *
+ */
 public class FileTabManager extends HBox {
 
 	public FileTabManager() {
@@ -44,9 +51,14 @@ public class FileTabManager extends HBox {
 		}
 	}
 
-	public void removeModified(File currentFile) {
+	/**
+	 * Removes "*" from the tab to show it's not modified
+	 * 
+	 * @param file
+	 */
+	public void removeModified(File file) {
 		for (Tab tab : getTabs()) {
-			if (tab.getUserData() == currentFile) {
+			if (tab.getUserData() == file) {
 				tab.setModified(false);
 			}
 		}

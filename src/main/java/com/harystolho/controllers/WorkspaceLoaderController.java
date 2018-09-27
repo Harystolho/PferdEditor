@@ -12,6 +12,12 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
+/**
+ * Controller used to change the workspace
+ * 
+ * @author Harystolho
+ *
+ */
 public class WorkspaceLoaderController {
 	@FXML
 	private ChoiceBox<File> workspaceList;
@@ -28,7 +34,7 @@ public class WorkspaceLoaderController {
 
 	private void loadEventHandlers() {
 
-		workspaceList.setOnMouseClicked((e) -> {
+		workspaceList.setOnMouseClicked((e) -> { // To select the folder
 			DirectoryChooser dc = new DirectoryChooser();
 
 			dc.setTitle("Choose the workspace folder");
@@ -50,8 +56,8 @@ public class WorkspaceLoaderController {
 
 	private void openSelectedDir(File dir) {
 		PEApplication.getInstance().getMainController().updateWorkspaceDirectory(dir);
-		stage.close();
-		PEApplication.getInstance().getWindow().show();
+		stage.close(); // Hide this window
+		PEApplication.getInstance().getWindow().show(); // Show the main window again
 	}
 
 	public void setStage(Stage stage) {
