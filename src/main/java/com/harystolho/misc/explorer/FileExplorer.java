@@ -71,7 +71,7 @@ public class FileExplorer extends ScrollPane {
 	 */
 	// TODO fix this to stop when the file is added
 	private void addFileToCorrectFolder(ExplorerFolder folder, FileInterface file) {
-		// If the folder is parent to cFile
+		// If folder is parent to file
 		if (folder.getDiskFile().equals(file.getDiskFile().getParentFile())) {
 			folder.add((Pane) file);
 			return;
