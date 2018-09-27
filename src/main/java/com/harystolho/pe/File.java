@@ -68,7 +68,7 @@ public class File {
 	 * @param keyEvent
 	 */
 	public void type(KeyEvent keyEvent) {
-
+		
 		setWasModified(true);
 		drawLock.writeLock().lock(); // TODO lock only when modifying the list
 
@@ -251,6 +251,7 @@ public class File {
 			if (wordToRemove.getType() == TYPES.NEW_LINE) {
 				// Update file's biggest Y
 				FileUpdaterThread.decrementBiggestYBy(CanvasManager.getInstance().getLineHeight());
+
 				// If the new line is the only word left in the first line, move the word after
 				// it 1 line above
 				if (wordToRemove.getY() == CanvasManager.getInstance().getLineHeight()) {

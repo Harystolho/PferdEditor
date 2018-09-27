@@ -306,7 +306,17 @@ public class ApplicationKeyHandler {
 				pressKeyOnCanvas(e);
 			}
 		});
-
+		
+		keyMap.put(KeyCode.MINUS, (e) -> {
+			if (e.isShiftDown()) {
+				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "_", KeyCode.UNDERSCORE, false,
+						false, false, false);
+				pressKeyOnCanvas(ke);
+			} else {
+				pressKeyOnCanvas(e);
+			}
+		});
+		
 		keyMap.put(KeyCode.COMMA, (e) -> {
 			if (e.isShiftDown()) {
 				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "<", KeyCode.LESS, false, false,
