@@ -46,6 +46,8 @@ public class NewFileController {
 
 	private Stage stage;
 
+	private File initialFolder;
+
 	private static final Pattern validFileName = Pattern.compile("^[\\w\\-. ]+$");
 
 	@FXML
@@ -59,7 +61,11 @@ public class NewFileController {
 		directory.setOnMouseClicked((e) -> { // To select the file directory
 			DirectoryChooser dc = new DirectoryChooser();
 
-			dc.setInitialDirectory(PEUtils.getWorkspaceFolder());
+			if (initialFolder == null) {
+				dc.setInitialDirectory(PEUtils.getWorkspaceFolder());
+			} else {
+				dc.setInitialDirectory(initialFolder);
+			}
 
 			File dir = dc.showDialog(PEApplication.getInstance().getWindow());
 
@@ -94,6 +100,14 @@ public class NewFileController {
 			}
 		}
 
+	}
+
+	public void setInitialFolder(File folder) {
+		this.initialFolder = folder;
+
+		if (initialFolder != null) {
+			directory.setText(initialFolder.getAbsolutePath());
+		}
 	}
 
 	private boolean isNameValid(String text) {

@@ -11,6 +11,7 @@ import javafx.scene.layout.Pane;
  * Class to manage windows inside the application.<br>
  *
  * Call {@link #setMainPane(Parent)} before using it.
+ * 
  * @author Harystolho
  *
  */
@@ -18,7 +19,7 @@ public class PropertiesWindowFactory {
 
 	// FILE - Window that opens when the user right clicks on a file
 	public static enum window_type {
-		FILE, CANVAS
+		FILE, CANVAS, FOLDER
 	}
 
 	public static Pane mainPane;
@@ -48,6 +49,11 @@ public class PropertiesWindowFactory {
 			break;
 		case CANVAS:
 			p = PEUtils.loadFXML("canvasRightClick.fxml", (c) -> {
+				controller.accept(c);
+			});
+			break;
+		case FOLDER:
+			p = PEUtils.loadFXML("folderRightClick.fxml", (c) -> {
 				controller.accept(c);
 			});
 			break;

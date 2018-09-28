@@ -1,6 +1,8 @@
 package com.harystolho.misc.explorer;
 
+import com.harystolho.controllers.FolderRightClickController;
 import com.harystolho.misc.PropertiesWindowFactory;
+import com.harystolho.misc.PropertiesWindowFactory.window_type;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -46,6 +48,11 @@ public class ExplorerFolderName extends ExplorerFile {
 						getParentFolder().showFile(true);
 					}
 				}
+			} else if (e.getButton() == MouseButton.SECONDARY) {
+				PropertiesWindowFactory.open(window_type.FOLDER, e.getSceneX(), e.getSceneY(), (c) -> {
+					FolderRightClickController controller = (FolderRightClickController) c;
+					controller.setFolder(parent);
+				});
 			}
 		});
 	}

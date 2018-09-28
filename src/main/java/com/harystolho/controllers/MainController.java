@@ -126,7 +126,7 @@ public class MainController implements ResizableInterface {
 		loadMenuBarItemHandler();
 
 		newFile.setOnMouseClicked((e) -> {
-			createNewFile();
+			createNewFile(null);
 		});
 
 		saveFile.setOnMouseClicked((e) -> {
@@ -195,7 +195,7 @@ public class MainController implements ResizableInterface {
 	private void loadMenuBarItemHandler() {
 
 		menuNewFile.setOnAction((e) -> {
-			createNewFile();
+			createNewFile(null);
 		});
 
 		menuSave.setOnAction((e) -> {
@@ -265,11 +265,17 @@ public class MainController implements ResizableInterface {
 		}
 	}
 
-	private void createNewFile() {
+	/**
+	 * 
+	 * @param folder <code>null</code> sets the initial folder to the workspace
+	 *               folder
+	 */
+	public static void createNewFile(java.io.File folder) {
 		OpenWindow ow = new OpenWindow("New File");
 		ow.load("newFile.fxml", (controller) -> {
 			NewFileController c = (NewFileController) controller;
 			c.setStage(ow.getStage());
+			c.setInitialFolder(folder);
 		});
 
 		ow.openWindow();
@@ -288,7 +294,7 @@ public class MainController implements ResizableInterface {
 
 		ExplorerFile eFile = new ExplorerFile(fileName);
 		eFile.setFile(file);
-		
+
 		fileExplorer.add(eFile);
 	}
 
