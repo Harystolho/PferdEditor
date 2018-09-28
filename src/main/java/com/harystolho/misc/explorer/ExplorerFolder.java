@@ -116,4 +116,9 @@ public class ExplorerFolder extends VBox implements FileInterface {
 		return getDiskFile().getName();
 	}
 
+	@Override
+	public String toString() {
+		return getName();
+	}
+
 }

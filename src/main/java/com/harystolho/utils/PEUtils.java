@@ -148,7 +148,7 @@ public class PEUtils {
 	 */
 	public static void createFileFromSourceFile(ExplorerFolder root, File f) {
 		if (f.isDirectory()) {
-			ExplorerFolder folder = new ExplorerFolder(f);
+			ExplorerFolder folder = new ExplorerFolder(f.getAbsoluteFile());
 
 			for (File ff : f.listFiles()) {
 				createFileFromSourceFile(folder, ff);

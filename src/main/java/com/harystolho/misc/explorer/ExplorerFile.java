@@ -74,4 +74,9 @@ public class ExplorerFile extends HBox implements FileInterface {
 		return getFile().getName();
 	}
 
+	@Override
+	public String toString() {
+		return getName();
+	}
+
 }

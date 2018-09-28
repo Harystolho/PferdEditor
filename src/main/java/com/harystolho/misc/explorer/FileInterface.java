@@ -5,6 +5,7 @@ import java.io.File;
 public interface FileInterface {
 
 	public String getName();
+
 	public File getDiskFile();
 
 	default public int compareTo(FileInterface other) {
