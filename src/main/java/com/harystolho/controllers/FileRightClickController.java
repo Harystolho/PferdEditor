@@ -78,7 +78,7 @@ public class FileRightClickController {
 	}
 
 	private void showProperties() {
-		// TODO showProperties
+		// TODO show file Properties
 	}
 
 	public void setFile(File file) {

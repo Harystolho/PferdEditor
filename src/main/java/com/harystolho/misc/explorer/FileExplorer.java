@@ -105,11 +105,6 @@ public class FileExplorer extends ScrollPane {
 		}
 	}
 
-	/**
-	 * 
-	 * 
-	 * @param file
-	 */
 	public void updateFile(File file) {
 		findFileAndApply(file, (cFile) -> {
 			cFile.update();
@@ -117,7 +112,7 @@ public class FileExplorer extends ScrollPane {
 	}
 
 	/**
-	 * Finds the {@link ExplorerFile} that corresponds to this <code>file</code> and
+	 * Finds the {@link ExplorerFile} that corresponds to the <code>file</code> and
 	 * calls <code>function.accept()</code>
 	 * 
 	 * @param file
@@ -146,7 +141,7 @@ public class FileExplorer extends ScrollPane {
 	}
 
 	/**
-	 * @return A list containing all the files under the save folder
+	 * @return A list containing all the files under the workspace directory
 	 * @see {@link PEUtils#getWorkspaceFolder()}
 	 */
 	public List<File> getFiles() {

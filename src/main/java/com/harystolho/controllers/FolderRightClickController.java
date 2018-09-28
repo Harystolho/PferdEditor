@@ -1,20 +1,20 @@
 package com.harystolho.controllers;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 import com.harystolho.PEApplication;
-import com.harystolho.misc.OpenWindow;
 import com.harystolho.misc.PropertiesWindowFactory;
 import com.harystolho.misc.explorer.ExplorerFolder;
-import com.harystolho.pe.File;
 import com.harystolho.utils.PEUtils;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DataFormat;
 import javafx.scene.layout.HBox;
 
 /**
@@ -62,7 +62,7 @@ public class FolderRightClickController {
 
 		copy.setOnMouseClicked((e) -> {
 			PropertiesWindowFactory.removeOpenWindow();
-			// TODO copy folder
+			copyFolder();
 		});
 
 		properties.setOnMouseClicked((e) -> {
@@ -76,11 +76,28 @@ public class FolderRightClickController {
 		});
 	}
 
+	private void copyFolder() {
+		if (folder.getDiskFile() == null || !folder.getDiskFile().exists()) {
+			return;
+		}
+
+		ClipboardContent clipboardContent = new ClipboardContent();
+
+		clipboardContent.putFiles(Arrays.asList(folder.getDiskFile()));
+
+		Clipboard.getSystemClipboard().setContent(clipboardContent);
+	}
+
+	/**
+	 * Shows an alert to confirm the folder deletion. If the user presses OK, it
+	 * will delete all files inside the folder and then the folder itself
+	 */
 	private void deleteFolderAlert() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 
 		alert.setTitle("Delete folder");
-		alert.setContentText("Are you sure you want to delete this folder?");
+		alert.setHeaderText("Are you sure you want to delete this folder?");
+		alert.setContentText("This can't be undone");
 
 		Optional<ButtonType> result = alert.showAndWait();
 
@@ -95,18 +112,18 @@ public class FolderRightClickController {
 	}
 
 	private static void deleteFiles(java.io.File folder) {
-		for (java.io.File f : folder.listFiles()) {
-			if (f.isDirectory()) {
-				deleteFiles(f); // Delete files inside folder
-				f.delete(); // Delete the folder
+		for (java.io.File file : folder.listFiles()) {
+			if (file.isDirectory()) {
+				deleteFiles(file); // Delete files inside folder
+				file.delete(); // Delete the folder
 			} else {
-				f.delete();
+				file.delete();
 			}
 		}
 	}
 
 	private void showProperties() {
-		// TODO showProperties
+		// TODO show folder Properties
 	}
 
 	public void setFolder(ExplorerFolder folder) {

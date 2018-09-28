@@ -6,17 +6,10 @@ import java.util.List;
 import java.util.ListIterator;
 
 import com.harystolho.PEApplication;
-import com.harystolho.controllers.FolderRightClickController;
-import com.harystolho.controllers.MainController;
-import com.harystolho.misc.OpenWindow;
-import com.harystolho.misc.PropertiesWindowFactory;
-import com.harystolho.misc.PropertiesWindowFactory.window_type;
 
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 /**
@@ -71,6 +64,8 @@ public class ExplorerFolder extends VBox implements FileInterface {
 
 	public void add(Pane file) {
 		file.setPadding(new Insets(1, 0, 1, 10));
+
+		// TODO when file is closed, add it to hiddenNodes
 		getChildren().add(getFileNameIndex((FileInterface) file), file);
 	}
 

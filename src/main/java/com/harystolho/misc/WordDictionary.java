@@ -12,6 +12,8 @@ import javafx.scene.paint.Color;
  */
 public class WordDictionary {
 
+	// TODO add word dictionary gui
+	
 	/**
 	 * A HashMap to store the color associated with a word
 	 */

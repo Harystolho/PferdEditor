@@ -108,7 +108,6 @@ public class SettingsController {
 		});
 
 		apply.setOnAction((e) -> {
-			// TODO freezes application
 			saveAll();
 			stage.close();
 		});
