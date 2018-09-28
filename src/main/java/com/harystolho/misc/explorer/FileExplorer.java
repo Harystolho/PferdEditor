@@ -28,7 +28,7 @@ public class FileExplorer extends ScrollPane {
 		setPadding(new Insets(0, 0, 0, 5));
 	}
 
-	public void remove(File file) {
+	public void removeFile(File file) {
 		Queue<ExplorerFolder> folders = new ArrayDeque<>();
 
 		ExplorerFolder currentFolder = (ExplorerFolder) getContent();
@@ -43,6 +43,27 @@ public class FileExplorer extends ScrollPane {
 					}
 				} else if (p instanceof ExplorerFolder) {
 					folders.add((ExplorerFolder) p);
+				}
+			}
+			currentFolder = folders.poll();
+		}
+	}
+
+	public void removeFolder(java.io.File folder) {
+		Queue<ExplorerFolder> folders = new ArrayDeque<>();
+
+		ExplorerFolder currentFolder = (ExplorerFolder) getContent();
+
+		while (currentFolder != null) {
+			for (FileInterface p : currentFolder.getFiles()) {
+				if (p instanceof ExplorerFolder) {
+					ExplorerFolder eFolder = (ExplorerFolder) p;
+					if (eFolder.getDiskFile().equals(folder)) {
+						currentFolder.remove(eFolder);
+						return;
+					} else {
+						folders.add((ExplorerFolder) p);
+					}
 				}
 			}
 			currentFolder = folders.poll();

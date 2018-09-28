@@ -300,13 +300,19 @@ public class MainController implements ResizableInterface {
 
 	public void deleteFile(File file) {
 		if (file != null) {
-			fileExplorer.remove(file);
+			fileExplorer.removeFile(file);
 
 			if (file.isLoaded()) {
 				filesTab.closeFile(file);
 			}
 
 			file.getDiskFile().delete();
+		}
+	}
+
+	public void deleteFolder(java.io.File folder) {
+		if (folder != null) {
+			fileExplorer.removeFolder(folder);
 		}
 	}
 
