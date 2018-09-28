@@ -72,7 +72,7 @@ public class FolderRightClickController {
 
 		delete.setOnMouseClicked((e) -> {
 			PropertiesWindowFactory.removeOpenWindow();
-			deleteFolderAlert();
+			showDeleteFolderAlert();
 		});
 	}
 
@@ -92,7 +92,7 @@ public class FolderRightClickController {
 	 * Shows an alert to confirm the folder deletion. If the user presses OK, it
 	 * will delete all files inside the folder and then the folder itself
 	 */
-	private void deleteFolderAlert() {
+	private void showDeleteFolderAlert() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 
 		alert.setTitle("Delete folder");

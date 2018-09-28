@@ -13,4 +13,7 @@ public class Main {
 		PEApplication.init(args);
 	}
 
+	// TODO future todo
+	// call updatePivotNode only when needed, fix values to improve performance
+
 }

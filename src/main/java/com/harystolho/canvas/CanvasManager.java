@@ -225,13 +225,12 @@ public class CanvasManager {
 	/**
 	 * Moves the pivot node backward or forward.
 	 */
-	// TODO call updatePivotNode only when needed, fix values to improve performance
 	public void updatePivotNode() {
 		if (pivotNode == null) {
 			return;
 		}
 
-		if (pivotNode.getData().getY() + (lineHeight * 2) >= getScrollY()) {
+		if (pivotNode.getData().getY() + (lineHeight * 2) >= getScrollY()) { // Move pivot left
 			while (pivotNode.getData().getY() + (lineHeight * 4) >= getScrollY()) {
 				if (pivotNode.getLeft() != null) {
 					pivotNode = pivotNode.getLeft();
@@ -239,7 +238,7 @@ public class CanvasManager {
 					break;
 				}
 			}
-		} else if (pivotNode.getData().getY() + (lineHeight * 5) < getScrollY()) {
+		} else if (pivotNode.getData().getY() + (lineHeight * 5) < getScrollY()) { // Move pivot right
 			while (pivotNode.getData().getY() + (lineHeight * 3) <= getScrollY()) {
 				if (pivotNode.getRight() != null) {
 					pivotNode = pivotNode.getRight();
@@ -413,10 +412,10 @@ public class CanvasManager {
 				} else { // Else align the scroll
 					setScrollY((int) (getCursorY() - (getCursorY() % lineHeight) - lineHeight));
 				}
-			} else if (getCursorY() + getLineHeight() == getScrollY() + canvas.getHeight()) {
-				// If the cursor is at the last line in the canvas
-				scrollUp();
-			}
+			} /*
+				 * else if (getCursorY() + getLineHeight() == getScrollY() + canvas.getHeight())
+				 * { // If the cursor is at the last line in the canvas }
+				 */
 		}
 	}
 
@@ -424,7 +423,6 @@ public class CanvasManager {
 		currentFile.setCursorY(getCursorY() + getLineHeight());
 		currentFile.setCursorX(getCursorX()); // Moves the cursor to the end of the life if the line below is shorter.
 
-		// TODO fix scroll alignment
 		if (getCursorY() > canvas.getHeight() + getScrollY()) {
 			scrollDown();
 		}
@@ -455,7 +453,8 @@ public class CanvasManager {
 
 	public void moveCursorToEndOfTheLine() {
 		if (currentFile != null) {
-			setCursorX(-1 - getScrollX());
+			// TODO scrollX if end of line is bigger than screen size
+			setCursorX(-1 - getScrollX()); 
 			resetCursorCount();
 		}
 	}

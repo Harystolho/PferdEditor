@@ -99,6 +99,7 @@ public class CanvasRightClickController {
 						false, false, false, false);
 				break;
 			case '\n':
+				System.out.println("N");
 				return;// Ignore
 			case '\r':
 				ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, "", String.valueOf((char) iChar), KeyCode.ENTER,
