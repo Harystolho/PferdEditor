@@ -75,4 +75,8 @@ public class ExplorerFolderName extends ExplorerFile {
 		this.parent = parent;
 	}
 
+	public boolean isOpened() {
+		return isOpened;
+	}
+
 }
