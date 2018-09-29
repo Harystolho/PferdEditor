@@ -21,7 +21,7 @@ public class PEConfiguration {
 
 		prop.putIfAbsent("VERSION", PEUtils.VERSION);
 		prop.putIfAbsent("LANG", "EN");
-		prop.putIfAbsent("PROJ_FOLDER", "files");
+		prop.putIfAbsent("PROJ_FOLDER", "NULL");
 
 		prop.putIfAbsent("TEXT_COLOR", "#fff");
 		prop.putIfAbsent("CANVAS_BACKGROUND_COLOR", "#333333");
@@ -65,6 +65,10 @@ public class PEConfiguration {
 
 	public static String getProperty(String key) {
 		return prop.getProperty(key);
+	}
+
+	public static boolean workspaceDirectoryExists() {
+		return !getProperty("PROJ_FOLDER").equals("NULL");
 	}
 
 }

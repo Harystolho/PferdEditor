@@ -99,8 +99,8 @@ public class CanvasRightClickController {
 						false, false, false, false);
 				break;
 			case '\n':
-				System.out.println("N");
-				return;// Ignore
+				// TODO fix ENTER on paste
+				return;
 			case '\r':
 				ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, "", String.valueOf((char) iChar), KeyCode.ENTER,
 						false, false, false, false);

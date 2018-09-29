@@ -11,6 +11,8 @@ import java.util.function.Consumer;
 import java.util.logging.Logger;
 
 import com.harystolho.PEApplication;
+import com.harystolho.controllers.WorkspaceLoaderController;
+import com.harystolho.misc.OpenWindow;
 import com.harystolho.misc.ResizableInterface;
 import com.harystolho.misc.explorer.ExplorerFile;
 import com.harystolho.misc.explorer.ExplorerFolder;
@@ -19,6 +21,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.FileChooser;
+import javafx.stage.StageStyle;
 
 public class PEUtils {
 
@@ -188,10 +191,6 @@ public class PEUtils {
 	}
 
 	public static File getWorkspaceFolder() {
-		if (!saveFolder.exists()) {
-			saveFolder.mkdir();
-		}
-
 		return saveFolder;
 	}
 
@@ -204,6 +203,23 @@ public class PEUtils {
 		return executor;
 	}
 
+	/**
+	 * Opens a window to select the workspace folder
+	 */
+	public static void showWorkspaceLoader() {
+		OpenWindow ow = new OpenWindow("Workspace Loader");
+
+		ow.load("workspaceLoader.fxml", (controller) -> {
+			WorkspaceLoaderController c = (WorkspaceLoaderController) controller;
+			c.setStage(ow.getStage());
+		});
+
+		ow.getStage().initStyle(StageStyle.UNDECORATED);
+
+		PEApplication.getInstance().getWindow().hide(); // Hides the application window
+		ow.openWindow();
+	}
+	
 	/**
 	 * Initializes resources for this application.
 	 */

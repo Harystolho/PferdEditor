@@ -5,6 +5,7 @@ import com.harystolho.canvas.eventHandler.ApplicationKeyHandler;
 import com.harystolho.canvas.eventHandler.ApplicationMouseHandler;
 import com.harystolho.controllers.MainController;
 import com.harystolho.misc.PropertiesWindowFactory;
+import com.harystolho.utils.PEConfiguration;
 import com.harystolho.utils.PEUtils;
 import com.harystolho.utils.SceneReverser;
 
@@ -56,7 +57,15 @@ public class PEApplication extends Application {
 
 		loadEventHandlers();
 
-		window.show();
+		showWindow();
+	}
+
+	private void showWindow() {
+		if (PEConfiguration.workspaceDirectoryExists()) {
+			window.show();
+		} else { // Show window to select workspace
+			PEUtils.showWorkspaceLoader();
+		}
 	}
 
 	private void setup() {

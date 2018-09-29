@@ -207,7 +207,7 @@ public class MainController implements ResizableInterface {
 		});
 
 		menuChangeWorkspace.setOnAction((e) -> {
-			showWorkspaceLoader();
+			PEUtils.showWorkspaceLoader();
 		});
 
 		menuExit.setOnAction((e) -> {
@@ -364,23 +364,6 @@ public class MainController implements ResizableInterface {
 			PEUtils.setWorkspaceFolder(dir); // Updates the save folder
 			loadWorkspaceDirectory(); // Loads the new directory
 		}
-	}
-
-	/**
-	 * Opens a window to select the workspace folder
-	 */
-	private void showWorkspaceLoader() {
-		OpenWindow ow = new OpenWindow("Workspace Loader");
-
-		ow.load("workspaceLoader.fxml", (controller) -> {
-			WorkspaceLoaderController c = (WorkspaceLoaderController) controller;
-			c.setStage(ow.getStage());
-		});
-
-		ow.getStage().initStyle(StageStyle.UNDECORATED);
-
-		PEApplication.getInstance().getWindow().hide(); // Hides the application window
-		ow.openWindow();
 	}
 
 	/**
