@@ -7,6 +7,7 @@ import com.harystolho.PEApplication;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.DirectoryChooser;
@@ -20,29 +21,39 @@ import javafx.stage.Stage;
  */
 public class WorkspaceLoaderController {
 	@FXML
-	private ChoiceBox<File> workspaceList;
+	private ComboBox<File> workspaceList;
 
 	@FXML
 	private Button load;
 
 	private Stage stage;
 
+	private File selectWorkspaceText;
+
 	@FXML
 	void initialize() {
+
+		addItems();
+
 		loadEventHandlers();
+	}
+
+	private void addItems() {
+		selectWorkspaceText = new File("") {
+			@Override
+			public String toString() {
+				return "Add new workspace folder";
+			}
+		};
+
+		workspaceList.getItems().add(selectWorkspaceText);
 	}
 
 	private void loadEventHandlers() {
 
-		workspaceList.setOnMouseClicked((e) -> { // To select the folder
-			DirectoryChooser dc = new DirectoryChooser();
-
-			dc.setTitle("Choose the workspace folder");
-			java.io.File workspaceDir = dc.showDialog(PEApplication.getInstance().getWindow());
-
-			if (workspaceDir != null) {
-				// TODO choice list not showing file name
-				workspaceList.getItems().add(workspaceDir);
+		workspaceList.getSelectionModel().selectedItemProperty().addListener((obv, oldValue, newValue) -> {
+			if (newValue == selectWorkspaceText) {
+				showDirectoryChooser(newValue);
 			}
 		});
 
@@ -52,6 +63,18 @@ public class WorkspaceLoaderController {
 			}
 		});
 
+	}
+
+	private void showDirectoryChooser(File newValue) {
+		DirectoryChooser dc = new DirectoryChooser();
+
+		dc.setTitle("Choose the workspace folder");
+		java.io.File workspaceDir = dc.showDialog(PEApplication.getInstance().getWindow());
+
+		if (workspaceDir != null) {
+			workspaceList.getItems().add(0, workspaceDir);
+			workspaceList.getSelectionModel().selectFirst();
+		}
 	}
 
 	private void openSelectedDir(File dir) {
