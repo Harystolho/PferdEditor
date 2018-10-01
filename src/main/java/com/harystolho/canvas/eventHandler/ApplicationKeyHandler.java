@@ -229,33 +229,36 @@ public class ApplicationKeyHandler {
 		});
 
 		keyMap.put(KeyCode.DIGIT3, (e) -> {
-			if (e.isShiftDown()) {
-				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "#", KeyCode.NUMBER_SIGN, false,
-						false, false, false);
-				pressKeyOnCanvas(ke);
-			} else {
-				pressKeyOnCanvas(e);
+			if (e.isControlDown()) {
+				PEApplication.getInstance().getMainController().selectTab(2);
+				return;
+			} else if (e.isShiftDown()) {
+				e = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "#", KeyCode.NUMBER_SIGN, false, false, false,
+						false);
 			}
+			pressKeyOnCanvas(e);
 		});
 
 		keyMap.put(KeyCode.DIGIT4, (e) -> {
-			if (e.isShiftDown()) {
-				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "$", KeyCode.DOLLAR, false, false,
-						false, false);
-				pressKeyOnCanvas(ke);
-			} else {
-				pressKeyOnCanvas(e);
+			if (e.isControlDown()) {
+				PEApplication.getInstance().getMainController().selectTab(3);
+				return;
+			} else if (e.isShiftDown()) {
+				e = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "$", KeyCode.DOLLAR, false, false, false,
+						false);
 			}
+			pressKeyOnCanvas(e);
 		});
 
 		keyMap.put(KeyCode.DIGIT5, (e) -> {
-			if (e.isShiftDown()) {
-				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "%", KeyCode.UNDEFINED, false, false,
-						false, false);
-				pressKeyOnCanvas(ke);
-			} else {
-				pressKeyOnCanvas(e);
+			if (e.isControlDown()) {
+				PEApplication.getInstance().getMainController().selectTab(4);
+				return;
+			} else if (e.isShiftDown()) {
+				e = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "%", KeyCode.UNDEFINED, false, false, false,
+						false);
 			}
+			pressKeyOnCanvas(e);
 		});
 
 		keyMap.put(KeyCode.DIGIT6, (e) -> {
