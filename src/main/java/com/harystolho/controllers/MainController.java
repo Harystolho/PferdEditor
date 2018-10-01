@@ -433,7 +433,7 @@ public class MainController implements ResizableInterface {
 		if (!filesTab.isEmpty()) {
 			Tab tab = filesTab.getTabs().get(0);
 			loadFileInCanvas(tab.getFile());
-		} else { // If there's no tab left
+		} else { // If there're no tabs left
 			hideSrollBar();
 			stopRendering();
 		}

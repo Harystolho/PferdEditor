@@ -13,7 +13,7 @@ import javafx.scene.paint.Color;
 public class WordDictionary {
 
 	// TODO IMPL add word dictionary gui
-	
+
 	/**
 	 * A HashMap to store the color associated with a word
 	 */
@@ -57,7 +57,7 @@ public class WordDictionary {
 	}
 
 	private static void addDefaultColors() {
-		addColor("###", Color.AQUA);
+		addColor("break;", Color.RED);
 	}
 
 }
