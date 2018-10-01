@@ -222,7 +222,7 @@ public class Word implements Comparable<Word> {
 	 * @see WordDictionary
 	 */
 	public void updateDrawingColor() {
-		// TODO improve performance, don't do this every time a char is added, use some
+		// TODO FIX improve performance, don't do this every time a char is added, use some
 		// kind of timer after a char is pressed
 		color = WordDictionary.getWordColor(this.getWordAsString());
 	}

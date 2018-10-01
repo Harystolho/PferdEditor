@@ -142,15 +142,15 @@ public class MainController implements ResizableInterface {
 		});
 
 		browser.setOnMouseClicked((e) -> {
-			// TODO browser button
+			// TODO IMPL browser button
 		});
 
 		donate.setOnMouseClicked((e) -> {
-			// TODO donate button
+			// TODO IMPL donate button
 		});
 
 		addNewIcon.setOnMouseClicked((e) -> {
-			// TODO custom buttons
+			// TODO IMPL custom buttons
 		});
 
 		rightScrollBar.setOnMousePressed((e) -> {
@@ -216,11 +216,11 @@ public class MainController implements ResizableInterface {
 		});
 
 		menuSearch.setOnAction((e) -> {
-			// TODO search
+			// TODO IMPL search
 		});
 
 		menuReplace.setOnAction((e) -> {
-			// TODO replace
+			// TODO IMPL replace
 		});
 
 		menuSettings.setOnAction((e) -> {
@@ -233,7 +233,7 @@ public class MainController implements ResizableInterface {
 		});
 
 		menuCheckForUpdates.setOnAction((e) -> {
-			// TODO check for updates
+			// TODO IMPL check for updates
 		});
 
 		menuAbout.setOnAction((e) -> {
@@ -380,6 +380,23 @@ public class MainController implements ResizableInterface {
 
 	public FileTabManager getFileTabManager() {
 		return filesTab;
+	}
+
+	/**
+	 * Selects the tab and loads the file at the index
+	 * 
+	 * @param idx
+	 */
+	public void selectTab(int idx) {
+		if (idx > filesTab.getTabs().size() - 1) {
+			return;
+		}
+
+		Tab tab = filesTab.getTabs().get(idx);
+
+		if (tab != null) {
+			loadFileInCanvas(tab.getFile());
+		}
 	}
 
 	/**

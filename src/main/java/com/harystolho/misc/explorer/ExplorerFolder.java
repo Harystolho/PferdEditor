@@ -82,7 +82,7 @@ public class ExplorerFolder extends VBox implements FileInterface {
 	 * the index where the new file should go
 	 * 
 	 * @param list       find the index in this list
-	 * @param startIndex amount of elements to skip
+	 * @param startIndex number of elements to skip
 	 * @param fi         return this file's index
 	 * @return
 	 */

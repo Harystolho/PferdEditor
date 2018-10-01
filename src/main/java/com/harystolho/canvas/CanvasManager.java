@@ -112,7 +112,7 @@ public class CanvasManager {
 		drawBackgroundLine();
 		drawWords();
 		drawCursor();
-		// TODO draw selection
+		// TODO IMPL draw selection
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -190,7 +190,7 @@ public class CanvasManager {
 
 				FileUpdaterThread.setBiggestX(biggestX);
 
-				// TODO if a file is being rendered and it's tab is closed it will throw an
+				// TODO FIX if a file is being rendered and it's tab is closed it will throw an
 				// exception because the canvas manager is going to try to unlock the lock in
 				// another file
 				currentFile.getDrawLock().readLock().unlock();
@@ -453,8 +453,8 @@ public class CanvasManager {
 
 	public void moveCursorToEndOfTheLine() {
 		if (currentFile != null) {
-			// TODO scrollX if end of line is bigger than screen size
-			setCursorX(-1 - getScrollX()); 
+			// TODO IMPL scrollX if end of line is bigger than screen size
+			setCursorX(-1 - getScrollX());
 			resetCursorCount();
 		}
 	}

@@ -74,37 +74,44 @@ public class FileExplorer extends ScrollPane {
 		if (getContent() != null) {
 			ExplorerFolder root = (ExplorerFolder) getContent();
 
-			addFileToCorrectFolder(root, (FileInterface) file);
+			addFileToFolder(root, (FileInterface) file);
 		} else {
 			setContent(file);
 		}
 	}
 
 	/**
-	 * If the file is at the same directory as the <code>folder</code> it will add
-	 * the <code>file</code> to that folder, if it's not then it will loop through
-	 * all the folders in the <code>folder</code> directory and call this method
-	 * until it finds the correct one.
+	 * Adds the <code>file</code> under the correct folder
 	 * 
-	 * @param folder
+	 * @param baseFolder
 	 * @param file
-	 * @return
 	 */
-	// TODO fix this to stop when the file is added
-	private void addFileToCorrectFolder(ExplorerFolder folder, FileInterface file) {
-		// If folder is parent to file
-		if (folder.getDiskFile().equals(file.getDiskFile().getParentFile())) {
-			folder.add((Pane) file);
-			return;
-		} else {
-			for (FileInterface fFile : folder.getFiles()) {
-				if (fFile instanceof ExplorerFolder) {
-					addFileToCorrectFolder((ExplorerFolder) fFile, file);
+	private void addFileToFolder(ExplorerFolder baseFolder, FileInterface file) {
+		Queue<ExplorerFolder> folders = new ArrayDeque<>();
+
+		ExplorerFolder currentFolder = baseFolder;
+
+		while (currentFolder != null) {
+			if (file.isParent(currentFolder)) {
+				currentFolder.add((Pane) file);
+				return;
+			}
+
+			for (FileInterface eFile : currentFolder.getFiles()) {
+				if (eFile instanceof ExplorerFolder) {
+					folders.add((ExplorerFolder) eFile);
 				}
 			}
+			currentFolder = folders.poll();
 		}
+
 	}
 
+	/**
+	 * Finds the <code>file</code> and calls {@link ExplorerFile#update()}
+	 * 
+	 * @param file
+	 */
 	public void updateFile(File file) {
 		findFileAndApply(file, (cFile) -> {
 			cFile.update();
@@ -155,20 +162,20 @@ public class FileExplorer extends ScrollPane {
 	}
 
 	/**
-	 * If <code>p</code> is a file, add it to the <code>list</code>, if it's a
+	 * If <code>fi</code> is a file, add it to the <code>list</code>, if it's a
 	 * folder call this method for each file under it.
 	 * 
 	 * @param list
-	 * @param p
+	 * @param fi
 	 */
-	private void addFilesToList(List<File> list, Pane p) {
-		if (p instanceof ExplorerFolderName) {
-			ExplorerFile cFile = (ExplorerFile) p;
+	private void addFilesToList(List<File> list, FileInterface fi) {
+		if (fi instanceof ExplorerFile) {
+			ExplorerFile cFile = (ExplorerFile) fi;
 			list.add(cFile.getFile());
-		} else if (p instanceof ExplorerFolder) {
-			ExplorerFolder cFolder = (ExplorerFolder) p;
+		} else if (fi instanceof ExplorerFolder) {
+			ExplorerFolder cFolder = (ExplorerFolder) fi;
 			for (FileInterface pp : cFolder.getFiles()) {
-				addFilesToList(list, (Pane) pp);
+				addFilesToList(list, pp);
 			}
 		}
 	}

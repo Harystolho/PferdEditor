@@ -68,9 +68,9 @@ public class File {
 	 * @param keyEvent
 	 */
 	public void type(KeyEvent keyEvent) {
-		
+
 		setWasModified(true);
-		drawLock.writeLock().lock(); // TODO lock only when modifying the list
+		drawLock.writeLock().lock();
 
 		switch (keyEvent.getCode()) {
 		case SPACE:
@@ -139,7 +139,7 @@ public class File {
 	 * 
 	 * @param word
 	 */
-	public void addWord(Word word) {
+	public void addWordAndUpdateCursorPosition(Word word) {
 		words.add(word);
 		updateCursorPosition(word.getWord()[0], true);
 	}
@@ -397,7 +397,7 @@ public class File {
 			lastWordTyped = word;
 
 			setWordPosition(word);
-			addWord(word);
+			addWordAndUpdateCursorPosition(word);
 		} else {
 			lastWordTyped.addChar(c);
 			updateCursorPosition(c, true);
@@ -421,7 +421,7 @@ public class File {
 		word.setX((float) wrd.getX() + 1);
 		word.setY((float) wrd.getY());
 
-		addWord(word);
+		addWordAndUpdateCursorPosition(word);
 	}
 
 	/**
@@ -483,7 +483,7 @@ public class File {
 		space.setX((float) CanvasManager.getInstance().getCursorX() + scrollX - 1);
 		space.setY((float) CanvasManager.getInstance().getCursorY());
 
-		addWord(space);
+		addWordAndUpdateCursorPosition(space);
 
 		resetLastWord();
 	}
@@ -493,7 +493,7 @@ public class File {
 
 		Word space = new Word(' ', TYPES.SPACE);
 		setWordPosition(space);
-		addWord(space);
+		addWordAndUpdateCursorPosition(space);
 
 		newWord.setX(space.getX() + space.getDrawingSize());
 		newWord.setY(word.getY());
@@ -505,7 +505,7 @@ public class File {
 	private void createSpaceAtTheEndOfTheWord() {
 		Word space = new Word(' ', TYPES.SPACE);
 		setWordPosition(space);
-		addWord(space);
+		addWordAndUpdateCursorPosition(space);
 		resetLastWord();
 	}
 
@@ -553,7 +553,7 @@ public class File {
 	private void createNewLineAtTheEndOfTheWord() {
 		Word new_line = new Word(TYPES.NEW_LINE);
 		setWordPosition(new_line);
-		addWord(new_line);
+		addWordAndUpdateCursorPosition(new_line);
 
 		// Move cursor to the beginning of the line below
 		forceLineDown();
@@ -567,7 +567,7 @@ public class File {
 		setWordPosition(tab);
 		tab.setDrawingSize(CanvasManager.TAB_SIZE);
 
-		addWord(tab);
+		addWordAndUpdateCursorPosition(tab);
 		updateCursorPosition(tab, true);
 		resetLastWord();
 	}

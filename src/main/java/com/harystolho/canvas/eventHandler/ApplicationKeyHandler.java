@@ -208,23 +208,24 @@ public class ApplicationKeyHandler {
 		});
 
 		keyMap.put(KeyCode.DIGIT1, (e) -> {
-			if (e.isShiftDown()) {
-				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "!", KeyCode.EXCLAMATION_MARK, false,
-						false, false, false);
-				pressKeyOnCanvas(ke);
-			} else {
-				pressKeyOnCanvas(e);
+			if (e.isControlDown()) {
+				PEApplication.getInstance().getMainController().selectTab(0);
+				return;
+			} else if (e.isShiftDown()) {
+				e = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "!", KeyCode.EXCLAMATION_MARK, false, false,
+						false, false);
 			}
+			pressKeyOnCanvas(e);
 		});
 
 		keyMap.put(KeyCode.DIGIT2, (e) -> {
 			if (e.isShiftDown()) {
-				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "@", KeyCode.AT, false, false, false,
-						false);
-				pressKeyOnCanvas(ke);
-			} else {
-				pressKeyOnCanvas(e);
+				e = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "@", KeyCode.AT, false, false, false, false);
+			} else if (e.isControlDown()) {
+				PEApplication.getInstance().getMainController().selectTab(1);
+				return;
 			}
+			pressKeyOnCanvas(e);
 		});
 
 		keyMap.put(KeyCode.DIGIT3, (e) -> {
@@ -306,17 +307,17 @@ public class ApplicationKeyHandler {
 				pressKeyOnCanvas(e);
 			}
 		});
-		
+
 		keyMap.put(KeyCode.MINUS, (e) -> {
 			if (e.isShiftDown()) {
-				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "_", KeyCode.UNDERSCORE, false,
-						false, false, false);
+				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "_", KeyCode.UNDERSCORE, false, false,
+						false, false);
 				pressKeyOnCanvas(ke);
 			} else {
 				pressKeyOnCanvas(e);
 			}
 		});
-		
+
 		keyMap.put(KeyCode.COMMA, (e) -> {
 			if (e.isShiftDown()) {
 				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "<", KeyCode.LESS, false, false,

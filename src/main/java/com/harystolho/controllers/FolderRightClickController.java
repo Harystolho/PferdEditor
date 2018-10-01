@@ -57,7 +57,7 @@ public class FolderRightClickController {
 
 		rename.setOnMouseClicked((e) -> {
 			PropertiesWindowFactory.removeOpenWindow();
-			// TODO rename folder
+			// TODO IMPL rename folder
 		});
 
 		copy.setOnMouseClicked((e) -> {
@@ -123,7 +123,7 @@ public class FolderRightClickController {
 	}
 
 	private void showProperties() {
-		// TODO show folder Properties
+		// TODO IMPL show folder Properties
 	}
 
 	public void setFolder(ExplorerFolder folder) {
