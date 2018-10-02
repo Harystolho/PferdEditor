@@ -15,6 +15,7 @@ import com.harystolho.thread.RenderThread;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 /**
  * This class manages the canvas, it holds a reference to the file that is being
@@ -215,9 +216,13 @@ public class CanvasManager {
 		SelectionManager sm = SelectionManager.getInstance();
 
 		Rectangle[] bounds = sm.getSelectionBounds();
-		
-		
-		
+
+		gc.setFill(Color.YELLOW);
+
+		for (Rectangle r : bounds) {
+			gc.fillRect(r.x, r.y - lineHeight, r.width, r.height);
+		}
+
 	}
 
 	private void drawCursor() {

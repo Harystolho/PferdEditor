@@ -47,11 +47,9 @@ public class SelectionManager {
 		double initY = cm.getCursorY();
 
 		Rectangle[] bounds = new Rectangle[3]; // There will be at most 3 rectangles
-		Arrays.fill(bounds, new Rectangle());
-
-		Rectangle bound1 = bounds[0];
-		Rectangle bound2 = bounds[1];
-		Rectangle bound3 = bounds[2];
+		Rectangle bound1 = new Rectangle();
+		Rectangle bound2 = new Rectangle();
+		Rectangle bound3 = new Rectangle();
 
 		if (lastY > initY) {
 			bound1.x = initX;
@@ -84,7 +82,11 @@ public class SelectionManager {
 			bound1.height = cm.getLineHeight();
 		}
 
-		return null;
+		bounds[0] = bound1;
+		bounds[1] = bound2;
+		bounds[2] = bound3;
+
+		return bounds;
 	}
 
 }
