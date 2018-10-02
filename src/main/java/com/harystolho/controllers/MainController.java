@@ -130,7 +130,7 @@ public class MainController implements ResizableInterface {
 		});
 
 		saveFile.setOnMouseClicked((e) -> {
-			PEUtils.saveFiles(fileExplorer.getFiles());
+			saveOpenedFile();
 		});
 
 		refresh.setOnMouseClicked((e) -> {
@@ -199,11 +199,12 @@ public class MainController implements ResizableInterface {
 		});
 
 		menuSave.setOnAction((e) -> {
-			PEUtils.saveFiles(fileExplorer.getFiles());
+			saveOpenedFile();
 		});
 
 		menuSaveAs.setOnAction((e) -> {
 			PEUtils.saveFileAs(CanvasManager.getInstance().getCurrentFile());
+			removeFileTabModified(CanvasManager.getInstance().getCurrentFile());
 		});
 
 		menuChangeWorkspace.setOnAction((e) -> {
@@ -412,7 +413,9 @@ public class MainController implements ResizableInterface {
 	 * Removes the '*' before the tab's file name
 	 */
 	private void removeFileTabModified(File file) {
-		filesTab.removeModified(file);
+		if (file != null) {
+			filesTab.removeModified(file);
+		}
 	}
 
 	/**

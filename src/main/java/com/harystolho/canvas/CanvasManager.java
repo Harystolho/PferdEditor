@@ -5,6 +5,7 @@ import java.util.ListIterator;
 import com.harystolho.PEApplication;
 import com.harystolho.canvas.eventHandler.CanvasMouseHandler;
 import com.harystolho.misc.BeforeUsing;
+import com.harystolho.misc.Rectangle;
 import com.harystolho.misc.StyleLoader;
 import com.harystolho.pe.File;
 import com.harystolho.pe.Word;
@@ -43,6 +44,7 @@ public class CanvasManager {
 	private double drawingDisplacementY = 0;
 
 	private boolean showWhiteSpaces;
+	private boolean showSelection;
 
 	// The canvas begins to draw at this word
 	@SuppressWarnings("rawtypes")
@@ -110,6 +112,7 @@ public class CanvasManager {
 
 	public void draw() {
 		drawBackgroundLine();
+		drawSelection();
 		drawWords();
 		drawCursor();
 		// TODO IMPL draw selection
@@ -132,12 +135,12 @@ public class CanvasManager {
 				float y = node.getData().getY();
 				while (node != null) {
 
-					Word wordObj = node.getData();
+					Word word = node.getData();
 
-					switch (wordObj.getType()) {
+					switch (word.getType()) {
 					case NEW_LINE:
-						wordObj.setX(x);
-						wordObj.setY(y);
+						word.setX(x);
+						word.setY(y);
 
 						if (x > biggestX) {
 							biggestX = x;
@@ -148,8 +151,8 @@ public class CanvasManager {
 						node = node.getRight();
 						continue;
 					case TAB:
-						wordObj.setX(x);
-						wordObj.setY(y);
+						word.setX(x);
+						word.setY(y);
 
 						if (showWhiteSpaces) {
 							gc.setFill(StyleLoader.getWhiteSpacesColor());
@@ -168,13 +171,13 @@ public class CanvasManager {
 						break;
 					}
 
-					gc.setFill(wordObj.getColor());
-					gc.fillText(wordObj.getWordAsString(), x - getScrollX(), y - getScrollY() - drawingDisplacementY);
+					gc.setFill(word.getColor());
+					gc.fillText(word.getWordAsString(), x - getScrollX(), y - getScrollY() - drawingDisplacementY);
 
-					wordObj.setX(x);
-					wordObj.setY(y);
+					word.setX(x);
+					word.setY(y);
 
-					x += wordObj.getDrawingSize();
+					x += word.getDrawingSize();
 
 					if (x > biggestX) {
 						biggestX = x;
@@ -190,9 +193,6 @@ public class CanvasManager {
 
 				FileUpdaterThread.setBiggestX(biggestX);
 
-				// TODO FIX if a file is being rendered and it's tab is closed it will throw an
-				// exception because the canvas manager is going to try to unlock the lock in
-				// another file
 				currentFile.getDrawLock().readLock().unlock();
 			}
 
@@ -205,6 +205,19 @@ public class CanvasManager {
 		gc.setFill(StyleLoader.getBackgroundLineColor());
 		gc.fillRect(0, getCursorY() - lineHeight - getScrollY(), canvas.getWidth(), getLineHeight());
 
+	}
+
+	private void drawSelection() {
+		if (!isShowingSelection()) {
+			return;
+		}
+
+		SelectionManager sm = SelectionManager.getInstance();
+
+		Rectangle[] bounds = sm.getSelectionBounds();
+		
+		
+		
 	}
 
 	private void drawCursor() {
@@ -563,6 +576,14 @@ public class CanvasManager {
 		} else {
 			showWhiteSpaces = true;
 		}
+	}
+
+	public boolean isShowingSelection() {
+		return showSelection;
+	}
+
+	public void showSelection(boolean showSelection) {
+		this.showSelection = showSelection;
 	}
 
 	/**

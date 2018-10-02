@@ -171,7 +171,9 @@ public class FileExplorer extends ScrollPane {
 	private void addFilesToList(List<File> list, FileInterface fi) {
 		if (fi instanceof ExplorerFile) {
 			ExplorerFile cFile = (ExplorerFile) fi;
-			list.add(cFile.getFile());
+			if(cFile.getFile() != null) {
+				list.add(cFile.getFile());	
+			}
 		} else if (fi instanceof ExplorerFolder) {
 			ExplorerFolder cFolder = (ExplorerFolder) fi;
 			for (FileInterface pp : cFolder.getFiles()) {

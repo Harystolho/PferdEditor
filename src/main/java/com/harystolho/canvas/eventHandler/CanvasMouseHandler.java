@@ -1,6 +1,7 @@
 package com.harystolho.canvas.eventHandler;
 
 import com.harystolho.canvas.CanvasManager;
+import com.harystolho.canvas.SelectionManager;
 import com.harystolho.controllers.CanvasRightClickController;
 import com.harystolho.misc.PropertiesWindowFactory;
 import com.harystolho.misc.PropertiesWindowFactory.window_type;
@@ -23,7 +24,6 @@ public class CanvasMouseHandler {
 		this.cm = cm;
 
 		init();
-
 	}
 
 	private void init() {
@@ -34,6 +34,10 @@ public class CanvasMouseHandler {
 
 		cm.getCanvas().setOnMouseReleased((e) -> {
 			mouseRelease(e);
+		});
+
+		cm.getCanvas().setOnMouseDragged((e) -> {
+			mouseDragged(e);
 		});
 
 		cm.getCanvas().setOnScroll((e) -> {
@@ -65,6 +69,11 @@ public class CanvasMouseHandler {
 		default:
 			break;
 		}
+	}
+
+	private void mouseDragged(MouseEvent e) {
+		SelectionManager.getInstance().setLastX(e.getX());
+		SelectionManager.getInstance().setLastY(e.getY());
 	}
 
 	private void scrollMoved(ScrollEvent e) {
