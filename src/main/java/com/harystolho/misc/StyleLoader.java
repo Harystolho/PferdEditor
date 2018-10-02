@@ -25,6 +25,7 @@ public class StyleLoader {
 	private static Color textColor;
 	private static Color cursorColor;
 	private static Color whiteSpacesColor;
+	private static Color selectionColor;
 	private static double fontSize;
 
 	static {
@@ -37,6 +38,7 @@ public class StyleLoader {
 		textColor = Color.web(PEConfiguration.getProperty("TEXT_COLOR"));
 		cursorColor = Color.web(PEConfiguration.getProperty("CURSOR_COLOR"));
 		whiteSpacesColor = Color.web(PEConfiguration.getProperty("WHITESPACE_COLOR"), 0.7);
+		selectionColor = Color.web(PEConfiguration.getProperty("SELECTION_COLOR"), 0.6);
 		fontSize = Double.valueOf(PEConfiguration.getProperty("FONT_SIZE"));
 		createDefaultFonts();
 	}
@@ -112,6 +114,15 @@ public class StyleLoader {
 	public static void setWhiteSpacesColor(Color whiteSpacesColor) {
 		StyleLoader.whiteSpacesColor = whiteSpacesColor;
 		PEConfiguration.setProperty("WHITESPACE_COLOR", getColorHexFromString(whiteSpacesColor));
+	}
+
+	public static Color getSelectionColor() {
+		return selectionColor;
+	}
+
+	public static void setSelectionColor(Color selectionColor) {
+		StyleLoader.selectionColor = selectionColor;
+		PEConfiguration.setProperty("SELECTION_COLOR", getColorHexFromString(selectionColor));
 	}
 
 	/**

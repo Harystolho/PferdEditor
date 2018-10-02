@@ -112,11 +112,9 @@ public class CanvasManager {
 	}
 
 	public void draw() {
-		drawBackgroundLine();
-		drawSelection();
+		drawBackgroundLineOrSelection();
 		drawWords();
 		drawCursor();
-		// TODO IMPL draw selection
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -202,25 +200,31 @@ public class CanvasManager {
 
 	}
 
-	private void drawBackgroundLine() {
-		gc.setFill(StyleLoader.getBackgroundLineColor());
-		gc.fillRect(0, getCursorY() - lineHeight - getScrollY(), canvas.getWidth(), getLineHeight());
-
+	private void drawBackgroundLineOrSelection() {
+		if (isShowingSelection()) { // Draw Selection
+			drawSelection();
+		} else { // Draw Background Line
+			gc.setFill(StyleLoader.getBackgroundLineColor());
+			gc.fillRect(0, getCursorY() - lineHeight - getScrollY(), canvas.getWidth(), getLineHeight());
+		}
 	}
 
 	private void drawSelection() {
-		if (!isShowingSelection()) {
-			return;
-		}
+		Rectangle[] bounds = SelectionManager.getInstance().getSelectionBounds();
 
-		SelectionManager sm = SelectionManager.getInstance();
-
-		Rectangle[] bounds = sm.getSelectionBounds();
-
-		gc.setFill(Color.YELLOW);
+		gc.setFill(StyleLoader.getSelectionColor());
 
 		for (Rectangle r : bounds) {
-			gc.fillRect(r.x, r.y - lineHeight, r.width, r.height);
+			// If the rectangle's width is the same as the canvas's width, it means that the
+			// selection spans the whole line. Because a line sometimes is bigger than
+			// the canvas's width it needs to update the rectangle size
+			if (r.width == canvas.getWidth()) {
+				if (FileUpdaterThread.getBiggestX() > canvas.getWidth()) {
+					r.width = FileUpdaterThread.getBiggestX();
+				}
+			}
+
+			gc.fillRect(r.x - getScrollX(), r.y - lineHeight - getScrollY(), r.width, r.height);
 		}
 
 	}
@@ -314,6 +318,7 @@ public class CanvasManager {
 		if (currentFile != null) {
 			this.currentFile = currentFile;
 			pivotNode = currentFile.getWords().getFirstNode(); // Starts drawing at the first word
+			showSelection(false);
 
 			if (!currentFile.wasPreRendered()) {
 				preRender();
@@ -397,6 +402,7 @@ public class CanvasManager {
 	public void setCursorX(float x) {
 		if (currentFile != null) {
 			currentFile.setCursorX(x + getScrollX());
+			SelectionManager.getInstance().setInitX(x + getScrollX());
 		}
 	}
 
@@ -405,6 +411,7 @@ public class CanvasManager {
 			cursorY += lineHeight - 1 + getScrollY(); // Centralize on cursor
 
 			currentFile.setCursorY(cursorY - (cursorY % lineHeight));
+			SelectionManager.getInstance().setInitY(cursorY - (cursorY % lineHeight));
 		}
 	}
 
@@ -589,6 +596,11 @@ public class CanvasManager {
 
 	public void showSelection(boolean showSelection) {
 		this.showSelection = showSelection;
+
+		if (!showSelection) {
+			SelectionManager.getInstance().reset();
+		}
+
 	}
 
 	/**

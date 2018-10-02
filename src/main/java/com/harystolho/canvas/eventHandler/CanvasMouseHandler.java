@@ -54,6 +54,7 @@ public class CanvasMouseHandler {
 		e.consume();
 
 		PropertiesWindowFactory.removeOpenWindow();
+		cm.showSelection(false);
 
 		switch (e.getButton()) {
 		case PRIMARY:
@@ -74,7 +75,7 @@ public class CanvasMouseHandler {
 	private void mouseDragged(MouseEvent e) {
 		SelectionManager.getInstance().setLastX(e.getX());
 		SelectionManager.getInstance().setLastY(e.getY());
-		CanvasManager.getInstance().showSelection(true);
+		cm.showSelection(true);
 	}
 
 	private void scrollMoved(ScrollEvent e) {

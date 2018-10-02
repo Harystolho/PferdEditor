@@ -73,6 +73,10 @@ public class SettingsController {
 	@FXML
 	private ColorPicker cursorColorPicker;
 	@FXML
+	private Label selectionColor;
+	@FXML
+	private ColorPicker selectionColorPicker;
+	@FXML
 	private Label textSize;
 	@FXML
 	private TextField textSizeInput;
@@ -130,6 +134,7 @@ public class SettingsController {
 		StyleLoader.setBgColor(bgColorPicker.getValue());
 		StyleLoader.setLineColor(lineColorPicker.getValue());
 		StyleLoader.setCursorColor(cursorColorPicker.getValue());
+		StyleLoader.setSelectionColor(selectionColorPicker.getValue());
 
 		changeFontSize();
 
@@ -174,6 +179,7 @@ public class SettingsController {
 		bgColorPicker.setValue(StyleLoader.getBgColor());
 		lineColorPicker.setValue(StyleLoader.getBackgroundLineColor());
 		cursorColorPicker.setValue(StyleLoader.getCursorColor());
+		selectionColorPicker.setValue(StyleLoader.getSelectionColor());
 		textSizeInput.setText(String.valueOf((int) StyleLoader.getFontSize()));
 	}
 
