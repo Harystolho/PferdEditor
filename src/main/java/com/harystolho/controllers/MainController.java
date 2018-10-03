@@ -33,7 +33,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.StageStyle;
 
 public class MainController implements ResizableInterface {
 

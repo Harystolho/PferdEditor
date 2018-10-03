@@ -15,7 +15,6 @@ import com.harystolho.thread.RenderThread;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 
 /**
  * This class manages the canvas, it holds a reference to the file that is being
@@ -402,16 +401,17 @@ public class CanvasManager {
 	public void setCursorX(float x) {
 		if (currentFile != null) {
 			currentFile.setCursorX(x + getScrollX());
-			SelectionManager.getInstance().setInitX(x + getScrollX());
+
+			SelectionManager.getInstance().setLastX(getCursorX());
 		}
 	}
 
 	public void setCursorY(float cursorY) {
 		if (currentFile != null) {
 			cursorY += lineHeight - 1 + getScrollY(); // Centralize on cursor
-
 			currentFile.setCursorY(cursorY - (cursorY % lineHeight));
-			SelectionManager.getInstance().setInitY(cursorY - (cursorY % lineHeight));
+
+			SelectionManager.getInstance().setLastY(getCursorY());
 		}
 	}
 

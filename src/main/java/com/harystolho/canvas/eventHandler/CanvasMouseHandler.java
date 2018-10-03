@@ -27,7 +27,6 @@ public class CanvasMouseHandler {
 	}
 
 	private void init() {
-
 		cm.getCanvas().setOnMousePressed((e) -> {
 			mousePressed(e);
 		});
@@ -62,6 +61,9 @@ public class CanvasMouseHandler {
 			cm.setCursorY((float) e.getY()); // setCursorY MUST come first
 			cm.setCursorX((float) e.getX());
 
+			SelectionManager.getInstance().setInitX(cm.getCursorX());
+			SelectionManager.getInstance().setInitY(cm.getCursorY());
+
 			cm.setCursorCount(CanvasManager.CURSOR_DELAY);
 			break;
 		case SECONDARY:
@@ -73,8 +75,8 @@ public class CanvasMouseHandler {
 	}
 
 	private void mouseDragged(MouseEvent e) {
-		SelectionManager.getInstance().setLastX(e.getX());
-		SelectionManager.getInstance().setLastY(e.getY());
+		cm.setCursorY((float) e.getY());
+		cm.setCursorX((float) e.getX());
 		cm.showSelection(true);
 	}
 

@@ -1,7 +1,5 @@
 package com.harystolho.canvas;
 
-import java.util.Arrays;
-
 import com.harystolho.misc.Rectangle;
 
 /**
@@ -47,12 +45,11 @@ public class SelectionManager {
 	}
 
 	public void setLastX(double x) {
-		lastX = x + cm.getScrollX();
+		lastX = x;
 	}
 
 	public void setLastY(double y) {
-		y += cm.getLineHeight() - 1 + cm.getScrollY(); // Centralize on cursor
-		lastY = y - (y % cm.getLineHeight());
+		lastY = y;
 	}
 
 	public void reset() {
@@ -63,7 +60,7 @@ public class SelectionManager {
 	}
 
 	/**
-	 * Calculates the bounds for the current selection area
+	 * Calculates the bounds for the current selected area
 	 * 
 	 * @return
 	 */
@@ -72,6 +69,10 @@ public class SelectionManager {
 		Rectangle bound1 = new Rectangle();
 		Rectangle bound2 = new Rectangle();
 		Rectangle bound3 = new Rectangle();
+
+		bounds[0] = bound1;
+		bounds[1] = bound2;
+		bounds[2] = bound3;
 
 		if (lastY > initY) { // Selection is downward
 			bound1.x = initX;
@@ -107,10 +108,6 @@ public class SelectionManager {
 			bound1.width = lastX - initX;
 			bound1.height = cm.getLineHeight();
 		}
-
-		bounds[0] = bound1;
-		bounds[1] = bound2;
-		bounds[2] = bound3;
 
 		return bounds;
 	}

@@ -6,7 +6,6 @@ import java.util.Optional;
 import com.harystolho.PEApplication;
 import com.harystolho.misc.PropertiesWindowFactory;
 import com.harystolho.misc.explorer.ExplorerFolder;
-import com.harystolho.utils.PEUtils;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -14,7 +13,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DataFormat;
 import javafx.scene.layout.HBox;
 
 /**
