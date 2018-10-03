@@ -101,12 +101,42 @@ public class SelectionManager {
 			}
 
 		} else if (lastY < initY) { // Selection is upward
-			// TODO IMPL upward selection
-		} else if (lastY == initY) { // Selection is only 1 line
-			bound1.x = initX;
-			bound1.y = initY;
-			bound1.width = lastX - initX;
+			bound1.x = lastX;
+			bound1.y = lastY;
+			bound1.width = cm.getCanvas().getWidth() - lastX;
 			bound1.height = cm.getLineHeight();
+
+			bound2.x = 0;
+			bound2.y = bound1.y + cm.getLineHeight();
+
+			if (initY - lastY == cm.getLineHeight()) { // 2 lines selection
+				bound2.width = initX;
+				bound2.height = cm.getLineHeight();
+
+				bound1.width = cm.getCanvas().getWidth();
+			} else { // More than 2 lines selected
+				bound2.width = cm.getCanvas().getWidth();
+				bound2.height = initY - bound2.y;
+
+				bound3.x = 0;
+				bound3.y = initY;
+				bound3.width = initX;
+				bound3.height = cm.getLineHeight();
+
+				bound1.width = cm.getCanvas().getWidth();
+			}
+		} else if (lastY == initY) { // Selection is only 1 line
+			if (initX < lastX) { // Selection is towards the left
+				bound1.x = initX;
+				bound1.y = initY;
+				bound1.width = lastX - initX;
+				bound1.height = cm.getLineHeight();
+			} else { // Selection is towards the right
+				bound1.x = lastX;
+				bound1.y = lastY;
+				bound1.width = initX - lastX;
+				bound1.height = cm.getLineHeight();
+			}
 		}
 
 		return bounds;
