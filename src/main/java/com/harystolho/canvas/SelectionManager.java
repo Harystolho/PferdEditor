@@ -10,6 +10,10 @@ import com.harystolho.misc.Rectangle;
  */
 public class SelectionManager {
 
+	public static enum SELECTION_DIRECTION {
+		SIDEWAYS_LEFT, SIDEWAYS_RIGHT, DOWNWARD, UPWARD
+	}
+
 	private static SelectionManager instance;
 
 	private static CanvasManager cm;
@@ -50,6 +54,22 @@ public class SelectionManager {
 
 	public void setLastY(double y) {
 		lastY = y;
+	}
+
+	public double getInitX() {
+		return initX;
+	}
+
+	public double getInitY() {
+		return initY;
+	}
+
+	public double getLastX() {
+		return lastX;
+	}
+
+	public double getLastY() {
+		return lastY;
 	}
 
 	public void reset() {
@@ -99,7 +119,6 @@ public class SelectionManager {
 
 				bound1.width = cm.getCanvas().getWidth();
 			}
-
 		} else if (lastY < initY) { // Selection is upward
 			bound1.x = lastX;
 			bound1.y = lastY;
@@ -140,6 +159,20 @@ public class SelectionManager {
 		}
 
 		return bounds;
+	}
+
+	public SELECTION_DIRECTION getSelectionDirection() {
+		if (initY < lastY) {
+			return SELECTION_DIRECTION.UPWARD;
+		} else if (initY == lastY) {
+			if (initX < lastX) {
+				return SELECTION_DIRECTION.SIDEWAYS_LEFT;
+			} else {
+				return SELECTION_DIRECTION.SIDEWAYS_RIGHT;
+			}
+		} else {
+			return SELECTION_DIRECTION.DOWNWARD;
+		}
 	}
 
 }

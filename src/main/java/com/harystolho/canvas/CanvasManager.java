@@ -1,8 +1,12 @@
 package com.harystolho.canvas;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.ListIterator;
 
 import com.harystolho.PEApplication;
+import com.harystolho.canvas.SelectionManager.SELECTION_DIRECTION;
 import com.harystolho.canvas.eventHandler.CanvasMouseHandler;
 import com.harystolho.misc.BeforeUsing;
 import com.harystolho.misc.Rectangle;
@@ -200,12 +204,19 @@ public class CanvasManager {
 	}
 
 	private void drawBackgroundLineOrSelection() {
-		if (isShowingSelection()) { // Draw Selection
+		if (isShowingSelection()) {
 			drawSelection();
-		} else { // Draw Background Line
-			gc.setFill(StyleLoader.getBackgroundLineColor());
-			gc.fillRect(0, getCursorY() - lineHeight - getScrollY(), canvas.getWidth(), getLineHeight());
+
+			// If selection is more than 1 line, don't draw background line
+			SELECTION_DIRECTION selDir = SelectionManager.getInstance().getSelectionDirection();
+			if (selDir != SELECTION_DIRECTION.SIDEWAYS_LEFT || selDir != SELECTION_DIRECTION.SIDEWAYS_RIGHT) {
+				return;
+			}
 		}
+
+		// Draw Background Line
+		gc.setFill(StyleLoader.getBackgroundLineColor());
+		gc.fillRect(0, getCursorY() - lineHeight - getScrollY(), canvas.getWidth(), getLineHeight());
 	}
 
 	private void drawSelection() {
@@ -215,8 +226,9 @@ public class CanvasManager {
 
 		for (Rectangle r : bounds) {
 			// If the rectangle's width is the same as the canvas's width, it means that the
-			// selection spans the whole line. Because a line sometimes is bigger than
-			// the canvas's width it needs to update the rectangle size
+			// selection spans the whole line. Because a line is sometimes bigger than
+			// the canvas's width(that's when you can scroll) it needs to update the
+			// rectangle size
 			if (r.width == canvas.getWidth()) {
 				if (FileUpdaterThread.getBiggestX() > canvas.getWidth()) {
 					r.width = FileUpdaterThread.getBiggestX();
@@ -601,6 +613,14 @@ public class CanvasManager {
 			SelectionManager.getInstance().reset();
 		}
 
+	}
+
+	public List<Word> getWordsInsideSelectionBound() {
+		if (currentFile != null) {
+			return currentFile.getWordsInsideSelectionBound();
+		} else {
+			return Collections.emptyList();
+		}
 	}
 
 	/**

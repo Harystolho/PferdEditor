@@ -1,5 +1,6 @@
 package com.harystolho.pe.linkedList;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -570,6 +571,14 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 		}
 
 		return node.getData();
+	}
+
+	public List<Word> getWordsFrom(double initX, double initY, double lastX, double lastY) {
+		List<Word> words = new ArrayList<>();
+
+		
+		
+		return words;
 	}
 
 	public Node getFirstNode() {

@@ -1,10 +1,14 @@
 package com.harystolho.pe;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import com.harystolho.PEApplication;
 import com.harystolho.canvas.CanvasManager;
+import com.harystolho.canvas.SelectionManager;
+import com.harystolho.misc.Rectangle;
 import com.harystolho.pe.Word.TYPES;
 import com.harystolho.pe.linkedList.IndexLinkedList;
 import com.harystolho.thread.FileUpdaterThread;
@@ -859,6 +863,43 @@ public class File {
 
 	public void setPreRendered(boolean wasPreRendered) {
 		this.wasPreRendered = wasPreRendered;
+	}
+
+	/**
+	 * @return A list containing all the words inside the selection bound. If the
+	 *         selection starts or ends at the middle of a word it will return that
+	 *         word too
+	 */
+	public List<Word> getWordsInsideSelectionBound() {
+		SelectionManager sm = SelectionManager.getInstance();
+
+		double initX = 0, initY = 0;
+		double lastX = 0, lastY = 0;
+
+		switch (sm.getSelectionDirection()) {
+		case UPWARD:
+		case SIDEWAYS_LEFT:
+			initX = sm.getLastX();
+			initY = sm.getLastY();
+			lastX = sm.getInitX();
+			lastY = sm.getInitY();
+			break;
+		case DOWNWARD:
+		case SIDEWAYS_RIGHT:
+			initX = sm.getInitX();
+			initY = sm.getInitY();
+			lastX = sm.getLastX();
+			lastY = sm.getLastY();
+			break;
+		default:
+			break;
+		}
+
+		return words.getWordsFrom(initX, initY, lastX, lastY);
+	}
+
+	public List<String> getTextInsideBound(Rectangle[] bounds) {
+		return Collections.emptyList();
 	}
 
 }
