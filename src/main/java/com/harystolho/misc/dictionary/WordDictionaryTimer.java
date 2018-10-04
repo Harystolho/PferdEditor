@@ -1,4 +1,4 @@
-package com.harystolho.misc;
+package com.harystolho.misc.dictionary;
 
 import java.util.HashSet;
 import java.util.Set;

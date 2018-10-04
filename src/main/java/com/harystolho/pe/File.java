@@ -395,20 +395,24 @@ public class File {
 	 * @param c
 	 */
 	public void addCharToFile(char c) {
+		if (isCharPunctuation(c)) {
+			Word word = new Word(c);
 
-		// TODO FIX don't add {, }, ( as part of existing word
+			setWordPosition(word);
+			addWordAndUpdateCursorPosition(word);
+			resetLastWord();
+			return;
+		}
 
 		Word wrd = words.get(getCursorX() - 1, getCursorY());
-
 		if (wrd != null) {
 			if (wrd.getType() == TYPES.SPACE || wrd.getType() == TYPES.NEW_LINE || wrd.getType() == TYPES.TAB) {
 				createWordAfterSpecialWord(wrd, c);
-				return;
 			} else {
 				addCharToExistingWord(wrd, c);
 				updateCursorPosition(c, true);
-				return;
 			}
+			return;
 		}
 
 		if (lastWordTyped == null || getCursorX() == 0) {
@@ -422,6 +426,26 @@ public class File {
 			updateCursorPosition(c, true);
 		}
 
+	}
+
+	private boolean isCharPunctuation(char c) {
+		switch (c) {
+		case '(':
+		case ')':
+		case '{':
+		case '}':
+		case '[':
+		case ']':
+		case '<':
+		case '>':
+		case ':':
+		case ';':
+		case '.':
+		case ',':
+			return true;
+		default:
+			return false;
+		}
 	}
 
 	/**

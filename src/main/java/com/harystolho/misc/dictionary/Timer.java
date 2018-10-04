@@ -1,4 +1,4 @@
-package com.harystolho.misc;
+package com.harystolho.misc.dictionary;
 
 public class Timer implements Runnable {
 

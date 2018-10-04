@@ -1,6 +1,8 @@
-package com.harystolho.misc;
+package com.harystolho.misc.dictionary;
 
 import java.util.HashMap;
+
+import com.harystolho.misc.StyleLoader;
 
 import javafx.scene.paint.Color;
 
@@ -57,7 +59,7 @@ public class WordDictionary {
 	}
 
 	private static void addDefaultColors() {
-		addColor("break;", Color.RED);
+		addColor("break", Color.RED);
 	}
 
 }

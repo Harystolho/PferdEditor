@@ -4,7 +4,6 @@ import com.harystolho.PEApplication;
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.misc.PropertiesWindowFactory;
 import com.harystolho.pe.File;
-import com.harystolho.utils.PEUtils;
 
 import javafx.fxml.FXML;
 import javafx.scene.input.Clipboard;

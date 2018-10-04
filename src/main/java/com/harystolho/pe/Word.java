@@ -3,8 +3,8 @@ package com.harystolho.pe;
 import java.util.Arrays;
 
 import com.harystolho.misc.StyleLoader;
-import com.harystolho.misc.WordDictionary;
-import com.harystolho.misc.WordDictionaryTimer;
+import com.harystolho.misc.dictionary.WordDictionary;
+import com.harystolho.misc.dictionary.WordDictionaryTimer;
 import com.sun.javafx.tk.Toolkit;
 
 import javafx.scene.paint.Color;
