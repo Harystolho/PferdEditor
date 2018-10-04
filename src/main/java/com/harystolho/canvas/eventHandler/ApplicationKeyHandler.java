@@ -162,7 +162,9 @@ public class ApplicationKeyHandler {
 
 		keyMap.put(KeyCode.C, (e) -> {
 			if (e.isControlDown()) {
-				FileRightClickController.copyFile(CanvasManager.getInstance().getCurrentFile());
+				// TODO FIX CTRL C
+				cm.getWordsInsideSelectionBound();
+				//FileRightClickController.copyFile(CanvasManager.getInstance().getCurrentFile());
 			} else {
 				pressKeyOnCanvas(e);
 			}

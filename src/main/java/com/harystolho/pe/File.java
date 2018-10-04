@@ -383,6 +383,8 @@ public class File {
 	 */
 	public void addCharToFile(char c) {
 
+		// TODO FIX don't add {, }, ( as part of existing word
+		
 		Word wrd = words.get(getCursorX() - 1, getCursorY());
 
 		if (wrd != null) {
@@ -879,17 +881,17 @@ public class File {
 		switch (sm.getSelectionDirection()) {
 		case UPWARD:
 		case SIDEWAYS_LEFT:
-			initX = sm.getLastX();
-			initY = sm.getLastY();
-			lastX = sm.getInitX();
-			lastY = sm.getInitY();
-			break;
-		case DOWNWARD:
-		case SIDEWAYS_RIGHT:
 			initX = sm.getInitX();
 			initY = sm.getInitY();
 			lastX = sm.getLastX();
 			lastY = sm.getLastY();
+			break;
+		case DOWNWARD:
+		case SIDEWAYS_RIGHT:
+			initX = sm.getLastX();
+			initY = sm.getLastY();
+			lastX = sm.getInitX();
+			lastY = sm.getInitY();
 			break;
 		default:
 			break;

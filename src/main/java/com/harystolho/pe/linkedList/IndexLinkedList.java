@@ -573,12 +573,60 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 		return node.getData();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Word> getWordsFrom(double initX, double initY, double lastX, double lastY) {
 		List<Word> words = new ArrayList<>();
 
-		
-		
+		// Exit case
+		if (initX < 0 || initY < 0) {
+			return words;
+		}
+		if (initY == lastY && initX > lastX) {
+			return words;
+		}
+
+		Node startNode = nodeIndexes.getMiddleIndex().getKey();
+		if (startNode.getData().getY() > initY) { // Move startNode left
+			while (startNode.getData().getY() > initY) { // Move up
+				startNode = startNode.getLeft();
+			}
+			while (startNode.getData().getX() > initX) { // Move left
+				startNode = startNode.getLeft();
+			}
+		} else { // Move startNode right
+			while (startNode.getData().getY() < initY) { // Move down
+				startNode = startNode.getRight();
+			}
+			while (startNode.getData().getX() + startNode.getData().getDrawingSize() <= initX) { // Move right
+				startNode = startNode.getRight();
+			}
+		}
+
+		Node endNode = startNode;
+		if (endNode.getData().getY() > lastY) { // Move endNode left
+			while (endNode.getData().getY() > lastY) { // Move up
+				endNode = endNode.getLeft();
+			}
+			while (endNode.getData().getX() > lastX) { // Move left
+				endNode = endNode.getLeft();
+			}
+		} else { // Move endNode right
+			while (endNode.getData().getY() < lastY) { // Move down
+				endNode = endNode.getRight();
+			}
+			while (endNode.getData().getX() + endNode.getData().getDrawingSize() < lastX) { // Move right
+				endNode = endNode.getRight();
+			}
+		}
+
+		while (startNode != endNode) { // Add all words between start and end
+			words.add(startNode.getData());
+			startNode = startNode.getRight();
+		}
+		words.add(endNode.getData());
+
 		return words;
+
 	}
 
 	public Node getFirstNode() {
