@@ -163,6 +163,7 @@ public class ApplicationKeyHandler {
 		keyMap.put(KeyCode.C, (e) -> {
 			if (e.isControlDown()) {
 				if (cm.getCurrentFile() != null) { // There is an open file, copy only the selected portion
+					// TODO FIX return only chars inside selection bound
 					CanvasRightClickController.copySelectedWords();
 				} else { // Copy the whole file
 					FileRightClickController.copyFile(CanvasManager.getInstance().getCurrentFile());

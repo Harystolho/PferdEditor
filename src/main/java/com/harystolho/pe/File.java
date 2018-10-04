@@ -112,30 +112,43 @@ public class File {
 		case ' ':
 			words.addLast(new Word(' ', TYPES.SPACE));
 			resetLastWord();
-			return;
+			break;
 		case '\n': // Ignore
 			return;
 		case '\r':
 			words.addLast(new Word(TYPES.NEW_LINE));
 			resetLastWord();
-			return;
+			break;
 		case '\t':
 			Word tab = new Word(TYPES.TAB);
 			tab.setDrawingSize(CanvasManager.TAB_SIZE);
 			words.addLast(tab);
 			resetLastWord();
-			return;
+			break;
+		case '(': // Add these chars as new words instead of appending them to the last word
+		case ')':
+		case '{':
+		case '}':
+		case '[':
+		case ']':
+		case '<':
+		case '>':
+		case ':':
+		case ';':
+		case '.':
+		case ',':
+			words.addLast(new Word(c, TYPES.NORMAL));
+			resetLastWord();
+			break;
 		default:
+			if (lastWordTyped == null) {
+				lastWordTyped = new Word(c);
+				words.addLast(lastWordTyped);
+			} else {
+				lastWordTyped.addChar(c);
+			}
 			break;
 		}
-
-		if (lastWordTyped == null) {
-			lastWordTyped = new Word(c);
-			words.addLast(lastWordTyped);
-		} else {
-			lastWordTyped.addChar(c);
-		}
-
 	}
 
 	/**
@@ -384,7 +397,7 @@ public class File {
 	public void addCharToFile(char c) {
 
 		// TODO FIX don't add {, }, ( as part of existing word
-		
+
 		Word wrd = words.get(getCursorX() - 1, getCursorY());
 
 		if (wrd != null) {
