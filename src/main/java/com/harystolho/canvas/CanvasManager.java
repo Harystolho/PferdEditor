@@ -615,6 +615,19 @@ public class CanvasManager {
 
 	}
 
+	public void selectWholeFile() {
+		SelectionManager sm = SelectionManager.getInstance();
+
+		sm.setInitX(0);
+		sm.setInitY(getLineHeight());
+
+		Word lastWord = currentFile.getWords().findLastWordIn(FileUpdaterThread.getBiggestY());
+		sm.setLastX(lastWord.getX() + lastWord.getDrawingSize());
+		sm.setLastY(FileUpdaterThread.getBiggestY());
+
+		showSelection(true);
+	}
+
 	public List<Word> getWordsInsideSelectionBound() {
 		if (currentFile != null) {
 			return currentFile.getWordsInsideSelectionBound();

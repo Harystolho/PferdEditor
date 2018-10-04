@@ -176,13 +176,20 @@ public class ApplicationKeyHandler {
 
 		keyMap.put(KeyCode.V, (e) -> {
 			if (e.isControlDown()) {
-				CanvasRightClickController.pasteFile(CanvasManager.getInstance().getCurrentFile());
+				CanvasRightClickController.pasteFile(cm.getCurrentFile());
 			} else {
 				pressKeyOnCanvas(e);
 			}
 		});
 
-		// Shift
+		keyMap.put(KeyCode.A, (e) -> {
+			if (e.isControlDown()) {
+				cm.selectWholeFile();
+			} else {
+				pressKeyOnCanvas(e);
+			}
+		});
+
 		keyMap.put(KeyCode.OPEN_BRACKET, (e) -> {
 			if (e.isShiftDown()) {
 				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "{", KeyCode.BRACELEFT, false, false,
