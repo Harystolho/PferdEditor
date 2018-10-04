@@ -4,9 +4,11 @@ import com.harystolho.PEApplication;
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.misc.PropertiesWindowFactory;
 import com.harystolho.pe.File;
+import com.harystolho.utils.PEUtils;
 
 import javafx.fxml.FXML;
 import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
@@ -78,6 +80,40 @@ public class CanvasRightClickController {
 				save.setDisable(true);
 			}
 		}
+	}
+
+	/**
+	 * Copies the selected words to clipboard
+	 * 
+	 * @param f
+	 */
+	public static void copySelectedWords() {
+		File file = CanvasManager.getInstance().getCurrentFile();
+
+		if (file == null) {
+			return;
+		}
+
+		ClipboardContent clipboardContent = new ClipboardContent();
+		StringBuilder sb = new StringBuilder();
+
+		CanvasManager.getInstance().getWordsInsideSelectionBound().forEach((word) -> {
+			switch (word.getType()) {
+			case NORMAL:
+			case SPACE:
+				sb.append(word.getWordAsString());
+				break;
+			case NEW_LINE:
+				sb.append(System.getProperty("line.separator"));
+				break;
+			case TAB:
+				sb.append("\t");
+				break;
+			}
+		});
+
+		clipboardContent.putString(sb.toString());
+		Clipboard.getSystemClipboard().setContent(clipboardContent);
 	}
 
 	/**

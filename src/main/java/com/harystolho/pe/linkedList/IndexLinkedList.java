@@ -573,6 +573,16 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 		return node.getData();
 	}
 
+	/**
+	 * Returns a list containing all the words from (initX, initY) to (lastX,
+	 * lastY). InitX and initY have to be greater than 0.
+	 * 
+	 * @param initX
+	 * @param initY
+	 * @param lastX
+	 * @param lastY
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	public List<Word> getWordsFrom(double initX, double initY, double lastX, double lastY) {
 		List<Word> words = new ArrayList<>();
@@ -585,15 +595,15 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 			return words;
 		}
 
-		Node startNode = nodeIndexes.getMiddleIndex().getKey();
-		if (startNode.getData().getY() > initY) { // Move startNode left
+		Node startNode = nodeIndexes.getMiddleIndex().getKey(); // Start at the middle node
+		if (startNode.getData().getY() > initY) { // If startNode comes after the initial Y, move it left
 			while (startNode.getData().getY() > initY) { // Move up
 				startNode = startNode.getLeft();
 			}
 			while (startNode.getData().getX() > initX) { // Move left
 				startNode = startNode.getLeft();
 			}
-		} else { // Move startNode right
+		} else { // If startNode comes before the initial Y, move it right
 			while (startNode.getData().getY() < initY) { // Move down
 				startNode = startNode.getRight();
 			}
@@ -602,15 +612,15 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 			}
 		}
 
-		Node endNode = startNode;
-		if (endNode.getData().getY() > lastY) { // Move endNode left
+		Node endNode = startNode; // endNode can't come before startNode, so start from here and more right
+		if (endNode.getData().getY() > lastY) { // If endNode comes after the last Y, move it left
 			while (endNode.getData().getY() > lastY) { // Move up
 				endNode = endNode.getLeft();
 			}
 			while (endNode.getData().getX() > lastX) { // Move left
 				endNode = endNode.getLeft();
 			}
-		} else { // Move endNode right
+		} else { // If endNode comes before the last Y, move it right
 			while (endNode.getData().getY() < lastY) { // Move down
 				endNode = endNode.getRight();
 			}
