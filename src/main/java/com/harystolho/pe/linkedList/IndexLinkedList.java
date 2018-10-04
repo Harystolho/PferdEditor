@@ -596,7 +596,7 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 		}
 
 		Node startNode = nodeIndexes.getMiddleIndex().getKey(); // Start at the middle node
-		if (startNode.getData().getY() > initY) { // If startNode comes after the initial Y, move it left
+		if (startNode.getData().getY() >= initY) { // If startNode comes after the initial Y, move it left
 			while (startNode.getData().getY() > initY) { // Move up
 				startNode = startNode.getLeft();
 			}

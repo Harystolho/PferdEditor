@@ -623,7 +623,7 @@ public class CanvasManager {
 		Word lastWord = currentFile.getWords().findLastWordIn(FileUpdaterThread.getBiggestY());
 		sm.setLastX(lastWord.getX() + lastWord.getDrawingSize());
 		sm.setLastY(FileUpdaterThread.getBiggestY());
-
+		
 		showSelection(true);
 	}
 
