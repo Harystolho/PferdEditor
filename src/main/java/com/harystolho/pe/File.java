@@ -40,8 +40,8 @@ public class File {
 	private float cursorX;
 	private float cursorY;
 
-	private int scrollX;
-	private int scrollY;
+	private double scrollX;
+	private double scrollY;
 
 	private Word lastWordTyped;
 
@@ -323,7 +323,7 @@ public class File {
 
 			CanvasManager cm = CanvasManager.getInstance();
 
-			word.setX((float) cm.getCursorX() + scrollX - 1);
+			word.setX((float) (cm.getCursorX() + scrollX - 1));
 			word.setY((float) cm.getCursorY());
 		}
 
@@ -523,7 +523,7 @@ public class File {
 	private void createSpaceBeforeWord() {
 		Word space = new Word(' ', TYPES.SPACE);
 
-		space.setX((float) CanvasManager.getInstance().getCursorX() + scrollX - 1);
+		space.setX((float) (CanvasManager.getInstance().getCursorX() + scrollX - 1));
 		space.setY((float) CanvasManager.getInstance().getCursorY());
 
 		addWordAndUpdateCursorPosition(space);
@@ -636,7 +636,6 @@ public class File {
 	 *                otherwise near <code>cursorX</code>
 	 */
 	public void setCursorX(float cursorX) {
-
 		Word word = getWords().get(cursorX, getCursorY());
 
 		if (word != null) {
@@ -868,19 +867,19 @@ public class File {
 		System.out.println("Unloading file from disk: " + getName());
 	}
 
-	public int getScrollX() {
+	public double getScrollX() {
 		return scrollX;
 	}
 
-	public void setScrollX(int scrollX) {
+	public void setScrollX(double scrollX) {
 		this.scrollX = scrollX;
 	}
 
-	public int getScrollY() {
+	public double getScrollY() {
 		return scrollY;
 	}
 
-	public void setScrollY(int scrollY) {
+	public void setScrollY(double scrollY) {
 		this.scrollY = scrollY;
 	}
 

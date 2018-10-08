@@ -411,7 +411,7 @@ public class CanvasManager {
 
 	public void setCursorX(float x) {
 		if (currentFile != null) {
-			currentFile.setCursorX(x + getScrollX());
+			currentFile.setCursorX((float) (x + getScrollX()));
 
 			SelectionManager.getInstance().setLastX(getCursorX());
 		}
@@ -490,7 +490,7 @@ public class CanvasManager {
 	public void moveCursorToEndOfTheLine() {
 		if (currentFile != null) {
 			// TODO IMPL scrollX if end of line is bigger than screen size
-			setCursorX(-1 - getScrollX());
+			setCursorX((float) (-1 - getScrollX()));
 			resetCursorCount();
 		}
 	}
@@ -554,7 +554,7 @@ public class CanvasManager {
 		}
 	}
 
-	public void setScrollY(int y) {
+	public void setScrollY(double y) {
 		if (currentFile != null) {
 
 			if (y < lineHeight) { // First Line
@@ -575,14 +575,14 @@ public class CanvasManager {
 		}
 	}
 
-	public int getScrollX() {
+	public double getScrollX() {
 		if (currentFile != null) {
 			return currentFile.getScrollX();
 		}
 		return 0;
 	}
 
-	public int getScrollY() {
+	public double getScrollY() {
 		if (currentFile != null) {
 			return currentFile.getScrollY();
 		}
