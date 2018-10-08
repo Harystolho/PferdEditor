@@ -596,17 +596,21 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 		}
 
 		Node startNode = nodeIndexes.getMiddleIndex().getKey(); // Start at the middle node
-		if (startNode.getData().getY() >= initY) { // If startNode comes after the initial Y, move it left
-			while (startNode.getData().getY() > initY) { // Move up
+		if (startNode.getData().getY() > initY) { // If startNode comes after the initial Y,
+			while (startNode.getData().getY() > initY) { // Move left
 				startNode = startNode.getLeft();
 			}
+		} else {
+			while (startNode.getData().getY() < initY) { // Move right
+				startNode = startNode.getRight();
+			}
+		}
+		
+		if (startNode.getData().getX() > initX) {// If startNode comes after the initial X,
 			while (startNode.getData().getX() > initX) { // Move left
 				startNode = startNode.getLeft();
 			}
-		} else { // If startNode comes before the initial Y, move it right
-			while (startNode.getData().getY() < initY) { // Move down
-				startNode = startNode.getRight();
-			}
+		} else {
 			while (startNode.getData().getX() + startNode.getData().getDrawingSize() <= initX) { // Move right
 				startNode = startNode.getRight();
 			}
