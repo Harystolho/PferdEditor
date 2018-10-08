@@ -1,6 +1,11 @@
 package com.harystolho.canvas;
 
+import java.util.Collections;
+import java.util.List;
+
 import com.harystolho.misc.Rectangle;
+import com.harystolho.pe.Word;
+import com.harystolho.pe.Word.TYPES;
 
 /**
  * Class used to manage the selection area in the canvas
@@ -57,19 +62,55 @@ public class SelectionManager {
 	}
 
 	public double getInitX() {
-		return initX;
+		switch (getSelectionDirection()) {
+		case UPWARD:
+		case SIDEWAYS_LEFT:
+			return initX;
+		case DOWNWARD:
+		case SIDEWAYS_RIGHT:
+			return lastX;
+		default:
+			return 0;
+		}
 	}
 
 	public double getInitY() {
-		return initY;
+		switch (getSelectionDirection()) {
+		case UPWARD:
+		case SIDEWAYS_LEFT:
+			return initY;
+		case DOWNWARD:
+		case SIDEWAYS_RIGHT:
+			return lastY;
+		default:
+			return 0;
+		}
 	}
 
 	public double getLastX() {
-		return lastX;
+		switch (getSelectionDirection()) {
+		case UPWARD:
+		case SIDEWAYS_LEFT:
+			return lastX;
+		case DOWNWARD:
+		case SIDEWAYS_RIGHT:
+			return initX;
+		default:
+			return 0;
+		}
 	}
 
 	public double getLastY() {
-		return lastY;
+		switch (getSelectionDirection()) {
+		case UPWARD:
+		case SIDEWAYS_LEFT:
+			return lastY;
+		case DOWNWARD:
+		case SIDEWAYS_RIGHT:
+			return initY;
+		default:
+			return 0;
+		}
 	}
 
 	public void reset() {
@@ -159,6 +200,97 @@ public class SelectionManager {
 		}
 
 		return bounds;
+	}
+
+	/**
+	 * @return A list containing all the words inside the selection bound. If the
+	 *         selection starts or ends at the middle of a word it will return that
+	 *         word too
+	 */
+	public List<Word> getWordsInsideSelectionBound() {
+		return cm.getCurrentFile().getWords().getWordsFrom(getInitX(), getInitY(), getLastX(), getLastY());
+	}
+
+	/**
+	 * @return the text
+	 */
+	public List<Word> getTextInsideBound() {
+		List<Word> selectedWords = getWordsInsideSelectionBound();
+		// TODO FIX return only chars inside selection bound
+
+		// The method above returns all the words that are inside the selection bound
+		// even if the selection only start at the middle of the word.
+		// The methods below remove the portion of the word that is not selected
+
+		splitLastWord(selectedWords);
+		splitFirstWord(selectedWords);
+
+		return selectedWords;
+	}
+
+	private void splitFirstWord(List<Word> selectedWords) {
+		Word firstWord = selectedWords.get(0);
+
+		double initX = getInitX();
+
+		if (firstWord.getX() != initX) { // Remove some portion of the first word
+			double width = firstWord.getX();
+			int idx = 0;
+
+			while (idx < firstWord.getWord().length) {
+				if (width == initX) {
+					break;
+				} else {
+					width += Word.computeCharWidth(firstWord.getWord()[idx]);
+				}
+				idx++;
+			}
+
+			String selectedWordPortion = firstWord.getWordAsString().substring(idx);
+			Word wordPortion = new Word(TYPES.NORMAL);
+			wordPortion.setX(firstWord.getX());
+			wordPortion.setY(firstWord.getY());
+
+			for (char c : selectedWordPortion.toCharArray()) {
+				wordPortion.addChar(c);
+			}
+
+			// Replace first word
+			selectedWords.set(0, wordPortion);
+		}
+	}
+
+	private void splitLastWord(List<Word> selectedWords) {
+		Word lastWord = selectedWords.get(selectedWords.size() - 1);
+
+		double lastX = getLastX();
+
+		if (lastWord.getX() + lastWord.getDrawingSize() > lastX) { // Remove some portion of the last word
+			double width = lastWord.getX();
+			int idx = 0;
+
+			while (idx < lastWord.getWord().length) {
+				if (width == lastX) {
+					break;
+				} else {
+					width += Word.computeCharWidth(lastWord.getWord()[idx]);
+				}
+				idx++;
+			}
+
+			String selectedWordPortion = lastWord.getWordAsString().substring(0, idx);
+
+			Word wordPortion = new Word(TYPES.NORMAL);
+			wordPortion.setX(lastWord.getX());
+			wordPortion.setY(lastWord.getY());
+
+			for (char c : selectedWordPortion.toCharArray()) {
+				wordPortion.addChar(c);
+			}
+
+			// Replace last word
+			selectedWords.set(selectedWords.size() - 1, wordPortion);
+		}
 	}
 
 	public SELECTION_DIRECTION getSelectionDirection() {

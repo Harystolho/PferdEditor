@@ -623,13 +623,13 @@ public class CanvasManager {
 		Word lastWord = currentFile.getWords().findLastWordIn(FileUpdaterThread.getBiggestY());
 		sm.setLastX(lastWord.getX() + lastWord.getDrawingSize());
 		sm.setLastY(FileUpdaterThread.getBiggestY());
-		
+
 		showSelection(true);
 	}
 
 	public List<Word> getWordsInsideSelectionBound() {
 		if (currentFile != null) {
-			return currentFile.getWordsInsideSelectionBound();
+			return SelectionManager.getInstance().getTextInsideBound();
 		} else {
 			return Collections.emptyList();
 		}

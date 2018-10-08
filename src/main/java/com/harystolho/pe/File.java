@@ -904,41 +904,4 @@ public class File {
 		this.wasPreRendered = wasPreRendered;
 	}
 
-	/**
-	 * @return A list containing all the words inside the selection bound. If the
-	 *         selection starts or ends at the middle of a word it will return that
-	 *         word too
-	 */
-	public List<Word> getWordsInsideSelectionBound() {
-		SelectionManager sm = SelectionManager.getInstance();
-
-		double initX = 0, initY = 0;
-		double lastX = 0, lastY = 0;
-
-		switch (sm.getSelectionDirection()) {
-		case UPWARD:
-		case SIDEWAYS_LEFT:
-			initX = sm.getInitX();
-			initY = sm.getInitY();
-			lastX = sm.getLastX();
-			lastY = sm.getLastY();
-			break;
-		case DOWNWARD:
-		case SIDEWAYS_RIGHT:
-			initX = sm.getLastX();
-			initY = sm.getLastY();
-			lastX = sm.getInitX();
-			lastY = sm.getInitY();
-			break;
-		default:
-			break;
-		}
-
-		return words.getWordsFrom(initX, initY, lastX, lastY);
-	}
-
-	public List<String> getTextInsideBound(Rectangle[] bounds) {
-		return Collections.emptyList();
-	}
-
 }

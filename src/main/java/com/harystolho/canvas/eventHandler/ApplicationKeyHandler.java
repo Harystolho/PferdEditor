@@ -163,7 +163,6 @@ public class ApplicationKeyHandler {
 		keyMap.put(KeyCode.C, (e) -> {
 			if (e.isControlDown()) {
 				if (cm.getCurrentFile() != null) { // There is an open file, copy only the selected portion
-					// TODO FIX return only chars inside selection bound
 					CanvasRightClickController.copySelectedWords();
 				} else { // Copy the whole file
 					FileRightClickController.copyFile(CanvasManager.getInstance().getCurrentFile());
@@ -192,32 +191,34 @@ public class ApplicationKeyHandler {
 
 		keyMap.put(KeyCode.OPEN_BRACKET, (e) -> {
 			if (e.isShiftDown()) {
-				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "{", KeyCode.BRACELEFT, false, false,
-						false, false);
-				pressKeyOnCanvas(ke);
-			} else {
-				pressKeyOnCanvas(e);
+				e = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "{", KeyCode.BRACELEFT, false, false, false,
+						false);
 			}
+			pressKeyOnCanvas(e);
 		});
 
 		keyMap.put(KeyCode.CLOSE_BRACKET, (e) -> {
 			if (e.isShiftDown()) {
-				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "}", KeyCode.BRACERIGHT, false, false,
-						false, false);
-				pressKeyOnCanvas(ke);
-			} else {
-				pressKeyOnCanvas(e);
+				e = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "}", KeyCode.BRACERIGHT, false, false, false,
+						false);
 			}
+			pressKeyOnCanvas(e);
 		});
 
 		keyMap.put(KeyCode.BACK_QUOTE, (e) -> {
 			if (e.isShiftDown()) {
-				KeyEvent ke = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "~", KeyCode.DEAD_TILDE, false, false,
-						false, false);
-				pressKeyOnCanvas(ke);
-			} else {
-				pressKeyOnCanvas(e);
+				e = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "~", KeyCode.DEAD_TILDE, false, false, false,
+						false);
 			}
+			pressKeyOnCanvas(e);
+		});
+
+		keyMap.put(KeyCode.SLASH, (e) -> {
+			if (e.isShiftDown()) {
+				e = new KeyEvent(null, null, KeyEvent.KEY_PRESSED, " ", "?", KeyCode.UNDEFINED, false, false, false,
+						false);
+			}
+			pressKeyOnCanvas(e);
 		});
 
 		keyMap.put(KeyCode.DIGIT1, (e) -> {

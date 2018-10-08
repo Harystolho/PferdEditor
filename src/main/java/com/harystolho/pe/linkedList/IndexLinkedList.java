@@ -636,7 +636,6 @@ public class IndexLinkedList<E extends Word> implements List<E>, Iterable<E> {
 		words.add(endNode.getData());
 
 		return words;
-
 	}
 
 	public Node getFirstNode() {
