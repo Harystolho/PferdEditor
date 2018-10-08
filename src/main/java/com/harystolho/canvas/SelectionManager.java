@@ -204,23 +204,24 @@ public class SelectionManager {
 
 	/**
 	 * @return A list containing all the words inside the selection bound. If the
-	 *         selection starts or ends at the middle of a word it will return that
-	 *         word too
+	 *         selection starts or ends at the middle of a word, it will return that
+	 *         word too`
 	 */
 	public List<Word> getWordsInsideSelectionBound() {
 		return cm.getCurrentFile().getWords().getWordsFrom(getInitX(), getInitY(), getLastX(), getLastY());
 	}
 
 	/**
-	 * @return the text
+	 * @return A list containing all the words inside the selection bound. If the
+	 *         selection starts or ends at the middle of the word, it will return
+	 *         only the selected portion
 	 */
 	public List<Word> getTextInsideBound() {
 		List<Word> selectedWords = getWordsInsideSelectionBound();
-		// TODO FIX return only chars inside selection bound
 
 		// The method above returns all the words that are inside the selection bound
 		// even if the selection only start at the middle of the word.
-		// The methods below remove the portion of the word that is not selected
+		// The methods below remove the portion of the words that is not selected
 
 		splitLastWord(selectedWords);
 		splitFirstWord(selectedWords);
@@ -233,11 +234,11 @@ public class SelectionManager {
 
 		double initX = getInitX();
 
-		if (firstWord.getX() != initX) { // Remove some portion of the first word
+		if (firstWord.getX() != initX) { // If the word starts before the selection
 			double width = firstWord.getX();
 			int idx = 0;
 
-			while (idx < firstWord.getWord().length) {
+			while (idx < firstWord.getWord().length) { // Find at which char the selection begins
 				if (width == initX) {
 					break;
 				} else {
@@ -246,6 +247,7 @@ public class SelectionManager {
 				idx++;
 			}
 
+			// Remove the part that is not selected
 			String selectedWordPortion = firstWord.getWordAsString().substring(idx);
 			Word wordPortion = new Word(TYPES.NORMAL);
 			wordPortion.setX(firstWord.getX());
@@ -265,11 +267,11 @@ public class SelectionManager {
 
 		double lastX = getLastX();
 
-		if (lastWord.getX() + lastWord.getDrawingSize() > lastX) { // Remove some portion of the last word
+		if (lastWord.getX() + lastWord.getDrawingSize() > lastX) { // If the word ends after the selection
 			double width = lastWord.getX();
 			int idx = 0;
 
-			while (idx < lastWord.getWord().length) {
+			while (idx < lastWord.getWord().length) { // Find at which char the selection ends
 				if (width == lastX) {
 					break;
 				} else {
@@ -278,6 +280,7 @@ public class SelectionManager {
 				idx++;
 			}
 
+			// Remove the part that is not selected
 			String selectedWordPortion = lastWord.getWordAsString().substring(0, idx);
 
 			Word wordPortion = new Word(TYPES.NORMAL);
