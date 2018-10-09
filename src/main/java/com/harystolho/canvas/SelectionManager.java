@@ -1,6 +1,5 @@
 package com.harystolho.canvas;
 
-import java.util.Collections;
 import java.util.List;
 
 import com.harystolho.misc.Rectangle;

@@ -75,6 +75,10 @@ public class Word implements Comparable<Word> {
 		return word;
 	}
 
+	public char getCharAt(int idx) {
+		return getWord()[idx];
+	}
+	
 	public String getWordAsString() {
 		return wordAsString;
 	}

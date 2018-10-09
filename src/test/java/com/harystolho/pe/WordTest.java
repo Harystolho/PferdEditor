@@ -1,4 +1,4 @@
-package com.harystolho;
+package com.harystolho.pe;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

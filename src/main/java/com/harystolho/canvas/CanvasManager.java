@@ -489,7 +489,6 @@ public class CanvasManager {
 
 	public void moveCursorToEndOfTheLine() {
 		if (currentFile != null) {
-			// TODO IMPL scrollX if end of line is bigger than screen size
 			setCursorX((float) (-1 - getScrollX()));
 			resetCursorCount();
 		}
@@ -541,14 +540,16 @@ public class CanvasManager {
 		}
 	}
 
-	public void setScrollX(int x) {
+	public void setScrollX(double x) {
 		if (currentFile != null) {
 
 			if (x < 0) {
 				currentFile.setScrollX(0);
 			} else {
-				if (x <= FileUpdaterThread.getBiggestX() - canvas.getWidth()) {
+				if (x <= FileUpdaterThread.getBiggestX() - canvas.getWidth()) { // Try to move X pixels
 					currentFile.setScrollX(x);
+				} else { // If it can't, just move what's possible
+					currentFile.setScrollX(FileUpdaterThread.getBiggestX() - canvas.getWidth());
 				}
 			}
 		}
@@ -658,6 +659,20 @@ public class CanvasManager {
 		gc.setFont(StyleLoader.getFont());
 		setLineHeight((int) StyleLoader.getFontSize() + 3);
 		drawingDisplacementY = StyleLoader.getFontSize() * 0.235;
+	}
+
+	public void updateHorizontalScroll() {
+		if (currentFile == null) {
+			return;
+		}
+
+		if (getCursorX() - getScrollX() > canvas.getWidth()) { // Move scroll right
+			setScrollX(getCursorX() - canvas.getWidth() + TAB_SIZE);
+		}
+
+		if (getCursorX() < getScrollX()) { // Move scroll left
+			setScrollX(getScrollX() - (getScrollX() - getCursorX()) - TAB_SIZE);
+		}
 	}
 
 	public void printDebugMessage() {

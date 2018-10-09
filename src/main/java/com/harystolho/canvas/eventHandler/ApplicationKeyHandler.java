@@ -94,11 +94,13 @@ public class ApplicationKeyHandler {
 		keyMap.put(KeyCode.LEFT, (e) -> {
 			cm.moveCursorLeft();
 			e.consume();
+			// TODO FIX left not going up
 		});
 
 		keyMap.put(KeyCode.RIGHT, (e) -> {
 			cm.moveCursorRight();
 			e.consume();
+			// TODO FIX right going line down
 		});
 
 		keyMap.put(KeyCode.S, (e) -> {

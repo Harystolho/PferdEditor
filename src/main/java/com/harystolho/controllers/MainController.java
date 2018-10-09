@@ -479,6 +479,9 @@ public class MainController implements ResizableInterface {
 		if (widthProportion <= 1) {
 			bottomScrollInside.setVisible(true);
 			bottomScrollInside.setWidth(bottomScrollBar.getWidth() * widthProportion);
+
+			// Updates the scroll position
+			CanvasManager.getInstance().updateHorizontalScroll();
 		} else { // Hides it
 			bottomScrollInside.setVisible(false);
 		}

@@ -1,14 +1,10 @@
 package com.harystolho.pe;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import com.harystolho.PEApplication;
 import com.harystolho.canvas.CanvasManager;
-import com.harystolho.canvas.SelectionManager;
-import com.harystolho.misc.Rectangle;
 import com.harystolho.pe.Word.TYPES;
 import com.harystolho.pe.linkedList.IndexLinkedList;
 import com.harystolho.thread.FileUpdaterThread;
@@ -37,6 +33,7 @@ public class File {
 	private String name;
 	private IndexLinkedList<Word> words;
 
+	// TODO FIX repalce float by double
 	private float cursorX;
 	private float cursorY;
 
@@ -158,11 +155,11 @@ public class File {
 	 */
 	public void addWordAndUpdateCursorPosition(Word word) {
 		words.add(word);
-		updateCursorPosition(word.getWord()[0], true);
+		updateCursorPosition(word.getCharAt(0), true);
 	}
 
 	private void addKeyToFile(KeyEvent key) {
-		String keyString = key.getText(); // Get String representing this key
+		String keyString = key.getText(); // Get string representing this key
 
 		// If SHIFT is pressed, it's keyString.lenght is 0
 		if (keyString.length() <= 0) {
@@ -359,11 +356,15 @@ public class File {
 		}
 
 		if (add) {
-			cursorX = cursorX + Word.computeCharWidth(c);
+			cursorX += Word.computeCharWidth(c);
 		} else {
-			cursorX = cursorX - Word.computeCharWidth(c);
-		}
+			// If the cursor is at the biggest X in the file, it has to move the scroll left
+			if (cursorX == FileUpdaterThread.getBiggestX()) {
+				setScrollX(getScrollX() - Word.computeCharWidth(c));
+			}
 
+			cursorX -= Word.computeCharWidth(c);
+		}
 	}
 
 	/**
@@ -872,7 +873,12 @@ public class File {
 	}
 
 	public void setScrollX(double scrollX) {
-		this.scrollX = scrollX;
+		if (scrollX > 0) {
+			this.scrollX = scrollX;
+		} else {
+			this.scrollX = 0;
+		}
+
 	}
 
 	public double getScrollY() {
