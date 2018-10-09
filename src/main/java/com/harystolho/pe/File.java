@@ -710,7 +710,6 @@ public class File {
 	}
 
 	public void moveCursorLeft() {
-
 		Word word = getWords().get(getCursorX() - 1, getCursorY());
 
 		if (word != null) {
@@ -728,7 +727,7 @@ public class File {
 
 				if (wordWidthPosition > cursorXInWWord) { // If the cursor is in the middle of a word
 					if (getCursorX() > 0) {
-						setCursorX(getCursorX() - Word.computeCharWidth(word.getWord()[x - 1]));
+						setCursorX(getCursorX() - Word.computeCharWidth(word.getCharAt(x - 1)));
 					}
 					return;
 				}
@@ -736,15 +735,14 @@ public class File {
 
 			// If the word has only 1 char it gets here
 			if (getCursorX() > 0) {
-				/*
-				 * if (word.getType() != TYPES.TAB) { setCursorX(getCursorX() -
-				 * Word.computeCharWidth(word.getWord()[x - 1])); }
-				 */
 				setCursorX(getCursorX() - Word.computeCharWidth(word.getWord()[x - 1]));
 			} else { // Move line up
 				CanvasManager.getInstance().lineUp();
 				setCursorX(-1);
 			}
+		} else {
+			CanvasManager.getInstance().lineUp();
+			setCursorX(-1);
 		}
 
 	}
@@ -777,9 +775,14 @@ public class File {
 				setCursorX(getCursorX() + Word.computeCharWidth(nextWord.getWord()[0]));
 			} else {
 				CanvasManager.getInstance().lineDown();
+				setCursorX(0);
 			}
 
 		}
+	}
+
+	public Word getWordAtCursor() {
+		return getWords().get(getCursorX(), getCursorY());
 	}
 
 	public String getName() {

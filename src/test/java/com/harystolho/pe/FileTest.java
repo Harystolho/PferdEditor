@@ -45,8 +45,8 @@ public class FileTest {
 		assertEquals(f.getCursorX(), 0, 0);
 		assertEquals(f.getCursorY(), 0, 0);
 
-		assertEquals(f.getScrollX(), 0);
-		assertEquals(f.getScrollY(), 0);
+		assertEquals(f.getScrollX(), 0, 1);
+		assertEquals(f.getScrollY(), 0, 1);
 
 	}
 
@@ -211,8 +211,6 @@ public class FileTest {
 
 		typeStringToFile(f, "-");
 
-		f.getWords().printDebug();
-
 		assertEquals(f.getWords().get(0).getWordAsString(), "-");
 		assertEquals(f.getWords().get(1).getWordAsString(), "before");
 	}
@@ -264,8 +262,6 @@ public class FileTest {
 
 		typeStringToFile(f, "d");
 
-		f.getWords().printDebug();
-
 		assertEquals(f.getWords().get(0).getWordAsString(), "a");
 		assertEquals(f.getWords().get(1).getWordAsString(), " ");
 		assertEquals(f.getWords().get(2).getWordAsString(), "d");
@@ -294,6 +290,46 @@ public class FileTest {
 
 	}
 
+	@Test
+	public void moveCursorRightAtTheEndOfLine() {
+		File f = new File("fCharBeforeSpace");
+		CanvasManager cm = CanvasManager.getInstance();
+		cm.setCurrentFile(f);
+
+		typeStringToFile(f, "line1");
+		typeEnter(f);
+		typeStringToFile(f, "line2");
+
+		cm.setCursorX(-1);
+		cm.setCursorY(0);
+
+		f.getWords().printDebug();
+
+		assertEquals(f.getWordAtCursor().getType(), TYPES.NEW_LINE);
+
+		cm.moveCursorRight();
+
+		assertEquals(f.getWordAtCursor().getWordAsString(), "line2");
+	}
+
+	public void moveCursorLeftAtTheBeginningOfLine() {
+		File f = new File("fCharBeforeSpace");
+		CanvasManager cm = CanvasManager.getInstance();
+		cm.setCurrentFile(f);
+
+		typeStringToFile(f, "line1");
+		typeEnter(f);
+		typeStringToFile(f, "line2");
+
+		cm.setCursorX(0);
+
+		assertEquals(f.getWordAtCursor().getWordAsString(), "line2");
+
+		cm.moveCursorLeft();
+
+		assertEquals(f.getWordAtCursor().getType(), TYPES.NEW_LINE);
+	}
+
 	private void typeStringToFile(File file, String string) {
 		for (char c : string.toCharArray()) {
 			file.type(new KeyEvent(null, null, null, null, String.valueOf(c), KeyCode.UNDEFINED, false, false, false,
@@ -304,6 +340,11 @@ public class FileTest {
 
 	private void typeSpace(File file) {
 		file.type(new KeyEvent(null, null, null, null, null, KeyCode.SPACE, false, false, false, false));
+		CanvasManager.getInstance().draw();
+	}
+
+	private void typeEnter(File file) {
+		file.type(new KeyEvent(null, null, null, null, null, KeyCode.ENTER, false, false, false, false));
 		CanvasManager.getInstance().draw();
 	}
 
