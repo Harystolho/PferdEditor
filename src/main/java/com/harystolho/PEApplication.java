@@ -26,9 +26,6 @@ public class PEApplication extends Application {
 
 	private MainController mainController;
 
-	private ApplicationKeyHandler keyHandler;
-	private ApplicationMouseHandler mouseHandler;
-
 	/**
 	 * Don't call this method. Call {@link #getInstance()}
 	 */
@@ -53,7 +50,7 @@ public class PEApplication extends Application {
 
 		window.setScene(scene);
 
-		PropertiesWindowFactory.setMainPane(PEApplication.getInstance().getWindow().getScene().getRoot());
+		PropertiesWindowFactory.setMainPane(scene.getRoot());
 
 		loadEventHandlers();
 
@@ -72,8 +69,8 @@ public class PEApplication extends Application {
 		instance = this;
 		loadMainScene();
 
-		keyHandler = new ApplicationKeyHandler(scene, CanvasManager.getInstance());
-		mouseHandler = new ApplicationMouseHandler(scene);
+		new ApplicationKeyHandler(scene, CanvasManager.getInstance());
+		new ApplicationMouseHandler(scene);
 	}
 
 	private void loadEventHandlers() {

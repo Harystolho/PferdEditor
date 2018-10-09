@@ -8,15 +8,22 @@ import static org.junit.Assert.assertTrue;
 import java.util.Arrays;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.harystolho.pe.Word;
 import com.harystolho.pe.Word.TYPES;
+import com.harystolho.utils.PEUtils;
 
 public class WordTest {
 
 	Word word;
 
+	@BeforeClass
+	public static void initialize() {
+		PEUtils.start();
+	}
+	
 	@Before
 	public void init() {
 		word = new Word('t');

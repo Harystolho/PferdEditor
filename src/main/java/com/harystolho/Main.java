@@ -5,6 +5,7 @@ import com.harystolho.utils.PEUtils;
 /**
  * Text Editor Application in Java.
  *
+ * @author Harystolho
  */
 public class Main {
 

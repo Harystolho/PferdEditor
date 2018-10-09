@@ -6,7 +6,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * Hides the main scene and shows another scene
+ * Class used to hide the {@link #mainScene} and show another scene.
  * 
  * @author Harystolho
  *
@@ -19,6 +19,13 @@ public class SceneReverser {
 
 	private static Scene mainScene;
 
+	/**
+	 * Hides the {@link #mainScene} and shows the <code>newScene</code> when this
+	 * method is first called. When this method is called again, it will hide the
+	 * window that is being shown and display the {@link #mainScene} again
+	 * 
+	 * @param newScene
+	 */
 	public static void reverse(Scene newScene) {
 		if (window == null) {
 			logger.severe("Window is null");

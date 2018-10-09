@@ -67,6 +67,7 @@ public class CanvasMouseHandler {
 			cm.setCursorCount(CanvasManager.CURSOR_DELAY);
 			break;
 		case SECONDARY:
+			// TODO FIX don't unselected when right click
 			openCanvasProperties(e);
 			break;
 		default:

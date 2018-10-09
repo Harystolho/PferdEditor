@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -42,18 +43,15 @@ public class PEUtils {
 	 *         <code>null</code> if it can't find the file.
 	 */
 	public static <T> Parent loadFXML(String file, Consumer<T> controller) {
-
 		try {
 			FXMLLoader fxml = new FXMLLoader(ClassLoader.getSystemResource(file));
 			Parent p = fxml.load();
 			controller.accept(fxml.getController());
 			return p;
-
 		} catch (NullPointerException | IOException e) {
 			logger.severe("Can't load file: " + file + " // " + ClassLoader.getSystemResource(file));
 			return null;
 		}
-
 	}
 
 	/**
@@ -84,22 +82,22 @@ public class PEUtils {
 		});
 	}
 
-	public static void saveFile(com.harystolho.pe.File fileToSave, File f) {
+	public static void saveFile(com.harystolho.pe.File fileToSave, File diskFile) {
 		// If a new PE file was created the disk file is null
-		if (f == null) {
+		if (diskFile == null) {
 			return;
 		}
 
-		if (!f.exists()) {
+		if (!diskFile.exists()) {
 			try {
-				f.createNewFile();
+				diskFile.createNewFile();
 			} catch (IOException e) {
-				logger.severe("Couldn't create file: " + f.getAbsolutePath());
+				logger.severe("Couldn't create file: " + diskFile.getAbsolutePath());
 			}
 		}
 
-		try (FileWriter fw = new FileWriter(f)) {
-			fileToSave.getWords().stream().forEach((word) -> {
+		try (FileWriter fw = new FileWriter(diskFile)) {
+			fileToSave.getWords().forEach((word) -> {
 				try {
 					switch (word.getType()) {
 					case NORMAL:
@@ -120,7 +118,7 @@ public class PEUtils {
 			});
 			fw.flush();
 		} catch (IOException e) {
-			logger.severe("Couldn't save file " + f.getName() + " to " + saveFolder.getAbsolutePath());
+			logger.severe("Couldn't save file " + diskFile.getName() + " to " + saveFolder.getAbsolutePath());
 		}
 	}
 
@@ -174,7 +172,7 @@ public class PEUtils {
 
 		if (file.getDiskFile() != null) {
 			try (FileReader fr = new FileReader(file.getDiskFile())) {
-
+				
 				int i;
 				while ((i = fr.read()) != -1) {
 					char c = (char) i;
@@ -219,7 +217,7 @@ public class PEUtils {
 		PEApplication.getInstance().getWindow().hide(); // Hides the application window
 		ow.openWindow();
 	}
-	
+
 	/**
 	 * Initializes resources for this application.
 	 */
