@@ -15,7 +15,8 @@ import javafx.scene.input.KeyEvent;
 
 /**
  * A class that behaves similarly to a normal file. It contains a list of the
- * words that are drawn by the {@link CanvasManager}.
+ * words that are drawn by the {@link CanvasManager}, the cursor position and
+ * scroll position of the file.
  * 
  * @author Harystolho
  *
@@ -37,8 +38,8 @@ public class File {
 	private float cursorX;
 	private float cursorY;
 
-	private double scrollX;
-	private double scrollY;
+	private float scrollX;
+	private float scrollY;
 
 	private Word lastWordTyped;
 
@@ -397,7 +398,8 @@ public class File {
 	 */
 	public void addCharToFile(char c) {
 		if (isCharPunctuation(c)) {
-			Word word = new Word(c);
+			Word word = new Word();
+			word.addChar(c);
 
 			setWordPosition(word);
 			addWordAndUpdateCursorPosition(word);
@@ -484,7 +486,7 @@ public class File {
 			wordWidthPosition += Word.computeCharWidth(ch);
 
 			if (wordWidthPosition > cursorXInWWord) {
-				wrd.addBeforeChar(c, x);
+				wrd.addBeforeIndex(c, x);
 				return;
 			}
 		}

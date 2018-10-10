@@ -6,6 +6,12 @@ import com.harystolho.canvas.CanvasManager;
 
 import javafx.animation.AnimationTimer;
 
+/**
+ * Thread used to render the content in the canvas. 
+ * 
+ * @author Harystolho
+ *
+ */
 public class RenderThread extends AnimationTimer {
 
 	private static final Logger logger = Logger.getLogger(RenderThread.class.getName());

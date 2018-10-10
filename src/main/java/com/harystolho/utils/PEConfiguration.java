@@ -9,6 +9,12 @@ import java.io.OutputStream;
 import java.util.Properties;
 import java.util.logging.Logger;
 
+/**
+ * Class to manage application's settings
+ * 
+ * @author Harystolho
+ *
+ */
 public class PEConfiguration {
 
 	private static final Logger logger = Logger.getLogger(PEConfiguration.class.getName());
@@ -57,7 +63,6 @@ public class PEConfiguration {
 		}
 
 		loadDefaultProperties();
-
 	}
 
 	public static void setProperty(Object string, Object value) {

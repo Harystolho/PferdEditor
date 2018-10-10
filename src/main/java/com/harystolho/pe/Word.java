@@ -78,7 +78,7 @@ public class Word implements Comparable<Word> {
 	public char getCharAt(int idx) {
 		return getWord()[idx];
 	}
-	
+
 	public String getWordAsString() {
 		return wordAsString;
 	}
@@ -93,16 +93,16 @@ public class Word implements Comparable<Word> {
 		updateWordAsString();
 	}
 
-	public void addBeforeChar(char charToAdd, int indexToADd) {
+	public void addBeforeIndex(char charToAdd, int index) {
 		if (size == word.length) {
 			resizeWordArray();
 		}
 
-		for (int x = size - 1; x >= indexToADd; x--) { // -2 because it begins at the char before the last char.
+		for (int x = size - 1; x >= index; x--) {
 			word[x + 1] = word[x];
 		}
 
-		word[indexToADd] = charToAdd;
+		word[index] = charToAdd;
 		size++;
 
 		updateWordAsString();
@@ -165,8 +165,8 @@ public class Word implements Comparable<Word> {
 		return x;
 	}
 
-	public void setX(float x2) {
-		this.x = x2;
+	public void setX(float x) {
+		this.x = x;
 	}
 
 	public float getY() {
@@ -190,7 +190,8 @@ public class Word implements Comparable<Word> {
 	}
 
 	/**
-	 * Updates the word's width
+	 * Updates the word's width. This is used when drawing the word or when moving
+	 * the cursor
 	 */
 	public void updateDrawingSize() {
 		drawingSize = Toolkit.getToolkit().getFontLoader().computeStringWidth(getWordAsString(), StyleLoader.getFont());
@@ -227,7 +228,7 @@ public class Word implements Comparable<Word> {
 	 * @see WordDictionary
 	 */
 	public void updateDrawingColor() {
-		color = WordDictionary.getWordColor(this.getWordAsString());
+		color = WordDictionary.getWordColor(getWordAsString());
 	}
 
 	/**
@@ -236,7 +237,7 @@ public class Word implements Comparable<Word> {
 	 * the initial chars.
 	 * 
 	 * @param ch
-	 * @return The other word
+	 * @return The word that was created
 	 */
 	public Word split(int charIndex) {
 		Word otherWord = new Word(TYPES.NORMAL);

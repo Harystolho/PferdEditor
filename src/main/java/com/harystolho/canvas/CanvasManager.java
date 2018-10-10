@@ -42,7 +42,7 @@ public class CanvasManager {
 	private File currentFile;
 
 	private int cursorCount = 0;
-	private int lineHeight;
+	private double lineHeight;
 
 	private double drawingDisplacementY = 0;
 
@@ -426,7 +426,7 @@ public class CanvasManager {
 		}
 	}
 
-	public int getLineHeight() {
+	public double getLineHeight() {
 		return lineHeight;
 	}
 

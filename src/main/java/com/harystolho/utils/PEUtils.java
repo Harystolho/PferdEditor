@@ -172,11 +172,10 @@ public class PEUtils {
 
 		if (file.getDiskFile() != null) {
 			try (FileReader fr = new FileReader(file.getDiskFile())) {
-				
+
 				int i;
 				while ((i = fr.read()) != -1) {
-					char c = (char) i;
-					file.type(c);
+					file.type((char)i);
 				}
 
 			} catch (IOException e) {
@@ -218,9 +217,6 @@ public class PEUtils {
 		ow.openWindow();
 	}
 
-	/**
-	 * Initializes resources for this application.
-	 */
 	public static void start() {
 		logger.info("Initializing application");
 

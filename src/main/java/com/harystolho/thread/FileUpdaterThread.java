@@ -9,7 +9,7 @@ import com.harystolho.pe.Word;
 import com.harystolho.utils.PEUtils;
 
 /**
- * A class that scans through the whole file to calculate information about the
+ * Class that scans through the whole file to calculate information about the
  * file such as biggestX and biggestY
  * 
  * @author Harystolho
@@ -17,19 +17,16 @@ import com.harystolho.utils.PEUtils;
  */
 public class FileUpdaterThread implements Runnable {
 
-	private static float biggestX = 0;
-	private static int biggestY = 0;
+	private static double biggestX = 0;
+	private static double biggestY = 0;
 
 	@Override
 	public void run() {
-		if (PEApplication.getInstance().getMainController() != null) {
-			if (CanvasManager.getInstance() != null) {
-				if (CanvasManager.getInstance().getCurrentFile() != null) {
-					calculate(CanvasManager.getInstance().getCurrentFile());
-				}
-			}
+		try {
+			calculate(CanvasManager.getInstance().getCurrentFile());
+		} catch (NullPointerException e) {
+			// Do nothing
 		}
-
 	}
 
 	public static void calculate() {
@@ -42,22 +39,19 @@ public class FileUpdaterThread implements Runnable {
 	 * @param file
 	 */
 	public static void calculate(File file) {
-
-		int lineHeight = CanvasManager.getInstance().getLineHeight();
-
 		file.getDrawLock().readLock().lock();
 
 		ListIterator<Word> i = file.getWords().listIterator();
 
-		float biggestX = 0;
-		int biggestY = lineHeight;
+		double biggestX = 0;
+		double biggestY = CanvasManager.getInstance().getLineHeight();
 
 		while (i.hasNext()) {
 			Word wordObj = i.next();
 
 			switch (wordObj.getType()) {
 			case NEW_LINE:
-				biggestY += lineHeight;
+				biggestY += CanvasManager.getInstance().getLineHeight();
 				continue;
 			default:
 				break;
@@ -75,33 +69,22 @@ public class FileUpdaterThread implements Runnable {
 		file.getDrawLock().readLock().unlock();
 	}
 
-	public static float getBiggestX() {
+	public static double getBiggestX() {
 		return biggestX;
 	}
 
-	public static void setBiggestX(float x) {
+	public static void setBiggestX(double x) {
 		biggestX = x;
 	}
-
-	public static void incrementBiggestXBy(float increment) {
-		biggestX += increment;
-		System.out.println("> " + biggestX);
-	}
-
-	public static void decrementBiggestXBy(float increment) {
-		biggestX -= increment;
-		System.out.println("< " + biggestX);
-	}
-
-	public static int getBiggestY() {
+	public static double getBiggestY() {
 		return biggestY;
 	}
 
-	public static void incrementBiggestYBy(int increment) {
+	public static void incrementBiggestYBy(double increment) {
 		biggestY += increment;
 	}
 
-	public static void decrementBiggestYBy(int increment) {
+	public static void decrementBiggestYBy(double increment) {
 		biggestY -= increment;
 	}
 
