@@ -11,6 +11,7 @@ import com.harystolho.thread.FileUpdaterThread;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 /**
@@ -52,7 +53,7 @@ public class File {
 
 		drawLock = new ReentrantReadWriteLock();
 
-		setWasModified(false);
+		wasModified = false;
 
 		cursorX = 0;
 		cursorY = 0;
@@ -64,8 +65,9 @@ public class File {
 	}
 
 	/**
-	 * This method is called when the user presses a key that can be turned into a
-	 * character (If the user presses <code>F3</code> this method won't be called)
+	 * Method used to type in the file using a {@link KeyEvent}. The method's
+	 * behaviour will depend on the key's {@link KeyCode}. It will also update the
+	 * cursor position when necessary
 	 * 
 	 * @param keyEvent
 	 */
@@ -99,8 +101,8 @@ public class File {
 	}
 
 	/**
-	 * Used when a file is loaded from the system. It will add one char after the
-	 * other.
+	 * Inserts the char in the file at the last word. Used when a file is loaded
+	 * from the system.
 	 * 
 	 * @param c
 	 */
@@ -175,6 +177,9 @@ public class File {
 
 	}
 
+	/**
+	 * Removes the char before the cursor and updates the cursor postiion
+	 */
 	public void removeCharBeforeCursor() {
 		if (words.isEmpty()) {
 			return;
@@ -182,8 +187,10 @@ public class File {
 
 		Word wordToRemove = words.get(getCursorX() - 1, getCursorY()); // Gets the word before the cursor.
 
-		if (wordToRemove == null) { // If it's the beginning of a line, it will return null and will remove the last
-									// word in the line above
+		// If it's the beginning of a line, it will return null and will remove the last
+		// word in the line above
+		if (wordToRemove == null) {
+			// If it's the first line
 			if (getCursorX() == 0 && getCursorY() == CanvasManager.getInstance().getLineHeight()) {
 				return;
 			}
@@ -192,31 +199,31 @@ public class File {
 
 			// Update file's biggest Y
 			FileUpdaterThread.decrementBiggestYBy(CanvasManager.getInstance().getLineHeight());
-			return;
-		}
+		} else { // It is not at the beginning of a line
 
-		// Remove the last char in the word
-		removeCharBeforeCursor(wordToRemove);
+			// Remove the last char in the word and update cursor position
+			removeCharBeforeCursor(wordToRemove);
 
-		// If the word has no chars left
-		if (!wordToRemove.hasChars()) {
-			words.remove(wordToRemove);
+			// If the word has no chars left
+			if (!wordToRemove.hasChars()) {
+				words.remove(wordToRemove); // Remove word from file
 
-			if (wordToRemove == lastWordTyped) {
-				lastWordTyped = null;
-			}
+				if (wordToRemove == lastWordTyped) {
+					lastWordTyped = null;
+				}
 
-			// Updates the cursor position
-			switch (wordToRemove.getType()) {
-			case NEW_LINE:
-				CanvasManager.getInstance().lineUp();
-				setCursorX(-1);
-				break;
-			case TAB:
-				updateCursorPosition(wordToRemove, false);
-				break;
-			default:
-				break;
+				// Updates the cursor position
+				switch (wordToRemove.getType()) {
+				case NEW_LINE:
+					CanvasManager.getInstance().lineUp();
+					CanvasManager.getInstance().moveCursorToEndOfTheLine();
+					break;
+				case TAB:
+					updateCursorPosition(wordToRemove, false);
+					break;
+				default:
+					break;
+				}
 			}
 		}
 	}
@@ -227,22 +234,25 @@ public class File {
 	 * @param word
 	 */
 	private void removeCharBeforeCursor(Word word) {
-		double cursorXInWWord = getCursorX() - word.getX(); // Cursor' X in relation to word's X
+		double cursorXInWWord = getCursorX() - word.getX(); // Cursor's X in relation to word's X
 		double wordWidthPosition = 0;
 
-		for (int x = 0; x < word.getSize(); x++) {
-			char ch = word.getWord()[x];
+		for (int charPosition = 0; charPosition < word.getSize(); charPosition++) { // Find char to remove
+			char charAtPosition = word.getCharAt(charPosition);
 
-			wordWidthPosition += Word.computeCharWidth(ch);
+			wordWidthPosition += Word.computeCharWidth(charAtPosition);
 
 			if (wordWidthPosition >= cursorXInWWord) {
-				char removed = word.removeCharAt(x); // Removes only 1 char in the word
+				char removed = word.removeCharAt(charPosition); // Removes only 1 char in the word
 				updateCursorPosition(removed, false);
 				break;
 			}
 		}
 	}
 
+	/**
+	 * Removes the char at the cursor and updates the cursor position
+	 */
 	private void removeCharAtCursor() {
 		if (words.isEmpty()) {
 			return;
@@ -267,8 +277,8 @@ public class File {
 				// Update file's biggest Y
 				FileUpdaterThread.decrementBiggestYBy(CanvasManager.getInstance().getLineHeight());
 
-				// If the new line is the only word left in the first line, move the word after
-				// it 1 line above
+				// If the word removed is a NEW_LINE and is in the first line, move the
+				// word after it 1 line above
 				if (wordToRemove.getY() == CanvasManager.getInstance().getLineHeight()) {
 					getWords().getFirst().setY(CanvasManager.getInstance().getLineHeight());
 				}
@@ -281,18 +291,14 @@ public class File {
 		double cursorXInWWord = getCursorX() - word.getX(); // Cursor X in relation to word X
 		double wordWidthPosition = 0;
 
-		for (int x = 0; x < word.getSize(); x++) {
-			char ch = word.getWord()[x];
+		for (int charPosition = 0; charPosition < word.getSize(); charPosition++) {
+			char charAtPosition = word.getWord()[charPosition];
 
 			if (wordWidthPosition >= cursorXInWWord) {
-				// Removes only 1 char in the word
-				word.removeCharAt(x);
-				/*
-				 * char removed = word.removeCharAt(x); updateCursorPosition(removed, false);
-				 */
+				word.removeCharAt(charPosition); // Removes only 1 char in the word
 				break;
 			}
-			wordWidthPosition += Word.computeCharWidth(ch);
+			wordWidthPosition += Word.computeCharWidth(charAtPosition);
 		}
 	}
 
@@ -301,14 +307,14 @@ public class File {
 	 * to remove the <code>new line</code> at the line above
 	 */
 	private void removeLastWordAtTheLineAbove() {
-		// The new line will always be the last word in a line
+		// The NEW_LINE will always be the last word in a line
 		Word newLine = words.findLastWordIn(getCursorY() - CanvasManager.getInstance().getLineHeight());
 		if (newLine != null) {
 			words.remove(newLine);
-		}
 
-		CanvasManager.getInstance().lineUp();
-		setCursorX(-1); // Sets cursor to the end of the line
+			CanvasManager.getInstance().lineUp();
+			CanvasManager.getInstance().moveCursorToEndOfTheLine();
+		}
 	}
 
 	/**
@@ -317,29 +323,26 @@ public class File {
 	 * @param word
 	 */
 	private void setWordPosition(Word word) {
-		if (PEApplication.getInstance().getMainController() != null) {
+		CanvasManager cm = CanvasManager.getInstance();
 
-			CanvasManager cm = CanvasManager.getInstance();
-
-			word.setX((float) (cm.getCursorX() + scrollX - 1));
-			word.setY((float) cm.getCursorY());
-		}
-
+		// TODO FIX why add scrollX?
+		word.setX(cm.getCursorX() + scrollX - 1);
+		word.setY(cm.getCursorY());
 	}
 
+	/**
+	 * Moves the cursor 1 line down
+	 */
 	private void forceLineDown() {
-		if (PEApplication.getInstance().getMainController() != null) {
-			// Update file's biggest Y
-			FileUpdaterThread.incrementBiggestYBy(CanvasManager.getInstance().getLineHeight());
+		// Update file's biggest Y
+		FileUpdaterThread.incrementBiggestYBy(CanvasManager.getInstance().getLineHeight());
 
-			// Increase cursor position
-			cursorY = (getCursorY() + CanvasManager.getInstance().getLineHeight());
+		// Increase cursor position
+		cursorY = getCursorY() + CanvasManager.getInstance().getLineHeight();
 
-			// Scroll down if necessary
-			if (getCursorY() > PEApplication.getInstance().getMainController().getCanvas().getHeight() + getScrollY()) {
-				CanvasManager.getInstance().scrollDown();
-			}
-
+		// Scroll down if necessary
+		if (getCursorY() > PEApplication.getInstance().getMainController().getCanvas().getHeight() + getScrollY()) {
+			CanvasManager.getInstance().scrollDown();
 		}
 	}
 
@@ -372,7 +375,7 @@ public class File {
 	 * Increases/Decreases the cursor position by <code>word</code>'s
 	 * {@link Word#getDrawingSize() getDrawingSize()}
 	 * 
-	 * @param word the word's width
+	 * @param word the word
 	 * @param add  If <code>true</code> it will add the width of this char to the
 	 *             cursor X, if <code>false</code> it will subtract.
 	 */
@@ -383,9 +386,9 @@ public class File {
 		}
 
 		if (add) {
-			cursorX = cursorX + word.getDrawingSize();
+			cursorX += word.getDrawingSize();
 		} else {
-			cursorX = cursorX - word.getDrawingSize();
+			cursorX -= word.getDrawingSize();
 		}
 	}
 
@@ -398,8 +401,7 @@ public class File {
 	 */
 	public void addCharToFile(char c) {
 		if (isCharPunctuation(c)) {
-			Word word = new Word();
-			word.addChar(c);
+			Word word = new Word(c);
 
 			setWordPosition(word);
 			addWordAndUpdateCursorPosition(word);
@@ -740,11 +742,11 @@ public class File {
 				setCursorX(getCursorX() - Word.computeCharWidth(word.getWord()[x - 1]));
 			} else { // Move line up
 				CanvasManager.getInstance().lineUp();
-				setCursorX(-1);
+				CanvasManager.getInstance().moveCursorToEndOfTheLine();
 			}
 		} else {
 			CanvasManager.getInstance().lineUp();
-			setCursorX(-1);
+			CanvasManager.getInstance().moveCursorToEndOfTheLine();
 		}
 
 	}
@@ -873,11 +875,11 @@ public class File {
 		System.out.println("Unloading file from disk: " + getName());
 	}
 
-	public double getScrollX() {
+	public float getScrollX() {
 		return scrollX;
 	}
 
-	public void setScrollX(double scrollX) {
+	public void setScrollX(float scrollX) {
 		if (scrollX > 0) {
 			this.scrollX = scrollX;
 		} else {
@@ -890,7 +892,7 @@ public class File {
 		return scrollY;
 	}
 
-	public void setScrollY(double scrollY) {
+	public void setScrollY(float scrollY) {
 		this.scrollY = scrollY;
 	}
 
