@@ -394,8 +394,8 @@ public class File {
 
 	/**
 	 * Adds the <code>char</code> to this file at the cursor position. If there is a
-	 * word at that position, it will add the char to that word, otherwise it will
-	 * create a new word
+	 * word at that position, it will append the char to that word, otherwise it
+	 * will create a new word
 	 * 
 	 * @param c
 	 */
@@ -413,26 +413,32 @@ public class File {
 		if (wrd != null) {
 			if (wrd.getType() == TYPES.SPACE || wrd.getType() == TYPES.NEW_LINE || wrd.getType() == TYPES.TAB) {
 				createWordAfterSpecialWord(wrd, c);
-			} else {
+			} else { // Append to word before the cursor
 				addCharToExistingWord(wrd, c);
 				updateCursorPosition(c, true);
 			}
 			return;
-		}
-
-		if (lastWordTyped == null || getCursorX() == 0) {
-			Word word = new Word(c);
-			lastWordTyped = word;
-
-			setWordPosition(word);
-			addWordAndUpdateCursorPosition(word);
 		} else {
-			lastWordTyped.addChar(c);
-			updateCursorPosition(c, true);
-		}
+			if (lastWordTyped == null || getCursorX() == 0) {
+				Word word = new Word(c);
+				lastWordTyped = word;
 
+				setWordPosition(word);
+				addWordAndUpdateCursorPosition(word);
+			} else {
+				lastWordTyped.addChar(c);
+				updateCursorPosition(c, true);
+			}
+		}
 	}
 
+	/**
+	 * If a char is a punctuation it shouldn't be appended to another word, it
+	 * should be a word on its own
+	 * 
+	 * @param c
+	 * @return
+	 */
 	private boolean isCharPunctuation(char c) {
 		switch (c) {
 		case '(':
@@ -466,14 +472,14 @@ public class File {
 		Word word = new Word(ch);
 		lastWordTyped = word;
 
-		word.setX((float) wrd.getX() + 1);
-		word.setY((float) wrd.getY());
+		word.setX(wrd.getX() + 1);
+		word.setY(wrd.getY());
 
 		addWordAndUpdateCursorPosition(word);
 	}
 
 	/**
-	 * Adds this char to an existing word
+	 * Appends this char to an existing word
 	 * 
 	 * @param wrd word
 	 * @param c   char
@@ -482,20 +488,25 @@ public class File {
 		double cursorXInWWord = getCursorX() - wrd.getX(); // Cursor' X in relation to word's X
 		double wordWidthPosition = 0;
 
-		for (int x = 0; x < wrd.getSize(); x++) {
-			char ch = wrd.getWord()[x];
+		for (int charPosition = 0; charPosition < wrd.getSize(); charPosition++) {
+			char charAtPosition = wrd.getWord()[charPosition];
 
-			wordWidthPosition += Word.computeCharWidth(ch);
+			wordWidthPosition += Word.computeCharWidth(charAtPosition);
 
 			if (wordWidthPosition > cursorXInWWord) {
-				wrd.addBeforeIndex(c, x);
+				wrd.addBeforeIndex(c, charPosition);
 				return;
 			}
 		}
 
-		wrd.addChar(c); // Add the char to the end of the word
+		// If it couldn't append the char in the loop above, append it to the end of the
+		// word
+		wrd.addChar(c);
 	}
 
+	/**
+	 * Creates a space and updates the cursor position
+	 */
 	private void createSpace() {
 
 		Word wordAtCursor = words.get(getCursorX(), getCursorY());
@@ -504,12 +515,13 @@ public class File {
 			double cursorXInWWord = getCursorX() - wordAtCursor.getX(); // Cursor' X in relation to word's X
 			double wordWidthPosition = 0;
 
-			for (int x = 0; x < wordAtCursor.getSize(); x++) {
-				wordWidthPosition += Word.computeCharWidth(wordAtCursor.getWord()[x]);
+			for (int charPosition = 0; charPosition < wordAtCursor.getSize(); charPosition++) {
+				wordWidthPosition += Word.computeCharWidth(wordAtCursor.getCharAt(charPosition));
 
 				if (wordWidthPosition > cursorXInWWord) { // If the cursor is in the middle of a word
-					if (x > 0) {
-						createSpaceInTheMiddleOfTheWord(wordAtCursor, x);// If the cursor is in the middle of a word
+					if (charPosition > 0) {
+						createSpaceInTheMiddleOfTheWord(wordAtCursor, charPosition);// If the cursor is in the middle of
+																					// a word
 					} else {
 						createSpaceBeforeWord(); // If the cursor is at the beginning of a word
 					}
@@ -519,7 +531,7 @@ public class File {
 
 			createSpaceAtTheEndOfTheWord(); // If the cursor is at the and of the word
 
-		} else { // It shouldn't get here, but in case it does
+		} else { // Create space after word
 			createSpaceAtTheEndOfTheWord();
 		}
 
@@ -528,8 +540,8 @@ public class File {
 	private void createSpaceBeforeWord() {
 		Word space = new Word(' ', TYPES.SPACE);
 
-		space.setX((float) (CanvasManager.getInstance().getCursorX() + scrollX - 1));
-		space.setY((float) CanvasManager.getInstance().getCursorY());
+		space.setX(CanvasManager.getInstance().getCursorX() + scrollX - 1);
+		space.setY(CanvasManager.getInstance().getCursorY());
 
 		addWordAndUpdateCursorPosition(space);
 
@@ -557,6 +569,9 @@ public class File {
 		resetLastWord();
 	}
 
+	/**
+	 * Creates a new line and updates the cursor position
+	 */
 	private void createNewLine() {
 
 		Word wordAtCursor = words.get(getCursorX(), getCursorY());
@@ -565,13 +580,13 @@ public class File {
 			double cursorXInWWord = getCursorX() - wordAtCursor.getX(); // Cursor' X in relation to word's X
 			double wordWidthPosition = 0;
 
-			// Loops through the chars in the word
-			for (int x = 0; x < wordAtCursor.getSize(); x++) {
-				wordWidthPosition += Word.computeCharWidth(wordAtCursor.getWord()[x]);
+			for (int charPosition = 0; charPosition < wordAtCursor.getSize(); charPosition++) {
+				wordWidthPosition += Word.computeCharWidth(wordAtCursor.getCharAt(charPosition));
 
 				if (wordWidthPosition > cursorXInWWord) {
-					if (x > 0) {
-						createNewLineInTheMiddleOfTheWord(wordAtCursor, x);// If the cursor is in the middle of a word
+					if (charPosition > 0) {
+						createNewLineInTheMiddleOfTheWord(wordAtCursor, charPosition);// If the cursor is in the middle
+																						// of a word
 					} else {
 						createNewLineAtTheEndOfTheWord(); // If the cursor is at the beginning of a word
 					}
@@ -581,7 +596,7 @@ public class File {
 
 			createNewLineAtTheEndOfTheWord(); // If the cursor is at the and of the word
 
-		} else { // It shouldn't get here, but in case it does
+		} else { // Create new line after word
 			createNewLineAtTheEndOfTheWord();
 		}
 	}
@@ -605,11 +620,14 @@ public class File {
 
 		// Move cursor to the beginning of the line below
 		forceLineDown();
-		cursorX = 0;
+		CanvasManager.getInstance().moveCursorToBeginningOfTheLine();
 
 		resetLastWord();
 	}
 
+	/**
+	 * Creates a tab and updates the cursor position
+	 */
 	private void createTab() {
 		Word tab = new Word(TYPES.TAB);
 		setWordPosition(tab);
@@ -656,8 +674,8 @@ public class File {
 			} else {
 				double wordWidthPosition = 0;
 
-				for (int i = 0; i < word.getSize(); i++) {
-					char c = word.getWord()[i];
+				for (int charPosition = 0; charPosition < word.getSize(); charPosition++) {
+					char c = word.getCharAt(charPosition);
 
 					float charWidth = Word.computeCharWidth(c);
 
@@ -674,7 +692,7 @@ public class File {
 			}
 
 			this.cursorX = cursorX;
-		} else {
+		} else { // Move cursor to the end of the last word in the cursor Y
 			Word lastWord = words.findLastWordIn(getCursorY());
 			if (lastWord != null) {
 				this.cursorX = lastWord.getX() + lastWord.getDrawingSize();
@@ -706,7 +724,6 @@ public class File {
 		}
 
 		resetLastWord();
-
 	}
 
 	public float getCursorY() {
@@ -744,7 +761,7 @@ public class File {
 				CanvasManager.getInstance().lineUp();
 				CanvasManager.getInstance().moveCursorToEndOfTheLine();
 			}
-		} else {
+		} else { // If the cursor is at the beginning of a line
 			CanvasManager.getInstance().lineUp();
 			CanvasManager.getInstance().moveCursorToEndOfTheLine();
 		}
