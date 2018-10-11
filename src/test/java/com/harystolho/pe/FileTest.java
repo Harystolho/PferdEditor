@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.pe.Word.TYPES;
+import com.harystolho.utils.PEHelper;
 import com.harystolho.utils.PEUtils;
 
 import javafx.embed.swing.JFXPanel;
@@ -19,16 +20,11 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-public class FileTest {
+public class FileTest extends PEHelper {
 
 	@BeforeClass
 	public static void init() {
-
-		new JFXPanel();
-		PEUtils.start();
-
-		Canvas canvas = new Canvas(1280, 720);
-		CanvasManager.setCanvas(canvas);
+		PEHelper.init();
 	}
 
 	@Test
@@ -368,29 +364,6 @@ public class FileTest {
 		cm.moveCursorLeft();
 
 		assertEquals(f.getWordAtCursor().getType(), TYPES.NEW_LINE);
-	}
-
-	private void typeStringToFile(File file, String string) {
-		for (char c : string.toCharArray()) {
-			file.type(new KeyEvent(null, null, null, null, String.valueOf(c), KeyCode.UNDEFINED, false, false, false,
-					false));
-			CanvasManager.getInstance().draw();
-		}
-	}
-
-	private void typeSpace(File file) {
-		file.type(new KeyEvent(null, null, null, null, null, KeyCode.SPACE, false, false, false, false));
-		CanvasManager.getInstance().draw();
-	}
-
-	private void typeEnter(File file) {
-		file.type(new KeyEvent(null, null, null, null, null, KeyCode.ENTER, false, false, false, false));
-		CanvasManager.getInstance().draw();
-	}
-
-	private void typeDelete(File file) {
-		file.type(new KeyEvent(null, null, null, null, null, KeyCode.BACK_SPACE, false, false, false, false));
-		CanvasManager.getInstance().draw();
 	}
 
 	@AfterClass

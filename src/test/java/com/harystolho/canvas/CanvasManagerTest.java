@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import com.harystolho.canvas.CanvasManager;
 import com.harystolho.pe.File;
+import com.harystolho.utils.PEHelper;
 import com.harystolho.utils.PEUtils;
 
 import javafx.embed.swing.JFXPanel;
@@ -14,10 +15,7 @@ public class CanvasManagerTest {
 
 	@Before
 	public void init() {
-		new JFXPanel();
-		PEUtils.start();
-		
-		CanvasManager.setCanvas(new Canvas(500, 200));
+		PEHelper.init();
 	}
 
 	@Test

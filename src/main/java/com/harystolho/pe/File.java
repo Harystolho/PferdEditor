@@ -764,6 +764,7 @@ public class File {
 
 	public void moveCursorLeft() {
 		Word word = getWords().get(getCursorX() - 1, getCursorY());
+		// TODO FIX don't move when first line
 
 		if (word != null) {
 			if (word.getType() == TYPES.TAB) {
