@@ -17,8 +17,8 @@ import com.harystolho.utils.PEUtils;
  */
 public class FileUpdaterThread implements Runnable {
 
-	private static double biggestX = 0;
-	private static double biggestY = 0;
+	private static float biggestX = 0;
+	private static float biggestY = 0;
 
 	@Override
 	public void run() {
@@ -43,8 +43,8 @@ public class FileUpdaterThread implements Runnable {
 
 		ListIterator<Word> i = file.getWords().listIterator();
 
-		double biggestX = 0;
-		double biggestY = CanvasManager.getInstance().getLineHeight();
+		float biggestX = 0;
+		float biggestY = CanvasManager.getInstance().getLineHeight();
 
 		while (i.hasNext()) {
 			Word wordObj = i.next();
@@ -69,22 +69,22 @@ public class FileUpdaterThread implements Runnable {
 		file.getDrawLock().readLock().unlock();
 	}
 
-	public static double getBiggestX() {
+	public static float getBiggestX() {
 		return biggestX;
 	}
 
-	public static void setBiggestX(double x) {
+	public static void setBiggestX(float x) {
 		biggestX = x;
 	}
-	public static double getBiggestY() {
+	public static float getBiggestY() {
 		return biggestY;
 	}
 
-	public static void incrementBiggestYBy(double increment) {
+	public static void incrementBiggestYBy(float increment) {
 		biggestY += increment;
 	}
 
-	public static void decrementBiggestYBy(double increment) {
+	public static void decrementBiggestYBy(float increment) {
 		biggestY -= increment;
 	}
 

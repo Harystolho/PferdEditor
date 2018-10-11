@@ -517,7 +517,7 @@ public class CanvasManager {
 	 * @param twoLines if <code>true</code> scrolls 2 lines up
 	 */
 	public void scrollUp(boolean twoLines) {
-		setScrollY(getScrollY() - lineHeight);
+		setScrollY(getScrollY() - getLineHeight());
 
 		if (twoLines) {
 			// Try to scroll up again
@@ -540,7 +540,7 @@ public class CanvasManager {
 		}
 	}
 
-	public void setScrollX(double x) {
+	public void setScrollX(float x) {
 		if (currentFile != null) {
 
 			if (x < 0) {
@@ -549,13 +549,13 @@ public class CanvasManager {
 				if (x <= FileUpdaterThread.getBiggestX() - canvas.getWidth()) { // Try to move X pixels
 					currentFile.setScrollX(x);
 				} else { // If it can't, just move what's possible
-					currentFile.setScrollX(FileUpdaterThread.getBiggestX() - canvas.getWidth());
+					currentFile.setScrollX((float) (FileUpdaterThread.getBiggestX() - canvas.getWidth()));
 				}
 			}
 		}
 	}
 
-	public void setScrollY(double y) {
+	public void setScrollY(float y) {
 		if (currentFile != null) {
 
 			if (y < lineHeight) { // First Line
@@ -576,14 +576,14 @@ public class CanvasManager {
 		}
 	}
 
-	public double getScrollX() {
+	public float getScrollX() {
 		if (currentFile != null) {
 			return currentFile.getScrollX();
 		}
 		return 0;
 	}
 
-	public double getScrollY() {
+	public float getScrollY() {
 		if (currentFile != null) {
 			return currentFile.getScrollY();
 		}
@@ -667,7 +667,7 @@ public class CanvasManager {
 		}
 
 		if (getCursorX() - getScrollX() > canvas.getWidth()) { // Move scroll right
-			setScrollX(getCursorX() - canvas.getWidth() + TAB_SIZE);
+			setScrollX((float) (getCursorX() - canvas.getWidth() + TAB_SIZE));
 		}
 
 		if (getCursorX() < getScrollX()) { // Move scroll left

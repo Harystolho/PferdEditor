@@ -742,13 +742,13 @@ public class File {
 			double cursorXInWWord = getCursorX() - word.getX(); // Cursor' X in relation to word's X
 			double wordWidthPosition = 0;
 
-			int x = 0;
-			for (x = 0; x < word.getSize(); x++) {
-				wordWidthPosition += Word.computeCharWidth(word.getWord()[x]);
+			int charPosition = 0;
+			for (charPosition = 0; charPosition < word.getSize(); charPosition++) {
+				wordWidthPosition += Word.computeCharWidth(word.getCharAt(charPosition));
 
 				if (wordWidthPosition > cursorXInWWord) { // If the cursor is in the middle of a word
 					if (getCursorX() > 0) {
-						setCursorX(getCursorX() - Word.computeCharWidth(word.getCharAt(x - 1)));
+						setCursorX(getCursorX() - Word.computeCharWidth(word.getCharAt(charPosition - 1)));
 					}
 					return;
 				}
@@ -756,7 +756,7 @@ public class File {
 
 			// If the word has only 1 char it gets here
 			if (getCursorX() > 0) {
-				setCursorX(getCursorX() - Word.computeCharWidth(word.getWord()[x - 1]));
+				setCursorX(getCursorX() - Word.computeCharWidth(word.getCharAt(charPosition - 1)));
 			} else { // Move line up
 				CanvasManager.getInstance().lineUp();
 				CanvasManager.getInstance().moveCursorToEndOfTheLine();
@@ -780,12 +780,12 @@ public class File {
 				return;
 			}
 
-			int x = 0;
-			for (x = 0; x < word.getSize(); x++) {
-				wordWidthPosition += Word.computeCharWidth(word.getWord()[x]);
+			int charPosition = 0;
+			for (charPosition = 0; charPosition < word.getSize(); charPosition++) {
+				wordWidthPosition += Word.computeCharWidth(word.getWord()[charPosition]);
 
 				if (wordWidthPosition > cursorXInWWord) { // If the cursor is in the middle of a word
-					setCursorX(getCursorX() + Word.computeCharWidth(word.getWord()[x]));
+					setCursorX(getCursorX() + Word.computeCharWidth(word.getWord()[charPosition]));
 					return;
 				}
 			}
@@ -796,9 +796,8 @@ public class File {
 				setCursorX(getCursorX() + Word.computeCharWidth(nextWord.getWord()[0]));
 			} else {
 				CanvasManager.getInstance().lineDown();
-				setCursorX(0);
+				CanvasManager.getInstance().moveCursorToBeginningOfTheLine();
 			}
-
 		}
 	}
 
@@ -905,7 +904,7 @@ public class File {
 
 	}
 
-	public double getScrollY() {
+	public float getScrollY() {
 		return scrollY;
 	}
 

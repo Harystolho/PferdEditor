@@ -163,7 +163,7 @@ public class MainController implements ResizableInterface {
 				double displacement = lastY - mouse.getY();
 
 				CanvasManager.getInstance().setScrollY(CanvasManager.getInstance().getScrollY()
-						- (FileUpdaterThread.getBiggestY() * (displacement / rightScrollBar.getHeight())));
+						- (FileUpdaterThread.getBiggestY() * (float) (displacement / rightScrollBar.getHeight())));
 
 				lastY = mouse.getY();
 			}
