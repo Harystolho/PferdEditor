@@ -5,6 +5,7 @@ import com.harystolho.canvas.SelectionManager;
 import com.harystolho.controllers.CanvasRightClickController;
 import com.harystolho.misc.PropertiesWindowFactory;
 import com.harystolho.misc.PropertiesWindowFactory.window_type;
+import com.harystolho.thread.RenderThread;
 
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
@@ -54,6 +55,9 @@ public class CanvasMouseHandler {
 
 		PropertiesWindowFactory.removeOpenWindow();
 
+		if (!RenderThread.isRunning())
+			return;
+
 		switch (e.getButton()) {
 		case PRIMARY:
 			cm.getCanvas().requestFocus();
@@ -97,6 +101,10 @@ public class CanvasMouseHandler {
 	 * @param e
 	 */
 	private void openCanvasProperties(MouseEvent e) {
+		if (!RenderThread.isRunning()) {
+			return;
+		}
+
 		if (CanvasManager.getInstance().getCurrentFile() != null) {
 			PropertiesWindowFactory.open(window_type.CANVAS, e.getSceneX(), e.getSceneY(), (controller) -> {
 				CanvasRightClickController canvasController = (CanvasRightClickController) controller;

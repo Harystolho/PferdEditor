@@ -7,7 +7,7 @@ import com.harystolho.canvas.CanvasManager;
 import javafx.animation.AnimationTimer;
 
 /**
- * Thread used to render the content in the canvas. 
+ * Thread used to render the content in the canvas.
  * 
  * @author Harystolho
  *
@@ -59,6 +59,10 @@ public class RenderThread extends AnimationTimer {
 		previousTime = 0;
 		previousFPS = 0;
 		CanvasManager.getInstance().makeCanvasTransparent();
+	}
+
+	public static boolean isRunning() {
+		return instance != null;
 	}
 
 }
