@@ -325,9 +325,10 @@ public class File {
 	private void setWordPosition(Word word) {
 		CanvasManager cm = CanvasManager.getInstance();
 
-		// TODO FIX why add scrollX?
-		word.setX(cm.getCursorX() + scrollX - 1);
+		word.setX(cm.getCursorX() - 1);
 		word.setY(cm.getCursorY());
+
+		System.out.println(word.getX());
 	}
 
 	/**
@@ -540,8 +541,7 @@ public class File {
 	private void createSpaceBeforeWord() {
 		Word space = new Word(' ', TYPES.SPACE);
 
-		space.setX(CanvasManager.getInstance().getCursorX() + scrollX - 1);
-		space.setY(CanvasManager.getInstance().getCursorY());
+		setWordPosition(space);
 
 		addWordAndUpdateCursorPosition(space);
 
@@ -628,7 +628,7 @@ public class File {
 	/**
 	 * Creates a tab and updates the cursor position
 	 */
-	private void createTab() {
+	private void createTab() { // TODO FIX tab in the middle of a word problem
 		Word tab = new Word(TYPES.TAB);
 		setWordPosition(tab);
 		tab.setDrawingSize(CanvasManager.TAB_SIZE);
@@ -747,7 +747,7 @@ public class File {
 				wordWidthPosition += Word.computeCharWidth(word.getCharAt(charPosition));
 
 				if (wordWidthPosition > cursorXInWWord) { // If the cursor is in the middle of a word
-					if (getCursorX() > 0) {
+					if (getCursorX() > 0 && charPosition > 0) {
 						setCursorX(getCursorX() - Word.computeCharWidth(word.getCharAt(charPosition - 1)));
 					}
 					return;

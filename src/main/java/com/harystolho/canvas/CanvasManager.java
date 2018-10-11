@@ -430,7 +430,7 @@ public class CanvasManager {
 		return lineHeight;
 	}
 
-	public void setLineHeight(int lineHeight) {
+	public void setLineHeight(float lineHeight) {
 		this.lineHeight = lineHeight;
 	}
 
@@ -666,6 +666,8 @@ public class CanvasManager {
 			return;
 		}
 
+		 // TODO FIX don't move scroll when scrolling using mouse
+		
 		if (getCursorX() - getScrollX() > canvas.getWidth()) { // Move scroll right
 			setScrollX((float) (getCursorX() - canvas.getWidth() + TAB_SIZE));
 		}

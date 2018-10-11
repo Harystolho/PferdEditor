@@ -53,12 +53,14 @@ public class CanvasMouseHandler {
 		e.consume();
 
 		PropertiesWindowFactory.removeOpenWindow();
-		cm.showSelection(false);
 
 		switch (e.getButton()) {
 		case PRIMARY:
 			cm.getCanvas().requestFocus();
-			cm.setCursorY((float) e.getY()); // setCursorY MUST come first
+
+			cm.showSelection(false);
+
+			cm.setCursorY((float) e.getY()); // setCursorY must come first
 			cm.setCursorX((float) e.getX());
 
 			SelectionManager.getInstance().setInitX(cm.getCursorX());
@@ -67,7 +69,6 @@ public class CanvasMouseHandler {
 			cm.setCursorCount(CanvasManager.CURSOR_DELAY);
 			break;
 		case SECONDARY:
-			// TODO FIX don't unselected when right click
 			openCanvasProperties(e);
 			break;
 		default:

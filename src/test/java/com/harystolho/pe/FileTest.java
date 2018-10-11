@@ -169,6 +169,31 @@ public class FileTest {
 	}
 
 	@Test
+	public void typeSpaceBetweenTwoOneCharWords() {
+		File f = new File("fOneChar");
+		CanvasManager cm = CanvasManager.getInstance();
+		cm.setCurrentFile(f);
+
+		typeStringToFile(f, "1");
+		typeSpace(f);
+		typeStringToFile(f, "2");
+
+		cm.moveCursorLeft();
+
+		// Delete space between words
+		typeDelete(f);
+
+		assertEquals(f.getWords().size(), 2);
+
+		assertEquals(f.getCursorX(), f.getWords().get(1).getX(), 0);
+		
+		typeSpace(f);
+		
+		assertEquals(TYPES.SPACE, f.getWords().get(1).getType());
+		assertEquals("2", f.getWords().get(2).getWordAsString());
+	}
+
+	@Test
 	public void typeCharInsideWord() {
 		File f = new File("fcharInTheMiddle");
 		CanvasManager cm = CanvasManager.getInstance();
@@ -348,6 +373,11 @@ public class FileTest {
 		CanvasManager.getInstance().draw();
 	}
 
+	private void typeDelete(File file) {
+		file.type(new KeyEvent(null, null, null, null, null, KeyCode.BACK_SPACE, false, false, false, false));
+		CanvasManager.getInstance().draw();
+	}
+	
 	@AfterClass
 	public static void exit() {
 		PEUtils.exit();
