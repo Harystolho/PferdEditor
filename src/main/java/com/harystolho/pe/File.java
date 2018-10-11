@@ -2,6 +2,8 @@ package com.harystolho.pe;
 
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 import com.harystolho.PEApplication;
 import com.harystolho.canvas.CanvasManager;
@@ -318,7 +320,7 @@ public class File {
 	}
 
 	/**
-	 * Sets the <code>word</code> position to the cursor position.
+	 * Sets the <code>word</code> position to 1px before the cursor position.
 	 * 
 	 * @param word
 	 */
@@ -327,8 +329,6 @@ public class File {
 
 		word.setX(cm.getCursorX() - 1);
 		word.setY(cm.getCursorY());
-
-		System.out.println(word.getX());
 	}
 
 	/**
@@ -524,28 +524,18 @@ public class File {
 						createSpaceInTheMiddleOfTheWord(wordAtCursor, charPosition);// If the cursor is in the middle of
 																					// a word
 					} else {
-						createSpaceBeforeWord(); // If the cursor is at the beginning of a word
+						// If the word has only 1 char and the cursor it at the end
+						createSpaceAfterWord();
 					}
 					return;
 				}
 			}
 
-			createSpaceAtTheEndOfTheWord(); // If the cursor is at the and of the word
-
+			createSpaceAfterWord(); // If the cursor is at the and of the word
 		} else { // Create space after word
-			createSpaceAtTheEndOfTheWord();
+			createSpaceAfterWord();
 		}
 
-	}
-
-	private void createSpaceBeforeWord() {
-		Word space = new Word(' ', TYPES.SPACE);
-
-		setWordPosition(space);
-
-		addWordAndUpdateCursorPosition(space);
-
-		resetLastWord();
 	}
 
 	private void createSpaceInTheMiddleOfTheWord(Word word, int charIndex) {
@@ -562,7 +552,8 @@ public class File {
 		resetLastWord();
 	}
 
-	private void createSpaceAtTheEndOfTheWord() {
+	// This method is usually called when the cursor is at the end of the file
+	private void createSpaceAfterWord() {
 		Word space = new Word(' ', TYPES.SPACE);
 		setWordPosition(space);
 		addWordAndUpdateCursorPosition(space);
@@ -585,20 +576,17 @@ public class File {
 
 				if (wordWidthPosition > cursorXInWWord) {
 					if (charPosition > 0) {
-						createNewLineInTheMiddleOfTheWord(wordAtCursor, charPosition);// If the cursor is in the middle
-																						// of a word
+						// If the cursor is in the middle of a word
+						createNewLineInTheMiddleOfTheWord(wordAtCursor, charPosition);
 					} else {
-						createNewLineAtTheEndOfTheWord(); // If the cursor is at the beginning of a word
+						// If the word has only 1 char and the cursor it at the end
+						createNewLineAfterWord();
 					}
 					return;
 				}
 			}
-
-			createNewLineAtTheEndOfTheWord(); // If the cursor is at the and of the word
-
-		} else { // Create new line after word
-			createNewLineAtTheEndOfTheWord();
 		}
+		createNewLineAfterWord();
 	}
 
 	private void createNewLineInTheMiddleOfTheWord(Word word, int charIndex) {
@@ -608,12 +596,12 @@ public class File {
 		newWord.setY(word.getY());
 		words.add(newWord);
 
-		createNewLineAtTheEndOfTheWord(); // Create New Line between words
+		createNewLineAfterWord(); // Create New Line between words
 
 		resetLastWord();
 	}
 
-	private void createNewLineAtTheEndOfTheWord() {
+	private void createNewLineAfterWord() {
 		Word new_line = new Word(TYPES.NEW_LINE);
 		setWordPosition(new_line);
 		addWordAndUpdateCursorPosition(new_line);
@@ -625,15 +613,59 @@ public class File {
 		resetLastWord();
 	}
 
+	// TODO FIX refactor all createTab, createSpace, createEnter
 	/**
 	 * Creates a tab and updates the cursor position
 	 */
-	private void createTab() { // TODO FIX tab in the middle of a word problem
+	private void createTab() {
+		Word wordAtCursor = words.get(getCursorX(), getCursorY());
+
+		if (wordAtCursor != null) {
+			double cursorXInWWord = getCursorX() - wordAtCursor.getX(); // Cursor' X in relation to word's X
+			double wordWidthPosition = 0;
+
+			for (int charPosition = 0; charPosition < wordAtCursor.getSize(); charPosition++) {
+				wordWidthPosition += Word.computeCharWidth(wordAtCursor.getCharAt(charPosition));
+
+				if (wordWidthPosition > cursorXInWWord) {
+					if (charPosition > 0) {
+						// If the cursor is in the middle of a word
+						createTabInTheMiddleOfTheWord(wordAtCursor, charPosition);
+					} else {
+						// If the word has only 1 char and the cursor it at the end
+						createTabAfterWord();
+					}
+					return;
+				}
+			}
+		}
+
+		createTabAfterWord();
+	}
+
+	public void createTabInTheMiddleOfTheWord(Word word, int charIndex) {
+		Word newWord = word.split(charIndex); // Split the current word in 2
+
 		Word tab = new Word(TYPES.TAB);
 		setWordPosition(tab);
 		tab.setDrawingSize(CanvasManager.TAB_SIZE);
 
-		addWordAndUpdateCursorPosition(tab);
+		words.add(tab);
+		updateCursorPosition(tab, true);
+
+		newWord.setX(tab.getX() + 1);
+		newWord.setY(word.getY());
+
+		words.add(newWord); // Add new word after tab
+		resetLastWord();
+	}
+
+	public void createTabAfterWord() {
+		Word tab = new Word(TYPES.TAB);
+		setWordPosition(tab);
+		tab.setDrawingSize(CanvasManager.TAB_SIZE);
+
+		words.add(tab);
 		updateCursorPosition(tab, true);
 		resetLastWord();
 	}
@@ -659,7 +691,7 @@ public class File {
 	 *                otherwise near <code>cursorX</code>
 	 */
 	public void setCursorX(float cursorX) {
-		Word word = getWords().get(cursorX, getCursorY());
+		Word word = getWords().get(cursorX, cursorY);
 
 		if (word != null) {
 			double cursorXInWWord = cursorX - word.getX(); // Cursor' X in relation to word's X

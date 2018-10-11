@@ -411,7 +411,7 @@ public class CanvasManager {
 
 	public void setCursorX(float x) {
 		if (currentFile != null) {
-			currentFile.setCursorX((float) (x + getScrollX()));
+			currentFile.setCursorX(x + getScrollX());
 
 			SelectionManager.getInstance().setLastX(getCursorX());
 		}
@@ -666,8 +666,8 @@ public class CanvasManager {
 			return;
 		}
 
-		 // TODO FIX don't move scroll when scrolling using mouse
-		
+		// TODO FIX don't move scroll when scrolling using mouse
+
 		if (getCursorX() - getScrollX() > canvas.getWidth()) { // Move scroll right
 			setScrollX((float) (getCursorX() - canvas.getWidth() + TAB_SIZE));
 		}

@@ -186,11 +186,26 @@ public class FileTest {
 		assertEquals(f.getWords().size(), 2);
 
 		assertEquals(f.getCursorX(), f.getWords().get(1).getX(), 0);
-		
+
 		typeSpace(f);
-		
+
 		assertEquals(TYPES.SPACE, f.getWords().get(1).getType());
 		assertEquals("2", f.getWords().get(2).getWordAsString());
+	}
+
+	@Test
+	public void typeTabBeforeWord() {
+
+	}
+
+	@Test
+	public void typeTabInsideWord() {
+
+	}
+
+	@Test
+	public void typeTabAfterWord() {
+
 	}
 
 	@Test
@@ -377,7 +392,7 @@ public class FileTest {
 		file.type(new KeyEvent(null, null, null, null, null, KeyCode.BACK_SPACE, false, false, false, false));
 		CanvasManager.getInstance().draw();
 	}
-	
+
 	@AfterClass
 	public static void exit() {
 		PEUtils.exit();
