@@ -4,6 +4,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.harystolho.utils.PEHelper;
+
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 
@@ -11,7 +13,7 @@ public class ApplicationKeyHandlerTest {
 
 	@BeforeClass
 	public static void init() {
-
+		PEHelper.init();
 	}
 
 	private Scene scene;
@@ -23,7 +25,7 @@ public class ApplicationKeyHandlerTest {
 
 	@Test
 	public void pressLeftKeyWhenTextIsSelected() {
-		
+
 	}
-	
+
 }

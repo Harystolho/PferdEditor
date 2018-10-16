@@ -161,7 +161,7 @@ public class FileTest extends PEHelper {
 
 		typeSpace(f);
 
-		assertEquals(f.getWords().size(), 3);
+		assertEquals(3, f.getWords().size());
 	}
 
 	@Test
@@ -338,8 +338,6 @@ public class FileTest extends PEHelper {
 
 		cm.setCursorX(-1);
 		cm.setCursorY(0);
-
-		f.getWords().printDebug();
 
 		assertEquals(f.getWordAtCursor().getType(), TYPES.NEW_LINE);
 

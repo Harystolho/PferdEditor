@@ -521,21 +521,14 @@ public class File {
 
 				if (wordWidthPosition > cursorXInWWord) { // If the cursor is in the middle of a word
 					if (charPosition > 0) {
-						createSpaceInTheMiddleOfTheWord(wordAtCursor, charPosition);// If the cursor is in the middle of
-																					// a word
-					} else {
-						// If the word has only 1 char and the cursor it at the end
-						createSpaceAfterWord();
+						// If the cursor is in the middle of a word
+						createSpaceInTheMiddleOfTheWord(wordAtCursor, charPosition);
+						return;
 					}
-					return;
 				}
 			}
-
-			createSpaceAfterWord(); // If the cursor is at the and of the word
-		} else { // Create space after word
-			createSpaceAfterWord();
 		}
-
+		createSpaceAfterWord(); // If the cursor is at the and of the word
 	}
 
 	private void createSpaceInTheMiddleOfTheWord(Word word, int charIndex) {
@@ -578,11 +571,8 @@ public class File {
 					if (charPosition > 0) {
 						// If the cursor is in the middle of a word
 						createNewLineInTheMiddleOfTheWord(wordAtCursor, charPosition);
-					} else {
-						// If the word has only 1 char and the cursor it at the end
-						createNewLineAfterWord();
+						return;
 					}
-					return;
 				}
 			}
 		}
@@ -631,11 +621,8 @@ public class File {
 					if (charPosition > 0) {
 						// If the cursor is in the middle of a word
 						createTabInTheMiddleOfTheWord(wordAtCursor, charPosition);
-					} else {
-						// If the word has only 1 char and the cursor it at the end
-						createTabAfterWord();
+						return;
 					}
-					return;
 				}
 			}
 		}
